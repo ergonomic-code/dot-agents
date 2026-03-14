@@ -1,0 +1,9 @@
+# Agents
+
+## Framework
+
+This repository uses the Ergocode AI Agent Framework.
+Framework checkout root: `<framework-checkout-root>`.
+Load `<framework-checkout-root>/src/project-baseline.md` before the local instructions in this file.
+
+TODO: add repository-specific sections below
