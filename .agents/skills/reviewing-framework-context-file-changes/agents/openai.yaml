@@ -1,0 +1,4 @@
+interface:
+  display_name: "Review Framework Context Files"
+  short_description: "Review framework context files"
+  default_prompt: "Use $reviewing-framework-context-file-changes to review framework context file changes."
