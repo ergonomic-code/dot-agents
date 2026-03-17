@@ -24,3 +24,13 @@ Then load all mandatory convention files referenced below.
 ## Active role
 
 - `roles/developer.md`
+
+### Any Kotlin code
+
+- Never delete blank single black lines in code.
+- Use Russian for comments in code.
+
+### Tests
+
+- Extract all fixture code from test case classes into helpers such as *ObjectMother, *FixturePresets, *TestApi, *HttpApi, *Assertions.
+- In test prefer `!!` to null handling.
