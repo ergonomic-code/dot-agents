@@ -1,0 +1,28 @@
+{
+  "version": "1",
+  "title": "Pair mode removed fields",
+  "changeMode": "marked",
+  "endpoints": [],
+  "models": [
+    {
+      "id": "model",
+      "name": "Model",
+      "change": "changed",
+      "diff": {
+        "before": {
+          "name": "Model",
+          "fields": [
+            {"name": "id", "type": {"kind": "primitive", "name": "String:UUID"}},
+            {"name": "createdDateTime", "type": {"kind": "primitive", "name": "String:date-time"}}
+          ]
+        }
+      },
+      "fields": [
+        {"name": "id", "type": {"kind": "primitive", "name": "String:UUID"}}
+      ]
+    }
+  ],
+  "sumTypes": [],
+  "enums": [],
+  "sharedNotes": []
+}

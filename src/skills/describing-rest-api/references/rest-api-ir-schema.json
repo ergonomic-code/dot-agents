@@ -1,0 +1,757 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ergocode.dev/schemas/rest-api-ir-v1.schema.json",
+  "title": "REST API IR",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "changeMode",
+    "endpoints",
+    "models",
+    "enums",
+    "sharedNotes"
+  ],
+  "properties": {
+    "version": {
+      "const": "1"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "changeMode": {
+      "type": "string",
+      "enum": ["none", "marked"]
+    },
+    "endpoints": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/endpoint"
+      }
+    },
+    "models": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/model"
+      }
+    },
+    "sumTypes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/sumTypeBlock"
+      }
+    },
+    "enums": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/enumBlock"
+      }
+    },
+    "sharedNotes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/note"
+      }
+    }
+  },
+  "$defs": {
+    "change": {
+      "type": "string",
+      "enum": ["added", "changed", "removed"]
+    },
+    "diffPatch": {
+      "type": "object"
+    },
+    "modelDiffPatch": {
+      "type": "object",
+      "properties": {
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/field"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "diffEnvelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "before": {
+          "$ref": "#/$defs/diffPatch"
+        },
+        "after": {
+          "$ref": "#/$defs/diffPatch"
+        }
+      }
+    },
+    "httpMethod": {
+      "type": "string",
+      "enum": ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]
+    },
+    "body": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind"],
+          "properties": {
+            "kind": {
+              "const": "none"
+            },
+            "change": {
+              "$ref": "#/$defs/change"
+            },
+            "diff": {
+              "$ref": "#/$defs/diffEnvelope"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "type"],
+          "properties": {
+            "kind": {
+              "const": "type"
+            },
+            "type": {
+              "$ref": "#/$defs/typeExpr"
+            },
+            "change": {
+              "$ref": "#/$defs/change"
+            },
+            "diff": {
+              "$ref": "#/$defs/diffEnvelope"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "parts"],
+          "properties": {
+            "kind": {
+              "const": "multipart"
+            },
+            "contentType": {
+              "type": "string",
+              "minLength": 1
+            },
+            "parts": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/multipartPart"
+              }
+            },
+            "change": {
+              "$ref": "#/$defs/change"
+            },
+            "diff": {
+              "$ref": "#/$defs/diffEnvelope"
+            }
+          }
+        }
+      ]
+    },
+    "header": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "oneOf": [
+        {
+          "required": ["type"]
+        },
+        {
+          "required": ["value"]
+        }
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "$ref": "#/$defs/typeExpr"
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string"
+        },
+        "change": {
+          "$ref": "#/$defs/change"
+        },
+        "diff": {
+          "$ref": "#/$defs/diffEnvelope"
+        }
+      }
+    },
+    "param": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "type"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "$ref": "#/$defs/typeExpr"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string"
+        },
+        "change": {
+          "$ref": "#/$defs/change"
+        },
+        "diff": {
+          "$ref": "#/$defs/diffEnvelope"
+        }
+      }
+    },
+    "rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text"],
+      "properties": {
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "change": {
+          "$ref": "#/$defs/change"
+        },
+        "diff": {
+          "$ref": "#/$defs/diffEnvelope"
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "headers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/header"
+          }
+        },
+        "body": {
+          "$ref": "#/$defs/body"
+        },
+        "change": {
+          "$ref": "#/$defs/change"
+        },
+        "diff": {
+          "$ref": "#/$defs/diffEnvelope"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "body"],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "minimum": 400
+              }
+            },
+            "required": ["status"]
+          },
+          "then": {
+            "required": ["description"],
+            "properties": {
+              "description": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      ],
+      "properties": {
+        "status": {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 599
+        },
+        "headers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/header"
+          }
+        },
+        "body": {
+          "$ref": "#/$defs/body"
+        },
+        "description": {
+          "type": "string"
+        },
+        "change": {
+          "$ref": "#/$defs/change"
+        },
+        "diff": {
+          "$ref": "#/$defs/diffEnvelope"
+        }
+      }
+    },
+    "endpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "method", "path", "responses"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "method": {
+          "$ref": "#/$defs/httpMethod"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pathParams": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/param"
+          }
+        },
+        "queryParams": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/param"
+          }
+        },
+        "request": {
+          "$ref": "#/$defs/request"
+        },
+        "responses": {
+          "type": "array",
+          "minItems": 1,
+          "contains": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "minimum": 400
+              }
+            },
+            "required": ["status"]
+          },
+          "minContains": 1,
+          "items": {
+            "$ref": "#/$defs/response"
+          }
+        },
+        "rules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/rule"
+          }
+        },
+        "change": {
+          "$ref": "#/$defs/change"
+        },
+        "diff": {
+          "$ref": "#/$defs/diffEnvelope"
+        }
+      }
+    },
+    "field": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "type"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "$ref": "#/$defs/typeExpr"
+        },
+        "description": {
+          "type": "string"
+        },
+        "change": {
+          "$ref": "#/$defs/change"
+        },
+        "diff": {
+          "$ref": "#/$defs/diffEnvelope"
+        }
+      }
+    },
+    "multipartPart": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "type"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "$ref": "#/$defs/typeExpr"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string"
+        },
+        "change": {
+          "$ref": "#/$defs/change"
+        },
+        "diff": {
+          "$ref": "#/$defs/diffEnvelope"
+        }
+      }
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "fields"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/field"
+          }
+        },
+        "description": {
+          "type": "string"
+        },
+        "change": {
+          "$ref": "#/$defs/change"
+        },
+        "diff": {
+          "type": "object",
+          "additionalProperties": false,
+          "minProperties": 1,
+          "properties": {
+            "before": {
+              "$ref": "#/$defs/modelDiffPatch"
+            },
+            "after": {
+              "$ref": "#/$defs/modelDiffPatch"
+            }
+          }
+        },
+        "rules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/rule"
+          }
+        }
+      }
+    },
+    "sumTypeBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "variants"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "variants": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/$defs/typeExpr"
+          }
+        },
+        "description": {
+          "type": "string"
+        },
+        "change": {
+          "$ref": "#/$defs/change"
+        },
+        "diff": {
+          "$ref": "#/$defs/diffEnvelope"
+        },
+        "rules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/rule"
+          }
+        }
+      }
+    },
+    "enumItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string"
+        },
+        "change": {
+          "$ref": "#/$defs/change"
+        },
+        "diff": {
+          "$ref": "#/$defs/diffEnvelope"
+        }
+      }
+    },
+    "enumBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "items"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/enumItem"
+          }
+        },
+        "description": {
+          "type": "string"
+        },
+        "change": {
+          "$ref": "#/$defs/change"
+        },
+        "diff": {
+          "$ref": "#/$defs/diffEnvelope"
+        },
+        "rules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/rule"
+          }
+        }
+      }
+    },
+    "note": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "text"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "change": {
+          "$ref": "#/$defs/change"
+        },
+        "diff": {
+          "$ref": "#/$defs/diffEnvelope"
+        }
+      }
+    },
+    "primitiveType": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "name"],
+      "properties": {
+        "kind": {
+          "const": "primitive"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^(String|Number|Boolean|Binary|Object)(:[A-Za-z][A-Za-z0-9_-]*)?$"
+        },
+        "nullable": {
+          "type": "boolean"
+        },
+        "change": {
+          "$ref": "#/$defs/change"
+        },
+        "diff": {
+          "$ref": "#/$defs/diffEnvelope"
+        }
+      }
+    },
+    "refType": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "ref"],
+      "description": "Type reference where ref is display/name and refId is stable identity that matches referenced definition id when available.",
+      "properties": {
+        "kind": {
+          "const": "ref"
+        },
+        "ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "refId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nullable": {
+          "type": "boolean"
+        },
+        "change": {
+          "$ref": "#/$defs/change"
+        },
+        "diff": {
+          "$ref": "#/$defs/diffEnvelope"
+        }
+      }
+    },
+    "arrayType": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "items"],
+      "properties": {
+        "kind": {
+          "const": "array"
+        },
+        "items": {
+          "$ref": "#/$defs/typeExpr"
+        },
+        "nullable": {
+          "type": "boolean"
+        },
+        "change": {
+          "$ref": "#/$defs/change"
+        },
+        "diff": {
+          "$ref": "#/$defs/diffEnvelope"
+        }
+      }
+    },
+    "objectType": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "fields"],
+      "properties": {
+        "kind": {
+          "const": "object"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/field"
+          }
+        },
+        "nullable": {
+          "type": "boolean"
+        },
+        "change": {
+          "$ref": "#/$defs/change"
+        },
+        "diff": {
+          "$ref": "#/$defs/diffEnvelope"
+        }
+      }
+    },
+    "inlineEnumType": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "items"],
+      "properties": {
+        "kind": {
+          "const": "enum"
+        },
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "nullable": {
+          "type": "boolean"
+        },
+        "change": {
+          "$ref": "#/$defs/change"
+        },
+        "diff": {
+          "$ref": "#/$defs/diffEnvelope"
+        }
+      }
+    },
+    "sumTypeExpr": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "variants"],
+      "properties": {
+        "kind": {
+          "const": "sum"
+        },
+        "variants": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/$defs/typeExpr"
+          }
+        },
+        "nullable": {
+          "type": "boolean"
+        },
+        "change": {
+          "$ref": "#/$defs/change"
+        },
+        "diff": {
+          "$ref": "#/$defs/diffEnvelope"
+        }
+      }
+    },
+    "typeExpr": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/primitiveType"
+        },
+        {
+          "$ref": "#/$defs/refType"
+        },
+        {
+          "$ref": "#/$defs/arrayType"
+        },
+        {
+          "$ref": "#/$defs/objectType"
+        },
+        {
+          "$ref": "#/$defs/inlineEnumType"
+        },
+        {
+          "$ref": "#/$defs/sumTypeExpr"
+        }
+      ]
+    }
+  }
+}

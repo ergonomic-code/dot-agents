@@ -1,0 +1,104 @@
+{
+  "version": "1",
+  "title": "marked mode must require added markers for added-only referenced blocks",
+  "changeMode": "marked",
+  "endpoints": [],
+  "models": [
+    {
+      "id": "model-news-properties",
+      "name": "NewsProperties",
+      "change": "changed",
+      "diff": {
+        "before": {
+          "fields": [
+            {
+              "name": "title",
+              "type": {
+                "kind": "primitive",
+                "name": "String"
+              }
+            }
+          ]
+        }
+      },
+      "fields": [
+        {
+          "name": "title",
+          "type": {
+            "kind": "primitive",
+            "name": "String"
+          }
+        },
+        {
+          "name": "pushTargeting",
+          "change": "added",
+          "type": {
+            "kind": "ref",
+            "ref": "PlatformTargeting",
+            "refId": "sum-platform-targeting"
+          }
+        }
+      ]
+    },
+    {
+      "id": "model-platform-targeting-all",
+      "name": "PlatformTargetingAll",
+      "fields": [
+        {
+          "name": "mode",
+          "type": {
+            "kind": "enum",
+            "items": [
+              "ALL"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "model-platform-targeting-listed",
+      "name": "PlatformTargetingListed",
+      "fields": [
+        {
+          "name": "mode",
+          "type": {
+            "kind": "enum",
+            "items": [
+              "LIST"
+            ]
+          }
+        },
+        {
+          "name": "versions",
+          "type": {
+            "kind": "array",
+            "items": {
+              "kind": "primitive",
+              "name": "String"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "sumTypes": [
+    {
+      "id": "sum-platform-targeting",
+      "name": "PlatformTargeting",
+      "variants": [
+        {
+          "kind": "ref",
+          "ref": "PlatformTargetingAll",
+          "refId": "model-platform-targeting-all"
+        },
+        {
+          "kind": "ref",
+          "ref": "PlatformTargetingListed",
+          "refId": "model-platform-targeting-listed"
+        }
+      ]
+    }
+  ],
+  "enums": [],
+  "sharedNotes": []
+}

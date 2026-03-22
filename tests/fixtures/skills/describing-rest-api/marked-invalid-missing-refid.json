@@ -1,0 +1,44 @@
+{
+  "version": "1",
+  "changeMode": "marked",
+  "endpoints": [
+    {
+      "id": "ep-missing",
+      "method": "POST",
+      "path": "/users",
+      "request": {
+        "body": {
+          "kind": "type",
+          "type": {
+            "kind": "ref",
+            "ref": "CreateUserRequest"
+          }
+        }
+      },
+      "responses": [
+        {
+          "status": 200,
+          "body": {
+            "kind": "none"
+          }
+        },
+        {
+          "status": 400,
+          "description": "Validation error.",
+          "body": {
+            "kind": "none"
+          }
+        }
+      ]
+    }
+  ],
+  "models": [
+    {
+      "id": "model.user.create",
+      "name": "CreateUserRequest",
+      "fields": []
+    }
+  ],
+  "enums": [],
+  "sharedNotes": []
+}
