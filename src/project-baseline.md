@@ -70,3 +70,8 @@ Then load all mandatory convention files referenced below.
 - Always add new test case methods to the end of the class.
 - Do not use Thread.sleep to wait for events or async completion.
 - Use Kotest `eventually` instead.
+
+## Diagrams
+
+- Mermaid is used by default.
+- Node labels may use `<br/>` for line breaks.
