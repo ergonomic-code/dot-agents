@@ -1,0 +1,31 @@
+{
+  "version": "1",
+  "title": "Pair mode multipart request",
+  "changeMode": "marked",
+  "endpoints": [
+    {
+      "id": "uploadAvatar",
+      "method": "POST",
+      "path": "/users/{userId}/avatar",
+      "pathParams": [
+        {"name": "userId", "type": {"kind": "primitive", "name": "String:UUID"}}
+      ],
+      "request": {
+        "body": {
+          "kind": "multipart",
+          "parts": [
+            {"name": "file", "type": {"kind": "primitive", "name": "Binary"}},
+            {"name": "meta", "type": {"kind": "ref", "ref": "AvatarMeta"}}
+          ]
+        }
+      },
+      "responses": [
+        {"status": "200", "body": {"kind": "none"}}
+      ]
+    }
+  ],
+  "models": [],
+  "sumTypes": [],
+  "enums": [],
+  "sharedNotes": []
+}

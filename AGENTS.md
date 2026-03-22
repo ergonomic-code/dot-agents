@@ -48,3 +48,7 @@ In prose paragraphs:
 Format Markdown compactly.
 Use empty lines only between headings and paragraphs.
 Do not separate sentences with empty lines.
+
+## Python tests
+
+Run Python tests with `pytest`.

@@ -1,0 +1,52 @@
+{
+  "version": "1",
+  "changeMode": "marked",
+  "models": [
+    {
+      "id": "model_news_edit_view",
+      "name": "NewsEditView",
+      "change": "changed",
+      "fields": [
+        {
+          "name": "id",
+          "type": {
+            "kind": "primitive",
+            "name": "String"
+          }
+        }
+      ],
+      "diff": {
+        "before": {
+          "fields": [
+            {
+              "name": "createdDateTime",
+              "type": {
+                "kind": "primitive",
+                "name": "String:date-time"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "sumTypes": [],
+  "enums": [],
+  "sharedNotes": [],
+  "endpoints": [
+    {
+      "id": "ep_health",
+      "method": "GET",
+      "path": "/health",
+      "responses": [
+        {
+          "status": 400,
+          "description": "Bad Request",
+          "body": {
+            "kind": "none"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "version": "1",
+  "changeMode": "marked",
+  "endpoints": [
+    {
+      "id": "ep-before",
+      "method": "POST",
+      "path": "/users/{id}",
+      "request": {
+        "body": {
+          "kind": "type",
+          "type": {
+            "kind": "ref",
+            "ref": "CreateUserRequestOld",
+            "refId": "A"
+          }
+        }
+      },
+      "responses": [
+        {
+          "status": 200,
+          "body": {
+            "kind": "none"
+          }
+        },
+        {
+          "status": 400,
+          "description": "Validation error.",
+          "body": {
+            "kind": "none"
+          }
+        }
+      ],
+      "change": "removed"
+    },
+    {
+      "id": "ep-after",
+      "method": "POST",
+      "path": "/users/{user-id}?q=1",
+      "request": {
+        "body": {
+          "kind": "type",
+          "type": {
+            "kind": "ref",
+            "ref": "CreateUserRequestNew",
+            "refId": "B"
+          }
+        }
+      },
+      "responses": [
+        {
+          "status": 200,
+          "body": {
+            "kind": "none"
+          }
+        },
+        {
+          "status": 400,
+          "description": "Validation error.",
+          "body": {
+            "kind": "none"
+          }
+        }
+      ],
+      "change": "added"
+    }
+  ],
+  "models": [
+    {
+      "id": "A",
+      "name": "CreateUserRequestOld",
+      "fields": []
+    },
+    {
+      "id": "B",
+      "name": "CreateUserRequestNew",
+      "fields": []
+    }
+  ],
+  "enums": [],
+  "sharedNotes": []
+}

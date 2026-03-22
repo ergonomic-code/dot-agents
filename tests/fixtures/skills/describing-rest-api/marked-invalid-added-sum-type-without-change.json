@@ -1,0 +1,66 @@
+{
+  "version": "1",
+  "title": "Marked mode must reject added sum type without change marker",
+  "changeMode": "marked",
+  "endpoints": [],
+  "models": [
+    {
+      "id": "model-platform-targeting-all",
+      "name": "PlatformTargetingAll",
+      "change": "added",
+      "fields": [
+        {
+          "name": "mode",
+          "type": {
+            "kind": "enum",
+            "items": ["all"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "model-platform-targeting-listed",
+      "name": "PlatformTargetingListed",
+      "change": "added",
+      "fields": [
+        {
+          "name": "mode",
+          "type": {
+            "kind": "enum",
+            "items": ["listed"]
+          }
+        },
+        {
+          "name": "versions",
+          "type": {
+            "kind": "array",
+            "items": {
+              "kind": "primitive",
+              "name": "String"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "sumTypes": [
+    {
+      "id": "sum-platform-targeting",
+      "name": "PlatformTargeting",
+      "variants": [
+        {
+          "kind": "ref",
+          "ref": "PlatformTargetingAll",
+          "refId": "model-platform-targeting-all"
+        },
+        {
+          "kind": "ref",
+          "ref": "PlatformTargetingListed",
+          "refId": "model-platform-targeting-listed"
+        }
+      ]
+    }
+  ],
+  "enums": [],
+  "sharedNotes": []
+}

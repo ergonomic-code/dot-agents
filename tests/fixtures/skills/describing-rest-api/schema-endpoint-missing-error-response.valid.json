@@ -1,0 +1,29 @@
+{
+  "version": "1",
+  "changeMode": "none",
+  "endpoints": [
+    {
+      "id": "ep1",
+      "method": "GET",
+      "path": "/users",
+      "responses": [
+        {
+          "status": 200,
+          "body": {
+            "kind": "none"
+          }
+        },
+        {
+          "status": 400,
+          "description": "Validation error.",
+          "body": {
+            "kind": "none"
+          }
+        }
+      ]
+    }
+  ],
+  "models": [],
+  "enums": [],
+  "sharedNotes": []
+}
