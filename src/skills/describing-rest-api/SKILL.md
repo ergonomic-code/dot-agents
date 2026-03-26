@@ -153,3 +153,4 @@ Output only the requested API description, IR, or files.
 Do not add unchanged details.
 Do not add commit-by-commit explanations unless requested.
 Do not add explanations outside the target artifact unless requested.
+Write all human-readable parts of the output (Markdown descriptions, comments and notes) in the configured `artifact_language` (see `project-baseline.md`).

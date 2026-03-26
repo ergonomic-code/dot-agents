@@ -39,7 +39,7 @@ Keep generated artifacts brief.
 ### Kotlin (General)
 
 - Never delete blank single black lines in code.
-- Use Russian for comments in code.
+- Use the configured `artifact_language` for comments in code (see `project-baseline.md`).
 - Prefer plain Kotlin singleton objects over classes no direct or transitive mutable state needed.
 - If helper function does not depends on class state - make it top-level function.
 - If a private helper does not depend on class state, implement it as a top-level function.

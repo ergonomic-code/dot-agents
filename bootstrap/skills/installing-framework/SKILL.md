@@ -12,6 +12,7 @@ Inputs:
 - `framework_checkout_root`
 - `agents_md_path`
 - `skills_symlink_path`
+- `framework_config_path` (optional)
 
 Defaults:
 - `repo_root=.`
@@ -24,6 +25,10 @@ Checks:
 - require `framework_checkout_root/src/project-baseline.md`
 - require `framework_checkout_root/src/skills` as the intended symlink target
 - installation must be idempotent
+- if `framework_config_path` is not provided, ask the user to either:
+  - provide it explicitly (suggest `../ergo-config.yaml` relative to `repo_root`), or
+  - explicitly refuse installing the framework config
+- if `framework_config_path` resolves outside `repo_root`, ask for explicit confirmation before writing files
 
 Effects:
 - ensure `framework_checkout_root` exists
@@ -31,6 +36,9 @@ Effects:
 - ensure `framework_checkout_root/src/project-baseline.md`
 - ensure `agents_md_path`
 - ensure `skills_symlink_path` is a symlink to `framework_checkout_root/src/skills`
+- if `framework_config_path` is provided and the file does not exist, create it by copying the template `bootstrap/ergo-config.yaml.template` relative to `repo_root`
+  This file defines the default `artifact_language: ru`.
+- if the user refuses installing the framework config, do not create any config file
 
 Contract:
 - the whole framework repository may be checked out, copied, or symlinked into `framework_checkout_root`
@@ -46,10 +54,13 @@ AGENTS.md patch algorithm:
 - if `AGENTS.md` is missing
   - create it from `assets/AGENTS.md.template`
   - materialize `<framework-checkout-root>` in the template with `framework_checkout_root`
+  - if `framework_config_path` is provided, materialize `<framework-config-path>` in the template with `framework_config_path`
+  - if the user refuses installing the framework config, remove the "Framework config path:" line from the template output
   - the generated framework section must reference only `framework_checkout_root/src` paths
 - else
   - detect a `## Framework` section that clearly refers to Ergocode or the resolved `framework_checkout_root`
   - if more than one matching section exists, fail
+  - the replacement framework section must include the "Framework config path:" line only if `framework_config_path` is provided
   - if one matching section exists, replace only that section with the current framework section
   - else append the framework section to the end of `AGENTS.md`
   - never duplicate the framework section
