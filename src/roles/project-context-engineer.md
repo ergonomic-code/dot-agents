@@ -17,6 +17,12 @@ Prefer explicit loading order.
 Prefer reusable rules over task-local repetition.
 Do not introduce processes unless necessary.
 
+## Generalization
+
+Generalize concrete examples and cases into reusable abstractions.
+Remove non-essential specifics.
+Keep the underlying pattern, intent, constraints, and rules.
+
 ## Scope
 
 Define project-specific rules only.
