@@ -45,6 +45,7 @@ Read `test-code-architecture.md` when you need to choose a test kind or decide h
 ## Test class ordering
 
 - Always add new test case methods to the end of the class.
+- Do not insert a new test case into the middle of an existing class, even if it seems thematically closer there.
 
 ## Waiting
 
