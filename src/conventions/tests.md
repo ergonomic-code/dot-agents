@@ -1,5 +1,7 @@
 # Tests conventions
 
+See also: `test-code-architecture.md`.
+
 ## Fixture and helper structure
 
 - Extract all fixture code from test case classes into helpers such as `*ObjectMother`, `*FixturePresets`, `*TestApi`, `*HttpApi`, `*Assertions`.
@@ -37,6 +39,9 @@
 ## APIs and ordering
 
 - For fixture insertions prefer `*TestApi`s over `*HttpApi`s.
+- In boundary tests, prefer typed `*HttpApi` methods over response-level assertions.
+- For expected error scenarios, prefer `*ForError` methods on `*HttpApi`.
+- Use `*ForResponse` methods on `*HttpApi` only when the scenario must verify transport-level behavior explicitly.
 - Always add new test case methods to the end of the class.
 
 ## Waiting
