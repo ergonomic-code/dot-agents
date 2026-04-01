@@ -1,6 +1,6 @@
 # Tests conventions
 
-See also: `test-code-architecture.md`.
+Read `test-code-architecture.md` when you need to choose a test kind or decide how to use `*TestApi`, `*HttpApi`, `*ForError`, `*ForResponse`, `*FixturePresets`, and `*Assertions`.
 
 ## Fixture and helper structure
 
@@ -13,7 +13,7 @@ See also: `test-code-architecture.md`.
 - In fixture setup specify only data relevant to the test-case.
 - If data in the fixture is related, derive it instead of copying.
 
-## Assertions and naming
+## Assertions
 
 - Use Kotest inspectors (`forAll`/`forOne`/`forNone`) to verify that collection elements match a property.
   See: https://kotest.io/docs/assertions/inspectors.html
@@ -25,23 +25,25 @@ See also: `test-code-architecture.md`.
   If exact value is not the point, assert a property.
   If an expected value is derived, compute it in `Given`.
   If a literal is unavoidable, declare it in `Given` with a short rationale comment.
+
+## Test naming
+
 - Avoid technical terms or implementations details in tests names.
   Prefer business and end user language.
 - Try to name tests as specification of SUT's behavior or result property.
 
-## Data and determinism
+## Test data
 
 - In test prefer `!!` to null handling.
-- Do not use non-deterministic randomness.
-  Use faker or data factories built on top of it.
 - Do not use constants in tests, if specific value does not matter for the test-case.
 
-## APIs and ordering
+## Determinism
 
-- For fixture insertions prefer `*TestApi`s over `*HttpApi`s.
-- In boundary tests, prefer typed `*HttpApi` methods over response-level assertions.
-- For expected error scenarios, prefer `*ForError` methods on `*HttpApi`.
-- Use `*ForResponse` methods on `*HttpApi` only when the scenario must verify transport-level behavior explicitly.
+- Do not use non-deterministic randomness.
+  Use faker or data factories built on top of it.
+
+## Test class ordering
+
 - Always add new test case methods to the end of the class.
 
 ## Waiting
