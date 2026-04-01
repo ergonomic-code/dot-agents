@@ -1,6 +1,7 @@
 # Tests conventions
 
-Read `test-code-architecture.md` when you need to choose a test kind or decide how to use `*TestApi`, `*HttpApi`, `*ForError`, `*ForResponse`, `*FixturePresets`, and `*Assertions`.
+Before changing tests, read `./test-code-architecture.md` when you need to choose a test kind or decide how to use `*TestApi`, `*HttpApi`, `*ForError`, `*ForResponse`, `*FixturePresets`, and `*Assertions`.
+Do not infer these roles from nearby test code or helper names alone.
 
 ## Fixture and helper structure
 
@@ -25,6 +26,8 @@ Read `test-code-architecture.md` when you need to choose a test kind or decide h
   If exact value is not the point, assert a property.
   If an expected value is derived, compute it in `Given`.
   If a literal is unavoidable, declare it in `Given` with a short rationale comment.
+- Use `*ForError` for error-path verification.
+- Use `*ForResponse` only for successful response payload verification.
 
 ## Test naming
 
