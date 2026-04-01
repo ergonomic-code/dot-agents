@@ -53,23 +53,6 @@ Keep generated artifacts brief.
 - Do not introduce managed beans, if component doesn't needs another managed beans as dependency.
   Use plain Kotlin singleton objects in this case.
 
-### Tests
+### Test code
 
-- Extract all fixture code from test case classes into helpers such as *ObjectMother, *FixturePresets, *TestApi, *HttpApi, *Assertions.
-  Even if the current code contains helpers in the same file.
-- Never place non-@Test functions in test case class file
-- In test prefer `!!` to null handling.
-- Each test case must set up its own fixture.
-- If fixture setup code duplication exceeds 3 lines, it may be extracted into helpers.
-- Use kotests's collection.forAll/forOne/forNone to verify that collection elements matches property.
-- In fixture setup specify only data relevant to the test-case.
-- Avoid using `shouldBe <boolean const>` in verfication - prefer more specific assertions such as `shouldContain <substr>`, `shouldBeAfter <instant>`, etc.
-- If data in the fixture is related – derive it instead of copying.
-- Avoid technical terms or implementations details in tests names – prefer business and end user language.
-- Try to name tests as specification of SUT's behavior or result property.
-- Do not use non-deterministic randomness; use faker or data factories built on top of it.
-- Do not use constants in tests, if specific value does not matter for the test-case.
-- For fixture insertions prefer `*TestApi`s over `*HttpApi`s.
-- Always add new test case methods to the end of the class.
-- Do not use Thread.sleep to wait for events or async completion.
-- Use Kotest `eventually` instead.
+- If the task involves changing or writing tests, load and follow `conventions/tests.md`.
