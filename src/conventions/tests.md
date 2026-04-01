@@ -18,9 +18,11 @@
 - Avoid using `shouldBe <boolean const>` in verification.
   Prefer more specific assertions such as `shouldContain <substr>`, `shouldBeAfter <instant>`, etc.
 - In verification block, including GWT-style `Then`, do not use magic constants for expected values.
-  Prefer expected values taken or derived from `Given`.
-  If exact value is not the point, assert result properties instead.
-  Use a literal expected constant only as an exception and add a short comment explaining which rule, formula, or principle derives it from the inputs.
+  Do not put expected literals in `Then`.
+  Bind each business value once in `Given` and reuse it in setup, request, and assertions.
+  If exact value is not the point, assert a property.
+  If an expected value is derived, compute it in `Given`.
+  If a literal is unavoidable, declare it in `Given` with a short rationale comment.
 - Avoid technical terms or implementations details in tests names.
   Prefer business and end user language.
 - Try to name tests as specification of SUT's behavior or result property.
