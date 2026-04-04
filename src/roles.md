@@ -11,10 +11,9 @@
 
 ## Loading the active role
 
-After the active role is determined, open and follow the corresponding role file:
-- `roles/assistant.md`
-- `roles/developer.md`
-- `roles/project-context-engineer.md`
+After the active role is determined, open and follow the corresponding role file under `framework_checkout_root/src/roles`:
+- `framework_checkout_root/src/roles/assistant.md`
+- `framework_checkout_root/src/roles/developer.md`
+- `framework_checkout_root/src/roles/project-context-engineer.md`
 
 The selected role file defines the role-specific goal, boundaries, outputs, and rules.
-If role-specific instructions conflict with this file, this file remains authoritative for shared routing and cross-role rules.

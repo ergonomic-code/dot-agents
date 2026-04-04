@@ -1,8 +1,4 @@
-# Configuration for the Ergocode AI Agent Framework.
-# This file defines configuration options that apply across all agents in the repository.
-#
-# The `artifact_language` entry specifies the natural language used for comments, commit
-# messages and human-facing documentation. Adjust the value to match your team's primary
-# language. Valid values are ISO 639-1 codes such as `ru` for Russian, `en` for English, etc.
+# Ergocode config.
+# `artifact_language` is the ISO 639-1 language for human-facing artifacts (e.g. `ru`, `en`).
 
 artifact_language: ru
