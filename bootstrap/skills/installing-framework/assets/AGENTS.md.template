@@ -5,6 +5,7 @@
 This repository uses the Ergocode AI Agent Framework.
 Framework checkout root: `<framework-checkout-root>`.
 Framework config path: `<framework-config-path>`.
-Load `<framework-checkout-root>/src/project-baseline.md` before the local instructions in this file.
+Keep the framework Codex `SessionStart` hook enabled.
+The hook loads `<framework-checkout-root>/src/roles.md`, `<framework-checkout-root>/src/project-baseline.md`, and optional framework config before the local instructions in this file.
 
 TODO: add repository-specific sections below

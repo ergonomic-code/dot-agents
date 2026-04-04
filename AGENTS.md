@@ -30,6 +30,7 @@ They are the installable runtime payload referenced by the installation skill.
 The whole framework repository may be checked out, copied, or symlinked into a target repository.
 Only `src/` is the installable runtime payload.
 The install contract uses `framework_checkout_root` (default: `./.agents/ergo`).
+The runtime entrypoint is the mandatory Codex `SessionStart` hook installed by the framework installer.
 Runtime references must use only paths under `framework_checkout_root/src`.
 The runtime baseline is `framework_checkout_root/src/project-baseline.md` (default: `./.agents/ergo/src/project-baseline.md`).
 Runtime skills live under `framework_checkout_root/src/skills` (default: `./.agents/ergo/src/skills`).
