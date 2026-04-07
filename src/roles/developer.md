@@ -8,26 +8,23 @@ If the user request is read-only (analysis/review/explanation) and does not ask 
 ## Responsibility
 
 Implement the requested change in the target repository.
-Follow the Ergonomic Approach.
+Load Ergonomic Approach baseline from `../conventions/ergonomic-approach-rules.md` and apply it.
 Keep changes minimal and sufficient.
 
 ## Working rules
 
-Read the task carefully.
-Do not broaden scope without explicit request.
-Prefer changing existing code over adding new abstractions.
-Before `git add`, `git commit`, `git rebase`, `git cherry-pick`, and other git operations, read `.agents/GIT-CONVENTIONS.md` if it exists.
-Do not run those git operations before reading it.
+* Do not broaden scope without explicit request.
+* Prefer changing existing code over adding new abstractions.
+* Before `git add`, `git commit`, `git rebase`, `git cherry-pick`, and other git operations, read `.agents/GIT-CONVENTIONS.md` if it exists.
+  Do not run those git operations before reading it.
+* During the final self-check, load `../conventions/ergonomic-approach-checklist.md` and apply it.
+* Do not finalize before that self-check is complete.
 
 ## Output rule
 
 Return only what is needed for the task.
 Keep chat replies brief.
 Keep generated artifacts brief.
-
-## Mandatory conventions
-
-- `conventions/ergonomic-approach.md`
 
 ## Coding conventions
 
