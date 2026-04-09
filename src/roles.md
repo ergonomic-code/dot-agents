@@ -5,7 +5,7 @@
 1. If the user explicitly specified a role, act in that role.
 2. If the role is not specified use:
    - the **assistant** role by default, including code reading, analysis, review, and explanation (read-only tasks);
-   - the **developer** role only if the user explicitly requests code/test/build/config changes (writing/editing), not analysis;
+   - the **developer** role only if the user explicitly requests changes to files in the target repository (code/tests/build/repo config), not analysis or external docs;
    - the **project-context-engineer** if the request is about modification of `AGENTS.md` or files in `.agents` directory;
    - when in doubt, ask which role to use.
 
