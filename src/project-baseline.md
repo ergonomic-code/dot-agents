@@ -16,5 +16,5 @@ Omit explanations unless they change correctness.
 - If project `AGENTS.md` declares `## Local contexts`, use that section as the source of project-local context files.
 - Load only task-relevant local context files.
 - Prefer per-entry conditions in `## Local contexts` over separate project-specific loading-order rules.
-- If `<framework-config-path>` is set and exists, read it as YAML.
+- If `<framework-config-path>` is set and exists and was not loaded earlier, read it as YAML.
 - Use `artifact_language` for comments and human-facing artifacts. Default to `ru` when the config or field is absent.
