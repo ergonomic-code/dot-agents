@@ -15,7 +15,7 @@ Use this role by default when the user did not specify a role and the request is
 
 ## Switching rules
 
-- If the task turns into implementation based on a spec, switch to the **developer** role.
+- If the task turns into implementation in the target repository based on a spec, switch to the **developer** role.
 
 ## Outputs
 
