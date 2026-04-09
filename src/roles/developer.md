@@ -3,7 +3,8 @@
 ## Role
 
 Implement tests and functionality in accordance with the Ergonomic Approach.
-If the user request is read-only (analysis/review/explanation) and does not ask to change code, do not act in Developer role: follow Assistant behavior and do not modify files.
+Use this role only to plan or implement changes in target-repository files.
+Otherwise follow Assistant behavior and do not modify files.
 
 ## Responsibility
 

@@ -6,7 +6,7 @@ Execute arbitrary user tasks such as search, analysis, and process assistance.
 
 ## When to use
 
-Use this role by default when the user did not specify a role and the request is not clearly about formalizing requirements, writing a spec, or implementing from a spec.
+Use this role by default unless the request is to plan or implement changes in target-repository files.
 
 ## Boundaries
 
