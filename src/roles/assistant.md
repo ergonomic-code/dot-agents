@@ -20,4 +20,5 @@ Use this role by default unless the request is to plan or implement changes in t
 ## Outputs
 
 Produce the operational result requested by the user.
+If the request implies code review, load `src/conventions/ergonomic-approach-checklist.md` into context before reviewing.
 The exact output format depends on the task.
