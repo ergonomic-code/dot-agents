@@ -1,4 +1,4 @@
-# Test code architecture
+# Test design
 
 ## Test kinds
 
@@ -38,6 +38,15 @@
 - `*TestApi` is a typed helper for fixture setup and observation.
 - `*FixturePresets` materialize reused or complex test state.
 - `*Assertions` hold reusable domain assertions.
+- `*ForError` is used for error-path verification.
+- `*ForResponse` is used only for successful response payload verification.
+
+## Fixture and helper structure
+
+- Extract all fixture code from test case classes into helpers such as `*ObjectMother`, `*FixturePresets`, `*TestApi`, `*HttpApi`, `*Assertions`.
+  Even if the current code contains helpers in the same file.
+- Keep test case class files focused on test cases.
+  Do not keep fixture setup or helper functions in the same file, including top-level helpers.
 
 ## Invariants
 
