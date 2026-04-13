@@ -55,4 +55,5 @@ Keep generated artifacts brief.
 
 ### Test code
 
-- Load and follow `../conventions/tests.md` only when editing test sources (adding or changing tests), not just because a task references failing tests.
+- Load and follow `../conventions/tests.md` when planning tests, choosing a test kind, or editing test sources (adding or changing tests).
+  Do not skip it just because the current task is still at plan stage.

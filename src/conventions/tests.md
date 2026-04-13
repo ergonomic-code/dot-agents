@@ -1,6 +1,6 @@
 # Tests conventions
 
-Before changing tests, read `./test-code-architecture.md` when you need to choose a test kind or decide how to use `*TestApi`, `*HttpApi`, `*ForError`, `*ForResponse`, `*FixturePresets`, and `*Assertions`.
+Before planning, adding, or changing tests, read `./test-code-architecture.md` when you need to choose a test kind, write a `Test Plan`, or decide how to use `*TestApi`, `*HttpApi`, `*ForError`, `*ForResponse`, `*FixturePresets`, and `*Assertions`.
 Do not infer these roles from nearby test code or helper names alone.
 
 ## Fixture and helper structure
