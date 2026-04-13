@@ -55,5 +55,5 @@ Keep generated artifacts brief.
 
 ### Test code
 
-- Load and follow `../conventions/tests.md` when planning tests, choosing a test kind, or editing test sources (adding or changing tests).
+- Load and follow `../conventions/tests.md` when planning tests, choosing a test kind, or editing test sources or test helpers such as `*HttpApi` (adding or changing them).
   Do not skip it just because the current task is still at plan stage.
