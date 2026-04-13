@@ -38,8 +38,7 @@
 - `*TestApi` is a typed helper for fixture setup and observation.
 - `*FixturePresets` materialize reused or complex test state.
 - `*Assertions` hold reusable domain assertions.
-- `*ForError` is used for error-path verification.
-- `*ForResponse` is used only for successful response payload verification.
+- Helper methods such as `*ForResponse` and `*ForError` may be used inside typed boundary helpers to separate reusable operation-level verification paths from test cases.
 
 ## Fixture and helper structure
 
