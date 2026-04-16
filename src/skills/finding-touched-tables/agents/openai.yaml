@@ -1,0 +1,4 @@
+interface:
+  display_name: "Find Touched Tables"
+  short_description: "Extract tables and views from a structure chart"
+  default_prompt: "Use $finding-touched-tables to list tables and views read or written along a structure-chart/v1 execution path."
