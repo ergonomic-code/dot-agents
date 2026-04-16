@@ -1,0 +1,74 @@
+schema: structure-chart/v1
+
+modules:
+  - id: publish
+    title: Publisher.<br/>publish
+    code:
+      path: app-news/src/main/kotlin/example/Publisher.kt
+      line: 10
+
+  - id: process_recipients
+    title: publish.<br/>processRecipients
+    code:
+      path: app-news/src/main/kotlin/example/Publisher.kt
+      line: 14
+
+  - id: validate
+    title: Validator.<br/>validate
+    code:
+      path: app-news/src/main/kotlin/example/Validator.kt
+      line: 8
+
+  - id: send
+    title: Gateway.<br/>send
+    code:
+      path: app-news/src/main/kotlin/example/Gateway.kt
+      line: 18
+
+lambdas:
+  - id: build_payload
+    owner: publish
+    code:
+      path: app-news/src/main/kotlin/example/Publisher.kt
+      line: 16
+    params:
+      - recipient
+    captures:
+      - news
+      - localeCode
+
+calls:
+  - from: publish
+    to: process_recipients
+    in:
+      - data: recipients
+      - module: validate
+    out:
+      - data: acceptedRecipients
+
+  - from: process_recipients
+    to: validate
+    loop:
+      collection: recipients
+    in:
+      - data: recipient
+    out:
+      - data: isValid
+
+  - from: process_recipients
+    to: build_payload
+    loop:
+      collection: acceptedRecipients
+    in:
+      - data: recipient
+    out:
+      - data: payload
+
+  - from: process_recipients
+    to: send
+    loop:
+      collection: payloads
+    in:
+      - data: payload
+    out:
+      - data: deliveryId

@@ -1,0 +1,16 @@
+%%{init: {"flowchart": {"nodeSpacing": 48, "rankSpacing": 72, "htmlLabels": true}, "themeCSS": ".edgeLabel rect, .edgeLabel .labelBkg { fill: transparent !important; stroke: transparent !important; } .edgeLabel p, .nodeLabel p, .label p { text-align: left !important; background: transparent !important; line-height: 1.35; }"}}%%
+flowchart LR
+    subgraph publish["Publisher.<br/>publish"]
+        build_payload["λ build_payload<br/>params: recipient<br/>captures: news, localeCode"]
+    end
+    process_recipients["publish.<br/>processRecipients"]
+    validate["Validator.<br/>validate"]
+    send["Gateway.<br/>send"]
+
+    publish -->|"in: recipients, validate<br/><br/>out: acceptedRecipients"| process_recipients
+    process_recipients -->|"loop: recipients<br/><br/>in: recipient<br/><br/>out: isValid"| validate
+    process_recipients -->|"loop: acceptedRecipients<br/><br/>in: recipient<br/><br/>out: payload"| build_payload
+    process_recipients -->|"loop: payloads<br/><br/>in: payload<br/><br/>out: deliveryId"| send
+
+    classDef lambda fill:#f7f2ff,stroke:#8a63ff,stroke-width:1px;
+    class build_payload lambda;

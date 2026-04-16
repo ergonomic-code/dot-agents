@@ -1,0 +1,197 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/structure-chart-v1.schema.json",
+  "title": "Structure Chart v1",
+  "description": "Machine-readable description of a classical structure chart with modules, nested modules, lambda callables, input/output data couples, conditional calls, and loop annotations.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "modules", "calls"],
+  "properties": {
+    "schema": {
+      "const": "structure-chart/v1"
+    },
+    "modules": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/module"
+      }
+    },
+    "lambdas": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/lambda"
+      }
+    },
+    "calls": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/call"
+      }
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z_][A-Za-z0-9_.:-]*$",
+      "description": "Stable identifier."
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "module": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id"],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "title": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "parent": {
+          "$ref": "#/$defs/id"
+        },
+        "code": {
+          "$ref": "#/$defs/codeRef"
+        }
+      }
+    },
+    "lambda": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "owner"],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "owner": {
+          "$ref": "#/$defs/id"
+        },
+        "title": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "params": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/nonEmptyString"
+          },
+          "default": []
+        },
+        "captures": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/nonEmptyString"
+          },
+          "default": []
+        },
+        "code": {
+          "$ref": "#/$defs/codeRef"
+        }
+      }
+    },
+    "codeRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "line"],
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "line": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "flowItem": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["data"],
+          "properties": {
+            "data": {
+              "$ref": "#/$defs/nonEmptyString"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["module"],
+          "properties": {
+            "module": {
+              "$ref": "#/$defs/id"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["lambda"],
+          "properties": {
+            "lambda": {
+              "$ref": "#/$defs/id"
+            }
+          }
+        }
+      ]
+    },
+    "loop": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["collection"],
+      "properties": {
+        "collection": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "condition": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    },
+    "call": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["from", "to"],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "from": {
+          "$ref": "#/$defs/id"
+        },
+        "to": {
+          "$ref": "#/$defs/id"
+        },
+        "if": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "loop": {
+          "$ref": "#/$defs/loop"
+        },
+        "in": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/flowItem"
+          },
+          "default": []
+        },
+        "out": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/flowItem"
+          },
+          "default": []
+        },
+        "notes": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    }
+  }
+}
