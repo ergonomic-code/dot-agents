@@ -47,9 +47,9 @@ If `spawn_agent` is unavailable or blocked, stop and report that the reverse pas
 3. For each call into project code, repeat the same procedure recursively until the relevant project control flow is covered.
 4. Do not descend into platform code, framework internals, or library code.
 5. Exclude tests, migrations, one-off scripts, and dead code unless the user explicitly asks for them.
-6. Assemble `structure-chart/v1` YAML in `./tmp/structure-chart.yaml`.
-7. Validate `./tmp/structure-chart.yaml`.
-8. Generate `./tmp/structure-chart.mmd`.
+6. Assemble `structure-chart/v1` YAML in `./tmp/structure-chart.yaml` by default, or in the chart output directory when one is provided.
+7. Validate the generated YAML path.
+8. Generate the matching Mermaid file next to that YAML path.
 
 ## Workflow: Bottom-up
 
@@ -68,7 +68,12 @@ If `spawn_agent` is unavailable or blocked, stop and report that the reverse pas
 6. Treat the upward walk as a way to discover candidate application entry points, not as the final chart shape.
    - The upward result is a chain of callers.
    - The final structure chart must still be a tree rooted at the selected entry point.
-7. For each selected HTTP endpoint entry point, run a separate agent to extend the chart from that endpoint downward.
+7. For each selected HTTP endpoint entry point, always run a separate agent to extend the chart from that endpoint downward.
+   - Launch that agent with the `spawn_agent` tool.
+   - Give the agent the exact endpoint, reverse-pass evidence, output directory, and the requirement to follow the `Top-down` workflow.
+   - Do not perform any part of that endpoint's downward expansion in the parent agent.
+   - Do not replace the required `spawn_agent` call with a local loop over endpoints.
+   - Wait for each reverse-pass agent result before final assembly of that endpoint chart.
    - In that agent, apply the `Top-down` workflow starting from the endpoint.
    - Use the upward chain only to choose the endpoint and to identify which downward branches must be present because they lead to the target tables.
    - Build the full relevant downward tree under that endpoint, not just the previously discovered chain.
@@ -104,6 +109,7 @@ Constraints:
 - Use the reverse-pass caller chain only as evidence for endpoint selection and for required downward branches.
 - Build the full relevant downward tree under the endpoint, not only the caller chain that was already discovered.
 - Keep meaningful sibling calls after a module is included, even when they do not lead to the target tables.
+- Treat <output dir> as the chart output directory for this run instead of the default `./tmp`.
 - Exclude platform code, framework internals, external libraries, tests, migrations, one-off scripts, and dead code unless explicitly requested.
 - Validate the YAML before rendering Mermaid.
 - Write `<endpoint-slug>-structure-chart.yaml` and `<endpoint-slug>-structure-chart.mmd` into <output dir>.
