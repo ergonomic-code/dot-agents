@@ -1,0 +1,4 @@
+interface:
+  display_name: "Finding Test Cases"
+  short_description: "Find test cases from a structure chart"
+  default_prompt: "Use $finding-test-cases to find test cases for this structure chart."
