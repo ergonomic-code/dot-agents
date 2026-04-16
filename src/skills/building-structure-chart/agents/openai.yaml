@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build Structure Chart"
+  short_description: "Generate validated structure chart YAML and Mermaid from code roots or DB tables"
+  default_prompt: "Use $building-structure-chart to derive a structure-chart/v1 YAML and Mermaid diagram from a root method, endpoint, or DB table set."
