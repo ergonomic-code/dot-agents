@@ -1,0 +1,4 @@
+interface:
+  display_name: "Standardize Brief Terms"
+  short_description: "Normalize terms in feature briefs and add a glossary"
+  default_prompt: "Use $standardize-feature-brief-terms to normalize terminology in this feature brief and append a final `## Термины` section with canonical terms and discouraged variants."

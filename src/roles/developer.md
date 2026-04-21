@@ -38,6 +38,7 @@ Keep generated artifacts brief.
 ### Kotlin (General)
 
 - Never delete blank single black lines in code.
+- Never make a property nullable unless it is actually nullable in the domain.
 - Use the configured `artifact_language` for comments in code (see `project-baseline.md`).
 - Prefer functional style: immutable data, pure functions, and declarative `map`/`filter`-style transformations where they keep code clear.
 - Prefer plain Kotlin singleton objects over classes no direct or transitive mutable state needed.
@@ -52,6 +53,7 @@ Keep generated artifacts brief.
 
 - Do not introduce managed beans, if component doesn't needs another managed beans as dependency.
   Use plain Kotlin singleton objects in this case.
+- If the request changes externally visible HTTP endpoint behavior and the planned write set still includes a Spring MVC handler target (`*Controller.kt`, `@RestController` / `@Controller`, mapping handler methods, or a related `@ExceptionHandler`), load `.agents/SPRING-MVC-HANDLER-EDIT.md` and follow it.
 
 ### Test code
 

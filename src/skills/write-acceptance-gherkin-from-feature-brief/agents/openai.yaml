@@ -1,0 +1,4 @@
+interface:
+  display_name: "Write Acceptance Gherkin"
+  short_description: "Write standard acceptance Gherkin cases from a feature brief"
+  default_prompt: "Use $write-acceptance-gherkin-from-feature-brief to derive concise standard acceptance Gherkin test cases from a feature brief or subfeature brief without binding them to a project-specific artifact format."

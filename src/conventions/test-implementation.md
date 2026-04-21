@@ -30,6 +30,9 @@
 
 - In test prefer `!!` to null handling.
 - Do not use constants in tests, if specific value does not matter for the test-case.
+- Represent non-essential test inputs by their role, not by an incidental sample value.
+- Prefer semantic helpers, factories, or fixtures that encode the role of the value instead of picking a concrete enum member, code, id, date, or name in the test body.
+- Keep a concrete value only when the rule, scenario, or public contract depends on that exact value.
 
 ## Determinism
 

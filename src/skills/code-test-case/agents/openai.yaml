@@ -1,0 +1,4 @@
+interface:
+  display_name: "Code Test Case"
+  short_description: "Generate or align Kotlin JUnit 5 tests from prose cases"
+  default_prompt: "Use $code-test-case to generate Kotlin JUnit 5 tests from this `formal-requirements-format-v0.1` artifact in `full` mode or update an existing `*Test.kt` file to match it."
