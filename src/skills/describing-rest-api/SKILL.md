@@ -5,25 +5,32 @@ description: Build REST API IR JSON for JSON over HTTP from code, OpenAPI, curl,
 
 # Describing REST API
 
-Write files in the working directory.
-Use `./tmp` when no path is given.
-Create `./tmp` if missing.
-Use `./tmp/rest-api-ir.json` for IR.
-Use `./tmp/rest-api.md` for Markdown.
+Read `framework_checkout_root/src/conventions/feature-workdir.md`.
+Write files in the active feature directory when it is resolved.
+Use `<active-feature-dir>` when the active feature directory is resolved and no path is given.
+Otherwise use `./tmp`.
+Create that default output directory if missing.
+Use the feature stage code as the file name prefix.
+Use stage `020` for requirements-to-code mapping and current-code contract analysis.
+Use stage `030` when the artifact belongs to optional refactoring work after that analysis.
+Use stage `050` when the artifact belongs to implementation design.
+If the user gave an explicit stage or file path, keep it.
+Use `<default-output-dir>/<stage-code>-rest-api-ir.json` for IR.
+Use `<default-output-dir>/<stage-code>-rest-api.md` for Markdown.
 Use `references/rest-api-ir-schema.json`, `scripts/validate_json.py`, and `scripts/render_rest_api.py`.
 
 ## Hard Gate
 
-Always generate IR at `./tmp/rest-api-ir.json`, even when the user asks only for Markdown.
-Always validate IR by running `python scripts/validate_json.py references/rest-api-ir-schema.json ./tmp/rest-api-ir.json`.
+Always generate IR at `<default-output-dir>/<stage-code>-rest-api-ir.json`, even when the user asks only for Markdown.
+Always validate IR by running `python scripts/validate_json.py references/rest-api-ir-schema.json <default-output-dir>/<stage-code>-rest-api-ir.json`.
 If validation fails, fix IR and rerun validation until it passes.
 Do not render Markdown before validation passes.
 
 ## Workflow
 
 1. Build REST API IR JSON matching `references/rest-api-ir-schema.json`.
-2. Validate it with `python scripts/validate_json.py references/rest-api-ir-schema.json ./tmp/rest-api-ir.json`.
-3. Render Markdown from the validated IR with `python scripts/render_rest_api.py ./tmp/rest-api-ir.json > ./tmp/rest-api.md`.
+2. Validate it with `python scripts/validate_json.py references/rest-api-ir-schema.json <default-output-dir>/<stage-code>-rest-api-ir.json`.
+3. Render Markdown from the validated IR with `python scripts/render_rest_api.py <default-output-dir>/<stage-code>-rest-api-ir.json > <default-output-dir>/<stage-code>-rest-api.md`.
 
 ## Contract Scope
 
