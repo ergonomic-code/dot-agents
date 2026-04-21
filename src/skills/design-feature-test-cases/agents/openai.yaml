@@ -1,0 +1,4 @@
+interface:
+  display_name: "Design Feature Test Cases"
+  short_description: "Design target cases and reuse old ones"
+  default_prompt: "Use $design-feature-test-cases to design the target case set for a feature from a brief, implementation summary, optional current cases, and optional API IR, then split old cases into removed, changed, added, and unchanged while rendering `formal-requirements-format-v0.1`."

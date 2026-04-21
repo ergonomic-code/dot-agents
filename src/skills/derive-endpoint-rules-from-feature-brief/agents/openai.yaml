@@ -1,0 +1,4 @@
+interface:
+  display_name: "Derive Endpoint Rules"
+  short_description: "Derive concise endpoint rules from feature briefs"
+  default_prompt: "Use $derive-endpoint-rules-from-feature-brief to extract a complete, non-contradictory set of endpoint requirements from a feature brief and optional user test cases, rendering `formal-requirements-format-v0.1` in `short` mode by default."

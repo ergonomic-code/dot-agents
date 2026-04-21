@@ -1,0 +1,4 @@
+interface:
+  display_name: "Write Grekhin Test Case"
+  short_description: "Write concise Gherkin-style prose test cases"
+  default_prompt: "Use $write-grekhin-test-case to write or normalize `formal-requirements-format-v0.1` cases in `full` mode with abstract, contract-based wording and without unnecessary concrete values."

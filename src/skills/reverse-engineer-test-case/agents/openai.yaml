@@ -1,0 +1,4 @@
+interface:
+  display_name: "Reverse Engineer Test Case"
+  short_description: "Recover a prose test case from test code"
+  default_prompt: "Use $reverse-engineer-test-case to recover one `formal-requirements-format-v0.1` case in `full` mode from `path/to/Test.kt:123` or from a concrete test name."
