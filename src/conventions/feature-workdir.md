@@ -1,0 +1,32 @@
+# Feature workdir
+
+Use this rule when the task may create files or depends on feature-local context.
+
+## Resolve active feature directory
+
+- If the user gave an explicit output path, feature directory, or a file path inside a feature directory, use that feature directory.
+- Otherwise, if the current working directory is `devlog/<feature-id>-<feature-slug>` and `<feature-id>` is exactly three digits, use it.
+- Otherwise, inspect the current user request for a standalone three-digit feature id matching `(?<!\d)\d{3}(?!\d)`.
+- Ignore four-digit numbers.
+- If the request contains `xxx`, search recursively under repository-root `./devlog` for directories whose basename starts with `<feature-id>-` or equals `<feature-id>`.
+- Otherwise, match that id only against direct subdirectories of repository-root `./devlog` whose basename starts with `<feature-id>-` or equals `<feature-id>`.
+- If exactly one directory matches, auto-bind to it.
+- If none or more than one directory matches, do not guess.
+
+## Use active feature directory
+
+- If the active feature directory is resolved and `<feature-dir>/index.md` exists, read it before substantial work.
+- Unless the user gave another path, create new task files in the active feature directory.
+- If a skill has a default `./tmp` output directory, treat it as `<active-feature-dir>/tmp` when the active feature directory is resolved.
+
+## Feature stage codes
+
+- Use the file name prefix as the feature stage code inside the feature workdir.
+- `010` means requirements preparation.
+- `020` means mapping requirements to code and analyzing the current code.
+- `030` means optional refactoring artifacts produced from that analysis.
+- `040` means test-case refresh.
+- `050` means implementation design.
+- `060` means test-case implementation.
+- If a skill defines a default file name in the feature workdir, prefix it with the matching stage code unless the user gave an explicit path.
+- If more than one stage is plausible, use the earliest stage that still matches the artifact purpose.

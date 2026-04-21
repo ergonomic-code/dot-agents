@@ -5,12 +5,18 @@ description: Build valid `structure-chart/v1` YAML and Mermaid `.mmd` from a roo
 
 # Building Structure Chart
 
-Write files to the working directory.
-If no path is specified, use `./tmp`.
-Create `./tmp` if it does not exist.
-For a single chart, use `./tmp/structure-chart.yaml` for YAML.
-For a single chart, use `./tmp/structure-chart.mmd` for Mermaid.
-For per-entry-point output, use `<output-directory>/<endpoint-slug>-structure-chart.yaml` and `<output-directory>/<endpoint-slug>-structure-chart.mmd`.
+Read `framework_checkout_root/src/conventions/feature-workdir.md`.
+Write files to the active feature directory when it is resolved.
+If no path is specified, use `<active-feature-dir>/tmp` when the active feature directory is resolved, otherwise use `./tmp`.
+Create that default output directory if it does not exist.
+Use the feature stage code as the file name prefix.
+Use stage `020` for requirements-to-code mapping and current-code analysis artifacts.
+Use stage `030` when the chart belongs to optional refactoring work after that analysis.
+Use stage `050` when the chart belongs to implementation design.
+If the user gave an explicit stage or file path, keep it.
+For a single chart, use `<default-output-dir>/<stage-code>-structure-chart.yaml` for YAML.
+For a single chart, use `<default-output-dir>/<stage-code>-structure-chart.mmd` for Mermaid.
+For per-entry-point output, use `<output-directory>/<stage-code>-<endpoint-slug>-structure-chart.yaml` and `<output-directory>/<stage-code>-<endpoint-slug>-structure-chart.mmd`.
 Use the shared artifact at `src/artifacts/structure-chart-v1`.
 Read only the files you need from:
 - `../../artifacts/structure-chart-v1/references/structure-chart-v1.schema.json`
@@ -47,7 +53,7 @@ If `spawn_agent` is unavailable or blocked, stop and report that the reverse pas
 3. For each call into project code, repeat the same procedure recursively until the relevant project control flow is covered.
 4. Do not descend into platform code, framework internals, or library code.
 5. Exclude tests, migrations, one-off scripts, and dead code unless the user explicitly asks for them.
-6. Assemble `structure-chart/v1` YAML in `./tmp/structure-chart.yaml` by default, or in the chart output directory when one is provided.
+6. Assemble `structure-chart/v1` YAML in `<default-output-dir>/<stage-code>-structure-chart.yaml` by default, or in the chart output directory when one is provided.
 7. Validate the generated YAML path.
 8. Generate the matching Mermaid file next to that YAML path.
 
@@ -64,7 +70,7 @@ If `spawn_agent` is unavailable or blocked, stop and report that the reverse pas
    - If one entry point is found, use it as the root module.
    - If multiple entry points are found and the user selected one, use that one as the root module.
    - If multiple entry points are found and the user did not narrow the scope, build one chart per entry point under separate output directories.
-   - Name files as `<output-directory>/<endpoint-slug>-structure-chart.yaml` and `<output-directory>/<endpoint-slug>-structure-chart.mmd`.
+   - Name files as `<output-directory>/<stage-code>-<endpoint-slug>-structure-chart.yaml` and `<output-directory>/<stage-code>-<endpoint-slug>-structure-chart.mmd`.
 6. Treat the upward walk as a way to discover candidate application entry points, not as the final chart shape.
    - The upward result is a chain of callers.
    - The final structure chart must still be a tree rooted at the selected entry point.
@@ -85,9 +91,9 @@ If `spawn_agent` is unavailable or blocked, stop and report that the reverse pas
    - Put unresolved gaps or inferred links into `notes`.
 10. Do not descend into platform code, framework internals, or library code.
 11. Exclude tests, migrations, one-off scripts, and dead code unless the user explicitly asks for them.
-12. Assemble `structure-chart/v1` YAML in the working directory as `structure-chart.yaml`, or in `<output-directory>/<endpoint-slug>-structure-chart.yaml` when multiple charts are needed.
+12. Assemble `structure-chart/v1` YAML in `<default-output-dir>/<stage-code>-structure-chart.yaml`, or in `<output-directory>/<stage-code>-<endpoint-slug>-structure-chart.yaml` when multiple charts are needed.
 13. Validate each generated YAML path.
-14. Generate the matching Mermaid file next to each YAML as `structure-chart.mmd` in the working directory, or as `<output-directory>/<endpoint-slug>-structure-chart.mmd` for per-entry-point output.
+14. Generate the matching Mermaid file next to each YAML as `<default-output-dir>/<stage-code>-structure-chart.mmd`, or as `<output-directory>/<stage-code>-<endpoint-slug>-structure-chart.mmd` for per-entry-point output.
 
 ## Reverse-Pass Subagent Prompt Template
 
@@ -109,10 +115,10 @@ Constraints:
 - Use the reverse-pass caller chain only as evidence for endpoint selection and for required downward branches.
 - Build the full relevant downward tree under the endpoint, not only the caller chain that was already discovered.
 - Keep meaningful sibling calls after a module is included, even when they do not lead to the target tables.
-- Treat <output dir> as the chart output directory for this run instead of the default `./tmp`.
+- Treat <output dir> as the chart output directory for this run instead of the default output directory.
 - Exclude platform code, framework internals, external libraries, tests, migrations, one-off scripts, and dead code unless explicitly requested.
 - Validate the YAML before rendering Mermaid.
-- Write `<endpoint-slug>-structure-chart.yaml` and `<endpoint-slug>-structure-chart.mmd` into <output dir>.
+- Write `<stage-code>-<endpoint-slug>-structure-chart.yaml` and `<stage-code>-<endpoint-slug>-structure-chart.mmd` into <output dir>.
 
 Evidence from the reverse pass:
 - <caller or touch-point evidence>
