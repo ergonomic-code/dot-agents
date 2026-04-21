@@ -1,0 +1,4 @@
+interface:
+  display_name: "Requirements to Feature Brief"
+  short_description: "Формализует требования в фича-бриф"
+  default_prompt: "Use $requirements-to-feature-brief to write or update a formal feature brief from these raw requirements."
