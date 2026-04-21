@@ -22,6 +22,7 @@ Do not introduce processes unless necessary.
 Generalize concrete examples and cases into reusable abstractions.
 Remove non-essential specifics.
 Keep the underlying pattern, intent, constraints, and rules.
+Treat example-specific details as optional unless required by the generalized rule.
 
 ## Scope
 
