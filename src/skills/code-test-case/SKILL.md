@@ -13,7 +13,10 @@ Accept one `formal-requirements-format-v0.1` artifact in `full` mode and an opti
 If any `Scenario` has no `Given` / `When` / `Then` steps, stop and report that `short` mode cannot be converted into test code.
 Use generate mode when no `*.kt` test file is given. Use update mode when the user points to one or explicitly asks to update existing tests.
 
-Map one `Feature` to one class and one `Scenario` to one `@Test` method. Keep source order. In update mode, bind the artifact feature to the existing class instead of creating or renaming another class.
+Map one `Feature` to one class and one `Scenario` to one `@Test` method. Keep source order.
+In update mode, bind one artifact feature to one existing Kotlin test class instead of creating or renaming another class.
+If several features must be applied to several existing test files, apply the skill sequentially, one feature and one Kotlin test file per run.
+If update mode input contains zero or multiple `Feature`s for one existing Kotlin test file, stop and report that update mode accepts exactly one feature per run.
 
 ## Generate
 
@@ -25,6 +28,7 @@ Map one `Feature` to one class and one `Scenario` to one `@Test` method. Keep so
 ## Update
 
 - Read the existing file first and treat it as the baseline for package, imports, class/file name, constructor, fields, superclass, helpers, nested declarations, and working test code.
+- Treat the existing Kotlin file as the container for exactly one artifact `Feature`.
 - Match scenarios to existing methods by current `@DisplayName`, method name, Russian backticked name, and verified behavior.
 - Preserve matched bodies and adapt minimally.
 - Create a new method only when no existing implementation clearly matches.
@@ -81,4 +85,4 @@ Map one `Feature` to one class and one `Scenario` to one `@Test` method. Keep so
 - If tests require non-DTO production changes to compile or pass, stop and report the blocker instead of changing production code.
 - By default, after implementing a new or aligned case, the test should compile. The test may still fail for any reason until production behavior is aligned.
 
-Before finishing, check: the input artifact is `full` mode, one class per feature, one method per scenario, class `@DisplayName` stripped of `Feature:`, multi-scenario methods use `<rule> :: <scenario>`, fallback method `@DisplayName` appears only when needed, new or aligned tests compile, generate mode returns only Kotlin, and update mode preserves the existing container code while editing in place.
+Before finishing, check: the input artifact is `full` mode, one class per feature, one method per scenario, class `@DisplayName` stripped of `Feature:`, multi-scenario methods use `<rule> :: <scenario>`, fallback method `@DisplayName` appears only when needed, new or aligned tests compile, generate mode returns only Kotlin, and update mode accepts exactly one feature per run and preserves the existing container code while editing in place.

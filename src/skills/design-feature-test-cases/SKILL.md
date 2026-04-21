@@ -76,6 +76,7 @@ Write human-readable text in the configured artifact language.
 Base the case bodies on `../../artifacts/formal-requirements-format-v0.1/ARTIFACT.md`.
 Follow `../write-grekhin-test-case/SKILL.md` for wording and step structure.
 Match the artifact container format requested by the user.
+If the user did not request a container format, default to AsciiDoc.
 - For Markdown files, use Markdown headings.
 - For AsciiDoc files, use AsciiDoc headings.
 
