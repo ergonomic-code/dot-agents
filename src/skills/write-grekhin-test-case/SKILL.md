@@ -14,6 +14,7 @@ Read `../../artifacts/formal-requirements-format-v0.1/references/full-mode-check
 - Return `formal-requirements-format-v0.1` in `full` mode.
 - Keep one `Scenario` per materially distinct branch unless the calling skill explicitly narrows the branch set.
 - Do not mention test code, mocks, fixtures, helper names, or internal implementation details.
+- Do not copy request-local numbering, ticket ids, checklist markers, or similar bookkeeping tokens into `Feature`, `Rule`, or `Scenario` names unless they are part of the public contract.
 
 ## Domain Language Rule
 
