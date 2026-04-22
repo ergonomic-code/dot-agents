@@ -19,6 +19,10 @@ Recommended:
 
 Optional:
 - current relevant test cases.
+- optional source-location metadata for current relevant test cases.
+  - include it only when you know the source commit, source file path, and source test method line.
+- optional artifact output path.
+  - use it when the artifact will be written to a concrete Markdown or AsciiDoc file.
 
 If current test cases are absent, still design the target case set and return empty `removed`, `changed`, and `unchanged` sections.
 If API IR is absent, derive the target set from the brief and implementation summary only.
@@ -79,12 +83,22 @@ Match the artifact container format requested by the user.
 If the user did not request a container format, default to AsciiDoc.
 - For Markdown files, use Markdown headings.
 - For AsciiDoc files, use AsciiDoc headings.
+- When explicit source-location metadata is available for a source-derived case and the artifact output path is explicit or can be inferred from the requested target file, add exactly one clickable link to the source test method line.
+  - use visible text `<commit>:<file-name>:<line-num>`;
+  - use target `<path-relative-to-target-artifact-file>`;
+  - resolve that target relative to the directory of the target Markdown or AsciiDoc file, not relative to the repository root;
+  - in Markdown, render `[<commit>:<file-name>:<line-num>](<path-relative-to-target-artifact-file>)`;
+  - in AsciiDoc, render `link:<path-relative-to-target-artifact-file>[<commit>:<file-name>:<line-num>]`;
+  - if either the source-location metadata or the artifact output path is missing, omit the source link instead of inventing it.
+- In AsciiDoc, render each scenario as its own `[source,gherkin]` + `....` block.
+- Do not merge several scenarios into one gherkin block even if they share `Feature` or `Rule`; repeat shared `Feature` and `Rule` headers as needed.
 
 For `removed` cases:
 - keep `Feature`, `Rule`, and `Scenario`;
 - omit `Given` / `When` / `Then`;
 - this is the only intentional `short`-mode output in this skill;
 - add one short line `Причина удаления: ...`.
+- if a source link is available, place it immediately after the removal reason.
 
 For `changed` cases:
 - if the output is Markdown, render each case as text with:
@@ -92,14 +106,14 @@ For `changed` cases:
   - `Причина изменения: ...`;
   - `Изменения:` followed by a flat list of concrete deltas;
   - then the updated full case in artifact form.
-- if the output is AsciiDoc, render them as a two-column table `Было | Стало`;
-  - the left column contains only the old case body;
-  - the right column contains only the updated full case body, then `Причина изменения: ...`, then `Изменения:` with a flat list;
-  - do not repeat the old case reference in the `Стало` column.
-- when code references are requested, place them after the updated case body and after the reason/change notes.
-- render code references as `commit:link:relative/path[label]`.
+- if the output is AsciiDoc, render them as a two-column `|===` table with header cells `| Было | Стало`;
+  - use `a|` for both content cells because they contain blocks and lists;
+  - the left content cell is `a|`, then one `[source,gherkin]` + `....` block with only the old case body, then the source link if available;
+  - the right content cell is `a|`, then one `[source,gherkin]` + `....` block with only the updated full case body, then `Причина изменения: ...`, then `Изменения:` with a flat list;
+  - do not repeat the old case reference in the `Стало` column;
+  - do not place the source link in the `Стало` column.
+- if the output is Markdown and a source link is available, place it after the updated case body and after the reason/change notes.
 - do not prepend `Комментарий к коду:` unless the user explicitly asked for that wording.
-- use the same `commit:link:relative/path[label]` shape in both Markdown and AsciiDoc outputs.
 - keep the old case reference verbatim.
 - keep the updated `Rule` name as close as possible to the source `Rule` name when the behavior lineage is preserved.
 
@@ -109,8 +123,8 @@ For `added` cases:
 
 For `unchanged` cases:
 - render the source case verbatim in artifact form;
-- add one short line `Комментарий: оставить без изменений`.
-- when code references are requested, use the same `commit:link:relative/path[label]` format.
+- do not add extra comment lines after the case body.
+- if a source link is available, place it immediately after the case block.
 
 When current cases are absent, keep the first, second, and fourth sections explicit and say that there are no source cases for those buckets.
 
@@ -128,8 +142,11 @@ Check all of these:
 - every `changed` case keeps the `Rule` name as close as possible to the source unless the old wording is no longer correct;
 - every `removed` case has a removal reason and no `Given` / `When` / `Then`;
 - every `unchanged` case is truly reusable without behavioral edits;
+- in AsciiDoc, every scenario is rendered in its own `[source,gherkin]` + `....` block and no block contains several scenarios;
 - every removed case is in `short` mode and every added, changed, or unchanged case is in `full` mode;
-- when output is AsciiDoc, every `changed` case is rendered in the `Было | Стало` table shape and the `Стало` cell does not repeat the old case reference;
-- when code references are requested, every such reference uses the `commit:link:relative/path[label]` shape consistently in both Markdown and AsciiDoc outputs;
+- when output is AsciiDoc, every `changed` case is rendered in the `|===` table shape with `a|` content cells, the `Было` cell contains the source link when available, and the `Стало` cell does not repeat the old case reference or contain the source link;
+- when explicit source-location metadata is available and the artifact output path is explicit or inferable, every `removed`, `changed`, or `unchanged` case has exactly one clickable link to the source test method line with visible text `<commit>:<file-name>:<line-num>` and target `<path-relative-to-target-artifact-file>`, resolved relative to the target Markdown or AsciiDoc file directory;
+- when either prerequisite for a source link is missing, no source link is invented;
+- no `unchanged` case adds any trailing keep-as-is note after the case body;
 - every new or updated case is written as the most abstract correct behavior case and avoids unnecessary concrete values;
 - the output contains only the four requested sections.
