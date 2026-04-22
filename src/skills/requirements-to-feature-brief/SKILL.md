@@ -10,14 +10,17 @@ Read `framework_checkout_root/src/conventions/markdown.md` before writing.
 Use it only for markdown formatting.
 If it conflicts with this skill or the feature-brief structure, keep this skill.
 Read `framework_checkout_root/src/conventions/feature-workdir.md`.
-Read `references/feature-brief-template.md`.
+Read `./references/feature-brief-template.md`.
+Read `./references/feature-dir-index-template.md`.
+Read `./references/feature-dir-progress-template.md`.
 
 ## Workflow
 
 - Determine the target feature directory.
 - If the user gave a feature directory or brief path, use it.
-- Otherwise, resolve the active feature directory via `feature-workdir.md`.
-- If no target feature directory is resolved, stop and ask for the feature directory or feature id.
+- Otherwise, resolve the active feature directory via `framework_checkout_root/src/conventions/feature-workdir.md`.
+- If no target feature directory is resolved, create one via `framework_checkout_root/src/conventions/feature-workdir.md` for the default stage `010` brief.
+- When creating a new feature directory for the default stage `010` brief, also create `<feature-dir>/index.md` and `<feature-dir>/progress.md` from the local templates.
 - Create or update `<feature-dir>/010-feature-brief.md`.
 - Build context only from the user request, explicitly referenced files, files already inside the target feature directory, and interview answers.
 - Do not read code, OpenAPI, tests, or contracts to fill missing requirements.

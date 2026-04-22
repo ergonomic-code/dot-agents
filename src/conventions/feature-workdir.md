@@ -13,8 +13,20 @@ Use this rule when the task may create files or depends on feature-local context
 - If exactly one directory matches, auto-bind to it.
 - If none or more than one directory matches, do not guess.
 
+## Create feature directory for stage 010
+
+- Use this rule only when a skill is creating its default stage `010` artifact and no active feature directory was resolved.
+- If the user already gave an explicit output path or feature directory, do not create another feature directory.
+- Require a three-digit feature id and a feature slug.
+- If either is missing, ask only for the missing part and stop.
+- Create `./devlog/<feature-id>-<feature-slug>` and use it as the active feature directory.
+- If the creating skill defines default bootstrap files for a new feature directory, create them in the same step.
+
 ## Use active feature directory
 
+- Treat `index.md` and `progress.md` in the feature directory root as the standard feature-directory overview files.
+- Use `index.md` for a short directory index with relative links to feature artifacts.
+- Use `progress.md` for the current feature-stage checklist and work status.
 - If the active feature directory is resolved and `<feature-dir>/index.md` exists, read it before substantial work.
 - Unless the user gave another path, create new task files in the active feature directory.
 - If a skill has a default `./tmp` output directory, treat it as `<active-feature-dir>/tmp` when the active feature directory is resolved.
