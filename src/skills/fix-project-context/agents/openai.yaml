@@ -1,0 +1,4 @@
+interface:
+  display_name: "Fix Project Context"
+  short_description: "Fix project-specific agent context"
+  default_prompt: "Use $fix-project-context to analyze this project-context problem, propose options, and implement the chosen one."

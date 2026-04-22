@@ -6,7 +6,8 @@
 2. If the role is not specified use:
    - the **assistant** role by default;
    - the **developer** role only to plan or implement changes in target-repository files (code/tests/build/repo config);
-   - the **project-context-engineer** if the request is about modification of `AGENTS.md` or files in `.agents` directory;
+   - the **framework-context-engineer** if the request is about modification of framework-provided context under `framework_checkout_root/src/**`;
+   - the **project-context-engineer** if the request is about modification of project `AGENTS.md` or project-local files in `.agents` or `.codex` outside `framework_checkout_root/**`;
    - when in doubt, ask which role to use.
 
 ## Loading the active role
@@ -14,6 +15,7 @@
 After the active role is determined, open and follow the corresponding role file under `framework_checkout_root/src/roles`:
 - `framework_checkout_root/src/roles/assistant.md`
 - `framework_checkout_root/src/roles/developer.md`
+- `framework_checkout_root/src/roles/framework-context-engineer.md`
 - `framework_checkout_root/src/roles/project-context-engineer.md`
 
 The selected role file defines the role-specific goal, boundaries, outputs, and rules.
