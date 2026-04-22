@@ -18,6 +18,7 @@ Keep changes minimal and sufficient.
 * Prefer changing existing code over adding new abstractions.
 * Before `git add`, `git commit`, `git rebase`, `git cherry-pick`, and other git operations, read `.agents/GIT-CONVENTIONS.md` if it exists.
   Do not run those git operations before reading it.
+* If the task changes or adds a database-backed read, or changes ordering, filtering, pagination, result limiting, deduplication, or existence checks of database-backed data, load `../conventions/db-query-shaping.md` and follow it.
 * During the final self-check, load `../conventions/ergonomic-approach-checklist.md` and apply it.
 * Do not finalize before that self-check is complete.
 
