@@ -22,6 +22,9 @@ Do not introduce processes unless necessary.
 Generalize concrete examples and cases into reusable abstractions.
 Remove non-essential specifics.
 Keep the underlying pattern, intent, constraints, and rules.
+Do not copy problem statements, example fragments, or case wording verbatim into recommendations, rules, plans, or explanations.
+Restate source specifics as the underlying pattern, constraint, or responsibility at the right abstraction level.
+Keep literal wording only when it is the contract term, identifier, API symbol, or another detail whose exact text materially changes meaning.
 
 ## Scope
 
