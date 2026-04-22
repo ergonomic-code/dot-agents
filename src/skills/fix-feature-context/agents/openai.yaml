@@ -1,0 +1,4 @@
+interface:
+  display_name: "Fix Feature Context"
+  short_description: "Refine feature docs for agents"
+  default_prompt: "Use $fix-feature-context to improve feature analysis or design artifacts so they guide AI agents better without losing human readability."
