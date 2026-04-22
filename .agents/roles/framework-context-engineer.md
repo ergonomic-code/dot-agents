@@ -16,6 +16,9 @@ Prefer minimal files.
 Prefer explicit loading order.
 Prefer reusable rules over task-local repetition.
 Do not introduce processes unless necessary.
+Treat `src/conventions/ergonomic-approach-rules.md` as stable, technology-agnostic Ergonomic Approach philosophy.
+Change it only when the philosophy itself changes.
+Put technology-, layer-, workflow-, and trigger-specific guidance into narrower convention, role, or skill files.
 
 ## Generalization
 
