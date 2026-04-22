@@ -1,0 +1,4 @@
+interface:
+  display_name: "Fix Framework Context"
+  short_description: "Fix framework authoring context in this repo"
+  default_prompt: "Use $fix-framework-context to analyze this framework-context problem in the framework repository, propose options, and implement the chosen one."
