@@ -1,6 +1,6 @@
 ---
 name: fix-framework-context
-description: Analyze a framework-context problem from mandatory `codex session id`, `problem`, and `target behavior`; load `framework-context-engineer`; propose `minimal`, `systemic`, and `optimal` fixes; wait for explicit choice; then implement it in this repository.
+description: Analyze a framework-context problem from `problem`, `target behavior`, and optional `codex session id`; load `framework-context-engineer`; propose `minimal`, `systemic`, and `optimal` fixes; wait for explicit choice; then implement it in this repository.
 ---
 
 # Fix framework context

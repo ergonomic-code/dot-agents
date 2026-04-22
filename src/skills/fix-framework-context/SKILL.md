@@ -1,6 +1,6 @@
 ---
 name: fix-framework-context
-description: Analyze a framework-context problem from mandatory `codex session id`, `problem`, and `target behavior`; load `framework-context-engineer`; propose `minimal`, `systemic`, and `optimal` fixes; wait for explicit choice; then implement it.
+description: Analyze a framework-context problem from `problem`, `target behavior`, and optional `codex session id`; load `framework-context-engineer`; propose `minimal`, `systemic`, and `optimal` fixes; wait for explicit choice; then implement it.
 ---
 
 # Fix framework context
@@ -15,7 +15,8 @@ If that file is missing, say so and stop.
 Treat editable roots as:
 - `framework_checkout_root/src/**`
 
-If the case is about current-repo `AGENTS.md`, or project-local `.agents/**` or `.codex/**` outside `framework_checkout_root/**`, stop and tell the user to use `$fix-project-context`.
+If the case is about current-repo `AGENTS.md`, or project-local `.agents/**` or `.codex/**` outside `framework_checkout_root/**` and outside `./devlog/**`, stop and tell the user to use `$fix-project-context`.
+If the case is about feature-local context under `./devlog/**`, stop and tell the user to use `$fix-feature-context`.
 
 ## Skill-specific scope and classification
 
