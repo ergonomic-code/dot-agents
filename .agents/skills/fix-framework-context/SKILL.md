@@ -1,9 +1,9 @@
 ---
 name: fix-framework-context
-description: Analyze a framework-context problem from `problem`, `target behavior`, and optional `codex session id`; load `framework-context-engineer`; propose `minimal`, `systemic`, and `optimal` fixes; wait for explicit choice; then implement it in this repository.
+description: Analyze a framework-context fix or feature request from `problem`, `target behavior`, and optional `codex session id`; load `framework-context-engineer`; propose `minimal`, `systemic`, and `optimal` changes; wait for explicit choice; then implement it in this repository.
 ---
 
-# Fix framework context
+# Fix or extend framework context
 
 Read `../../../src/skills/fix-framework-context/SKILL.md` first.
 Use its workflow for required input, evidence, option design, long-file handling, implementation, and output.
@@ -11,6 +11,9 @@ In this wrapper, do not apply the runtime redirect from current-repo `AGENTS.md`
 
 This wrapper always resolves the role to `framework-context-engineer`.
 Before task triage, load `./.agents/roles/framework-context-engineer.md`.
+
+Treat framework-context fixes and new framework-context capabilities in this repository as in scope.
+For new capability work without a defect, treat the missing capability or limitation as the `problem`.
 
 In this repository, classify `framework surface` before options:
 - `authoring-context`
