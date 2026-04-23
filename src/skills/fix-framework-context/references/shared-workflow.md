@@ -1,4 +1,4 @@
-# Shared context-fix workflow
+# Shared context-change workflow
 
 Use this workflow for `$fix-framework-context`, `$fix-project-context`, and `$fix-feature-context`.
 Each concrete skill defines its own role, editable roots, redirect rules, file scope, and layer values.
@@ -10,6 +10,7 @@ Each concrete skill defines its own role, editable roots, redirect rules, file s
 - optional `codex session id`
 
 If any required input is missing, ask only for the missing items and stop.
+For new capability work without a defect, treat the missing capability, absent rule, or current limitation as the `problem`.
 Treat `codex session id` as optional.
 If a session id is provided but the session cannot be found from it, say so and ask for a valid session file path or the missing evidence.
 
@@ -26,12 +27,13 @@ Treat current files as the source of truth.
 Classify each candidate by operation (`delete` | `shorten` | `merge` | `move` | `split` | `add`) and breadth (`single-file` | `cross-file`).
 Prefer `delete`, `shorten`, `merge`, `move`, or `split` before `add`.
 Do not infer deltas unsupported by the available evidence.
+When there is no defect, describe the delta as a missing capability instead of inventing broken current behavior.
 Before adding, scan the smallest target set for overlap and prefer reuse, merge, move, or replacement.
 If one file seems enough, double-check linked files for contradiction, stale refs, or missing enforcement, but do not expand without concrete need.
 
 ## Analysis
 
-Identify symptom, likely root cause, current context gap, and target behavior.
+Identify symptom or requested capability, likely root cause or missing capability, current context gap, and target behavior.
 Base root cause on the available evidence and current files.
 
 ## Options
