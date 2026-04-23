@@ -7,6 +7,7 @@ description: Design formal requirement cases for a new feature from a feature br
 
 Read `../write-grekhin-test-case/SKILL.md`.
 Read the format reference at `../../artifacts/formal-requirements-format-v0.1/ARTIFACT.md`.
+Read `../../artifacts/formal-requirements-format-v0.1/references/source-reference.md`.
 
 ## Inputs
 
@@ -48,6 +49,7 @@ Treat old cases only as reusable material and migration input, not as the source
 4. Normalize current relevant cases if they exist.
    - If they are not already in artifact form, recover stable `Feature` / `Rule` / `Scenario` anchors without changing meaning.
    - If they are already in artifact form, treat their wording as canonical and keep it verbatim when reusing or citing them.
+   - Treat any optional scenario source reference as metadata, not as part of the canonical case wording.
    - Use the recovered anchor as the source reference in `changed` cases.
 5. Compare current cases against the target case set.
    - `unchanged`: one current case already matches one target case with no behavioral edits.
@@ -83,13 +85,10 @@ Match the artifact container format requested by the user.
 If the user did not request a container format, default to AsciiDoc.
 - For Markdown files, use Markdown headings.
 - For AsciiDoc files, use AsciiDoc headings.
-- When explicit source-location metadata is available for a source-derived case and the artifact output path is explicit or can be inferred from the requested target file, add exactly one clickable link to the source test method line.
-  - use visible text `<commit>:<file-name>:<line-num>`;
-  - use target `<path-relative-to-target-artifact-file>`;
-  - resolve that target relative to the directory of the target Markdown or AsciiDoc file, not relative to the repository root;
-  - in Markdown, render `[<commit>:<file-name>:<line-num>](<path-relative-to-target-artifact-file>)`;
-  - in AsciiDoc, render `link:<path-relative-to-target-artifact-file>[<commit>:<file-name>:<line-num>]`;
-  - if either the source-location metadata or the artifact output path is missing, omit the source link instead of inventing it.
+- When source-location metadata is available for a source-derived case, render exactly one source reference using `../../artifacts/formal-requirements-format-v0.1/references/source-reference.md`.
+- In Markdown or AsciiDoc, use the human clickable form when the artifact output path is explicit or can be inferred.
+- In the human form, keep visible text `<commit>:<file-name>:<line-num>` and keep the target equal to the relative source file path resolved from the target artifact file directory.
+- When the artifact output path is missing or a safe clickable link cannot be rendered, use the machine form instead of dropping the source reference.
 - In AsciiDoc, render each scenario as its own `[source,gherkin]` + `....` block.
 - Do not merge several scenarios into one gherkin block even if they share `Feature` or `Rule`; repeat shared `Feature` and `Rule` headers as needed.
 
@@ -98,7 +97,7 @@ For `removed` cases:
 - omit `Given` / `When` / `Then`;
 - this is the only intentional `short`-mode output in this skill;
 - add one short line `Причина удаления: ...`.
-- if a source link is available, place it immediately after the removal reason.
+- if a source reference is available, place it immediately after the removal reason.
 
 For `changed` cases:
 - if the output is Markdown, render each case as text with:
@@ -108,11 +107,11 @@ For `changed` cases:
   - then the updated full case in artifact form.
 - if the output is AsciiDoc, render them as a two-column `|===` table with header cells `| Было | Стало`;
   - use `a|` for both content cells because they contain blocks and lists;
-  - the left content cell is `a|`, then one `[source,gherkin]` + `....` block with only the old case body, then the source link if available;
+  - the left content cell is `a|`, then one `[source,gherkin]` + `....` block with only the old case body, then the source reference if available;
   - the right content cell is `a|`, then one `[source,gherkin]` + `....` block with only the updated full case body, then `Причина изменения: ...`, then `Изменения:` with a flat list;
   - do not repeat the old case reference in the `Стало` column;
-  - do not place the source link in the `Стало` column.
-- if the output is Markdown and a source link is available, place it after the updated case body and after the reason/change notes.
+  - do not place the source reference in the `Стало` column.
+- if the output is Markdown and a source reference is available, place it after the updated case body and after the reason/change notes.
 - do not prepend `Комментарий к коду:` unless the user explicitly asked for that wording.
 - keep the old case reference verbatim.
 - keep the updated `Rule` name as close as possible to the source `Rule` name when the behavior lineage is preserved.
@@ -124,7 +123,7 @@ For `added` cases:
 For `unchanged` cases:
 - render the source case verbatim in artifact form;
 - do not add extra comment lines after the case body.
-- if a source link is available, place it immediately after the case block.
+- if a source reference is available, place it immediately after the case block.
 
 When current cases are absent, keep the first, second, and fourth sections explicit and say that there are no source cases for those buckets.
 
@@ -137,16 +136,18 @@ Check all of these:
 - no target case appears in more than one of `added`, `changed`, `unchanged`;
 - every `changed` case has a reason and a concrete delta list;
 - when a changed case keeps the same behavioral obligation, the old `Rule` is preserved;
-- every reused source case reference is copied verbatim;
+- every reused source case `Feature` / `Rule` / `Scenario` anchor is copied verbatim;
 - every `unchanged` case body is copied verbatim from the source;
 - every `changed` case keeps the `Rule` name as close as possible to the source unless the old wording is no longer correct;
 - every `removed` case has a removal reason and no `Given` / `When` / `Then`;
 - every `unchanged` case is truly reusable without behavioral edits;
 - in AsciiDoc, every scenario is rendered in its own `[source,gherkin]` + `....` block and no block contains several scenarios;
 - every removed case is in `short` mode and every added, changed, or unchanged case is in `full` mode;
-- when output is AsciiDoc, every `changed` case is rendered in the `|===` table shape with `a|` content cells, the `Было` cell contains the source link when available, and the `Стало` cell does not repeat the old case reference or contain the source link;
-- when explicit source-location metadata is available and the artifact output path is explicit or inferable, every `removed`, `changed`, or `unchanged` case has exactly one clickable link to the source test method line with visible text `<commit>:<file-name>:<line-num>` and target `<path-relative-to-target-artifact-file>`, resolved relative to the target Markdown or AsciiDoc file directory;
-- when either prerequisite for a source link is missing, no source link is invented;
+- when output is AsciiDoc, every `changed` case is rendered in the `|===` table shape with `a|` content cells, the `Было` cell contains the source reference when available, and the `Стало` cell does not repeat the old case reference or contain the source reference;
+- when explicit source-location metadata is available, every `removed`, `changed`, or `unchanged` case has exactly one source reference rendered per `../../artifacts/formal-requirements-format-v0.1/references/source-reference.md`;
+- when the output is Markdown or AsciiDoc and the artifact output path is explicit or inferable, the source reference uses the human clickable form with visible text `<commit>:<file-name>:<line-num>` and a target resolved relative to the target artifact file directory;
+- when the human clickable form cannot be rendered safely, the machine form is used instead of inventing or dropping the source reference;
+- when source-location metadata is absent, no source reference is invented;
 - no `unchanged` case adds any trailing keep-as-is note after the case body;
 - every new or updated case is written as the most abstract correct behavior case and avoids unnecessary concrete values;
 - the output contains only the four requested sections.

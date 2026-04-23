@@ -3,6 +3,7 @@
 Use this mode for executable or near-executable cases, reverse-engineered cases, and code generation input.
 
 Output `Feature`, `Rule`, `Scenario`, `Given`, `When`, `Then`, and `And`.
+An optional source reference line may appear immediately under `Scenario` per `references/source-reference.md`.
 
 Put only outcome-relevant preconditions in `Given`.
 Describe setup with concrete domain objects, states, and literals only when they materially affect the branch.

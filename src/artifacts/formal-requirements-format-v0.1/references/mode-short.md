@@ -3,6 +3,7 @@
 Use this mode for concise formal requirements and other intentionally non-executable case lists.
 
 Output only `Feature`, `Rule`, and `Scenario`.
+An optional source reference line may appear immediately under `Scenario` per `references/source-reference.md`.
 Do not output `Given`, `When`, `Then`, or `And`.
 
 Name `Scenario` by the branch or case being represented.

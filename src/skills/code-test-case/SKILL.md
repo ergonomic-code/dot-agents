@@ -7,9 +7,11 @@ description: Convert cases written in `formal-requirements-format-v0.1` in `full
 
 Read `../../artifacts/formal-requirements-format-v0.1/ARTIFACT.md`.
 Read `../../artifacts/formal-requirements-format-v0.1/references/mode-full.md`.
+Read `../../artifacts/formal-requirements-format-v0.1/references/source-reference.md`.
 Read `../../conventions/tests.md`. 
 
 Accept one `formal-requirements-format-v0.1` artifact in `full` mode and an optional existing Kotlin JUnit 5 test file.
+Ignore one optional source reference line immediately under each `Scenario` per `../../artifacts/formal-requirements-format-v0.1/references/source-reference.md`.
 If any `Scenario` has no `Given` / `When` / `Then` steps, stop and report that `short` mode cannot be converted into test code.
 Use generate mode when no `*.kt` test file is given. Use update mode when the user points to one or explicitly asks to update existing tests.
 
