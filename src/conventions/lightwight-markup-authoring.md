@@ -1,4 +1,4 @@
-# Markdown conventions
+# Documentation formatting
 
 ## One Sentence Per Line
 
@@ -9,6 +9,6 @@ In documentation:
 
 ## Compact formatting
 
-Format Markdown compactly.
+Format documentation compactly.
 Use empty lines only between headings and paragraphs.
 Do not separate sentences with empty lines.

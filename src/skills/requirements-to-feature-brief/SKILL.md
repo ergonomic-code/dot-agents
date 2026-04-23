@@ -5,9 +5,9 @@ description: Write or update a formal `010-feature-brief.md` from raw requiremen
 
 # Write Feature Brief From Requirements
 
-Use configured `artifact_language` for the markdown artifact.
-Read `framework_checkout_root/src/conventions/markdown.md` before writing.
-Use it only for markdown formatting.
+Use configured `artifact_language` for the brief artifact.
+Read `framework_checkout_root/src/conventions/lightwight-markup-authoring.md` before writing.
+Use it only for documentation formatting.
 If it conflicts with this skill or the feature-brief structure, keep this skill.
 Read `framework_checkout_root/src/conventions/feature-workdir.md`.
 Read `./references/feature-brief-template.md`.

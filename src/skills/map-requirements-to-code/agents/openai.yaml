@@ -1,0 +1,4 @@
+interface:
+  display_name: "Map Requirements to Code"
+  short_description: "Create a 020 technical mapping artifact"
+  default_prompt: "Use $map-requirements-to-code to create or update a `020-technical-mapping.adoc` artifact from this feature brief by linking its requirements to concrete code anchors and future change points in a required two-column table."
