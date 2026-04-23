@@ -6,17 +6,10 @@ description: Build valid `structure-chart/v1` YAML and Mermaid `.mmd` from a roo
 # Building Structure Chart
 
 Read `framework_checkout_root/src/conventions/feature-workdir.md`.
+Read `./references/output-layout.md`.
+Read `./references/top-down-workflow.md`.
+Read `./references/bottom-up-workflow.md`.
 Write files to the active feature directory when it is resolved.
-If no path is specified, use `<active-feature-dir>/tmp` when the active feature directory is resolved, otherwise use `./tmp`.
-Create that default output directory if it does not exist.
-Use the feature stage code as the file name prefix.
-Use stage `020` for requirements-to-code mapping and current-code analysis artifacts.
-Use stage `030` when the chart belongs to optional refactoring work after that analysis.
-Use stage `050` when the chart belongs to implementation design.
-If the user gave an explicit stage or file path, keep it.
-For a single chart, use `<default-output-dir>/<stage-code>-structure-chart.yaml` for YAML.
-For a single chart, use `<default-output-dir>/<stage-code>-structure-chart.mmd` for Mermaid.
-For per-entry-point output, use `<output-directory>/<stage-code>-<endpoint-slug>-structure-chart.yaml` and `<output-directory>/<stage-code>-<endpoint-slug>-structure-chart.mmd`.
 Use the shared artifact at `src/artifacts/structure-chart-v1`.
 Read only the files you need from:
 - `../../artifacts/structure-chart-v1/references/structure-chart-v1.schema.json`
@@ -43,91 +36,9 @@ If `spawn_agent` is unavailable or blocked, stop and report that the reverse pas
 
 - `Top-down`: input is an endpoint, method, or function.
 - `Bottom-up`: input is one or more DB tables.
+- For `Top-down`, follow `./references/top-down-workflow.md`.
+- For `Bottom-up`, follow `./references/bottom-up-workflow.md`.
 
-## Workflow: Top-down
-
-1. Resolve the input to a specific root entry point.
-   - For an endpoint, find the controller or handler method and treat it as the root module.
-   - For a method or function, use it as the root module.
-2. Read only the code needed to understand the control flow under that root.
-3. For each call into project code, repeat the same procedure recursively until the relevant project control flow is covered.
-4. Do not descend into platform code, framework internals, or library code.
-5. Exclude tests, migrations, one-off scripts, and dead code unless the user explicitly asks for them.
-6. Assemble `structure-chart/v1` YAML in `<default-output-dir>/<stage-code>-structure-chart.yaml` by default, or in the chart output directory when one is provided.
-7. Validate the generated YAML path.
-8. Generate the matching Mermaid file next to that YAML path.
-
-## Workflow: Bottom-up
-
-1. Normalize the input tables.
-   - Keep schema-qualified and unqualified names.
-   - Use aliases, entity names, jOOQ names, repository names, and hardcoded SQL spellings only as search aids.
-2. Find persistence touch points that read or write those tables.
-3. Walk upward through project callers until you reach application entry points such as controllers, handlers, jobs, schedulers, batch launchers, or message consumers.
-4. Distinguish direct evidence from inference.
-   - If the table link is only implied by naming or mapping conventions, say so in `notes`.
-5. Choose chart scope.
-   - If one entry point is found, use it as the root module.
-   - If multiple entry points are found and the user selected one, use that one as the root module.
-   - If multiple entry points are found and the user did not narrow the scope, build one chart per entry point under separate output directories.
-   - Name files as `<output-directory>/<stage-code>-<endpoint-slug>-structure-chart.yaml` and `<output-directory>/<stage-code>-<endpoint-slug>-structure-chart.mmd`.
-6. Treat the upward walk as a way to discover candidate application entry points, not as the final chart shape.
-   - The upward result is a chain of callers.
-   - The final structure chart must still be a tree rooted at the selected entry point.
-7. For each selected HTTP endpoint entry point, always run a separate agent to extend the chart from that endpoint downward.
-   - Launch that agent with the `spawn_agent` tool.
-   - Give the agent the exact endpoint, reverse-pass evidence, output directory, and the requirement to follow the `Top-down` workflow.
-   - Do not perform any part of that endpoint's downward expansion in the parent agent.
-   - Do not replace the required `spawn_agent` call with a local loop over endpoints.
-   - Wait for each reverse-pass agent result before final assembly of that endpoint chart.
-   - In that agent, apply the `Top-down` workflow starting from the endpoint.
-   - Use the upward chain only to choose the endpoint and to identify which downward branches must be present because they lead to the target tables.
-   - Build the full relevant downward tree under that endpoint, not just the previously discovered chain.
-   - After a module is included in the chart, keep all of its meaningful project calls from the covered code, even when some sibling calls do not participate in the target-table path.
-   - Keep one agent per endpoint so the downward expansions stay isolated.
-8. For non-HTTP entry points, perform the same top-down tree expansion locally from that entry point downward.
-9. When assembling the chart, keep the selected entry point as the single root and include the relevant branching structure under it.
-   - Do not emit a linear caller chain as the final diagram when the code below the root forms a wider tree.
-   - Put unresolved gaps or inferred links into `notes`.
-10. Do not descend into platform code, framework internals, or library code.
-11. Exclude tests, migrations, one-off scripts, and dead code unless the user explicitly asks for them.
-12. Assemble `structure-chart/v1` YAML in `<default-output-dir>/<stage-code>-structure-chart.yaml`, or in `<output-directory>/<stage-code>-<endpoint-slug>-structure-chart.yaml` when multiple charts are needed.
-13. Validate each generated YAML path.
-14. Generate the matching Mermaid file next to each YAML as `<default-output-dir>/<stage-code>-structure-chart.mmd`, or as `<output-directory>/<stage-code>-<endpoint-slug>-structure-chart.mmd` for per-entry-point output.
-
-## Reverse-Pass Subagent Prompt Template
-
-Use this template when launching the reverse-pass agent for a selected HTTP endpoint.
-
-```text
-Build a structure chart for this HTTP endpoint with the `building-structure-chart` skill.
-
-Endpoint:
-- <HTTP method> <path>
-- Root handler: <repo-relative file path>:<line> <symbol>
-
-Output directory:
-- <output dir>
-
-Constraints:
-- Follow the `Top-down` workflow from the selected endpoint downward.
-- Keep the selected endpoint as the single root.
-- Use the reverse-pass caller chain only as evidence for endpoint selection and for required downward branches.
-- Build the full relevant downward tree under the endpoint, not only the caller chain that was already discovered.
-- Keep meaningful sibling calls after a module is included, even when they do not lead to the target tables.
-- Treat <output dir> as the chart output directory for this run instead of the default output directory.
-- Exclude platform code, framework internals, external libraries, tests, migrations, one-off scripts, and dead code unless explicitly requested.
-- Validate the YAML before rendering Mermaid.
-- Write `<stage-code>-<endpoint-slug>-structure-chart.yaml` and `<stage-code>-<endpoint-slug>-structure-chart.mmd` into <output dir>.
-
-Evidence from the reverse pass:
-- <caller or touch-point evidence>
-- <caller or touch-point evidence>
-```
-
-Fill every placeholder before launch.
-Do not launch the agent with unresolved placeholders.
-Do not rewrite the template into a shorter implicit prompt before launch.
 ## Shared Modeling Rules
 
 - Model named executable units as `modules`.
