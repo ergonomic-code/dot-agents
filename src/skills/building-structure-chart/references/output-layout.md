@@ -1,9 +1,11 @@
 # Output Layout
 
-- If the user gave an explicit output file path, keep it.
-- If the user gave an explicit output directory, keep it as the chart root directory.
-- Otherwise, if the active feature directory is resolved, use `<active-feature-dir>/020-structure-charts`.
-- Otherwise use `./020-structure-charts`.
+Use `framework_checkout_root/src/conventions/feature-stage-skill.md` for explicit-path handling, feature-dir binding, write-before-sync order, and optional overview-file sync.
+This file binds only the chart-specific output container, stage-code use, bundle layout, and `index.md` policy.
+
+- default feature-dir output container: `<active-feature-dir>/020-structure-charts`
+- non-feature default output container: `./tmp/structure-charts`
+- When the shared lifecycle keeps an explicit output directory, use it as the chart root directory.
 - Create the default chart root directory if it does not exist.
 - Use the feature stage code as the file name prefix.
 - Use stage `020` for requirements-to-production-code mapping and other current-state analysis artifacts.

@@ -6,16 +6,14 @@ description: Map a feature brief or another requirements artifact to the concret
 # Map Requirements To Code
 
 Read `framework_checkout_root/src/conventions/feature-workdir.md`.
+Read `framework_checkout_root/src/conventions/feature-stage-skill.md`.
 
-## Resolve Paths
+## Feature-stage bindings
 
-- If the user gave an explicit output path, use it.
-- Otherwise resolve the active feature directory via `feature-workdir.md`.
-- If the user gave a requirements file path inside a feature directory, use that feature directory.
-- If no target feature directory is resolved and no explicit output path is given, stop and ask for the feature directory or output path.
-- Prefer the main source artifact from the user request.
-- Otherwise prefer `<feature-dir>/010-feature-brief.md`.
-- Default output path to `<feature-dir>/020-technical-mapping.adoc`.
+- stage code: `020`
+- default feature-dir output path: `<feature-dir>/020-technical-mapping.adoc`
+- default source artifact: `<feature-dir>/010-feature-brief.md`
+- progress.md checklist item: `Маппинг требований на прод-код`
 
 ## Scope
 
@@ -29,14 +27,15 @@ Read `framework_checkout_root/src/conventions/feature-workdir.md`.
 ## Workflow
 
 1. If the output artifact already exists, read it before editing.
-2. Read the source requirements artifact and extract candidate phrases.
-3. Keep only materially distinct terms, actions, inputs, outputs, ordering rules, fallbacks, invariants, storage concepts, and user-visible variants.
-4. For each candidate, find the narrowest concrete code anchor or anchor chain that explains it.
-5. Read only the code needed to resolve that mapping.
-6. Preserve correct existing mappings and rewrite only stale, vague, conflicting, or missing parts.
-7. Merge duplicates and drop mappings that add no new traceability.
-8. Write or update the mapping artifact.
-9. If the active feature directory is resolved and `<feature-dir>/progress.md` exists, change the checklist sub-item `Маппинг требований на прод-код` to checked form when it is present, including when it is nested under `Привязка требований к коду`, and append exactly one Markdown link to the written artifact using the path relative to `progress.md` and the artifact file name as the link text.
+2. Prefer the main source artifact from the user request.
+3. Otherwise use the default source artifact when it resolves.
+4. Read the source requirements artifact and extract candidate phrases.
+5. Keep only materially distinct terms, actions, inputs, outputs, ordering rules, fallbacks, invariants, storage concepts, and user-visible variants.
+6. For each candidate, find the narrowest concrete code anchor or anchor chain that explains it.
+7. Read only the code needed to resolve that mapping.
+8. Preserve correct existing mappings and rewrite only stale, vague, conflicting, or missing parts.
+9. Merge duplicates and drop mappings that add no new traceability.
+10. If an output path is resolved, write or update the mapping artifact.
 
 ## Mapping Rules
 
@@ -57,7 +56,10 @@ Read `framework_checkout_root/src/conventions/feature-workdir.md`.
 - Write the artifact in the configured `artifact_language`.
 - Use AsciiDoc.
 - Add the document attribute line `:max-width: 95%` before the document title.
-- Use the heading `= Технический маппинг к link:./<source-file-name>[<source-file-name>]` when the artifact is in Russian.
+- When the artifact is in Russian and the source artifact path is safely renderable relative to the output artifact, use the heading `= Технический маппинг к link:./<source-file-name>[<source-file-name>]`.
+- Otherwise use the heading `= Технический маппинг к <source-file-name>`.
+- If an output path is resolved, write only the artifact text to that file.
+- Otherwise return only the artifact text.
 - Always render mappings as a two-column `|===` table.
 - Use the header row `| Формулировка в брифе | Техническое соответствие`.
 - Render each mapping as one table row.
@@ -79,4 +81,3 @@ Read `framework_checkout_root/src/conventions/feature-workdir.md`.
 - Check that the output covers the main brief terms and observable behaviors without repeating synonyms.
 - Check that each mapping points to the narrowest useful code anchor.
 - Check that unresolved ambiguity is reported instead of guessed.
-- Check that `progress.md` is updated only after the mapping artifact was successfully written.

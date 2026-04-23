@@ -6,10 +6,10 @@ description: Build valid `structure-chart/v1` YAML and Mermaid `.mmd` from a roo
 # Building Structure Chart
 
 Read `framework_checkout_root/src/conventions/feature-workdir.md`.
+Read `framework_checkout_root/src/conventions/feature-stage-skill.md`.
 Read `./references/output-layout.md`.
 Read `./references/top-down-workflow.md`.
 Read `./references/bottom-up-workflow.md`.
-Write files to the active feature directory when it is resolved.
 Use the shared artifact at `src/artifacts/structure-chart-v1`.
 Read only the files you need from:
 - `../../artifacts/structure-chart-v1/references/structure-chart-v1.schema.json`

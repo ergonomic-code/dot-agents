@@ -6,10 +6,16 @@ description: Build REST API IR JSON for JSON over HTTP from code, OpenAPI, curl,
 # Describing REST API
 
 Read `framework_checkout_root/src/conventions/feature-workdir.md`.
-Write files in the active feature directory when it is resolved.
-Use `<active-feature-dir>` when the active feature directory is resolved and no path is given.
-Otherwise use `./tmp`.
-Create that default output directory if missing.
+Read `framework_checkout_root/src/conventions/feature-stage-skill.md`.
+
+## Feature-stage bindings
+
+- stage code: `020`, `030`, or `050` by artifact purpose
+- default feature-dir output container: `<feature-dir>`
+- non-feature default output container: `./tmp`
+
+Resolve `<default-output-dir>` via the shared feature-stage lifecycle and these bindings.
+Create that directory if missing.
 Use the feature stage code as the file name prefix.
 Use stage `020` for requirements-to-production-code mapping and other current-state analysis artifacts, including current HTTP contract analysis.
 Use stage `030` when the artifact belongs to optional preliminary-refactoring review or follow-up fixes after that analysis.
