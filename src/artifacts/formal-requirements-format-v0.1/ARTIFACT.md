@@ -16,6 +16,14 @@ Write `Rule` in the obligation form of the artifact language when that language 
 Write all human-readable text in the configured `artifact_language`.
 Use only the English Gherkin keywords `Feature`, `Rule`, `Scenario`, `Given`, `When`, `Then`, and `And`.
 
+## Optional Source Reference
+
+One `Scenario` may carry at most one optional source reference.
+Treat it as scenario metadata, not as a `Given` / `When` / `Then` step.
+In plain artifact text, place the machine form immediately under `Scenario`.
+When the surrounding container supports clickable links, the same metadata may be rendered in a container-native human form outside the raw Gherkin block.
+Read `references/source-reference.md`.
+
 ## Modes
 
 This artifact has exactly two modes:
@@ -50,6 +58,7 @@ Feature: <concrete surface or SUT element>
   Rule: <obligation>
 
     Scenario: <branch or case>
+      # <commit>:<relative-file-path>:<line-number>
 ```
 
 ```gherkin
@@ -58,6 +67,7 @@ Feature: <concrete surface or SUT element>
   Rule: <obligation>
 
     Scenario: <branch or case>
+      # <commit>:<relative-file-path>:<line-number>
       Given <relevant condition>
       When <action on the surface or SUT>
       Then <observable result>
