@@ -39,11 +39,14 @@ Base root cause on the available evidence and current files.
 ## Options
 
 Always propose at least these options:
-- `minimal`
-- `systemic`
-- `optimal`
+- `minimal` — the smallest viable change in the narrowest relevant file set.
+- `systemic` — a coherent fix for the underlying pattern within the current framework model, shared flow, and existing artifact/routing shape.
+- `optimal` — the best practical balance of correctness, maintainability, and size within the current framework constraints.
 
 Add extras only when materially different.
+When needed, prefer these canonical extras instead of inventing near-synonyms:
+- `architecturally-correct` — the best option from an architecture standpoint, even if it requires substantial framework reshaping, new artifact types, routing changes, or similar deep structural changes.
+- `out-of-system` — a fundamentally different solution outside the current framework boundary, such as solving the problem at another layer, reframing it, or removing the need for the current change.
 Do not restate the same solution with cosmetic wording changes.
 Each option must include candidate files or areas, classification summary, delta, why it fits its class, benefits, and risks.
 
@@ -69,6 +72,6 @@ Validate the changed files or relevant checks before finishing.
 
 Before choice, return `Resolved role`, `Editable roots`, `Case summary`, `Root cause`, `Classification`, `Options`, `Recommendation`, and `Choice needed`.
 `Case summary` must include the available evidence, the current context gap, and the target behavior.
-In `Options`, keep the order `minimal`, `systemic`, `optimal`, then any extras.
+In `Options`, keep the order `minimal`, `systemic`, `optimal`, then `architecturally-correct`, `out-of-system`, then any other extras.
 After implementation, return `Implemented option`, `Changed files`, `Validation`, `Impact check`, and optional `Long-file justifications` or `Notes`.
 Do not invent missing evidence.
