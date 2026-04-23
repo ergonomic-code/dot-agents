@@ -5,6 +5,15 @@ description: Find existing test cases for modules present in a ready structural 
 
 # Finding Test Cases
 
+Read `framework_checkout_root/src/conventions/feature-workdir.md`.
+
+## Resolve Paths
+
+- If the user gave an explicit output path, use it.
+- Otherwise resolve the active feature directory via `feature-workdir.md`.
+- If the user gave an input diagram path inside a feature directory, use that feature directory.
+- If the active feature directory is resolved and no explicit output path is given, default output path to `<feature-dir>/020-current-test-cases.md`.
+
 Input is an existing structural diagram.
 Prefer `structure-chart/v1` YAML when available.
 Do not rebuild the diagram unless the user explicitly asks for it.
@@ -18,7 +27,9 @@ Use `../../artifacts/structure-chart-v1` only as the format reference.
 4. Anchor cases only in classes named `*Test`.
 5. Inside only those matched tests, inspect methods and keep usages that sit under `// When`.
 6. If the diagram contains a controller method, extract its HTTP method and path, grep test code by path first, then keep only HTTP calls and wrappers that target the same path with the same HTTP method.
-7. Merge results by SUT and return only concrete test cases with file and line evidence.
+7. Merge results by SUT and write or return only concrete test cases with file and line evidence.
+8. If an output path is resolved, write the result to that Markdown file.
+9. If the active feature directory is resolved, an output path is resolved, and `<feature-dir>/progress.md` exists, change the checklist sub-item `Составление списка текущих тест-кейсов` to checked form when it is present, including when it is nested under `Привязка требований к коду`, and append exactly one Markdown link to the written artifact using the path relative to `progress.md` and the artifact file name as the link text.
 
 ## Core Matching Rule
 
@@ -84,7 +95,8 @@ Use repository-relative paths and 1-based line numbers.
 
 ## Output
 
-Return concise Markdown grouped by SUT.
+If an output path is resolved, write concise Markdown grouped by SUT to that file.
+Otherwise return concise Markdown grouped by SUT.
 For each SUT, list:
 - test case name;
 - evidence kind: `direct`, `controller`, or `indirect`;

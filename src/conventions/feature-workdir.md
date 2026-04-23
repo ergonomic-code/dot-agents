@@ -28,6 +28,8 @@ Use this rule when the task may create files or depends on feature-local context
 - Use `index.md` for a short directory index with relative links to feature artifacts.
 - Use `progress.md` for the current feature-stage checklist and work status.
 - If the active feature directory is resolved and `<feature-dir>/index.md` exists, read it before substantial work.
+- If a skill creates default artifacts in the active feature directory and `<feature-dir>/index.md` exists, update `index.md` in the same step with concise relative links to the new files or directories.
+- If the skill defines a more specific indexing rule, follow that rule for row granularity and wording.
 - Unless the user gave another path, create new task files in the active feature directory.
 - If a skill has a default `./tmp` output directory, treat it as `<active-feature-dir>/tmp` when the active feature directory is resolved.
 
@@ -35,8 +37,8 @@ Use this rule when the task may create files or depends on feature-local context
 
 - Use the file name prefix as the feature stage code inside the feature workdir.
 - `010` means requirements preparation.
-- `020` means mapping requirements to code and analyzing the current code.
-- `030` means optional refactoring artifacts produced from that analysis.
+- `020` means mapping requirements to production code, analyzing the current implementation, and listing current test cases.
+- `030` means optional preliminary-refactoring review and follow-up fixes produced from that analysis.
 - `040` means test-case refresh.
 - `050` means implementation design.
 - `060` means test-case implementation.
