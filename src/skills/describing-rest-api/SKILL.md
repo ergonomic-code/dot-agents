@@ -11,8 +11,8 @@ Use `<active-feature-dir>` when the active feature directory is resolved and no 
 Otherwise use `./tmp`.
 Create that default output directory if missing.
 Use the feature stage code as the file name prefix.
-Use stage `020` for requirements-to-code mapping and current-code contract analysis.
-Use stage `030` when the artifact belongs to optional refactoring work after that analysis.
+Use stage `020` for requirements-to-production-code mapping and other current-state analysis artifacts, including current HTTP contract analysis.
+Use stage `030` when the artifact belongs to optional preliminary-refactoring review or follow-up fixes after that analysis.
 Use stage `050` when the artifact belongs to implementation design.
 If the user gave an explicit stage or file path, keep it.
 Use `<default-output-dir>/<stage-code>-rest-api-ir.json` for IR.

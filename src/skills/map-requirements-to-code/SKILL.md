@@ -22,7 +22,7 @@ Read `framework_checkout_root/src/conventions/feature-workdir.md`.
 - Map only behavior and terms that matter for implementing, reviewing, or testing the requested change.
 - Cover both domain terms and observable behavior statements.
 - Prefer the smallest set of mappings that makes the brief traceable into code.
-- Prefer source code over generated docs or secondary descriptions.
+- Prefer production source code over tests, generated docs, or secondary descriptions.
 - Do not rewrite the brief.
 - Do not design the implementation beyond identifying the nearest concrete change points.
 
@@ -36,7 +36,7 @@ Read `framework_checkout_root/src/conventions/feature-workdir.md`.
 6. Preserve correct existing mappings and rewrite only stale, vague, conflicting, or missing parts.
 7. Merge duplicates and drop mappings that add no new traceability.
 8. Write or update the mapping artifact.
-9. If the active feature directory is resolved and `<feature-dir>/progress.md` exists, change `- [ ] Привязка требований к коду и анализ текущего кода` to `- [x] Привязка требований к коду и анализ текущего кода` when that checklist item is present.
+9. If the active feature directory is resolved and `<feature-dir>/progress.md` exists, change the checklist sub-item `Маппинг требований на прод-код` to checked form when it is present, including when it is nested under `Привязка требований к коду`, and append exactly one Markdown link to the written artifact using the path relative to `progress.md` and the artifact file name as the link text.
 
 ## Mapping Rules
 
