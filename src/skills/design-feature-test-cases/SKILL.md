@@ -5,9 +5,17 @@ description: Design formal requirement cases for a new feature from a feature br
 
 # Design Feature Test Cases
 
+Read `framework_checkout_root/src/conventions/feature-workdir.md`.
+Read `framework_checkout_root/src/conventions/feature-stage-skill.md`.
 Read `../write-grekhin-test-case/SKILL.md`.
 Read the format reference at `../../artifacts/formal-requirements-format-v0.1/ARTIFACT.md`.
 Read `../../artifacts/formal-requirements-format-v0.1/references/source-reference.md`.
+
+## Feature-stage bindings
+
+- stage code: `040`
+- default feature-dir output path: `<feature-dir>/040-test-cases-refresh.adoc`
+- progress.md checklist item: `Обновление тест-кейсов`
 
 ## Inputs
 
@@ -22,10 +30,10 @@ Optional:
 - current relevant test cases.
 - optional source-location metadata for current relevant test cases.
   - include it only when you know the source commit, source file path, and source test method line.
-- optional artifact output path.
+- optional explicit artifact output path.
   - use it when the artifact will be written to a concrete Markdown or AsciiDoc file.
 
-If current test cases are absent, still design the target case set and return empty `removed`, `changed`, and `unchanged` sections.
+If current test cases are absent, still design the target case set and keep `removed`, `changed`, and `unchanged` sections explicit and empty.
 If API IR is absent, derive the target set from the brief and implementation summary only.
 
 ## Core Rule
@@ -35,30 +43,32 @@ Treat old cases only as reusable material and migration input, not as the source
 
 ## Workflow
 
-1. Read the feature brief and extract the target behavior.
+1. If the output artifact already exists, read it before editing.
+2. Read the feature brief and extract the target behavior.
    - Prefer explicit acceptance scenarios, business rules, invariants, compatibility constraints, and error conditions.
    - Separate independent behavior properties into separate `Rule`s.
-2. Read the implementation summary and API IR.
+3. Read the implementation summary and API IR.
    - Use them to refine the contract, identify touched surfaces, and detect migration-sensitive behavior.
    - Prefer the feature brief and explicit API rules over narrative implementation details when they conflict.
-3. Design the target case set from scratch.
+4. Design the target case set from scratch.
    - Cover only behavior that is actually implied by the inputs.
    - Add positive, negative, boundary, fallback, and compatibility cases only when the inputs justify them.
    - Merge duplicates and keep one `Scenario` per materially distinct branch.
    - Prefer abstract contract wording over literal sample data unless exact values are behaviorally required.
-4. Normalize current relevant cases if they exist.
+5. Normalize current relevant cases if they exist.
    - If they are not already in artifact form, recover stable `Feature` / `Rule` / `Scenario` anchors without changing meaning.
    - If they are already in artifact form, treat their wording as canonical and keep it verbatim when reusing or citing them.
    - Treat any optional scenario source reference as metadata, not as part of the canonical case wording.
    - Use the recovered anchor as the source reference in `changed` cases.
-5. Compare current cases against the target case set.
+6. Compare current cases against the target case set.
    - `unchanged`: one current case already matches one target case with no behavioral edits.
    - `changed`: one current case maps to one target case, but preconditions, action, or assertions must change.
    - `removed`: one current case no longer belongs to the target set.
    - preserve the old `Rule` when the obligation itself stays valid and only the scenario needs to change.
    - for `changed` cases, minimize the difference between the new `Rule` name and the source `Rule` name; rename it only when the old wording becomes incorrect.
-6. Mark as `added` every target case that has no reusable current source case.
-7. Render the four output lists.
+7. Mark as `added` every target case that has no reusable current source case.
+8. Render the four output lists.
+9. If an output path is resolved, write the result to that Markdown or AsciiDoc file.
 
 ## Classification Rules
 
@@ -72,7 +82,7 @@ Treat old cases only as reusable material and migration input, not as the source
 
 ## Output
 
-Return exactly four sections in this order:
+The artifact content must contain exactly four sections in this order:
 - `Удаляемые тест-кейсы`
 - `Изменяемые тест-кейсы`
 - `Добавляемые тест-кейсы`
@@ -82,9 +92,12 @@ Write human-readable text in the configured artifact language.
 Base the case bodies on `../../artifacts/formal-requirements-format-v0.1/ARTIFACT.md`.
 Follow `../write-grekhin-test-case/SKILL.md` for wording and step structure.
 Match the artifact container format requested by the user.
-If the user did not request a container format, default to AsciiDoc.
+If the user did not request a container format, infer it from the explicit output path extension when present.
+Otherwise default to AsciiDoc.
 - For Markdown files, use Markdown headings.
 - For AsciiDoc files, use AsciiDoc headings.
+- If an output path is resolved, write only the artifact text to that file.
+- Otherwise return only the artifact text.
 - When source-location metadata is available for a source-derived case, render exactly one source reference using `../../artifacts/formal-requirements-format-v0.1/references/source-reference.md`.
 - In Markdown or AsciiDoc, use the human clickable form when the artifact output path is explicit or can be inferred.
 - In the human form, keep visible text `<commit>:<file-name>:<line-num>` and keep the target equal to the relative source file path resolved from the target artifact file directory.

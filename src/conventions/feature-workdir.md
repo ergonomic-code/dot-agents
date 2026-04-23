@@ -28,8 +28,7 @@ Use this rule when the task may create files or depends on feature-local context
 - Use `index.md` for a short directory index with relative links to feature artifacts.
 - Use `progress.md` for the current feature-stage checklist and work status.
 - If the active feature directory is resolved and `<feature-dir>/index.md` exists, read it before substantial work.
-- If a skill creates default artifacts in the active feature directory and `<feature-dir>/index.md` exists, update `index.md` in the same step with concise relative links to the new files or directories.
-- If the skill defines a more specific indexing rule, follow that rule for row granularity and wording.
+- Skills that write default stage outputs use `feature-stage-skill.md` for write and overview-file sync.
 - Unless the user gave another path, create new task files in the active feature directory.
 - If a skill has a default `./tmp` output directory, treat it as `<active-feature-dir>/tmp` when the active feature directory is resolved.
 
