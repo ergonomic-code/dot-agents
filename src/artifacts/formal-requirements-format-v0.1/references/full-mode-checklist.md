@@ -1,8 +1,8 @@
 # Full Mode Checklist
 
 - `Feature` names the SUT directly.
-- `Rule` expresses exactly one observable behavior property.
-- `Scenario` checks that property and not another one.
+- `Rule` expresses one material condition set and all required response, persistent state, and outbound-interaction obligations for it.
+- `Scenario` checks a representative branch of that condition set.
 - All meaningful branch differences are in `Given`.
 - `When` describes the action on the SUT.
 - `Then` describes observable results.

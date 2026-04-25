@@ -41,9 +41,14 @@ Keep atomic rules for request interpretation, authoritative data sources, decisi
 Treat statements explicitly limited to the current phase, rollout step, migration window, temporary workaround, current implementation stage, or a later follow-up feature as transition notes rather than rules.
 Treat permissions, allowances, and exceptions phrased as temporary or stage-bound as non-rule scope notes unless the user explicitly asks for interim or phase-specific contract behavior.
 Name `Feature`, `Rule`, and `Scenario` in domain language, not by raw API symbol names.
+For endpoint features, keep the domain name first and add the HTTP method and route in parentheses.
+Write each endpoint `Rule` so `Feature` + `Rule` states the endpoint, relevant data/request conditions, expected response, persistent state changes, and outbound interactions.
 When a request parameter, header, field, flag, enum value, or other wire symbol has a stable domain meaning, rewrite it into that meaning instead of copying the literal name.
 Prefer wording that keeps the contract role visible, such as request source, selected value, or controlled business concept, without mirroring the transport-level identifier.
 Keep the literal symbol only when it is itself the stable public contract term, there is no clear domain equivalent, or removing it would make the rule ambiguous.
+Do not create a rule whose only obligation is support for a value set, mode set, scope set, or context set.
+Use representative variants as `Scenario` branches under the obligations they can falsify.
+Name scenarios by semantic class when the literal identity is incidental.
 Use external user test cases only as draft evidence.
 Add missing brief-backed rules.
 Drop unsupported candidate rules.
@@ -65,7 +70,7 @@ Stop and report issues instead of guessing when:
 
 Check that:
 - each `Feature` names one concrete endpoint or other concrete API surface;
-- each `Rule` states exactly one observable obligation;
+- each `Rule` states one material data/request condition set and all response, persistent-state, and outbound-interaction obligations for it;
 - the selected mode matches the user request;
 - `short` mode contains no steps;
 - `full` mode adds steps only under `Scenario`;
@@ -74,6 +79,7 @@ Check that:
 - no surviving rules contradict each other;
 - no surviving rule encodes a temporary allowance, phase-bound permission, migration exception, or other transition-scoped note unless the user explicitly requested interim behavior;
 - raw parameter, header, field, flag, and enum names were replaced with stable domain wording wherever that does not lose meaning;
+- scenario sets use minimal semantic representatives instead of enumerating interchangeable literals;
 - all wording stays domain-based and implementation-light.
 
 ## Output

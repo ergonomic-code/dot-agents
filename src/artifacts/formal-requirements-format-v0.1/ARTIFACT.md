@@ -8,7 +8,10 @@ Use one format for requirement derivation, requirement review, test-case design,
 ## Structure
 
 Use one `Feature` per one concrete endpoint, API surface, component, operation, or other concrete SUT element.
-Use one `Rule` per one observable obligation or desired observable behavior property.
+Use one `Rule` per one material data/request condition set and its contract obligations.
+One `Rule` may include multiple required responses, persistent state changes, and outbound interactions for the same condition set.
+Write `Rule` so `Feature` + `Rule` reads as: `<SUT> [under these data and request conditions] must <return this result, persist these changes, and/or perform these outbound interactions>`.
+In Russian, prefer `Rule: [при <описание особенностей состояния БД и параметров запроса>] должен <описание характеристик результата, изменений состояния и/или внешних взаимодействий>`.
 Use one `Scenario` per one materially distinct branch of one `Rule`.
 Place each `Scenario` under its `Rule`.
 Keep one abstraction level inside one `Feature`.

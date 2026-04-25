@@ -8,5 +8,8 @@ Do not output `Given`, `When`, `Then`, or `And`.
 
 Name `Scenario` by the branch or case being represented.
 Keep one `Scenario` per one materially distinct branch of one `Rule`.
-Prefer the smallest complete scenario set.
+Treat `Scenario`s as the minimal property-test-like example set for the `Rule`.
+Choose representatives that would expose one-case, hard-coded, or overfit implementations.
+Prefer semantic classes over literals: default/non-default, empty/non-empty, present/missing, matching/non-matching, boundary/ordinary, valid/invalid.
+Prefer the smallest complete representative set.
 Do not preserve example detail unless dropping it would lose contract meaning.
