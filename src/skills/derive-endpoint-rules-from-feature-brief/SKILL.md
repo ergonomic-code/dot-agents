@@ -6,8 +6,9 @@ description: Derive endpoint-scoped business rules from a feature brief and opti
 # Derive Endpoint Rules From Feature Brief
 
 Read `../../artifacts/formal-requirements-format-v0.1/ARTIFACT.md`.
+Read `../../artifacts/formal-requirements-format-v0.1/references/layout.md` before rendering.
 Read `../../artifacts/formal-requirements-format-v0.1/references/mode-short.md`.
-Read `../../artifacts/formal-requirements-format-v0.1/references/requirements-coverage-checklist.md`.
+Read `../../artifacts/formal-requirements-format-v0.1/references/requirements-coverage-checklist.md` only before final self-check.
 
 ## Mode
 
