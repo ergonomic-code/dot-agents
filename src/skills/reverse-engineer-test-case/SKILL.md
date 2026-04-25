@@ -6,8 +6,10 @@ description: "Reconstruct one or more Gherkin test cases from test code and retu
 # Reverse Engineer Test Case
 
 Read `../../artifacts/formal-requirements-format-v0.1/ARTIFACT.md`.
+Read `../../artifacts/formal-requirements-format-v0.1/references/layout.md` before rendering.
 Read `../../artifacts/formal-requirements-format-v0.1/references/mode-full.md`.
 Read `../../artifacts/formal-requirements-format-v0.1/references/source-reference.md`.
+Read `../../artifacts/formal-requirements-format-v0.1/references/full-mode-checklist.md` only before final self-check.
 
 Accept exactly one selector set: one concrete test selector, one repo-relative test class path, or several repo-relative test class paths. A concrete selector is `path:line`, `path:testName`, or a unique test name. Resolve class input to all real test methods in source order. If resolution is ambiguous, stop and return only the candidates.
 
@@ -22,7 +24,11 @@ For method names in the formal shape `<rule> :: <scenario>`, split mechanically 
 
 If a method name does not use that formal shape, recover `Rule` and `Scenario` conservatively from the name and code evidence. When the name already gives a complete conditional rule, keep that order instead of rewriting it.
 
-Keep `Given` in business language unless technical terms are part of the stable contract or no business equivalent exists. Preserve concrete values, identifiers, attributes, boundaries, and other materially distinguishing literals.
+Write `Feature`, `Rule`, `Scenario`, and steps in domain language, following the artifact shared content rules.
+When method names, assertions, or helpers expose raw technical symbols, translate them to their evidenced contract meaning unless the scenario is specifically about that named contract member or value.
+Preserve concrete values, identifiers, attributes, boundaries, and other materially distinguishing literals.
+Before returning, scan the final artifact for copied code, helper, parameter, field, flag, timestamp, and storage names.
+Translate each to domain wording or stop with the unresolved symbols.
 
 When several assertions exist, keep only outcomes produced by the same conditions and the same action. Omit ordinary valid setup. Keep exceptional-but-allowed setup. Include side-effect details only when checked.
 

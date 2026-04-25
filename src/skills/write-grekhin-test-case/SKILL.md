@@ -6,8 +6,9 @@ description: Write or normalize one or more Gherkin-style requirements in `forma
 # Write Grekhin Test Case
 
 Read `../../artifacts/formal-requirements-format-v0.1/ARTIFACT.md`.
+Read `../../artifacts/formal-requirements-format-v0.1/references/layout.md` before rendering.
 Read `../../artifacts/formal-requirements-format-v0.1/references/mode-full.md`.
-Read `../../artifacts/formal-requirements-format-v0.1/references/full-mode-checklist.md`.
+Read `../../artifacts/formal-requirements-format-v0.1/references/full-mode-checklist.md` only before final self-check.
 
 ## Core Rules
 

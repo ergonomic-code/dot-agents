@@ -13,3 +13,4 @@
 - Overlapping rules are merged.
 - Material conflicts are treated as a stop, not guessed through.
 - Temporary, rollout-bound, migration-bound, or other transition-only notes are excluded unless interim behavior was explicitly requested.
+- Layout matches `references/layout.md`.
