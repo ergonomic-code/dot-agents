@@ -1,8 +1,10 @@
 # Requirements Coverage Checklist
 
 - `Feature` names the concrete endpoint, API surface, component, operation, or other SUT element being described.
-- `Rule` expresses exactly one observable obligation or desired behavior property.
-- `Scenario` names one materially distinct branch of that `Rule`.
+- `Rule` expresses one material data/request condition set and all its contract-visible obligations.
+- `Feature` + `Rule` together state the SUT, relevant data/request conditions, expected response, persistent state changes, and outbound interactions.
+- `Scenario` names one materially distinct representative branch of that `Rule`.
+- Scenario sets cover the smallest useful semantic classes that would expose plausible one-case, hard-coded, or overfit implementations.
 - Relevant inputs, context values, and preconditions that affect behavior are covered.
 - Authoritative data sources and decision logic are reflected only through contract-visible behavior.
 - Result scope, filtering, selection, ordering, cardinality, and mandatory presence rules are covered.
