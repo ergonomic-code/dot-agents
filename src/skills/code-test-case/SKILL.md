@@ -12,17 +12,21 @@ Read `../../conventions/tests.md`.
 
 Accept one `formal-requirements-format-v0.1` artifact in `full` mode and an optional existing Kotlin JUnit 5 test file.
 Ignore one optional source reference line immediately under each `Scenario` per `../../artifacts/formal-requirements-format-v0.1/references/source-reference.md`.
-If any `Scenario` has no `Given` / `When` / `Then` steps, stop and report that `short` mode cannot be converted into test code.
+Default to coding exactly one test case, where one `Scenario` is one test case.
+If the user did not explicitly select several scenarios, all scenarios, or a named multi-case set, code only the explicitly selected `Scenario`; if none is selected, code the first not-yet-implemented `Scenario` in source order, or the first `Scenario` if implementation status is unknown.
+Do not treat a feature directory, artifact file, progress checklist, or pending-case list as an explicit request to code multiple test cases.
+Before coding, resolve selected scenarios and verify each selected `Scenario` has `Given` / `When` / `Then` steps.
+If any selected `Scenario` lacks them, stop and report that `short` mode cannot be converted into test code.
 Use generate mode when no `*.kt` test file is given. Use update mode when the user points to one or explicitly asks to update existing tests.
 
-Map one `Feature` to one class and one `Scenario` to one `@Test` method. Keep source order.
+Map one selected `Feature` to one class and one selected `Scenario` to one `@Test` method. Keep source order.
 In update mode, bind one artifact feature to one existing Kotlin test class instead of creating or renaming another class.
 If several features must be applied to several existing test files, apply the skill sequentially, one feature and one Kotlin test file per run.
 If update mode input contains zero or multiple `Feature`s for one existing Kotlin test file, stop and report that update mode accepts exactly one feature per run.
 
 ## Generate
 
-- Build one Kotlin class per feature and one test method per scenario.
+- Build one Kotlin class per selected feature and one test method per selected scenario.
 - Return only Kotlin code.
 - Implement bodies fully unless the user explicitly asked for skeletons or placeholders.
 - Apply the loaded test conventions in generated test code too, including fixture/helper extraction and test-data abstraction rules.
@@ -63,6 +67,8 @@ If update mode input contains zero or multiple `Feature`s for one existing Kotli
 
 - Do not use Kotlin backticked test method names.
 - Always put human-readable case text into method `@DisplayName`.
+- Copy `Rule` and `Scenario` header text verbatim after removing only the keyword prefix, one separator colon, and surrounding whitespace.
+- Do not paraphrase, normalize, translate, shorten, re-punctuate, or inflect `Rule` or `Scenario` text in display names.
 - For one-scenario rules, set method `@DisplayName` to `<rule> :: <scenario>` unless the scenario text only repeats the rule.
 - For multi-scenario rules with `@Nested`, put the rule text into nested class `@DisplayName` and the scenario text into method `@DisplayName`.
 - Use the exact separator ` :: `. If the source `Rule` or `Scenario` already contains `::`, stop and report ambiguity.
@@ -83,4 +89,4 @@ If update mode input contains zero or multiple `Feature`s for one existing Kotli
 - If tests require non-DTO production changes to compile or pass, stop and report the blocker instead of changing production code.
 - By default, after implementing a new or aligned case, the test should compile. The test may still fail for any reason until production behavior is aligned.
 
-Before finishing, check: the input artifact is `full` mode, one class per feature, one method per scenario, class `@DisplayName` stripped of `Feature:`, methods are named `test_<slug>`, display names preserve rule/scenario text, new or aligned tests compile, generate mode returns only Kotlin, and update mode accepts exactly one feature per run and preserves the existing container code while editing in place.
+Before finishing, check: default scope produced exactly one scenario unless the user explicitly requested more, one class per selected feature, one method per selected scenario, class `@DisplayName` stripped of `Feature:`, methods are named `test_<slug>`, display names copy `Rule` and `Scenario` text verbatim, new or aligned tests compile, generate mode returns only Kotlin, and update mode accepts exactly one feature per run and preserves the existing container code while editing in place.
