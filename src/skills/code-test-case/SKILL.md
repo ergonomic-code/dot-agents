@@ -47,6 +47,7 @@ If update mode input contains zero or multiple `Feature`s for one existing Kotli
 - For features starting with `Метод API`, resolve the handler by HTTP method and path. If it delegates to one `xxxOp`, use `XxxApiTest`; otherwise use the handler method name as `XxxApiTest`. If resolution is ambiguous, stop.
 - In update mode, keep the existing class and file name unless the user explicitly asked to rename them.
 - Use one blank line between methods.
+- Use `@Nested` classes for multi-scenario rules when this keeps method display names shorter and matches the existing file style.
 - Preserve existing fixtures, assertions, helpers, and supporting code in update mode.
 - If the user explicitly asked for placeholders or skeletons, use only:
 
@@ -60,21 +61,16 @@ If update mode input contains zero or multiple `Feature`s for one existing Kotli
 
 ## Method Names
 
-- Prefer a Kotlin backticked method name over method `@DisplayName`.
-- Add method `@DisplayName` only when the artifact-based backticked name would not compile, typically because of length or invalid identifier form. Then keep a shorter compilable method name derived from the same wording.
-- For one-scenario rules, use the `Rule` text as the method name unless the `Scenario` adds material wording needed for clarity or uniqueness.
-- For multi-scenario rules, use the exact form `<rule> :: <scenario>`.
-- Keep the `Rule` fragment identical across methods of one multi-scenario rule and keep the `Scenario` fragment as close as possible to the source scenario text.
+- Do not use Kotlin backticked test method names.
+- Always put human-readable case text into method `@DisplayName`.
+- For one-scenario rules, set method `@DisplayName` to `<rule> :: <scenario>` unless the scenario text only repeats the rule.
+- For multi-scenario rules with `@Nested`, put the rule text into nested class `@DisplayName` and the scenario text into method `@DisplayName`.
 - Use the exact separator ` :: `. If the source `Rule` or `Scenario` already contains `::`, stop and report ambiguity.
-- Remove only wrappers like `Feature:`, `Rule:`, and `Scenario:`.
-- If two generated backticked names still collide, extend the source scenario wording instead of translating or changing style.
-
-## Rule Constants
-
-- Do not create rule constants for naming.
-- Add a private companion object only when fallback method `@DisplayName` needs shared rule constants.
-- If used, keep the rule text itself as both constant name and value.
-- Add `@Suppress("ConstPropertyName")` only when such constants exist.
+- Name test methods as `test_<slug>`.
+- Build `<slug>` as a lowercase ASCII `snake_case` summary of `2`-`5` words.
+- For one-scenario rules, summarize the rule in `<slug>`.
+- For multi-scenario rules, summarize the scenario in `<slug>`.
+- If two generated method names collide, extend the slug without changing display text.
 
 ## Output Discipline
 
@@ -87,4 +83,4 @@ If update mode input contains zero or multiple `Feature`s for one existing Kotli
 - If tests require non-DTO production changes to compile or pass, stop and report the blocker instead of changing production code.
 - By default, after implementing a new or aligned case, the test should compile. The test may still fail for any reason until production behavior is aligned.
 
-Before finishing, check: the input artifact is `full` mode, one class per feature, one method per scenario, class `@DisplayName` stripped of `Feature:`, multi-scenario methods use `<rule> :: <scenario>`, fallback method `@DisplayName` appears only when needed, new or aligned tests compile, generate mode returns only Kotlin, and update mode accepts exactly one feature per run and preserves the existing container code while editing in place.
+Before finishing, check: the input artifact is `full` mode, one class per feature, one method per scenario, class `@DisplayName` stripped of `Feature:`, methods are named `test_<slug>`, display names preserve rule/scenario text, new or aligned tests compile, generate mode returns only Kotlin, and update mode accepts exactly one feature per run and preserves the existing container code while editing in place.
