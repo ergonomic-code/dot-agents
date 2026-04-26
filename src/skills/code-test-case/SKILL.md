@@ -8,7 +8,7 @@ description: Convert cases written in `formal-requirements-format-v0.1` in `full
 Read `../../artifacts/formal-requirements-format-v0.1/ARTIFACT.md`.
 Read `../../artifacts/formal-requirements-format-v0.1/references/mode-full.md`.
 Read `../../artifacts/formal-requirements-format-v0.1/references/source-reference.md`.
-Read `../../conventions/tests.md`. 
+Read `../../conventions/tests.md`.
 
 Accept one `formal-requirements-format-v0.1` artifact in `full` mode and an optional existing Kotlin JUnit 5 test file.
 Ignore one optional source reference line immediately under each `Scenario` per `../../artifacts/formal-requirements-format-v0.1/references/source-reference.md`.
@@ -17,6 +17,8 @@ If the user did not explicitly select several scenarios, all scenarios, or a nam
 Do not treat a feature directory, artifact file, progress checklist, or pending-case list as an explicit request to code multiple test cases.
 Before coding, resolve selected scenarios and verify each selected `Scenario` has `Given` / `When` / `Then` steps.
 If any selected `Scenario` lacks them, stop and report that `short` mode cannot be converted into test code.
+Before editing code, map scenario data roles to helpers, factories, or fixtures; keep exact literals, enum members, constants, codes, ids, dates, and names in the test body only when named by the case or public contract.
+Inspect available fixture APIs for generic role helpers before choosing named constants or presets.
 Use generate mode when no `*.kt` test file is given. Use update mode when the user points to one or explicitly asks to update existing tests.
 
 Map one selected `Feature` to one class and one selected `Scenario` to one `@Test` method. Keep source order.
@@ -89,4 +91,4 @@ If update mode input contains zero or multiple `Feature`s for one existing Kotli
 - If tests require non-DTO production changes to compile or pass, stop and report the blocker instead of changing production code.
 - By default, after implementing a new or aligned case, the test should compile. The test may still fail for any reason until production behavior is aligned.
 
-Before finishing, check: default scope produced exactly one scenario unless the user explicitly requested more, one class per selected feature, one method per selected scenario, class `@DisplayName` stripped of `Feature:`, methods are named `test_<slug>`, display names copy `Rule` and `Scenario` text verbatim, new or aligned tests compile, generate mode returns only Kotlin, and update mode accepts exactly one feature per run and preserves the existing container code while editing in place.
+Before finishing, read `../../conventions/test-implementation-checklist.md`, fix any failed item, and check: default scope produced exactly one scenario unless the user explicitly requested more, one class per selected feature, one method per selected scenario, class `@DisplayName` stripped of `Feature:`, methods are named `test_<slug>`, display names copy `Rule` and `Scenario` text verbatim, new or aligned tests compile, generate mode returns only Kotlin, and update mode accepts exactly one feature per run and preserves the existing container code while editing in place.
