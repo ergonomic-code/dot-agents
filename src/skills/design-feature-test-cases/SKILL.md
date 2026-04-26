@@ -1,6 +1,6 @@
 ---
 name: design-feature-test-cases
-description: Design formal requirement cases for a new feature from a feature brief, current implementation summary, optional current relevant cases, and optional API IR. Use when you need to derive the target case set for the feature first, then decide which old cases stay unchanged, which must be removed, which must be updated, and which new cases must be added.
+description: Design feature test-case refresh artifacts from a feature brief, implementation/API context, and optional current cases. Prefer added cases for new obligations; update old cases only when forced.
 ---
 
 # Design Feature Test Cases
@@ -38,8 +38,8 @@ If API IR is absent, derive the target set from the brief and implementation sum
 
 ## Core Rule
 
-Design the target test case set for the new feature first.
-Treat old cases only as reusable material and migration input, not as the source of truth.
+Design the target test case set first; treat old cases only as reusable material and migration input, not as the source of truth.
+Prefer `added` for new obligations; keep old cases unchanged unless they contradict new rules, would stop compiling, would fail under new conditions, or are baseline save/return cases for model field-set changes.
 
 ## Workflow
 
@@ -60,13 +60,12 @@ Treat old cases only as reusable material and migration input, not as the source
    - If they are already in artifact form, treat their wording as canonical and keep it verbatim when reusing or citing them.
    - Treat any optional scenario source reference as metadata, not as part of the canonical case wording.
    - Use the recovered anchor as the source reference in `changed` cases.
-6. Compare current cases against the target case set.
-   - `unchanged`: one current case already matches one target case with no behavioral edits.
-   - `changed`: one current case maps to one target case, but preconditions, action, or assertions must change.
-   - `removed`: one current case no longer belongs to the target set.
-   - preserve the old `Rule` when the obligation itself stays valid and only the scenario needs to change.
-   - for `changed` cases, minimize the difference between the new `Rule` name and the source `Rule` name; rename it only when the old wording becomes incorrect.
-7. Mark as `added` every target case that has no reusable current source case.
+6. Compare current cases against the target case set with preservation bias.
+   - `unchanged`: the current case stays valid as-is.
+   - `changed`: the current case must change by the Core Rule.
+   - `removed`: the current case no longer belongs to the target set.
+   - for `changed`, preserve the old `Rule` unless the old wording becomes incorrect.
+7. Mark as `added` every target case that is not `changed` or `unchanged`.
 8. Render the four output lists.
 9. If an output path is resolved, write the result to that Markdown or AsciiDoc file.
 
@@ -74,10 +73,11 @@ Treat old cases only as reusable material and migration input, not as the source
 
 - Put every current case into exactly one bucket: `removed`, `changed`, or `unchanged`.
 - Put every target case into exactly one bucket: `added`, `changed`, or `unchanged`.
-- Use `changed`, not `removed` + `added`, only when the old and new cases clearly test the same behavior lineage.
+- Prefer `added` for every new obligation.
+- Use `changed` only when the old case itself must change by the Core Rule.
+- A related old case plus a new behavior branch is `unchanged` + `added`, not `changed`.
 - Use `removed` when the old case targets behavior that is obsolete, contradicted, overspecified, or no longer worth keeping as a separate guarantee.
-- Use `unchanged` only when the old case can be kept as-is.
-- Do not keep a case in `unchanged` if its assertions, inputs, or expectation wording need behavioral edits.
+- Use `unchanged` only when the old case can be kept as-is, with no assertion, input, or expectation edits.
 - Do not invent new obligations from implementation hints alone unless the brief or API contract makes them test-worthy.
 
 ## Output
@@ -145,9 +145,9 @@ When current cases are absent, keep the first, second, and fourth sections expli
 Check all of these:
 - the target case set was designed before comparing old cases;
 - the target case set covers the feature brief, explicit API changes, and material compatibility/fallback behavior from the inputs;
-- no current case appears in more than one of `removed`, `changed`, `unchanged`;
-- no target case appears in more than one of `added`, `changed`, `unchanged`;
+- no current or target case appears in more than one bucket;
 - every `changed` case has a reason and a concrete delta list;
+- no current case is `changed` only because it is related to a new obligation, except baseline save/return cases for model field-set changes;
 - when a changed case keeps the same behavioral obligation, the old `Rule` is preserved;
 - every reused source case `Feature` / `Rule` / `Scenario` anchor is copied verbatim;
 - every `unchanged` case body is copied verbatim from the source;
