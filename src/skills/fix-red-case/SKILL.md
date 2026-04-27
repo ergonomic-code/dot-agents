@@ -19,6 +19,8 @@ Do not edit tests, test fixtures, test data, assertions, display names, test ann
    If resolved, read `<active-feature-dir>/progress.md` when present, `<active-feature-dir>/index.md` when present, and every `<active-feature-dir>/050*` artifact that exists.
    If not resolved or no `050*` artifact exists, continue from the failing test, current code, and loaded conventions.
 3. Make only the smallest production-code change that addresses the currently observed failure cause and is consistent with the selected case, progress state, and feature design when they exist.
+   Before editing production code, read `../../roles/developer.md` and follow it.
+   Keep this skill's test-edit ban and selected-case scope as stricter constraints.
    Do not implement predicted later design changes before rerunning the selected test.
    If the test contradicts the feature design, requires test edits, or cannot be fixed within production code, stop and report the blocker.
 4. Rerun the same selected test.
