@@ -13,5 +13,6 @@
 - Layout matches `references/layout.md`.
 - Wording is short, domain-based, and implementation-light.
 - Raw request, response, code, storage, helper, flag, timestamp, and field symbols are absent unless the scenario is about that named contract member or value.
+- Scenario and step wording has no avoidable endpoint, parameter, field, DTO, payload, or response-model names.
 - Entity names, flags, statuses, and errors match the contract.
 - A single scenario can be implemented as a test without guessing intended behavior.

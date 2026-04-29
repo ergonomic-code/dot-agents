@@ -20,8 +20,9 @@ Read `../../artifacts/formal-requirements-format-v0.1/references/full-mode-check
 ## Domain Language Rule
 
 Name behaviors in the domain language of the user-visible contract.
-Prefer business concepts, user-visible entities, public API concepts, and documented terms over code symbols.
+Prefer business concepts, user-visible entities, public contract meanings, and documented domain terms over API, code, storage, transport, and implementation terms.
 Do not mention class names, method names, field names, enum constants, table names, flag names, builder names, or helper names unless they are themselves part of the public contract or there is no stable domain equivalent.
+In `Scenario` and step text, translate endpoint names, request parameters, response fields, DTO names, and payload structure into their user-observable meanings unless the exact contract member name is being validated.
 If code uses technical names but the behavior is domain-facing, rewrite them into domain wording.
 If several code symbols map to one domain concept, use the single domain concept instead of mirroring the code structure.
 
