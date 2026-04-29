@@ -20,6 +20,9 @@ If any selected `Scenario` lacks them, stop and report that `short` mode cannot 
 Before editing code, map scenario data roles to helpers, factories, or fixtures; keep exact literals, enum members, constants, codes, ids, dates, and names in the test body only when named by the case or public contract.
 Inspect available fixture APIs for generic role helpers before choosing named constants or presets.
 Use generate mode when no `*.kt` test file is given. Use update mode when the user points to one or explicitly asks to update existing tests.
+Before choosing or announcing the target Kotlin test class, read `../../conventions/test-container-selection.md`.
+Then scan existing sibling `*Test.kt` files for operation-level and variant-specific containers.
+If the selected scenario is specific to one polymorphic input or output variant and a matching variant-specific test class exists, use that class even when the `Feature` names the shared operation or endpoint.
 
 Map one selected `Feature` to one class and one selected `Scenario` to one `@Test` method. Keep source order.
 In update mode, bind one artifact feature to one existing Kotlin test class instead of creating or renaming another class.
