@@ -21,12 +21,16 @@ Do not edit tests, test fixtures, test data, assertions, display names, test ann
 3. Make only the smallest production-code change that addresses the currently observed failure cause and is consistent with the selected case, progress state, and feature design when they exist.
    Before editing production code, read `../../roles/developer.md` and follow it.
    Keep this skill's test-edit ban and selected-case scope as stricter constraints.
+   Derive the selected behavior boundary from the failing test's entry point, endpoint, operation, scenario, and feature design when present.
+   Keep investigation and edits inside that boundary, except for compile-only call-site propagation forced by the chosen change.
+   If the next necessary step would inspect or change a sibling endpoint, operation, mode, or scenario to justify the fix, stop and report the boundary instead of widening the implementation.
    Do not implement predicted later design changes before rerunning the selected test.
    If the test contradicts the feature design, requires test edits, or cannot be fixed within production code, stop and report the blocker.
-4. Rerun the same selected test.
+4. Rerun only the same selected test after each production-code change.
    If it passes, stop.
    If the failure changes, stop immediately and report the new failure.
-   If the same failure remains, continue only while the same root cause is still within this skill's constraints.
+   If the same failure remains after a production-code change, re-identify the current cause and continue only inside the same selected SUT boundary.
+   Stop if the next fix requires changing a sibling endpoint, operation, mode, scenario, or a broader shared path not already inside that boundary.
 
 ## Constraints
 
