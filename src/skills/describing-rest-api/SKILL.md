@@ -23,6 +23,7 @@ Use stage `050` when the artifact belongs to implementation design.
 If the user gave an explicit stage or file path, keep it.
 Use `<default-output-dir>/<stage-code>-rest-api-ir.json` for IR.
 Use `<default-output-dir>/<stage-code>-rest-api.md` for Markdown.
+Use `<default-output-dir>/<stage-code>-rest-api.adoc` for AsciiDoc.
 Use `references/rest-api-ir-schema.json`, `scripts/validate_json.py`, and `scripts/render_rest_api.py`.
 
 ## Hard Gate
@@ -30,13 +31,14 @@ Use `references/rest-api-ir-schema.json`, `scripts/validate_json.py`, and `scrip
 Always generate IR at `<default-output-dir>/<stage-code>-rest-api-ir.json`, even when the user asks only for Markdown.
 Always validate IR by running `python scripts/validate_json.py references/rest-api-ir-schema.json <default-output-dir>/<stage-code>-rest-api-ir.json`.
 If validation fails, fix IR and rerun validation until it passes.
-Do not render Markdown before validation passes.
+Do not render the human-readable artifact before validation passes.
 
 ## Workflow
 
 1. Build REST API IR JSON matching `references/rest-api-ir-schema.json`.
 2. Validate it with `python scripts/validate_json.py references/rest-api-ir-schema.json <default-output-dir>/<stage-code>-rest-api-ir.json`.
 3. Render Markdown from the validated IR with `python scripts/render_rest_api.py <default-output-dir>/<stage-code>-rest-api-ir.json > <default-output-dir>/<stage-code>-rest-api.md`.
+4. If the user asks for AsciiDoc or a before/after table, render AsciiDoc from the same validated IR with `python scripts/render_rest_api.py --diff-format paired --output-format adoc <default-output-dir>/<stage-code>-rest-api-ir.json > <default-output-dir>/<stage-code>-rest-api.adoc`.
 
 ## Contract Scope
 
@@ -159,6 +161,7 @@ Verify:
 - `diff.before.fields` contains no after-only field;
 - current `fields` contains no before-only field;
 - the IR passes `validate_json.py`.
+- AsciiDoc before/after output, when requested, is one document-level two-column `|===` table with `separator=!` and headers `Было` and `Стало`; use `!` cells so `|` inside source blocks cannot split cells; set `:max-width: 95%` once; keep only source blocks in data cells.
 
 ## Output
 
