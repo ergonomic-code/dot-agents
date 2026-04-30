@@ -596,6 +596,14 @@ def fenced_block(lines: list[str]) -> list[str]:
     return ["```text", *(lines or ["none"]), "```"]
 
 
+def source_block(lines: list[str]) -> list[str]:
+    content = lines or ["none"]
+    delimiter = "----"
+    while delimiter in content:
+        delimiter += "-"
+    return ["[source,text]", delimiter, *content, delimiter]
+
+
 def paired_block(title: str, before_lines: list[str], after_lines: list[str]) -> str:
     return "\n".join([
         title,
@@ -608,6 +616,33 @@ def paired_block(title: str, before_lines: list[str], after_lines: list[str]) ->
         "",
         *fenced_block(after_lines),
     ])
+
+
+def adoc_paired_row(title: str, before_lines: list[str], after_lines: list[str]) -> list[str]:
+    return [
+        "a!",
+        *source_block(before_lines),
+        "",
+        "a!",
+        *source_block(after_lines),
+    ]
+
+
+def adoc_paired_table(rows: list[list[str]]) -> list[str]:
+    lines = [
+        '[cols="1,1",separator=!,options="header"]',
+        "|===",
+        "! Было ! Стало",
+    ]
+    for row in rows:
+        lines.append("")
+        lines.extend(row)
+    lines.append("|===")
+    return lines
+
+
+def adoc_plain_block(title: str, lines: list[str]) -> str:
+    return "\n".join([title, "", *source_block(lines)])
 
 
 
@@ -774,6 +809,67 @@ def render_paired_document(doc: dict[str, Any]) -> str:
         parts.append(shared_notes)
     return "\n\n".join(parts) + "\n"
 
+
+def render_adoc_paired_document(doc: dict[str, Any]) -> str:
+    before_doc, after_doc = normalize_pair_document(doc)
+    title = after_doc.get("title", doc.get("title", "API"))
+    rows: list[list[str]] = []
+
+    before_endpoints = before_doc.get("endpoints", [])
+    after_endpoints = after_doc.get("endpoints", [])
+    for index, endpoint in enumerate(after_endpoints):
+        before_endpoint = before_endpoints[index] if index < len(before_endpoints) else None
+        before_lines = render_endpoint_gutter_code_block(before_endpoint) if before_endpoint else ["none"]
+        after_lines = render_endpoint_gutter_code_block(endpoint) if endpoint else ["none"]
+        rows.append(adoc_paired_row(f'Method {endpoint["method"]} {endpoint["path"]}', before_lines, after_lines))
+
+    before_defs = {definition_pair_key(kind, definition): definition for kind, definition in ordered_definitions(before_doc)}
+    for kind, definition in ordered_definitions(after_doc):
+        before_definition = before_defs.get(definition_pair_key(kind, definition))
+        if kind == "model":
+            row_title = f'Model {definition["name"]}'
+            before_lines = render_model_gutter_code_block(before_definition) if before_definition else ["none"]
+            after_lines = render_model_gutter_code_block(definition)
+        elif kind == "sumType":
+            row_title = f'Model {definition["name"]}'
+            before_lines = render_sum_type_gutter_lines(before_definition) if before_definition else ["none"]
+            after_lines = render_sum_type_gutter_lines(definition)
+        else:
+            row_title = f'Enum {definition["name"]}'
+            before_lines = render_enum_gutter_code_block(before_definition) if before_definition else ["none"]
+            after_lines = render_enum_gutter_code_block(definition)
+        rows.append(adoc_paired_row(row_title, before_lines, after_lines))
+
+    if after_doc.get("sharedNotes"):
+        rows.append(adoc_paired_row(
+            "Shared Notes",
+            render_shared_notes_gutter_code_block(before_doc.get("sharedNotes", [])),
+            render_shared_notes_gutter_code_block(after_doc.get("sharedNotes", [])),
+        ))
+
+    parts = [f"= {title}", ":max-width: 95%", "", *adoc_paired_table(rows)]
+    return "\n".join(parts) + "\n"
+
+
+def render_adoc_plain_document(doc: dict[str, Any], marked: bool = False) -> str:
+    parts: list[str] = [f'= {doc.get("title", "API")}']
+    for endpoint in doc.get("endpoints", []):
+        code_block = render_endpoint_gutter_code_block(endpoint) if marked else render_endpoint_code_block(endpoint)
+        parts.append(adoc_plain_block(f'== Method {endpoint["method"]} {endpoint["path"]}', code_block))
+    for model in doc.get("models", []):
+        code_block = render_model_gutter_code_block(model) if marked else render_model_code_block(model)
+        parts.append(adoc_plain_block(f'== Model {model["name"]}', code_block))
+    for sum_type in doc.get("sumTypes", []):
+        code_block = render_sum_type_gutter_lines(sum_type) if marked else render_sum_type_lines(sum_type)
+        parts.append(adoc_plain_block(f'== Model {sum_type["name"]}', code_block))
+    for enum_block in doc.get("enums", []):
+        code_block = render_enum_gutter_code_block(enum_block) if marked else render_enum_code_block(enum_block)
+        parts.append(adoc_plain_block(f'== Enum {enum_block["name"]}', code_block))
+    if doc.get("sharedNotes"):
+        code_block = render_shared_notes_gutter_code_block(doc["sharedNotes"]) if marked else render_shared_notes_code_block(doc["sharedNotes"])
+        parts.append(adoc_plain_block("== Shared Notes", code_block))
+    return "\n\n".join(parts) + "\n"
+
 def render_model_block(
     model: dict[str, Any],
     paired: bool,
@@ -874,7 +970,7 @@ def resolve_render_mode(doc: dict[str, Any], diff_format: str) -> str:
     return "marked"
 
 
-def render_document(doc: dict[str, Any], diff_format: str) -> str:
+def render_markdown_document(doc: dict[str, Any], diff_format: str) -> str:
     mode = resolve_render_mode(doc, diff_format)
     if mode == "paired":
         return render_paired_document(doc)
@@ -883,23 +979,44 @@ def render_document(doc: dict[str, Any], diff_format: str) -> str:
     return render_plain_document(doc, paired=False, marked=True)
 
 
+def render_adoc_document(doc: dict[str, Any], diff_format: str) -> str:
+    mode = resolve_render_mode(doc, diff_format)
+    if mode == "paired":
+        return render_adoc_paired_document(doc)
+    if mode == "none":
+        return render_adoc_plain_document(project(doc, "after", preserve_meta=False), marked=False)
+    return render_adoc_plain_document(doc, marked=True)
+
+
+def render_document(doc: dict[str, Any], diff_format: str, output_format: str = "markdown") -> str:
+    if output_format == "adoc":
+        return render_adoc_document(doc, diff_format=diff_format)
+    return render_markdown_document(doc, diff_format=diff_format)
+
+
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Render REST API IR JSON to Markdown.")
+    parser = argparse.ArgumentParser(description="Render REST API IR JSON.")
     parser.add_argument("input", type=Path, help="Path to IR JSON file")
-    parser.add_argument("output", type=Path, nargs="?", help="Output Markdown path. Defaults to stdout.")
+    parser.add_argument("output", type=Path, nargs="?", help="Output path. Defaults to stdout.")
     parser.add_argument(
         "--diff-format",
         choices=["auto", "none", "marked", "paired"],
         default="auto",
         help="How to render changes. 'auto' uses document.changeMode.",
     )
+    parser.add_argument(
+        "--output-format",
+        choices=["markdown", "adoc"],
+        default="markdown",
+        help="Output format.",
+    )
     args = parser.parse_args()
     doc = load_json(args.input)
-    markdown = render_document(doc, diff_format=args.diff_format)
+    rendered = render_document(doc, diff_format=args.diff_format, output_format=args.output_format)
     if args.output:
-        args.output.write_text(markdown, encoding="utf-8")
+        args.output.write_text(rendered, encoding="utf-8")
     else:
-        print(markdown, end="")
+        print(rendered, end="")
     return 0
 
 
