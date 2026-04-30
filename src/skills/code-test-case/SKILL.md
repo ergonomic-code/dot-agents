@@ -89,7 +89,8 @@ If update mode input contains zero or multiple `Feature`s for one existing Kotli
 - Do not weaken assertions only to keep tests green unless the user explicitly asked for that.
 - In update mode, do not replace implemented bodies with placeholder comments.
 - In production code, allow only DTO adjustments needed for test compilation.
-- Do not change production business logic, control flow, persistence, external integrations, endpoint contracts, or validation rules under this skill.
+- Do not edit any non-DTO production artifact under this skill unless the user explicitly requested broader production-code changes.
+- This ban includes business logic, control flow, persistence, external integrations, endpoint contracts, validation rules, migrations, configuration, generated/static API docs, controllers, services, repositories, and clients.
 - Keep DTO adjustments compile-oriented and minimal: field/constructor/signature alignment only, without semantic behavior changes.
 - If tests require non-DTO production changes to compile or pass, stop and report the blocker instead of changing production code.
 - By default, after implementing a new or aligned case, the test should compile. The test may still fail for any reason until production behavior is aligned.
