@@ -5,6 +5,7 @@
 - `Scenario` checks a representative branch of that condition set.
 - All meaningful branch differences are in `Given`.
 - `When` describes the action on the SUT.
+- Composite flows split sequential actions across `When` and following `And`.
 - `Then` describes observable results.
 - No assertion depends on internal implementation instead of contract.
 - No precondition is irrelevant to the outcome.
