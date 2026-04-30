@@ -10,5 +10,6 @@ Describe setup with concrete domain objects, states, and literals only when they
 Put the action under test in `When`.
 Prefer one action in `When`.
 Add a second action only for explicit read-after-write or another essential composite flow.
+In a composite flow, put the first action in `When` and each later action in following `And`.
 Put only observable results, side effects, rejections, ordering guarantees, and cardinality guarantees in `Then` and following `And`.
 Use `And` only to continue the previous step type.
