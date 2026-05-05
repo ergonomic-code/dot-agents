@@ -20,12 +20,6 @@
   If an expected value is derived, compute it in `Given`.
   If a literal is unavoidable, declare it in `Given` with a short rationale comment.
 
-## Test naming
-
-- Avoid technical terms or implementations details in tests names.
-  Prefer business and end user language.
-- Try to name tests as specification of SUT's behavior or result property.
-
 ## Test data
 
 - In test prefer `!!` to null handling.
