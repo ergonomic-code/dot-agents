@@ -10,6 +10,7 @@ Read `framework_checkout_root/src/conventions/feature-stage-skill.md`.
 Read `../write-grekhin-test-case/SKILL.md`.
 Read the format reference at `../../artifacts/formal-requirements-format-v0.1/ARTIFACT.md`.
 Read `../../artifacts/formal-requirements-format-v0.1/references/source-reference.md`.
+When current cases come from test code and anchors must be recovered, use `../reverse-engineer-test-case/SKILL.md` anchor rules.
 
 ## Feature-stage bindings
 
@@ -44,6 +45,7 @@ Prefer `added` for new obligations; keep old cases unchanged unless they contrad
 ## Workflow
 
 1. If the output artifact already exists, read it before editing.
+   - Treat it as previous output, not as current source cases, unless the user explicitly makes it the source.
 2. Read the feature brief and extract the target behavior.
    - Prefer explicit acceptance scenarios, business rules, invariants, compatibility constraints, and error conditions.
    - Separate independent behavior properties into separate `Rule`s.
@@ -56,8 +58,9 @@ Prefer `added` for new obligations; keep old cases unchanged unless they contrad
    - Merge duplicates and keep one `Scenario` per materially distinct branch.
    - Prefer abstract contract wording over literal sample data unless exact values are behaviorally required.
 5. Normalize current relevant cases if they exist.
+   - If current cases come from test code, recover current `Feature` / `Rule` / `Scenario` anchors from the source before reusing an existing output artifact.
    - If they are not already in artifact form, recover stable `Feature` / `Rule` / `Scenario` anchors without changing meaning.
-   - If they are already in artifact form, treat their wording as canonical and keep it verbatim when reusing or citing them.
+   - If they are already in artifact form and are the current source cases, treat their wording as canonical and keep it verbatim when reusing or citing them.
    - Treat any optional scenario source reference as metadata, not as part of the canonical case wording.
    - Use the recovered anchor as the source reference in `changed` cases.
 6. Compare current cases against the target case set with preservation bias.
@@ -150,6 +153,7 @@ Check all of these:
 - every `changed` case has a reason and a concrete delta list;
 - no current case is `changed` only because it is related to a new obligation, except baseline save/return cases for model field-set changes;
 - when a changed case keeps the same behavioral obligation, the old `Rule` is preserved;
+- when current cases are source-derived, every reused source case `Feature` / `Rule` / `Scenario` anchor matches the current source;
 - every reused source case `Feature` / `Rule` / `Scenario` anchor is copied verbatim;
 - every `unchanged` case body is copied verbatim from the source;
 - every `changed` case keeps the `Rule` name as close as possible to the source unless the old wording is no longer correct;
