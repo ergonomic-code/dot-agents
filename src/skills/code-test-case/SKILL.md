@@ -9,6 +9,7 @@ Read `../../artifacts/formal-requirements-format-v0.1/ARTIFACT.md`.
 Read `../../artifacts/formal-requirements-format-v0.1/references/mode-full.md`.
 Read `../../artifacts/formal-requirements-format-v0.1/references/source-reference.md`.
 Read `../../conventions/tests.md`.
+Read `../../conventions/test-naming.md`.
 
 Accept one `formal-requirements-format-v0.1` artifact in `full` mode and an optional existing Kotlin JUnit 5 test file.
 Ignore one optional source reference line immediately under each `Scenario` per `../../artifacts/formal-requirements-format-v0.1/references/source-reference.md`.
@@ -50,7 +51,7 @@ If update mode input contains zero or multiple `Feature`s for one existing Kotli
 ## Rendering
 
 - Import `org.junit.jupiter.api.DisplayName` and `org.junit.jupiter.api.Test`.
-- Write class `@DisplayName` from the raw feature text without `Feature:`.
+- Apply `../../conventions/test-naming.md` for class `@DisplayName`, method `@DisplayName`, and `test_<slug>` names.
 - Resolve class names from code symbols when possible. Use `UpperCamelCase`.
 - For non-API features use `<SUT>Test`.
 - For features starting with `Метод API`, resolve the handler by HTTP method and path. If it delegates to one `xxxOp`, use `XxxApiTest`; otherwise use the handler method name as `XxxApiTest`. If resolution is ambiguous, stop.
@@ -70,18 +71,8 @@ If update mode input contains zero or multiple `Feature`s for one existing Kotli
 
 ## Method Names
 
-- Do not use Kotlin backticked test method names.
-- Always put human-readable case text into method `@DisplayName`.
-- Copy `Rule` and `Scenario` header text verbatim after removing only the keyword prefix, one separator colon, and surrounding whitespace.
-- Do not paraphrase, normalize, translate, shorten, re-punctuate, or inflect `Rule` or `Scenario` text in display names.
-- For one-scenario rules, set method `@DisplayName` to `<rule> :: <scenario>` unless the scenario text only repeats the rule.
-- For multi-scenario rules with `@Nested`, put the rule text into nested class `@DisplayName` and the scenario text into method `@DisplayName`.
-- Use the exact separator ` :: `. If the source `Rule` or `Scenario` already contains `::`, stop and report ambiguity.
-- Name test methods as `test_<slug>`.
-- Build `<slug>` as a lowercase ASCII `snake_case` summary of `2`-`5` words.
-- For one-scenario rules, summarize the rule in `<slug>`.
-- For multi-scenario rules, summarize the scenario in `<slug>`.
-- If two generated method names collide, extend the slug without changing display text.
+Follow `../../conventions/test-naming.md`.
+For this skill, use the formal case mapping rules.
 
 ## Output Discipline
 
@@ -95,4 +86,4 @@ If update mode input contains zero or multiple `Feature`s for one existing Kotli
 - If tests require non-DTO production changes to compile or pass, stop and report the blocker instead of changing production code.
 - By default, after implementing a new or aligned case, the test should compile. The test may still fail for any reason until production behavior is aligned.
 
-Before finishing, read `../../conventions/test-implementation-checklist.md`, fix any failed item, and check: default scope produced exactly one scenario unless the user explicitly requested more, one class per selected feature, one method per selected scenario, class `@DisplayName` stripped of `Feature:`, methods are named `test_<slug>`, display names copy `Rule` and `Scenario` text verbatim, new or aligned tests compile, generate mode returns only Kotlin, and update mode accepts exactly one feature per run and preserves the existing container code while editing in place.
+Before finishing, read `../../conventions/test-implementation-checklist.md`, fix any failed item, and check: default scope produced exactly one scenario unless the user explicitly requested more, one class per selected feature, one method per selected scenario, naming follows `../../conventions/test-naming.md`, new or aligned tests compile, generate mode returns only Kotlin, and update mode accepts exactly one feature per run and preserves the existing container code while editing in place.
