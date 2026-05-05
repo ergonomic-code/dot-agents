@@ -96,6 +96,7 @@ If the user did not request a container format, infer it from the explicit outpu
 Otherwise default to AsciiDoc.
 - For Markdown files, use Markdown headings.
 - For AsciiDoc files, use AsciiDoc headings.
+- For AsciiDoc files, place `:max-width: 95%` once immediately after the first section heading.
 - If an output path is resolved, write only the artifact text to that file.
 - Otherwise return only the artifact text.
 - When source-location metadata is available for a source-derived case, render exactly one source reference using `../../artifacts/formal-requirements-format-v0.1/references/source-reference.md`.
@@ -157,6 +158,7 @@ Check all of these:
 - in AsciiDoc, every scenario is rendered in its own `[source,gherkin]` + `....` block and no block contains several scenarios;
 - every removed case is in `short` mode and every added, changed, or unchanged case is in `full` mode;
 - when output is AsciiDoc, every `changed` case is rendered in the `|===` table shape with `a|` content cells, the `Было` cell contains the source reference when available, and the `Стало` cell does not repeat the old case reference or contain the source reference;
+- when output is AsciiDoc, `:max-width: 95%` appears exactly once immediately after the first section heading;
 - when explicit source-location metadata is available, every `removed`, `changed`, or `unchanged` case has exactly one source reference rendered per `../../artifacts/formal-requirements-format-v0.1/references/source-reference.md`;
 - when the output is Markdown or AsciiDoc and the artifact output path is explicit or inferable, the source reference uses the human clickable form with visible text `<commit>:<file-name>:<line-num>` and a target resolved relative to the target artifact file directory;
 - when the human clickable form cannot be rendered safely, the machine form is used instead of inventing or dropping the source reference;
