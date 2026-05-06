@@ -40,6 +40,15 @@
 - `*Assertions` hold reusable domain assertions.
 - Helper methods such as `*ForResponse` and `*ForError` may be used inside typed boundary helpers to separate reusable operation-level verification paths from test cases.
 
+## Observation
+
+- Verify behavior through the same architectural boundary as the test kind.
+- Boundary-test actions still use boundary helpers.
+- Boundary-test observation may use typed `*TestApi` helpers to fetch required data.
+- For observation-only reads, `*TestApi` may call controller methods directly; if not practical, call operation methods; otherwise call resource methods.
+- Do not verify boundary-test outcomes by reading database state directly.
+- Direct database reads are allowed only to verify async work scheduling when no standard observation API exists.
+
 ## Fixture and helper structure
 
 - Extract all fixture code from test case classes into helpers such as `*ObjectMother`, `*FixturePresets`, `*TestApi`, `*HttpApi`, `*Assertions`.
