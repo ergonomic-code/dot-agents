@@ -34,7 +34,6 @@
 12. Assemble each `structure-chart/v1` YAML at the resolved YAML path for that entry point.
 13. Validate each generated YAML path.
 14. Generate the matching Mermaid file next to each YAML path.
-15. If `index.md` update is required by `./references/output-layout.md`, add or refresh one feature-index row per created bundle directory.
 
 ## Reverse-Pass Subagent Prompt Template
 

@@ -12,7 +12,6 @@ If it conflicts with this skill or the feature-brief structure, keep this skill.
 Read `framework_checkout_root/src/conventions/feature-workdir.md`.
 Read `framework_checkout_root/src/conventions/feature-stage-skill.md`.
 Read `./references/feature-brief-template.md`.
-Read `./references/feature-dir-index-template.md`.
 Read `./references/feature-dir-progress-template.md`.
 
 ## Feature-stage bindings
@@ -25,7 +24,7 @@ Read `./references/feature-dir-progress-template.md`.
 
 - Treat an explicit feature directory or brief path as the target.
 - Otherwise use the shared feature-stage lifecycle for the default stage `010` brief.
-- When this run creates a new feature directory, also create `<feature-dir>/index.md` and `<feature-dir>/progress.md` from the local templates.
+- When this run creates a new feature directory, also create `<feature-dir>/progress.md` from the local template.
 - Create or update the resolved brief path.
 - Build context only from the user request, explicitly referenced files, files already inside the target feature directory when it exists, and interview answers.
 - Do not read code, OpenAPI, tests, or contracts to fill missing requirements.

@@ -11,4 +11,3 @@
 7. Assemble `structure-chart/v1` YAML at the resolved YAML path.
 8. Validate the generated YAML path.
 9. Generate the matching Mermaid file at the resolved `.mmd` path.
-10. If `index.md` update is required by `./references/output-layout.md`, add or refresh the bundle-directory row in the feature index.

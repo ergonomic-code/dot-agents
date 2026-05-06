@@ -1,7 +1,7 @@
 # Output Layout
 
-Use `framework_checkout_root/src/conventions/feature-stage-skill.md` for explicit-path handling, feature-dir binding, write-before-sync order, and optional overview-file sync.
-This file binds only the chart-specific output container, stage-code use, bundle layout, and `index.md` policy.
+Use `framework_checkout_root/src/conventions/feature-stage-skill.md` for explicit-path handling, feature-dir binding, and write-before-sync order.
+This file binds only the chart-specific output container, stage-code use, and bundle layout.
 
 - default feature-dir output container: `<active-feature-dir>/020-structure-charts`
 - non-feature default output container: `./tmp/structure-charts`
@@ -19,8 +19,3 @@ This file binds only the chart-specific output container, stage-code use, bundle
 - Inside a bundle directory, write `<slug>.yaml` and `<slug>.mmd`.
 - If an explicit output file path is used, keep that file path and place the paired artifact next to it with the same basename and the other extension.
 - If multiple charts are needed, create one bundle directory per selected entry point under the chart root directory.
-- If the active feature directory is resolved, the default chart root directory was used, and `<active-feature-dir>/index.md` exists, update `index.md` in the same step.
-- In `index.md`, add or refresh exactly one row per created bundle directory.
-- Use a relative Markdown link to the bundle directory.
-- Describe the bundle as one structure-chart artifact set containing validated YAML and Mermaid for the corresponding entry point.
-- Do not add duplicate rows for the same bundle directory.
