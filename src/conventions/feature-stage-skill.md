@@ -10,7 +10,6 @@ Keep only these bindings in the skill or its local references:
 - default feature-dir output path or output container;
 - optional non-feature default output container;
 - optional `progress.md` checklist item;
-- optional `index.md` policy;
 - optional stage `010` bootstrap allowance.
 Keep task-specific logic, content rules, and validations in the skill.
 
@@ -28,5 +27,4 @@ Keep task-specific logic, content rules, and validations in the skill.
 
 - If an output path is resolved, write the artifact before any overview-file sync.
 - If the skill binds a `progress.md` checklist item, the active feature directory is resolved, an output path is resolved, and `<feature-dir>/progress.md` exists, check that item when it is present, including when nested, and append exactly one Markdown link to the written artifact using the path relative to `progress.md` and the artifact file name as the link text.
-- If the skill binds an `index.md` policy, the active feature directory is resolved, and `<feature-dir>/index.md` exists, apply that policy only after the write succeeds.
-- If no output path is resolved, do not update `progress.md` or `index.md`.
+- If no output path is resolved, do not update `progress.md`.
