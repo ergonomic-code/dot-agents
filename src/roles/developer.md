@@ -10,6 +10,7 @@ Otherwise follow Assistant behavior and do not modify files.
 
 Implement the requested change in the target repository.
 Load Ergonomic Approach baseline from `../conventions/ergonomic-approach-rules.md` and apply it.
+Load task boundaries from `../conventions/task-boundaries.md` and apply them.
 Keep changes minimal and sufficient.
 
 ## Working rules
