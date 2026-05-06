@@ -425,9 +425,25 @@ def render_errors(errors: list[tuple[str, str]]) -> None:
         print(f"{i}. {path}: {message}")
 
 
+def validate_custom_rules(document: object, mode: str) -> list[tuple[str, str]]:
+    errors: list[tuple[str, str]] = []
+    if mode == "strict":
+        errors.extend(validate_resolved_ref_ids(document))
+    errors.extend(validate_marked_ref_ids(document))
+    errors.extend(validate_marked_block_changes(document))
+    errors.extend(validate_marked_added_ref_targets(document))
+    return errors
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         description="Validate JSON document against JSON Schema draft 2020-12.",
+    )
+    parser.add_argument(
+        "--mode",
+        choices=("strict", "nonstrict"),
+        default="strict",
+        help="strict rejects unresolved refId values; nonstrict allows unresolved model, enum, sum-type, or endpoint refs",
     )
     parser.add_argument("schema", type=Path, help="Path to JSON Schema file")
     parser.add_argument("document", type=Path, help="Path to JSON document file")
@@ -454,10 +470,7 @@ def main() -> int:
             render_errors(rendered)
             return 1
 
-        custom_errors = validate_resolved_ref_ids(document)
-        custom_errors.extend(validate_marked_ref_ids(document))
-        custom_errors.extend(validate_marked_block_changes(document))
-        custom_errors.extend(validate_marked_added_ref_targets(document))
+        custom_errors = validate_custom_rules(document, args.mode)
         if custom_errors:
             render_errors(custom_errors)
             return 1

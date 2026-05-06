@@ -29,7 +29,8 @@ Use `references/rest-api-ir-schema.json`, `scripts/validate_json.py`, and `scrip
 ## Hard Gate
 
 Always generate IR at `<default-output-dir>/<stage-code>-rest-api-ir.json`, even when the user asks only for Markdown.
-Always validate IR by running `python scripts/validate_json.py references/rest-api-ir-schema.json <default-output-dir>/<stage-code>-rest-api-ir.json`.
+Validate IR in strict mode by running `python scripts/validate_json.py references/rest-api-ir-schema.json <default-output-dir>/<stage-code>-rest-api-ir.json`.
+Use `--mode nonstrict` only when unresolved model, enum, named sum-type, or endpoint references are intentional external or future targets.
 If validation fails, fix IR and rerun validation until it passes.
 Do not render the human-readable artifact before validation passes.
 

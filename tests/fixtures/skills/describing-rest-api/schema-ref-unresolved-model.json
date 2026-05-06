@@ -1,0 +1,34 @@
+{
+  "version": "1",
+  "changeMode": "none",
+  "endpoints": [
+    {
+      "id": "get-user",
+      "method": "GET",
+      "path": "/users/{id}",
+      "responses": [
+        {
+          "status": 200,
+          "body": {
+            "kind": "type",
+            "type": {
+              "kind": "ref",
+              "ref": "ExternalUser",
+              "refId": "model.external.user"
+            }
+          }
+        },
+        {
+          "status": 400,
+          "body": {
+            "kind": "none"
+          },
+          "description": "Invalid request"
+        }
+      ]
+    }
+  ],
+  "models": [],
+  "enums": [],
+  "sharedNotes": []
+}

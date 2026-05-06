@@ -70,6 +70,33 @@ def test_validate_marked_ref_ids_allows_rename_with_stable_refid():
     assert errors == []
 
 
+def test_validate_custom_rules_mode_controls_unresolved_ref_ids():
+    validator = _load_validator_module()
+    document = _load_fixture("schema-ref-unresolved-model.json")
+
+    assert validator.validate_custom_rules(document, "strict") == [
+        (
+            "$.endpoints[0].responses[0].body.type.refId",
+            "unresolved refId 'model.external.user' for ref 'ExternalUser'",
+        ),
+    ]
+    assert validator.validate_custom_rules(document, "nonstrict") == []
+
+
+def test_validate_custom_rules_nonstrict_keeps_marked_refid_errors():
+    validator = _load_validator_module()
+    document = _load_fixture("marked-invalid-missing-refid.json")
+
+    errors = validator.validate_custom_rules(document, "nonstrict")
+
+    assert errors == [
+        (
+            "$.endpoints[0].request.body.type.refId",
+            "missing required refId for marked-mode endpoint body (slot=request)",
+        ),
+    ]
+
+
 def test_validate_marked_block_changes_rejects_added_sum_type_without_change_marker():
     validator = _load_validator_module()
     document = _load_fixture("marked-invalid-added-sum-type-without-change.json")
