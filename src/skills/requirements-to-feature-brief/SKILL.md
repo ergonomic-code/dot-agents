@@ -55,5 +55,5 @@ Read `./references/feature-dir-progress-template.md`.
 - Describe the delta from the current product state, not the whole feature area.
 - Keep the brief at UI and observable system behavior level.
 - Keep implementation design out of the brief unless the requirement explicitly makes it user-visible.
-- Acceptance tests must describe observable behavior in domain language.
+- Acceptance checks must describe observable behavior in domain language.
 - Cover the main flow, invariants, fallbacks, and important edge cases.

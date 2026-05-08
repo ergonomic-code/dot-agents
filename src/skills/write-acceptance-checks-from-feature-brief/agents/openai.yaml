@@ -1,0 +1,4 @@
+interface:
+  display_name: "Write Acceptance Checks"
+  short_description: "Write acceptance verification checks from a feature brief"
+  default_prompt: "Use $write-acceptance-checks-from-feature-brief to derive concise `verification-check-format-v0.1` checks from a feature brief or subfeature brief."

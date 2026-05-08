@@ -36,18 +36,11 @@ This fenced block is the target file content.
 
 1. <что ещё нужно уточнить>
 
-## Приёмочные тесты
+## Приёмочные проверки
 
-```gherkin
-Feature: <краткое имя поведения>
-
-  Rule: <ключевое правило>
-
-    Scenario: <наблюдаемый сценарий>
-      Given ...
-      When ...
-      Then ...
-```
+1. <SUT>
+   1. <проверяемое свойство>
+      1. <вариант проверки, если нужен>
 ~~~
 
 ## Agent Rules
@@ -55,7 +48,7 @@ Feature: <краткое имя поведения>
 The rules below guide how to fill the template.
 They are not part of the output file.
 
-- Core sections are mandatory: `Контекст`, `Изменения в поведении системы`, `Бизнес-правила`, `Приёмочные тесты`.
+- Core sections are mandatory: `Контекст`, `Изменения в поведении системы`, `Бизнес-правила`, `Приёмочные проверки`.
 - `Изменения в UI`, `Термины`, and `Открытые вопросы` are optional but preferred when they add clarity.
 - Write only in end-user domain language.
 - Describe only behavior a user can trigger or observe through UI.
@@ -63,4 +56,5 @@ They are not part of the output file.
 - Do not add endpoint lists, API contracts, persistence details, or implementation design.
 - Keep scope boundaries explicit.
 - Put unresolved but non-blocking gaps into `Открытые вопросы`.
-- Gherkin must stay observable and non-technical.
+- `Приёмочные проверки` use only short checks: `SUT`, then required properties, then optional variants.
+- Do not put `Given` / `When` / `Then` in the feature brief.
