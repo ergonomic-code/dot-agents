@@ -1,14 +1,17 @@
 # Source Reference
 
-Use this reference when a scenario must preserve the source location of a test or another evidence line.
+Use this reference when a check must preserve the source location of a test or another evidence line.
 
-Attach at most one source reference to one `Scenario`.
+Attach at most one source reference to one `Check` block.
 If the source location is unknown, omit the reference.
 
 ## Fields
 
-- `<commit>`: the concrete source revision. Prefer an explicitly provided revision. Otherwise prefer the current checked-out `HEAD` short hash.
-- `<relative-file-path>`: the source file path relative to the target artifact file directory when that directory is known. Otherwise use the repo-relative source file path.
+- `<commit>`: the concrete source revision.
+Prefer an explicitly provided revision.
+Otherwise prefer the current checked-out `HEAD` short hash.
+- `<relative-file-path>`: the source file path relative to the target artifact file directory when that directory is known.
+Otherwise use the repo-relative source file path.
 - `<file-name>`: the basename of `<relative-file-path>`.
 - `<line-number>`: the source test method declaration line or another explicitly provided stable source line.
 

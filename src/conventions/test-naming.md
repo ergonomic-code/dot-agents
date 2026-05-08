@@ -21,12 +21,17 @@ Use surrounding tests only after these rules to preserve local mechanics, import
 
 ## Formal case mapping
 
-- For formal case artifacts, write class `@DisplayName` from raw `Feature` text without `Feature:`.
-- Copy `Rule` and `Scenario` header text verbatim after removing only the keyword prefix, one separator colon, and surrounding whitespace.
-- Do not paraphrase, normalize, translate, shorten, re-punctuate, or inflect `Rule` or `Scenario` text in display names.
-- For one-scenario rules, set method `@DisplayName` to `<rule> :: <scenario>` unless the scenario text only repeats the rule.
-- For multi-scenario rules with `@Nested`, put the rule text into nested class `@DisplayName` and the scenario text into method `@DisplayName`.
+- Use this section when coding from formal case artifacts, aligning existing tests to formal case names, or preserving already formal test anchors.
+- For existing tests without a formal artifact, first recover `SUT`, `Check`, and optional `Variant` from explicit anchors, source references, enclosing group names, or verified behavior.
+- After recovery, treat recovered `SUT`, `Check`, and `Variant` as source headers for this section.
+- If formal mapping applies and `SUT` or `Check` cannot be recovered confidently, stop and report the missing anchor.
+- For formal case artifacts, write class `@DisplayName` from raw `SUT` text without `SUT:`.
+- Copy `Check` and optional `Variant` header text verbatim after removing only the keyword prefix, one separator colon, and surrounding whitespace.
+- Do not paraphrase, normalize, translate, shorten, re-punctuate, or inflect `Check` or `Variant` text in display names.
+- If `Variant` is absent, set method `@DisplayName` to `<check>`.
+- If `Variant` is present, set method `@DisplayName` to `<check> :: <variant>`.
+- Use `@Nested` only when the existing file already groups related cases this way.
 - Use the exact separator ` :: `.
-- If the source `Rule` or `Scenario` already contains `::`, stop and report ambiguity.
-- For one-scenario rules, summarize the rule in `<slug>`.
-- For multi-scenario rules, summarize the scenario in `<slug>`.
+- If the source `Check` or `Variant` already contains `::`, stop and report ambiguity.
+- If `Variant` is absent, summarize the check in `<slug>`.
+- If `Variant` is present, summarize the check and variant in `<slug>`.

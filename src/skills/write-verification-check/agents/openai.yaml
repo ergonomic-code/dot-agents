@@ -1,0 +1,4 @@
+interface:
+  display_name: "Write Verification Check"
+  short_description: "Write concise Given/When/Then verification checks"
+  default_prompt: "Use $write-verification-check to write or normalize `verification-check-format-v0.1` checks in `full` mode with abstract, contract-based wording and without unnecessary concrete values."
