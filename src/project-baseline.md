@@ -6,6 +6,13 @@ Be **maximally laconic** in chat and generated artifacts.
 Prefer shorter wording and fewer sections.
 Omit explanations unless they change correctness.
 
+## Explicit Planning
+
+If the user asks to start with a plan, provide the intended plan in chat after required role, skill, and context loading, then stop.
+Wait for explicit permission to continue.
+Do not edit files or run mutating commands in that turn.
+A tool task list does not satisfy the request.
+
 ## Context
 
 - Use resolved framework values from the host context.
