@@ -34,10 +34,10 @@ Use this rule when the task may create files or depends on feature-local context
 
 - Use the file name prefix as the feature stage code inside the feature workdir.
 - `010` means requirements preparation.
-- `020` means mapping requirements to production code, analyzing the current implementation, and listing current test cases.
-- `030` means optional preliminary-refactoring review and follow-up fixes produced from that analysis.
-- `040` means test-case refresh.
-- `050` means implementation design.
-- `060` means test-case implementation.
+- Standard `010` artifacts are `010-feature-brief.md` and other `010-*` requirement files.
+- `020` means current code analysis.
+- Standard `020` artifacts are `020-api-current.md`, `020-test-cases-current.md`, `020-sut-acceptance-criteria-current.adoc`, `020-model-current.md`, `020-persistence-current.md`, and `020-schema.md`.
+- `030` means implementation design.
+- Standard `030` artifacts are `030-api-new.adoc`, `030-test-cases-new.adoc`, `030-model-new.md`, `030-persistence-new.md`, and `030-schema.md`.
 - If a skill defines a default file name in the feature workdir, prefix it with the matching stage code unless the user gave an explicit path.
 - If more than one stage is plausible, use the earliest stage that still matches the artifact purpose.

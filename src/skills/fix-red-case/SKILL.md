@@ -16,8 +16,8 @@ Do not edit tests, test fixtures, test data, assertions, display names, test ann
 
 1. Reproduce or inspect the failing selected test and identify the current failure cause.
 2. Resolve the active feature directory via `feature-workdir.md`.
-   If resolved, read `<active-feature-dir>/progress.md` when present and every `<active-feature-dir>/050*` artifact that exists.
-   If not resolved or no `050*` artifact exists, continue from the failing test, current code, and loaded conventions.
+   If resolved, read `<active-feature-dir>/progress.md` when present and every `<active-feature-dir>/030*` artifact that exists.
+   If not resolved or no `030*` artifact exists, continue from the failing test, current code, and loaded conventions.
 3. Make only the smallest production-code change that addresses the currently observed failure cause and is consistent with the selected case, progress state, and feature design when they exist.
    Before editing production code, read `../../roles/developer.md` and follow it.
    Keep this skill's test-edit ban and selected-case scope as stricter constraints.

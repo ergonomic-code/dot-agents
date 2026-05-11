@@ -11,8 +11,8 @@ Read `framework_checkout_root/src/conventions/feature-stage-skill.md`.
 ## Feature-stage bindings
 
 - stage code: `020`
-- default feature-dir output path: `<feature-dir>/020-current-test-cases.md`
-- progress.md checklist item: `Составление списка текущих тест-кейсов`
+- default feature-dir output path: `<feature-dir>/020-test-cases-current.md`
+- progress.md checklist item: `Текущие тест-кейсы`
 
 Input is an existing structural diagram.
 Prefer `structure-chart/v1` YAML when available.

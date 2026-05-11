@@ -1,19 +1,18 @@
 ---
 name: map-requirements-to-code
-description: Map a feature brief or another requirements artifact to the concrete code anchors that already implement it or must change for it. Use when you need a `020-technical-mapping.adoc` artifact with a required two-column table that links domain terms and observable behavior to endpoints, handlers, operations, models, repositories, queries, tables, migrations, config, i18n keys, or future change points in code.
+description: Map a feature brief or another requirements artifact to concrete code anchors. Use when you need an auxiliary two-column requirements-to-code mapping that links domain terms and observable behavior to endpoints, handlers, operations, models, repositories, queries, tables, migrations, config, i18n keys, or future change points in code.
 ---
 
 # Map Requirements To Code
 
 Read `framework_checkout_root/src/conventions/feature-workdir.md`.
-Read `framework_checkout_root/src/conventions/feature-stage-skill.md`.
 
-## Feature-stage bindings
+## Feature-directory behavior
 
-- stage code: `020`
-- default feature-dir output path: `<feature-dir>/020-technical-mapping.adoc`
 - default source artifact: `<feature-dir>/010-feature-brief.md`
-- progress.md checklist item: `Маппинг требований на прод-код`
+- This auxiliary mapping has no standard stage output path.
+- Use an explicit output path when provided.
+- Otherwise return the artifact inline.
 
 ## Scope
 

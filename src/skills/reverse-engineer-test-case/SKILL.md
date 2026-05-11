@@ -10,6 +10,7 @@ Read `../../artifacts/verification-check-format-v0.1/references/layout.md` befor
 Read `../../artifacts/verification-check-format-v0.1/references/mode-full.md`.
 Read `../../artifacts/verification-check-format-v0.1/references/source-reference.md`.
 Read `../../artifacts/verification-check-format-v0.1/references/full-mode-checklist.md` only before final self-check.
+If writing current acceptance criteria from existing tests, read `references/current-acceptance-criteria.md` and use that layout instead of the normal check-format rendering.
 
 Accept exactly one selector set: one concrete test selector, one repo-relative test class path, or several repo-relative test class paths.
 A concrete selector is `path:line`, `path:testName`, or a unique test name.

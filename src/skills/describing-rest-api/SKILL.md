@@ -10,36 +10,38 @@ Read `framework_checkout_root/src/conventions/feature-stage-skill.md`.
 
 ## Feature-stage bindings
 
-- stage code: `020`, `030`, or `050` by artifact purpose
+- stage code: `020` or `030` by artifact purpose
 - default feature-dir output container: `<feature-dir>`
 - non-feature default output container: `./tmp`
+- progress.md checklist item: `Текущее API` for stage `020`; `Изменения API` for stage `030`
 
 Resolve `<default-output-dir>` via the shared feature-stage lifecycle and these bindings.
 Create that directory if missing.
-Use the feature stage code as the file name prefix.
-Use stage `020` for requirements-to-production-code mapping and other current-state analysis artifacts, including current HTTP contract analysis.
-Use stage `030` when the artifact belongs to optional preliminary-refactoring review or follow-up fixes after that analysis.
-Use stage `050` when the artifact belongs to implementation design.
+Use stage `020` for current relevant HTTP API analysis.
+Use stage `030` for HTTP API change design.
 If the user gave an explicit stage or file path, keep it.
-Use `<default-output-dir>/<stage-code>-rest-api-ir.json` for IR.
-Use `<default-output-dir>/<stage-code>-rest-api.md` for Markdown.
-Use `<default-output-dir>/<stage-code>-rest-api.adoc` for AsciiDoc.
+Use basename `020-api-current` for stage `020`.
+Use basename `030-api-new` for stage `030`.
+Use `<default-output-dir>/<basename>-ir.json` for IR.
+Use `<default-output-dir>/<basename>.md` for Markdown.
+Use `<default-output-dir>/<basename>.adoc` for AsciiDoc.
 Use `references/rest-api-ir-schema.json`, `scripts/validate_json.py`, and `scripts/render_rest_api.py`.
 
 ## Hard Gate
 
-Always generate IR at `<default-output-dir>/<stage-code>-rest-api-ir.json`, even when the user asks only for Markdown.
-Validate IR in strict mode by running `python scripts/validate_json.py references/rest-api-ir-schema.json <default-output-dir>/<stage-code>-rest-api-ir.json`.
+Always generate IR at `<ir-path>`, even when the user asks only for Markdown.
+Validate IR in strict mode by running `python scripts/validate_json.py references/rest-api-ir-schema.json <ir-path>`.
 Use `--mode nonstrict` only when unresolved model, enum, named sum-type, or endpoint references are intentional external or future targets.
 If validation fails, fix IR and rerun validation until it passes.
 Do not render the human-readable artifact before validation passes.
 
 ## Workflow
 
-1. Build REST API IR JSON matching `references/rest-api-ir-schema.json`.
-2. Validate it with `python scripts/validate_json.py references/rest-api-ir-schema.json <default-output-dir>/<stage-code>-rest-api-ir.json`.
-3. Render Markdown from the validated IR with `python scripts/render_rest_api.py <default-output-dir>/<stage-code>-rest-api-ir.json > <default-output-dir>/<stage-code>-rest-api.md`.
-4. If the user asks for AsciiDoc or a before/after table, render AsciiDoc from the same validated IR with `python scripts/render_rest_api.py --diff-format paired --output-format adoc <default-output-dir>/<stage-code>-rest-api-ir.json > <default-output-dir>/<stage-code>-rest-api.adoc`.
+1. Resolve `<basename>`, `<ir-path>`, and target artifact path.
+2. Build REST API IR JSON matching `references/rest-api-ir-schema.json`.
+3. Validate it with `python scripts/validate_json.py references/rest-api-ir-schema.json <ir-path>`.
+4. For stage `020` or a requested Markdown artifact, render Markdown with `python scripts/render_rest_api.py <ir-path> > <default-output-dir>/<basename>.md`.
+5. For stage `030`, a requested AsciiDoc artifact, or a before/after table, render AsciiDoc with `python scripts/render_rest_api.py --diff-format paired --output-format adoc <ir-path> > <default-output-dir>/<basename>.adoc`.
 
 ## Contract Scope
 
