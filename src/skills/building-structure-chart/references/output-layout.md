@@ -8,9 +8,8 @@ This file binds only the chart-specific output container, stage-code use, and bu
 - When the shared lifecycle keeps an explicit output directory, use it as the chart root directory.
 - Create the default chart root directory if it does not exist.
 - Use the feature stage code as the file name prefix.
-- Use stage `020` for requirements-to-production-code mapping and other current-state analysis artifacts.
-- Use stage `030` when the chart belongs to optional preliminary-refactoring review or follow-up fixes after that analysis.
-- Use stage `050` when the chart belongs to implementation design.
+- Use stage `020` for current implementation charts.
+- Use stage `030` only when the user explicitly asks for a target implementation-design chart.
 - If the user gave an explicit stage, keep it.
 - If chart output uses a directory layout, write each chart into its own bundle directory.
 - For an HTTP entry point, name the bundle directory as `<slug>`, where `<slug>` is `<lowercase-method>-<kebab-case-path>`.

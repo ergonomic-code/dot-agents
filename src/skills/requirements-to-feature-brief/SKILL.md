@@ -18,6 +18,7 @@ Read `./references/feature-dir-progress-template.md`.
 
 - stage code: `010`
 - default feature-dir output path: `<feature-dir>/010-feature-brief.md`
+- progress.md checklist item: `Фича-бриф`
 - stage `010` bootstrap: this skill may create the feature directory when unresolved
 
 ## Workflow

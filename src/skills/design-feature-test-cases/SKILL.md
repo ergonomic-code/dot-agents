@@ -1,6 +1,6 @@
 ---
 name: design-feature-test-cases
-description: Design feature test-case refresh artifacts from a feature brief, implementation/API context, and optional current cases. Prefer added cases for new obligations; update old cases only when forced.
+description: Design `030-test-cases-new.adoc` from a feature brief, implementation/API context, and optional current cases. Prefer added cases for new obligations; update old cases only when forced.
 ---
 
 # Design Feature Test Cases
@@ -14,9 +14,9 @@ When current cases come from test code and anchors must be recovered, use `../re
 
 ## Feature-stage bindings
 
-- stage code: `040`
-- default feature-dir output path: `<feature-dir>/040-test-cases-refresh.adoc`
-- progress.md checklist item: `Обновление тест-кейсов`
+- stage code: `030`
+- default feature-dir output path: `<feature-dir>/030-test-cases-new.adoc`
+- progress.md checklist item: `Изменения тест-кейсов`
 
 ## Inputs
 
