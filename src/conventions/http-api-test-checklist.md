@@ -4,4 +4,5 @@
 - Does each changed `*HttpApi` operation keep one canonical `*ForResponse` request builder that typed overloads delegate to?
 - Do public typed `*HttpApi` methods mirror the controller contract by parameters and result type?
 - Do transport checks, schema validation, and body decoding stay inside `*HttpApi`?
+- Do status checks on the project error response body type use semantic project assertions instead of raw status field comparisons?
 - Were extra test-layer `*Request` or `*Response` DTOs avoided when the controller contract already defines the transport shape?
