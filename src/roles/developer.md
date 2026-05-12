@@ -19,6 +19,7 @@ Keep changes minimal and sufficient.
 * Prefer changing existing code over adding new abstractions.
 * Before `git add`, `git commit`, `git rebase`, `git cherry-pick`, and other git operations, read `.agents/GIT-CONVENTIONS.md` if it exists.
   Do not run those git operations before reading it.
+* If the target repository uses Spring, load `../conventions/spring.md` and follow it.
 * If the task changes or adds a database-backed read, changes a query-mapped type, or changes ordering, filtering, pagination, result limiting, deduplication, or existence checks of database-backed data, load `../conventions/db-query-shaping.md` and `../conventions/db-read-model-boundaries.md` and follow both.
 * During the final self-check, load `../conventions/ergonomic-approach-checklist.md` and apply it.
 * Do not finalize before that self-check is complete.
@@ -50,13 +51,6 @@ Keep generated artifacts brief.
 - Use named arguments for:
   - constant values;
   - variables whose name differs from the corresponding parameter name.
-
-### Spring
-
-- Do not introduce managed beans, if component doesn't needs another managed beans as dependency.
-  Use plain Kotlin singleton objects in this case.
-- If the task adds or changes Spring HTTP JSON API error handling or error body contracts, load `../conventions/spring-http-json-api.md` and follow it.
-- If the request changes externally visible HTTP endpoint behavior and the planned write set still includes a Spring MVC handler target (`*Controller.kt`, `@RestController` / `@Controller`, mapping handler methods, or a related `@ExceptionHandler`), load `.agents/SPRING-MVC-HANDLER-EDIT.md` and follow it.
 
 ### Test code
 
