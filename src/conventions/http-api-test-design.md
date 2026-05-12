@@ -28,6 +28,8 @@
 - Keep status checks, header checks, request schema validation, response schema validation, and body decoding inside `*HttpApi`.
 - Tests must not call `WebTestClient` or `RestTestClient` directly.
 - Boundary tests must stay thin scenario scripts over `*HttpApi`, not a place for HTTP plumbing.
+- For status checks on the project error response body type, use an existing semantic project assertion for that type.
+  If none exists and the check is reusable or contract-level, add one to project-local test assertions instead of comparing raw status fields in tests.
 
 ## Implementation rules
 
