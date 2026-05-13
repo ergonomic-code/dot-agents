@@ -1,6 +1,6 @@
 ---
 name: code-test-case
-description: Convert cases written in `verification-check-format-v0.1` in `full` mode into Kotlin JUnit test code. Use when the input is a verification check artifact with `SUT`, `Check`, optional `Variant`, `Given`, `When`, `Then`, and `And`, and you either need new Kotlin tests or need to update an existing `*Test.kt` file to match it without losing the surrounding test code.
+description: Convert cases written in `verification-check-format-v0.1` in `full` mode into Kotlin JUnit test code. Use when the input is a verification check artifact with `SUT`, `Check`, optional `Variant`, `Given`, `When`, `Then`, and `And`, or when the user asks to code/закодировать the next/следующий or selected feature progress/checklist case backed by such an artifact.
 ---
 
 # Code Test Case
@@ -11,7 +11,8 @@ Read `../../artifacts/verification-check-format-v0.1/references/source-reference
 Read `../../conventions/tests.md`.
 Read `../../conventions/test-naming.md`.
 
-Accept one `verification-check-format-v0.1` artifact in `full` mode and an optional existing Kotlin JUnit 5 test file.
+Accept one `verification-check-format-v0.1` artifact in `full` mode, or a feature progress/checklist item that links to one, and an optional existing Kotlin JUnit 5 test file.
+When given `progress.md` or a checklist item, resolve the selected entry to its linked full-mode check artifact before selecting the test case.
 Ignore one optional source reference line immediately under each `Check` or after its `Variant` per `../../artifacts/verification-check-format-v0.1/references/source-reference.md`.
 Default to coding exactly one test case, where one full `Check` block is one test case.
 If the user did not explicitly select several checks, all checks, or a named multi-case set, code only the explicitly selected `Check`; if none is selected, code the first not-yet-implemented `Check` in source order, or the first `Check` if implementation status is unknown.
