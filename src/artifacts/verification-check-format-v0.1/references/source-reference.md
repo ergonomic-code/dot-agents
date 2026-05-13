@@ -14,6 +14,9 @@ Otherwise prefer the current checked-out `HEAD` short hash.
 Otherwise use the repo-relative source file path.
 - `<file-name>`: the basename of `<relative-file-path>`.
 - `<line-number>`: the source test method declaration line or another explicitly provided stable source line.
+  Do not substitute a method name or any other identifier for `<line-number>`.
+  Read the source file to find the exact line number.
+  If it cannot be determined, use machine form instead of the human form.
 
 ## Machine Form
 
