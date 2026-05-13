@@ -9,6 +9,7 @@ Read `../../artifacts/verification-check-format-v0.1/ARTIFACT.md`.
 Read `../../artifacts/verification-check-format-v0.1/references/mode-full.md`.
 Read `../../artifacts/verification-check-format-v0.1/references/source-reference.md`.
 Read `../../conventions/tests.md`.
+Read `../../conventions/test-fixture-architecture.md`.
 Read `../../conventions/test-naming.md`.
 
 Accept one `verification-check-format-v0.1` artifact in `full` mode, or a feature progress/checklist item that links to one, and an optional existing Kotlin JUnit 5 test file.
@@ -21,6 +22,8 @@ Before coding, resolve selected checks and verify each selected `Check` has `Giv
 If any selected `Check` lacks them, stop and report that `short` mode cannot be converted into test code.
 Before editing code, map check data roles to helpers, factories, or fixtures; keep exact literals, enum members, constants, codes, ids, dates, and names in the test body only when named by the case or public contract.
 Inspect available fixture APIs for generic role helpers before choosing named constants or presets.
+Before announcing a plan or editing code, if the test needs new or changed fixture helpers, check `../../conventions/test-fixture-architecture.md`:
+name each `*TestApi` scope, keep cross-scope creation/linking in `*FixturePresets`, and create missing sibling `*TestApi` helpers instead of expanding an existing one.
 Use generate mode when no `*.kt` test file is given.
 Use update mode when the user points to one or explicitly asks to update existing tests.
 Before choosing or announcing the target Kotlin test class, read `../../conventions/test-container-selection.md`.
@@ -89,4 +92,4 @@ For this skill, use the formal case mapping rules.
 - If tests require non-DTO production changes to compile or pass, stop and report the blocker instead of changing production code.
 - By default, after implementing a new or aligned case, the test should compile. The test may still fail for any reason until production behavior is aligned.
 
-Before finishing, read `../../conventions/test-implementation-checklist.md`, fix any failed item, and check: default scope produced exactly one check unless the user explicitly requested more, one class per selected SUT, one method per selected check, naming follows `../../conventions/test-naming.md`, new or aligned tests compile, generate mode returns only Kotlin, and update mode accepts exactly one SUT per run and preserves the existing container code while editing in place.
+Before finishing, read `../../conventions/test-implementation-checklist.md`, fix any failed item, and check: default scope produced exactly one check unless the user explicitly requested more, one class per selected SUT, one method per selected check, fixture helper boundaries follow `../../conventions/test-fixture-architecture.md`, naming follows `../../conventions/test-naming.md`, new or aligned tests compile, generate mode returns only Kotlin, and update mode accepts exactly one SUT per run and preserves the existing container code while editing in place.
