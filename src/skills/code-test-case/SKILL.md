@@ -20,6 +20,9 @@ If the user did not explicitly select several checks, all checks, or a named mul
 Do not treat a feature directory, artifact file, progress checklist, or pending-case list as an explicit request to code multiple test cases.
 Before coding, resolve selected checks and verify each selected `Check` has `Given` / `When` / `Then` steps.
 If any selected `Check` lacks them, stop and report that `short` mode cannot be converted into test code.
+Before editing, validate selected checks against `verification-check-format-v0.1` rules, including `Check` obligation form.
+If a selected check is nonconforming but repairable without changing behavior, stop and ask the user to choose: keep the source wording as-is, use your proposed corrected wording, or provide replacement wording.
+If a selected check cannot be repaired without inventing behavior, stop and ask for corrected case text.
 Before editing code, map check data roles to helpers, factories, or fixtures; keep exact literals, enum members, constants, codes, ids, dates, and names in the test body only when named by the case or public contract.
 Inspect available fixture APIs for generic role helpers before choosing named constants or presets.
 Before announcing a plan or editing code, if the test needs new or changed fixture helpers, check `../../conventions/test-fixture-architecture.md`:
