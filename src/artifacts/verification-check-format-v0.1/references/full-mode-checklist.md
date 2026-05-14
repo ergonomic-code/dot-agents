@@ -1,7 +1,7 @@
 # Full Mode Checklist
 
 - `SUT` names the object under verification directly.
-- `Check` expresses one required observable property.
+- `Check` expresses one required observable property in the artifact-language obligation form.
 - `Variant` is absent or names one semantic input or context class for that `Check`.
 - All meaningful check differences are in `Given` or `Variant`.
 - `When` describes the action on the SUT.

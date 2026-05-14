@@ -7,6 +7,7 @@ description: Convert cases written in `verification-check-format-v0.1` in `full`
 
 Read `../../artifacts/verification-check-format-v0.1/ARTIFACT.md`.
 Read `../../artifacts/verification-check-format-v0.1/references/mode-full.md`.
+Read `../../artifacts/verification-check-format-v0.1/references/full-mode-checklist.md`.
 Read `../../artifacts/verification-check-format-v0.1/references/source-reference.md`.
 Read `../../conventions/tests.md`.
 Read `../../conventions/test-fixture-architecture.md`.
@@ -18,10 +19,10 @@ Ignore one optional source reference line immediately under each `Check` or afte
 Default to coding exactly one test case, where one full `Check` block is one test case.
 If the user did not explicitly select several checks, all checks, or a named multi-case set, code only the explicitly selected `Check`; if none is selected, code the first not-yet-implemented `Check` in source order, or the first `Check` if implementation status is unknown.
 Do not treat a feature directory, artifact file, progress checklist, or pending-case list as an explicit request to code multiple test cases.
-Before coding, resolve selected checks and verify each selected `Check` has `Given` / `When` / `Then` steps.
-If any selected `Check` lacks them, stop and report that `short` mode cannot be converted into test code.
-Before editing, validate selected checks against `verification-check-format-v0.1` rules, including `Check` obligation form.
-If a selected check is nonconforming but repairable without changing behavior, stop and ask the user to choose: keep the source wording as-is, use your proposed corrected wording, or provide replacement wording.
+Before announcing a plan, choosing a target test class, scanning fixtures, or editing code, resolve selected checks and run input preflight.
+Input preflight must verify that each selected check is valid `verification-check-format-v0.1` full mode, including `Given` / `When` / `Then` and `Check` obligation form.
+If any selected `Check` lacks `Given` / `When` / `Then`, stop and report that `short` mode cannot be converted into test code.
+If a selected check violates format but is repairable without changing behavior, stop and show the issue, the proposed corrected case header, and these choices: keep source wording as-is, use the proposed wording, or provide replacement wording.
 If a selected check cannot be repaired without inventing behavior, stop and ask for corrected case text.
 Before editing code, map check data roles to helpers, factories, or fixtures; keep exact literals, enum members, constants, codes, ids, dates, and names in the test body only when named by the case or public contract.
 Inspect available fixture APIs for generic role helpers before choosing named constants or presets.
@@ -29,7 +30,10 @@ Before announcing a plan or editing code, if the test needs new or changed fixtu
 name each `*TestApi` scope, keep cross-scope creation/linking in `*FixturePresets`, and create missing sibling `*TestApi` helpers instead of expanding an existing one.
 Use generate mode when no `*.kt` test file is given.
 Use update mode when the user points to one or explicitly asks to update existing tests.
-Before choosing or announcing the target Kotlin test class, read `../../conventions/test-container-selection.md`.
+Before choosing or announcing the target Kotlin test class or test action, read `../../conventions/test-container-selection.md`.
+Infer the test kind from the explicit target class, explicit SUT, and sibling test style.
+For a component test, resolve the concrete component symbol and planned `When` receiver before editing.
+If the component symbol or direct call shape cannot be resolved, stop instead of substituting a boundary client, controller, `*Api`, `*HttpApi`, or `*TestApi`.
 Then scan existing sibling `*Test.kt` files for operation-level and variant-specific containers.
 If the selected check is specific to one polymorphic input or output variant and a matching variant-specific test class exists, use that class even when the `SUT` names the shared operation or endpoint.
 
