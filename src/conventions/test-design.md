@@ -20,6 +20,8 @@
 ## Component tests
 
 - A component test calls one application component directly.
+- The `When` action receiver must be the selected component instance or a thin local wrapper that invokes only it.
+- Logged-in clients, `*Api`, `*HttpApi`, controllers, and `*TestApi` are not component-test actions.
 - A component is defined by the project architecture, not by a language framework or DI container.
 - In the Ergonomic Approach, a component is typically a resource, an operation, or a port.
 - A component test may use fixture helpers for setup and observation.
