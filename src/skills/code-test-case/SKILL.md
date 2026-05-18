@@ -9,6 +9,7 @@ Read `../../artifacts/verification-check-format-v0.1/ARTIFACT.md`.
 Read `../../artifacts/verification-check-format-v0.1/references/mode-full.md`.
 Read `../../artifacts/verification-check-format-v0.1/references/full-mode-checklist.md`.
 Read `../../artifacts/verification-check-format-v0.1/references/source-reference.md`.
+Read `../../conventions/feature-workdir.md`.
 Read `../../conventions/tests.md`.
 Read `../../conventions/test-fixture-architecture.md`.
 Read `../../conventions/test-naming.md`.
@@ -17,7 +18,12 @@ Accept one `verification-check-format-v0.1` artifact in `full` mode, or a featur
 When given `progress.md` or a checklist item, resolve the selected entry to its linked full-mode check artifact before selecting the test case.
 Ignore one optional source reference line immediately under each `Check` or after its `Variant` per `../../artifacts/verification-check-format-v0.1/references/source-reference.md`.
 Default to coding exactly one test case, where one full `Check` block is one test case.
-If the user did not explicitly select several checks, all checks, or a named multi-case set, code only the explicitly selected `Check`; if none is selected, code the first not-yet-implemented `Check` in source order, or the first `Check` if implementation status is unknown.
+If the user did not explicitly select several checks, all checks, or a named multi-case set, code only the explicitly selected `Check`.
+If none is selected and `progress.md` has unchecked red steps (`Красный тест`) under implementation cases, collect those cases first.
+Before coding the first such case, check whether a test already matches it by display name, method name, Russian backticked name, or verified behavior.
+If it exists, stop, list stale implemented candidates as `1. <progress item title> - <file>:<line>`, offer to mark their red steps done in `progress.md`, and name the first later unchecked red case without implementation evidence as the next case to code.
+If no unchecked red case without implementation evidence exists, stop and report stale progress.
+Otherwise code the first not-yet-implemented `Check` in source order, or the first `Check` if implementation status is unknown.
 Do not treat a feature directory, artifact file, progress checklist, or pending-case list as an explicit request to code multiple test cases.
 Before announcing a plan, choosing a target test class, scanning fixtures, or editing code, resolve selected checks and run input preflight.
 Input preflight must verify that each selected check is valid `verification-check-format-v0.1` full mode, including `Given` / `When` / `Then` and `Check` obligation form.
@@ -101,3 +107,4 @@ For this skill, use the formal case mapping rules.
 - By default, after implementing a new or aligned case, the test should compile. The test may still fail for any reason until production behavior is aligned.
 
 Before finishing, read `../../conventions/test-implementation-checklist.md`, fix any failed item, and check: default scope produced exactly one check unless the user explicitly requested more, one class per selected SUT, one method per selected check, fixture helper boundaries follow `../../conventions/test-fixture-architecture.md`, naming follows `../../conventions/test-naming.md`, new or aligned tests compile, generate mode returns only Kotlin, and update mode accepts exactly one SUT per run and preserves the existing container code while editing in place.
+After the selected test case is created or aligned and the required validation is complete, mark the matching red step (`Красный тест`) done in `progress.md` when that step exists.

@@ -29,6 +29,9 @@ Use this rule when the task may create files or depends on feature-local context
 - Skills that write default stage outputs use `feature-stage-skill.md` for write and overview-file sync.
 - Unless the user gave another path, create new task files in the active feature directory.
 - If a skill has a default `./tmp` output directory, treat it as `<active-feature-dir>/tmp` when the active feature directory is resolved.
+- In `progress.md`, group implementation cases under `Реализация` by `SUT: <название>`.
+- Under each SUT item, list cases; under each case, use `Красный тест` for the red step and `Зелёный тест` for the green step.
+- When all child items under a case or SUT are done, mark that parent item done too.
 
 ## Feature stage codes
 
