@@ -12,6 +12,7 @@ Read `../../artifacts/verification-check-format-v0.1/references/source-reference
 Read `../../conventions/feature-workdir.md`.
 Read `../../conventions/tests.md`.
 Read `../../conventions/test-fixture-architecture.md`.
+Read `../../conventions/test-implementation.md`.
 Read `../../conventions/test-naming.md`.
 
 Accept one `verification-check-format-v0.1` artifact in `full` mode, or a feature progress/checklist item that links to one, and an optional existing Kotlin JUnit 5 test file.

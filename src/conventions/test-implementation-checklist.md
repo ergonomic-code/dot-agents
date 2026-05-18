@@ -8,3 +8,4 @@
 - Is each cross-scope setup helper implemented in `*FixturePresets`?
 - Are expected values bound in `Given` and reused?
 - Are exact literals absent from `Then`?
+- Are new test case methods added to the end of the class?
