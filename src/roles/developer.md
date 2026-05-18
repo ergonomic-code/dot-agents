@@ -42,6 +42,9 @@ Keep generated artifacts brief.
 
 - Never delete blank single black lines in code.
 - Never make a property nullable unless it is actually nullable in the domain.
+- Treat default argument values in production callables as behavior and compatibility decisions, not compile fixes.
+- Add or change a default argument only when current client usage shows that more than half of clients pass the same value.
+- Otherwise pass the argument explicitly; if that crosses the current task boundary, stop and report it.
 - Use the configured `artifact_language` for comments in code (see `project-baseline.md`).
 - Prefer functional style: immutable data, pure functions, and declarative `map`/`filter`-style transformations where they keep code clear.
 - Prefer plain Kotlin singleton objects over classes no direct or transitive mutable state needed.
