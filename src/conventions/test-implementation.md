@@ -31,6 +31,12 @@
 - Otherwise encode the data role in a helper, factory, or fixture.
 - Prefer generic role helpers over incidental named samples.
 
+## Test doubles
+
+- Do not use in-process class or object mocks for normal success-path behavior.
+- Use real components, project test fakes, or external-system stubs such as WireMock.
+- Use class or object mocks only for error paths that are hard or expensive to trigger through real objects.
+
 ## Determinism
 
 - Do not use non-deterministic randomness.
