@@ -13,7 +13,9 @@ Use `Variant` only to enumerate materially distinct input or context classes for
 Do not use `Variant` for independent properties.
 Keep one abstraction level inside one `SUT`.
 Write `Check` in the obligation form of the artifact language when that language has one.
-For Russian `Check`, use an explicit obligation predicate such as `должен`, `должна`, `должно`, or `должны`; bare present-tense descriptions are nonconforming unless they are exact public contract wording.
+For Russian `Check`, use `должен` or `должна`.
+Put any input or state condition either before the obligation or after the required output.
+Bare present-tense descriptions are nonconforming unless they are exact public contract wording.
 Write all human-readable text in the configured `artifact_language`.
 Use only the English keywords `SUT`, `Check`, `Variant`, `Given`, `When`, `Then`, and `And`.
 Read `references/layout.md` before rendering.

@@ -9,6 +9,8 @@ Use surrounding tests only after these rules to preserve local mechanics, import
 - For existing Kotlin test files, keep the existing class and file name unless the user explicitly asks to rename technical identifiers.
 - Name class `@DisplayName` by the behavior container, feature, operation, or API method under test.
 - Name case `@DisplayName` as a specification of observable behavior or result property.
+- For Russian case names, use `должен` or `должна`.
+- Put any input or state condition either before the obligation or after the required output.
 - Use business, end-user, and public-contract language.
 - Avoid technical terms and implementation details.
 - For data-driven tests, name the case by the common invariant and put the varying input axis into the parameterized test display name.
