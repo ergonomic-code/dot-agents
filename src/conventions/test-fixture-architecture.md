@@ -5,6 +5,7 @@
 - `*TestApi` is scoped to one aggregate, resource, or external system.
 - If setup or observation needs another aggregate/resource, create or use its own `*TestApi`.
 - `*TestApi` may contain reusable single-scope production calls for setup and observation.
+- Put low-level single-scope setup and observation helpers in the scoped `*TestApi`, not in test classes.
 - `*TestApi` must not orchestrate writes across multiple aggregates/resources.
 - Cross-aggregate/resource setup belongs in `*FixturePresets`.
 - `*FixturePresets` may compose multiple `*TestApi`, production calls, `*ObjectMother`, and `Mock*Server`.
