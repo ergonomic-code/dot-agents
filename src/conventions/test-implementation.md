@@ -33,9 +33,7 @@
 
 ## Test doubles
 
-- Do not use in-process class or object mocks for normal success-path behavior.
-- Use real components, project test fakes, or external-system stubs such as WireMock.
-- Use class or object mocks only for error paths that are hard or expensive to trigger through real objects.
+Follow `./test-doubles.md`.
 
 ## Determinism
 

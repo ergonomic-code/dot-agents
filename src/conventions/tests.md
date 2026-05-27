@@ -3,6 +3,7 @@
 Before planning, adding, or changing tests, read:
 
 - `./test-design.md` for test kinds, test structure, and helper APIs.
+- `./test-doubles.md` before choosing test dependencies.
 - `./test-fixture-architecture.md` for `*TestApi`, `*Fixture`, and `*FixturePresets` boundaries.
 - `./test-container-selection.md` for choosing the target test class.
 - `./test-naming.md` for class, case, method, and `@DisplayName` naming.
