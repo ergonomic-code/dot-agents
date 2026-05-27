@@ -6,9 +6,8 @@ Use surrounding tests only after these rules to preserve local mechanics, import
 ## Human names
 
 - Put human-readable class and case text into `@DisplayName` when the test framework supports it.
-- Write human-readable test names in the configured `artifact_language`.
-- This includes class and case `@DisplayName`, Kotlin backticked human-readable method names, and parameterized test display name text.
-- Keep technical class/file identifiers and `test_<slug>` method identifiers in the repository's technical naming style unless the user explicitly asks to rename technical identifiers.
+- Write only display text in the configured `artifact_language`: class and case `@DisplayName`, plus parameterized test display name text.
+- Keep class, file, and method identifiers, including Kotlin backticked method names and `test_<slug>`, in the repository's technical naming style unless the user explicitly asks to rename identifiers outside `@DisplayName`.
 - For existing Kotlin test files, keep the existing class and file name unless the user explicitly asks to rename technical identifiers.
 - Name class `@DisplayName` by the behavior container, feature, operation, or API method under test.
 - Name case `@DisplayName` as a specification of observable behavior or result property.
