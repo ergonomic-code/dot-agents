@@ -1,5 +1,10 @@
 # Test implementation
 
+## Test case body
+
+- In every new or changed test-case method, split the body with `// Given`, `// When`, and `// Then` comments.
+- Put setup under `Given`, the action under `When`, and verification under `Then`.
+
 ## Fixture setup
 
 - Each test case must set up its own fixture.

@@ -1,5 +1,6 @@
 # Test implementation checklist
 
+- Does each new or changed test-case method use `// Given`, `// When`, and `// Then` sections?
 - For each literal, enum member, constant, code, id, date, or name: does the case or public contract name it?
 - For each named fixture constant or preset: is that exact named variant required?
 - If no, replace it with a role helper, factory, or fixture.

@@ -80,6 +80,7 @@ If update mode input contains zero or multiple `SUT`s for one existing Kotlin te
 - Use one blank line between methods.
 - Use `@Nested` classes only when this matches the existing file style and keeps repeated check or variant names shorter.
 - Preserve existing fixtures, assertions, helpers, and supporting code in update mode.
+- Render every generated or updated test method body with `// Given`, `// When`, and `// Then` section comments.
 - If the user explicitly asked for placeholders or skeletons, use only:
 
 ```kotlin
