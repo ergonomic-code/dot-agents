@@ -74,7 +74,7 @@ If update mode input contains zero or multiple `SUT`s for one existing Kotlin te
 - Import `org.junit.jupiter.api.DisplayName` and `org.junit.jupiter.api.Test`.
 - Apply `../../conventions/test-naming.md` for class `@DisplayName`, method `@DisplayName`, and `test_<slug>` names.
 - Resolve class names from code symbols when possible. Use `UpperCamelCase`.
-- For non-API SUTs use `<SUT>Test`.
+- For component tests, name the class from the resolved component symbol when available; otherwise for non-API SUTs use `<SUT>Test`.
 - For SUTs starting with `Метод API`, resolve the handler by HTTP method and path. If it delegates to one `xxxOp`, use `XxxApiTest`; otherwise use the handler method name as `XxxApiTest`. If resolution is ambiguous, stop.
 - In update mode, keep the existing class and file name unless the user explicitly asked to rename them.
 - Use one blank line between methods.

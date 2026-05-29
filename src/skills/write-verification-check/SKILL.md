@@ -18,13 +18,21 @@ Read `../../artifacts/verification-check-format-v0.1/references/full-mode-checkl
 - Do not mention test code, mocks, fixtures, helper names, or internal implementation details.
 - Do not copy request-local numbering, ticket ids, checklist markers, or similar bookkeeping tokens into `SUT`, `Check`, or `Variant` names unless they are part of the public contract.
 
+## SUT Anchor Rule
+
+Preserve an explicit or existing human-readable `SUT` anchor when it directly names the verified object.
+Valid anchors include artifact or progress `SUT`, class `@DisplayName`, named component, operation, endpoint, or API surface.
+For component tests, `SUT` may name the component anchor or the behavior surface; do not force the component symbol into `SUT` when the component is otherwise resolved.
+Apply the domain-language rule to `Check`, `Variant`, and steps after selecting `SUT`.
+
 ## Domain Language Rule
 
 Name behaviors in the domain language of the user-visible contract.
 Prefer business concepts, user-visible entities, public contract meanings, and documented domain terms over API, code, storage, transport, and implementation terms.
-Do not mention class names, method names, field names, enum constants, table names, flag names, builder names, or helper names unless they are themselves part of the public contract or there is no stable domain equivalent.
+In `Check`, `Variant`, and steps, do not mention class names, method names, field names, enum constants, table names, flag names, builder names, or helper names unless they are themselves part of the public contract or there is no stable domain equivalent.
 In `Check`, `Variant`, and step text, translate endpoint names, request parameters, response fields, DTO names, and payload structure into their user-observable meanings unless the exact contract member name is being validated.
 If code uses technical names but the behavior is domain-facing, rewrite them into domain wording.
+If the checked obligation is technical, keep the technical term needed to make it precise.
 If several code symbols map to one domain concept, use the single domain concept instead of mirroring the code structure.
 
 ## Abstraction Rule
