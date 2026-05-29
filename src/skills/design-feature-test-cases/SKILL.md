@@ -7,7 +7,7 @@ description: Design `030-test-cases-new.adoc` from a feature brief, implementati
 
 Read `framework_checkout_root/src/conventions/feature-workdir.md`.
 Read `framework_checkout_root/src/conventions/feature-stage-skill.md`.
-Read `../write-verification-check/SKILL.md`.
+Read `../design-test-case/SKILL.md`.
 Read the format reference at `../../artifacts/verification-check-format-v0.1/ARTIFACT.md`.
 Read `../../artifacts/verification-check-format-v0.1/references/source-reference.md`.
 When current cases come from test code and anchors must be recovered, use `../reverse-engineer-test-case/SKILL.md` anchor rules.
@@ -53,6 +53,7 @@ Keep old cases unchanged unless they contradict new checks, would stop compiling
    - Use them to refine the contract, identify touched surfaces, and detect migration-sensitive behavior.
    - Prefer the feature brief and explicit API requirements over narrative implementation details when they conflict.
 4. Design the target case set from scratch.
+   - Use `../design-test-case/SKILL.md` for each full target case.
    - Cover only behavior that is actually implied by the inputs.
    - Add positive, negative, boundary, fallback, and compatibility cases only when the inputs justify them.
    - Merge duplicates and keep the smallest materially distinct `Check` / `Variant` set.
@@ -93,7 +94,7 @@ The artifact content must contain exactly four sections in this order:
 
 Write human-readable text in the configured artifact language.
 Base the case bodies on `../../artifacts/verification-check-format-v0.1/ARTIFACT.md`.
-Follow `../write-verification-check/SKILL.md` for wording and step structure.
+Follow `../design-test-case/SKILL.md` for full-case wording and step structure.
 Match the artifact container format requested by the user.
 If the user did not request a container format, infer it from the explicit output path extension when present.
 Otherwise default to AsciiDoc.
