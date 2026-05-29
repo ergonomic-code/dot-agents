@@ -5,15 +5,13 @@ description: Convert cases written in `verification-check-format-v0.1` in `full`
 
 # Code Test Case
 
+Read `../../conventions/code-implementation.md`.
 Read `../../artifacts/verification-check-format-v0.1/ARTIFACT.md`.
 Read `../../artifacts/verification-check-format-v0.1/references/mode-full.md`.
 Read `../../artifacts/verification-check-format-v0.1/references/full-mode-checklist.md`.
 Read `../../artifacts/verification-check-format-v0.1/references/source-reference.md`.
 Read `../../conventions/feature-workdir.md`.
 Read `../../conventions/tests.md`.
-Read `../../conventions/test-fixture-architecture.md`.
-Read `../../conventions/test-implementation.md`.
-Read `../../conventions/test-naming.md`.
 
 Accept one `verification-check-format-v0.1` artifact in `full` mode, or a feature progress/checklist item that links to one, and an optional existing Kotlin JUnit 5 test file.
 When given `progress.md` or a checklist item, resolve the selected entry to its linked full-mode check artifact before selecting the test case.
@@ -108,5 +106,5 @@ For this skill, use the formal case mapping rules.
 - If tests require non-DTO production changes to compile or pass, stop and report the blocker instead of changing production code.
 - By default, after implementing a new or aligned case, the test should compile. The test may still fail for any reason until production behavior is aligned.
 
-Before finishing, read `../../conventions/test-implementation-checklist.md`, fix any failed item, and check: default scope produced exactly one check unless the user explicitly requested more, one class per selected SUT, one method per selected check, fixture helper boundaries follow `../../conventions/test-fixture-architecture.md`, naming follows `../../conventions/test-naming.md`, new or aligned tests compile, generate mode returns only Kotlin, and update mode accepts exactly one SUT per run and preserves the existing container code while editing in place.
+Before finishing, read `../../conventions/test-implementation-checklist.md`, fix any failed item, and check: default scope produced exactly one check unless the user explicitly requested more, one class per selected SUT, one method per selected check, fixture helper boundaries follow `../../conventions/test-fixture-architecture.md`, naming follows `../../conventions/test-naming.md`, new structured resources or schemas reuse or extract shared definitions instead of duplicating equivalent definitions, new or aligned tests compile, generate mode returns only Kotlin, and update mode accepts exactly one SUT per run and preserves the existing container code while editing in place.
 After the selected test case is created or aligned and the required validation is complete, mark the matching red step (`Красный тест`) done in `progress.md` when that step exists.

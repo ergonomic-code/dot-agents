@@ -7,6 +7,9 @@ description: Fix production code for one red Kotlin JUnit case created or aligne
 
 Read `../../conventions/feature-workdir.md`.
 Read `../../conventions/tests.md`.
+Read `../../conventions/ergonomic-approach-rules.md`.
+Read `../../conventions/task-boundaries.md`.
+Read `../../conventions/code-implementation.md`.
 
 Use this skill only after `$code-test-case` has created or aligned one Kotlin JUnit case and that case is red.
 Fix production code only.
@@ -19,7 +22,7 @@ Do not edit tests, test fixtures, test data, assertions, display names, test ann
    If resolved, read `<active-feature-dir>/progress.md` when present and every `<active-feature-dir>/030*` artifact that exists.
    If not resolved or no `030*` artifact exists, continue from the failing test, current code, and loaded conventions.
 3. Make only the smallest production-code change that addresses the currently observed failure cause and is consistent with the selected case, progress state, and feature design when they exist.
-   Before editing production code, read `../../roles/developer.md` and follow it.
+   Before editing production code, apply the loaded ergonomic, boundary, and code implementation conventions.
    Keep this skill's test-edit ban and selected-case scope as stricter constraints.
    Derive the selected behavior boundary from the failing test's entry point, endpoint, operation, scenario, and feature design when present.
    Keep investigation and edits inside that boundary, except for compile-only call-site propagation forced by the chosen change.
