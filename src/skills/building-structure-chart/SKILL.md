@@ -53,7 +53,13 @@ If `spawn_agent` is unavailable or blocked, stop and report that the reverse pas
 - If the input was DB tables, keep the root module as the selected application entry point, not as the repository or SQL touch point.
 - Use `parent` only when one named function is syntactically nested inside another named function.
 - Model local or anonymous callables as `lambdas` with `owner` set to the module where they are declared.
-- Do not add modules or calls from the platform, frameworks, or external libraries to the diagram.
+- Do not descend into platform code, framework internals, or external libraries.
+- Add a platform, framework, or external-library call only as a leaf and only when that call represents a globally observable effect.
+- Globally observable effects include network or storage IO, message publication, process launch, thread/job/task start, and OS-level side effects.
+- Treat logging, metrics, tracing, builder setup, and result extraction as noise unless the user explicitly asks for them.
+- For a fluent external call chain that performs one effect, choose only one method as the call target.
+- Choose the method that best names the effect, not configuration or extraction methods in the chain.
+- Do not encode fluent configuration details as `call.in` or `call.out`.
 - Read each relevant statement as a full expression tree, not only by its top-level call.
 - Include meaningful project calls nested in arguments, chained expressions, assigned expressions, and return expressions.
 - Do not reduce an included module to only the subpath that reaches the target table; keep its other meaningful sibling calls as well.
@@ -83,5 +89,8 @@ If `spawn_agent` is unavailable or blocked, stop and report that the reverse pas
 - Check that inline lambdas used only as bodies of inline HOFs are inlined into the owner's calls and are not emitted as separate `lambdas`.
 - Check that meaningful project calls nested in arguments, chained expressions, and assignment or return expressions are not skipped.
 - Check that meaningful calls on local-variable receivers and inside inline-HOF bodies were kept when they resolve to project code.
+- Check that external-library call nodes are leaves and represent globally observable effects.
+- Check that each fluent external effect chain contributes at most one call target.
+- Check that fluent configuration details are not encoded as `call.in` or `call.out`.
 - For every included module, enumerate its meaningful direct project calls from the covered statements and verify that sibling calls were not pruned just because they do not touch the target table.
 - If the input was DB tables, check that the rendered chart still reads from the application entry point down to the relevant table access path.
