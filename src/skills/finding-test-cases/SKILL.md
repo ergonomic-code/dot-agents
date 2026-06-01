@@ -103,4 +103,5 @@ For each SUT, list:
 - optional forwarded-call or API-helper evidence as `<path>:<line>`;
 - short note when the match depends on controller expansion or thin-wrapper resolution.
 
+For `test case name`, prefer method `@DisplayName`, resolving simple literal text; then a Kotlin backticked or otherwise human-readable method name; then the technical method identifier.
 When no cases are found for a SUT, say so explicitly.
