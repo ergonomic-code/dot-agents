@@ -65,13 +65,13 @@ If `spawn_agent` is unavailable or blocked, stop and report that the reverse pas
 - Do not reduce an included module to only the subpath that reaches the target table; keep its other meaningful sibling calls as well.
 - Do not drop a meaningful project call just because its receiver is a local variable, a lambda parameter, or an intermediate expression rather than an injected dependency.
 - Do not create nodes for `if`, `when`, `switch`, `forEach`, `map`, `mapNotNull`, `filter`, loops, collections, DTOs, temporary values, or framework glue.
-- Treat Kotlin HOFs declared with the `inline` modifier as syntax for control flow, not as callable nodes.
-- This applies even when the inline HOF is not one of the common collection names.
-- Collection HOFs such as `forEach`, `map`, `mapNotNull`, and `filter` are common examples of that rule.
-- If such an inline HOF uses an inline lambda only as the body of that control flow, do not emit a `lambda` node for it.
-- Inline the lambda body into direct calls from the owning module and mark those calls with `call.loop`.
-- Example: `savedEvents.map { EventToEditEventViewConverter.convert(it, languageTag) }` should produce a looped call from the owner to `EventToEditEventViewConverter.convert`, not `owner -> lambda -> convert`.
-- Example: `savedEvents.mapNotNull { DiaryEventCreated.fromDto(userId, it, serial) }` should produce a looped call from the owner to `DiaryEventCreated.fromDto`, not `owner -> mapNotNull -> lambda -> fromDto`.
+- Do not use Kotlin `inline` alone to decide whether a callable becomes a node.
+- Model a named project function or method as a module when it owns meaningful work or meaningful project calls, even if it is an `inline` HOF.
+- Collapse only HOF calls that act as control-flow, iteration, scoping, collection transformation, or builder syntax and do not own meaningful project work.
+- For a collapsed HOF, do not create a callable node for the HOF.
+- If a collapsed HOF uses a lambda only as the body of that syntax, do not emit a `lambda` node for it.
+- Inline that lambda body into direct calls from the owning module.
+- Mark calls from collapsed iteration HOFs with `call.loop`.
 - Represent a condition in `call.if`.
 - Represent iteration in `call.loop`.
 - Put a passed module or lambda in `call.in`.
@@ -85,8 +85,9 @@ If `spawn_agent` is unavailable or blocked, stop and report that the reverse pas
 
 ## Shared Validation
 
-- Check that Kotlin inline HOFs are represented via direct calls and `loop` when they encode iteration, not as separate nodes.
-- Check that inline lambdas used only as bodies of inline HOFs are inlined into the owner's calls and are not emitted as separate `lambdas`.
+- Check that meaningful named project functions remain modules even when declared `inline` or accepting lambdas.
+- Check that collapsed Kotlin HOFs are represented via direct calls and `loop` when they encode iteration, not as separate nodes.
+- Check that lambdas used only as bodies of collapsed HOFs are inlined into the owner's calls and are not emitted as separate `lambdas`.
 - Check that meaningful project calls nested in arguments, chained expressions, and assignment or return expressions are not skipped.
 - Check that meaningful calls on local-variable receivers and inside inline-HOF bodies were kept when they resolve to project code.
 - Check that external-library call nodes are leaves and represent globally observable effects.
