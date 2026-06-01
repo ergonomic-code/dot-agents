@@ -27,7 +27,7 @@ Use `../../artifacts/structure-chart-v1` only as the format reference.
 4. Anchor cases only in classes named `*Test`.
 5. Inside only those matched tests, inspect methods and keep usages that sit under `// When`.
 6. If the diagram contains a controller method, extract its HTTP method and path, grep test code by path first, then keep only HTTP calls and wrappers that target the same path with the same HTTP method.
-7. Merge results by SUT and write or return only concrete test cases with file and line evidence.
+7. Merge results by SUT and write or return concrete test cases plus reportable uncovered SUT gaps.
 8. If an output path is resolved, write the result to that Markdown file.
 
 ## Core Matching Rule
@@ -92,11 +92,24 @@ If no `// When` marker exists in a candidate test, infer the action phase from t
 Do not treat setup, assertions, or cleanup as the action phase.
 Use repository-relative paths and 1-based line numbers.
 
+## Coverage Gap Filtering
+
+Direct coverage means at least one reported case is attributed to the SUT.
+Transitive coverage means the SUT is reachable through diagram `calls` from a directly covered upstream SUT in the same execution path.
+Treat a SUT as complex when it owns branching, looping, validation, orchestration, side effects, IO, persistence, publication, or multiple meaningful project calls.
+Treat a SUT as simple when it only forwards, maps, wraps, extracts, constructs data, or delegates without its own branching or side effect.
+For uncovered output, keep only:
+- complex SUTs without direct coverage;
+- simple SUTs without transitive coverage.
+
+Transitive coverage does not suppress a complex SUT gap.
+Do not list simple SUTs transitively exercised by reported upstream cases.
+
 ## Output
 
 If an output path is resolved, write concise Markdown grouped by SUT to that file.
 Otherwise return concise Markdown grouped by SUT.
-For each SUT, list:
+For each covered SUT, list:
 - test case name;
 - evidence kind: `direct`, `controller`, or `indirect`;
 - case location as `<path>:<line>`;
@@ -104,4 +117,4 @@ For each SUT, list:
 - short note when the match depends on controller expansion or thin-wrapper resolution.
 
 For `test case name`, prefer method `@DisplayName`, resolving simple literal text; then a Kotlin backticked or otherwise human-readable method name; then the technical method identifier.
-When no cases are found for a SUT, say so explicitly.
+For reportable uncovered SUTs, say no cases were found and state whether the gap is `complex without direct coverage` or `simple without transitive coverage`.
