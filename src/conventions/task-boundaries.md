@@ -13,9 +13,10 @@
 
 ## Write set
 
-- In one coding slice, change either tests or production code.
-- If the request needs both tests and production code, execute only the current or first explicit slice, then stop and report the next slice.
-- Test-only slices may adjust API DTO shape only as needed for test compilation.
-- Do not edit non-DTO production code to make a test-only slice pass.
+- In one coding slice, change either tests or production behavior.
+- If the request needs both tests and production behavior, execute only the current or first explicit slice, then stop and report the next slice.
+- Test-only slices may add only compile-only production surface needed by the selected test.
+- Compile-only production surface means required symbols, signatures, types, constructors, and used fields, with no behavior beyond `TODO` method bodies.
+- Do not add or change production behavior to make a test-only slice pass.
 - If test-only changes require production behavior, stop with the failing tests and blocker.
 - Production-only slices must not edit tests, fixtures, test data, assertions, or test build configuration.
