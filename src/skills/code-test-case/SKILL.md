@@ -99,11 +99,12 @@ For this skill, use the formal case mapping rules.
 - Keep new or newly aligned cases strict even if they fail against current production code.
 - Do not weaken assertions only to keep tests green unless the user explicitly asked for that.
 - In update mode, do not replace implemented bodies with placeholder comments.
-- In production code, allow only DTO adjustments needed for test compilation.
-- Do not edit any non-DTO production artifact under this skill unless the user explicitly requested broader production-code changes.
-- This ban includes business logic, control flow, persistence, external integrations, endpoint contracts, validation rules, migrations, configuration, generated/static API docs, controllers, services, repositories, and clients.
-- Keep DTO adjustments compile-oriented and minimal: field/constructor/signature alignment only, without semantic behavior changes.
-- If tests require non-DTO production changes to compile or pass, stop and report the blocker instead of changing production code.
+- In production code, allow only compile-only surface needed by the selected test.
+- Keep production additions to required symbols, signatures, types, constructors, and fields used by the selected test.
+- Do not add production fields, parameters, enum values, or types not used by the selected test.
+- Put `TODO` inside newly added production method bodies unless the body is a trivial constructor, accessor, or data holder.
+- Do not add production behavior, control flow, persistence, external integrations, endpoint contracts, validation rules, migrations, configuration, generated/static API docs, controllers, services, repositories, or clients.
+- If tests require production behavior to compile or pass, stop and report the blocker instead of changing production behavior.
 - By default, after implementing a new or aligned case, the test should compile. The test may still fail for any reason until production behavior is aligned.
 
 Before finishing, read `../../conventions/test-implementation-checklist.md`, fix any failed item, and check: default scope produced exactly one check unless the user explicitly requested more, one class per selected SUT, one method per selected check, fixture helper boundaries follow `../../conventions/test-fixture-architecture.md`, naming follows `../../conventions/test-naming.md`, new structured resources or schemas reuse or extract shared definitions instead of duplicating equivalent definitions, new or aligned tests compile, generate mode returns only Kotlin, and update mode accepts exactly one SUT per run and preserves the existing container code while editing in place.
