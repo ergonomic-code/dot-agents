@@ -4,6 +4,12 @@
 
 - Apply this convention when changing or adding production database schema migrations for tables that may already contain rows.
 
+## Migration file choice
+
+- Before adding a new migration, inspect the latest adjacent migrations for the same schema object or active feature.
+- If an existing migration belongs to the current unfinished feature and is not yet part of any deployed or externally applied schema history, amend that migration instead of adding a later migration.
+- If deployment or external application status is unclear, ask before creating or amending the migration.
+
 ## Required columns
 
 - When adding a required column to an existing table, add it nullable, backfill all existing rows from current persisted data or explicit domain meaning, then add the `NOT NULL` constraint.

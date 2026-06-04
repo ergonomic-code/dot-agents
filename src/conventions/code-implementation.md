@@ -4,7 +4,7 @@
 
 - If the task adds or changes production values, parameters, fields, DTOs, API contracts, repository methods, or persistence bindings whose primitive type would hide meaning, unit, range, or nullability, load `./semantic-value-types.md`.
 - If the target repository uses Spring, load `./spring.md`.
-- If the task changes or adds production database schema migrations, load `./db-schema-migrations.md`.
+- If the task changes or adds production database schema migrations, or production persistence changes require a schema change, load `./db-schema-migrations.md`.
 - If the task changes or adds a database-backed read, changes a query-mapped type, or changes ordering, filtering, pagination, result limiting, deduplication, or existence checks of database-backed data, load `./db-query-shaping.md` and `./db-read-model-boundaries.md`.
 - If the task changes or adds a persistence-backed class, constructor, factory, repository mapping, serializer, or persistence adapter, load `./persistence-models.md`.
 
