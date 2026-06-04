@@ -25,6 +25,7 @@
 - Omission is safe only when forgetting to pass the argument cannot cause unexpected side effects.
 - Otherwise pass the argument explicitly; if that crosses the current task boundary, stop and report it.
 - Use the configured `artifact_language` for comments in code.
+- Prefer Kotlin operator syntax over direct `operator fun` calls.
 - Prefer functional style: immutable data, pure functions, and declarative `map`/`filter`-style transformations where they keep code clear.
 - Prefer plain Kotlin singleton objects over classes when no direct or transitive mutable state is needed.
 - If a helper does not depend on class state, implement it as a top-level function.
