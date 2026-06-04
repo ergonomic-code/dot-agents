@@ -28,6 +28,7 @@ Do not edit tests, test fixtures, test data, assertions, display names, test ann
    Keep investigation and edits inside that boundary, except for compile-only call-site propagation forced by the chosen change.
    Smallest production change means the smallest coherent production fix, not the smallest shortcut that greens the selected test.
    Do not introduce temporary, test-shaped, or bypass behavior in production code to reduce the current green slice.
+   If the selected test uses stale database setup after a production migration, fix the normal migration path used by the test; do not add production schema-existence branches.
    If the next necessary step would inspect or change a sibling endpoint, operation, mode, or scenario to justify the fix, stop and report the boundary instead of widening the implementation.
    Do not implement predicted later design changes before rerunning the selected test.
    If the test contradicts the feature design, requires test edits, or cannot be fixed within production code, stop and report the blocker.
