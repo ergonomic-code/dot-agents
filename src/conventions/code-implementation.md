@@ -5,6 +5,7 @@
 - If the task adds or changes production values, parameters, fields, DTOs, API contracts, repository methods, or persistence bindings whose primitive type would hide meaning, unit, range, or nullability, load `./semantic-value-types.md`.
 - If the target repository uses Spring, load `./spring.md`.
 - If the task changes or adds a database-backed read, changes a query-mapped type, or changes ordering, filtering, pagination, result limiting, deduplication, or existence checks of database-backed data, load `./db-query-shaping.md` and `./db-read-model-boundaries.md`.
+- If the task changes or adds a persistence-backed class, constructor, factory, repository mapping, serializer, or persistence adapter, load `./persistence-models.md`.
 
 ## Reuse
 
@@ -18,8 +19,9 @@
 
 - Preserve existing blank separator lines in code.
 - Never make a property nullable unless it is actually nullable in the domain.
-- Treat default argument values in production callables as behavior and compatibility decisions, not compile fixes.
-- Add or change a default argument only when current client usage shows that more than half of clients pass the same value.
+- Treat default argument values in production callables as behavior, not compile fixes.
+- Add or change a default argument only when current client usage shows that more than half of clients pass the same value, the default value is explicit target behavior, and omission is safe.
+- Omission is safe only when forgetting to pass the argument cannot cause unexpected side effects.
 - Otherwise pass the argument explicitly; if that crosses the current task boundary, stop and report it.
 - Use the configured `artifact_language` for comments in code.
 - Prefer functional style: immutable data, pure functions, and declarative `map`/`filter`-style transformations where they keep code clear.
