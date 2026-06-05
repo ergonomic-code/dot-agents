@@ -23,8 +23,13 @@
 - A system operation must serve one use case of one actor or client application.
 - A subprogram implementation must stay on one abstraction level.
 - A subprogram must have at least communicational or sequential cohesion.
-- A non-trivial operation that includes at least two branch types among input, transformation, and output should have a balanced form.
-- Prefer read, then transform, then write.
+- A non-trivial operation that includes at least two branch types among input, calculation, and output must have a balanced form.
+- In balanced form, the operation orchestrator must coordinate explicit read, calculate, and write branch roots.
+- Read branch roots must be queries.
+- Calculate branch roots must be effectively pure queries over explicit logical inputs and must perform no I/O.
+- Write branch roots must be commands.
+- Prefer completing reads before calculations and writes after calculations.
+- Keep exceptions to read-calculate-write order explicit and confined.
 
 ## Stateful application component design
 
@@ -42,4 +47,3 @@
 - Apply DRY and SSOT.
 - Apply YAGNI.
 - Prefer practical code over idealized code.
-
