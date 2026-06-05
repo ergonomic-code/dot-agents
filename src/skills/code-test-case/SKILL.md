@@ -42,6 +42,8 @@ If the component symbol or direct call shape cannot be resolved, stop instead of
 Then scan existing sibling `*Test.kt` files for operation-level and variant-specific containers.
 If the selected check is specific to one polymorphic input or output variant and a matching variant-specific test class exists, use that class even when the `SUT` names the shared operation or endpoint.
 Before editing, compare selected `Check` and `Variant` anchors with the candidate class name and display name; if the anchors are narrower and sibling patterns support a narrower class, use or create that class instead.
+Before announcing a plan or adding fixture cleanup, trace the candidate test class setup/reset path: superclass hooks, test extensions, and reset/init helpers they call.
+If that path already resets the relevant state, rely on it.
 
 Map one selected `SUT` to one class and one selected `Check` block to one `@Test` method.
 Keep source order.
