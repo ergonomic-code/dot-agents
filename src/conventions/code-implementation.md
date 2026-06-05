@@ -20,10 +20,11 @@
 
 - Preserve existing blank separator lines in code.
 - Never make a property nullable unless it is actually nullable in the domain.
-- Treat default argument values in production callables as behavior, not compile fixes.
-- Add or change a default argument only when current client usage shows that more than half of clients pass the same value, the default value is explicit target behavior, and omission is safe.
-- Omission is safe only when forgetting to pass the argument cannot cause unexpected side effects.
-- Otherwise pass the argument explicitly; if that crosses the current task boundary, stop and report it.
+- Treat default argument values in production callables as behavior, not compile, source/API compatibility, or call-site propagation fixes.
+- Add or change a default argument only when current client usage shows that more than half of clients intentionally pass the same value, that value is explicit target behavior for omitted calls, and omission is safe.
+- Omission is safe only when forgetting to pass the argument cannot cause unexpected side effects or hide a required behavior choice.
+- Otherwise pass the argument explicitly at every affected call site.
+- If explicit propagation crosses the current task boundary, stop and report it instead of adding a default.
 - Use the configured `artifact_language` for comments in code.
 - Prefer Kotlin operator syntax over direct `operator fun` calls.
 - Prefer functional style: immutable data, pure functions, and declarative `map`/`filter`-style transformations where they keep code clear.
