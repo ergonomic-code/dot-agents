@@ -10,6 +10,8 @@
 - Each test case must set up its own fixture.
 - Do not add per-test cleanup for shared fixture state.
   Use or extend the shared fixture setup/reset layer.
+- Before adding cleanup for shared fixture state, inspect the selected test container's setup/reset path, including superclasses, test extensions, and called reset/init helpers.
+- If that path already resets the state, rely on it.
 - If fixture setup code duplication exceeds 3 lines, it may be extracted into helpers.
 - In fixture setup specify only data relevant to the test-case.
 - If data in the fixture is related, derive it instead of copying.
