@@ -27,6 +27,7 @@
 - If explicit propagation crosses the current task boundary, stop and report it instead of adding a default.
 - Use the configured `artifact_language` for comments in code.
 - Prefer Kotlin operator syntax over direct `operator fun` calls.
+- Prefer Kotlin reified or extension APIs over equivalent Java `Class<T>` overloads where available.
 - Prefer functional style: immutable data, pure functions, and declarative `map`/`filter`-style transformations where they keep code clear.
 - Prefer plain Kotlin singleton objects over classes when no direct or transitive mutable state is needed.
 - If a helper does not depend on class state, implement it as a top-level function.
