@@ -4,6 +4,7 @@
 
 - Does every implementation-code change serve required behavior rather than only making tests pass?
 - Is there any duplication in the code beyond acceptable repetition of setup and assertions between test cases?
+- Are non-trivial operations shaped as explicit read-query, I/O-free pure-calculation-query, and write-command branches?
 - Are values whose meaning, unit, range, or nullability is narrower than their primitive type represented by semantic types, or made explicit at required primitive boundaries?
 
 ## Tests
