@@ -25,6 +25,8 @@ Do not edit tests, test fixtures, test data, assertions, display names, test ann
    Before editing production code, apply the loaded ergonomic, boundary, and code implementation conventions.
    Keep this skill's test-edit ban and selected-case scope as stricter constraints.
    Derive the selected behavior boundary from the failing test's entry point, endpoint, operation, scenario, and feature design when present.
+   Treat feature design as the source for behavior intent and production value sources; use the selected case and progress item only to choose the current slice and checks.
+   Do not replace a design-defined value source with a constant, default, or global setting derived from one case, example, or progress item.
    Keep investigation and edits inside that boundary, except for compile-only call-site propagation forced by the chosen change.
    Smallest production change means the smallest coherent production fix, not the smallest shortcut that greens the selected test.
    Do not introduce temporary, test-shaped, or bypass behavior in production code to reduce the current green slice.
