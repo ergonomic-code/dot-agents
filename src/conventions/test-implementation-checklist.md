@@ -8,6 +8,7 @@
 - Is shared fixture state cleaned only by the shared setup/reset layer?
 - Are in-process mocks absent except for hard or expensive error simulation?
 - Are low-level setup and observation helpers absent from test classes?
+- Are production dependencies and DI lookups absent from test classes for setup or observation?
 - Does each new or changed `*TestApi` stay inside one aggregate/resource scope?
 - Is each cross-scope setup helper implemented in `*FixturePresets`?
 - Are expected values bound in `Given` and reused?

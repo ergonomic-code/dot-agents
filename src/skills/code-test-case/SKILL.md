@@ -30,6 +30,8 @@ If any selected `Check` lacks `Given` / `When` / `Then`, stop and report that `s
 If a selected check violates format but is repairable without changing behavior, stop and show the issue, the proposed corrected case header, and these choices: keep source wording as-is, use the proposed wording, or provide replacement wording.
 If a selected check cannot be repaired without inventing behavior, stop and ask for corrected case text.
 Before editing code, map check data roles to helpers, factories, or fixtures; keep exact literals, enum members, constants, codes, ids, dates, and names in the test body only when named by the case or public contract.
+Do not add production repositories, DAOs, services, clients, application contexts, or DI lookups to test case classes for setup or observation.
+Put that access behind scoped `*TestApi` or `*FixturePresets`.
 Inspect available fixture APIs for generic role helpers before choosing named constants or presets.
 Before announcing a plan or editing code, if the test needs new or changed fixture helpers, check `../../conventions/test-fixture-architecture.md`:
 name each `*TestApi` scope, keep cross-scope creation/linking in `*FixturePresets`, and create missing sibling `*TestApi` helpers instead of expanding an existing one.
