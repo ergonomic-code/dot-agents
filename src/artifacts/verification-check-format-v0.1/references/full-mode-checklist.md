@@ -10,6 +10,7 @@
 - No assertion depends on internal implementation instead of contract.
 - No precondition is irrelevant to the outcome.
 - No assertion is outside the scope of the `Check`.
+- No positive result is paired with a mirrored absence assertion unless the absence is a distinct contract obligation.
 - Each negative path states the absence of the required side effect.
 - Layout matches `references/layout.md`.
 - Wording is short, domain-based, and implementation-light.
