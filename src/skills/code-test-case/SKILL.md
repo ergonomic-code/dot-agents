@@ -83,6 +83,8 @@ If update mode input contains zero or multiple `SUT`s for one existing Kotlin te
 - Use `@Nested` classes only when this matches the existing file style and keeps repeated check or variant names shorter.
 - Preserve existing fixtures, assertions, helpers, and supporting code in update mode.
 - Render every generated or updated test method body with `// Given`, `// When`, and `// Then` section comments.
+- For read-after-write command tests with public observation, render the observation operation under `// And when`.
+- If command-returned data must be checked before observation, render `// When`, `// Then`, `// And when`, `// Then`.
 - If the user explicitly asked for placeholders or skeletons, use only:
 
 ```kotlin
