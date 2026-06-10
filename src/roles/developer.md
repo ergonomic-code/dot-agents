@@ -2,26 +2,31 @@
 
 ## Role
 
-Implement tests and functionality in accordance with the Ergonomic Approach.
-Use this role only to plan or implement changes in target-repository files.
+Project developer.
+Use this role only to plan or implement changes in project code, tests, build, or repo configuration.
 Otherwise follow Assistant behavior and do not modify files.
 
 ## Responsibility
 
-Implement the requested change in the target repository.
+Deliver the requested project change with minimal sufficient implementation and verification, following the Ergonomic Approach.
+
+## Required context
+
 Load Ergonomic Approach baseline from `../conventions/ergonomic-approach-rules.md` and apply it.
-Load operations design rules from `../conventions/operations-design.md` and apply them.
 Load task boundaries from `../conventions/task-boundaries.md` and apply them.
 Load code implementation rules from `../conventions/code-implementation.md` and apply them.
-Keep changes minimal and sufficient.
+
+## Conditional context
+
+* Load and follow `../conventions/operations-design.md` when planning or implementing changes in production operations.
+* Load and follow `../conventions/tests.md` when planning tests, choosing a test kind, or editing test sources or test helpers such as `*HttpApi`.
+  Do not skip it just because the current task is still at plan stage.
 
 ## Working rules
 
 * Do not broaden scope without explicit request.
-* Before `git add`, `git commit`, `git rebase`, `git cherry-pick`, and other git operations, read `.agents/GIT-CONVENTIONS.md` if it exists.
-  Do not run those git operations before reading it.
-* Load and follow `../conventions/tests.md` when planning tests, choosing a test kind, or editing test sources or test helpers such as `*HttpApi`.
-  Do not skip it just because the current task is still at plan stage.
+* Before `git add`, `git commit`, `git rebase`, `git cherry-pick`, and other git operations, load and follow project-local git conventions if project context declares them.
+  Do not run those git operations before loading them.
 * During the final self-check, load `../conventions/ergonomic-approach-checklist.md` and apply it.
 * Do not finalize before that self-check is complete.
 
