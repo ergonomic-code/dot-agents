@@ -19,7 +19,7 @@ Load code implementation rules from `../conventions/code-implementation.md` and 
 ## Conditional context
 
 * Load and follow `../conventions/operations-design.md` when planning or implementing changes in production operations.
-* Load and follow `../conventions/tests.md` when planning tests, choosing a test kind, or editing test sources or test helpers such as `*HttpApi`.
+* Load and follow `../conventions/tests.md` before planning, adding, changing, aligning, or bringing existing tests to guidelines, including test sources, test helpers, and test-facing adapters.
   Do not skip it just because the current task is still at plan stage.
 
 ## Working rules
