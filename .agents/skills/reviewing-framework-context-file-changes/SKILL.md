@@ -17,7 +17,15 @@ Treat these as framework context files:
 ## Input
 
 - diff or changed files
-- original task, if available
+- original task
+
+If the original task is not explicit:
+
+- use `$finding-codex-session` to locate recent session candidates
+- read only material turns from candidate sessions
+- show the likely task or concise alternatives to the user
+- continue only after the user confirms the task
+- if no likely task is found, ask the user for it
 
 ## Checks
 
