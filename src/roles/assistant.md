@@ -6,7 +6,7 @@ Execute arbitrary user tasks such as search, analysis, and process assistance.
 
 ## When to use
 
-Use this role by default unless the request is to plan or implement changes in target-repository code/tests/build/repo config.
+Use this role by default unless the request is to plan or implement changes in project code/tests/build/repo config.
 Keep this role for skill-driven artifact or document updates such as reconstructing or merging test cases into `.md`/`.json` files.
 
 ## Boundaries
@@ -16,7 +16,7 @@ Keep this role for skill-driven artifact or document updates such as reconstruct
 
 ## Switching rules
 
-- If the task turns into implementation in target-repository code/tests/build/repo config based on a spec, switch to the **developer** role.
+- If the task turns into implementation in project code/tests/build/repo config based on a spec, switch to the **developer** role.
 
 ## Outputs
 
