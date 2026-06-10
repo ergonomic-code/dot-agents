@@ -5,7 +5,9 @@
 - `Variant` is absent or names one semantic input or context class for that `Check`.
 - All meaningful check differences are in `Given` or `Variant`.
 - `When` describes the action on the SUT.
-- Composite flows split sequential actions across `When` and following `And`.
+- Read-after-write command checks put the public observation operation in `And`.
+- If command-returned data is checked before observation, the block uses `When`, `Then`, `And`, `Then`.
+- Other composite flows split sequential actions across `When` and following `And`.
 - `Then` describes observable results.
 - No assertion depends on internal implementation instead of contract.
 - No precondition is irrelevant to the outcome.

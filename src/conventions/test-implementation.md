@@ -4,6 +4,8 @@
 
 - In every new or changed test-case method, split the body with `// Given`, `// When`, and `// Then` comments.
 - Put setup under `Given`, the action under `When`, and verification under `Then`.
+- In command tests with a public observation API, prefer two public API actions: put the target command under `// When` and the observation operation under `// And when`.
+- If command-returned data must be checked before observation, use `// When`, `// Then`, `// And when`, `// Then`.
 
 ## Fixture setup
 
