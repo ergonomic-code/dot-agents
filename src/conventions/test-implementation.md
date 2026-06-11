@@ -32,6 +32,8 @@
   If exact value is not the point, assert a property.
   If an expected value is derived, compute it in `Given`.
   If a literal is unavoidable, declare it in `Given` with a short rationale comment.
+  In test-case bodies, name expected-value variables by the expected meaning or checked property, not `expected*`.
+  `expected*` names are allowed in helpers, helper parameters, and helper internals.
 
 ## Test data
 
