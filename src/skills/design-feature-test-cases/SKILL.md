@@ -18,6 +18,7 @@ When current cases come from test code and anchors must be recovered, use `../re
 - artifact phase code: `030`
 - default feature-dir output path: `<feature-dir>/030-test-cases-new.adoc`
 - progress.md checklist item: `Изменения тест-кейсов`
+- human-readable artifact title: `Изменения тест-кейсов`
 
 ## Inputs
 
@@ -100,8 +101,10 @@ Match the artifact container format requested by the user.
 If the user did not request a container format, infer it from the explicit output path extension when present.
 Otherwise default to AsciiDoc.
 - For Markdown files, use Markdown headings.
-- For AsciiDoc files, use AsciiDoc headings.
-- For AsciiDoc files, place `:max-width: 95%` once immediately after the first section heading.
+- For AsciiDoc files, start with a level-1 document title: `= <document-title>`.
+- For AsciiDoc files, derive `<document-title>` by the human-readable document title rule from `framework_checkout_root/src/conventions/feature-stage-skill.md`.
+- For AsciiDoc files, render each of the four required section headings as level-2 headings: `== ...`.
+- For AsciiDoc files, place `:max-width: 95%` once immediately after the document title.
 - If an output path is resolved, write only the artifact text to that file.
 - Otherwise return only the artifact text.
 - When source-location metadata is available for a source-derived case, render exactly one source reference using `../../artifacts/verification-check-format-v0.1/references/source-reference.md`.
@@ -164,11 +167,13 @@ Check all of these:
 - in AsciiDoc, every check is rendered in its own `[source,text]` + `....` block and no block contains several checks;
 - every removed case is in `short` mode and every added, changed, or unchanged case is in `full` mode;
 - when output is AsciiDoc, every `changed` case is rendered in the `|===` table shape with `a|` content cells, the `Было` cell contains the source reference when available, and the `Стало` cell does not repeat the old case reference or contain the source reference;
-- when output is AsciiDoc, `:max-width: 95%` appears exactly once immediately after the first section heading;
+- when output is AsciiDoc, the document starts with `= <document-title>` derived by the human-readable document title rule from `framework_checkout_root/src/conventions/feature-stage-skill.md`;
+- when output is AsciiDoc, each of the four required section headings is level 2: `== ...`;
+- when output is AsciiDoc, `:max-width: 95%` appears exactly once immediately after the document title;
 - when explicit source-location metadata is available, every `removed`, `changed`, or `unchanged` case has exactly one source reference rendered per `../../artifacts/verification-check-format-v0.1/references/source-reference.md`;
 - when the output is Markdown or AsciiDoc and the artifact output path is explicit or inferable, the source reference uses the human clickable form with visible text `<commit>:<file-name>:<line-num>` and a target resolved relative to the target artifact file directory;
 - when the human clickable form cannot be rendered safely, the machine form is used instead of inventing or dropping the source reference;
 - when source-location metadata is absent, no source reference is invented;
 - no `unchanged` case adds any trailing keep-as-is note after the case body;
 - every new or updated case is written as the most abstract correct behavior case and avoids unnecessary concrete values;
-- the output contains only the four requested sections.
+- the output contains only the AsciiDoc document title when applicable and the four requested sections.
