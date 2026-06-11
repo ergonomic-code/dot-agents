@@ -1,27 +1,33 @@
-# Feature stage skill
+# Feature artifact lifecycle
 
-Use this rule for skills that can write default stage outputs into a feature workdir.
-A feature-stage skill may still be used without a feature directory when explicit paths, a non-feature default output container, or inline output are available.
+Use this rule for skills that can write default artifact-phase outputs into a feature workdir.
+A feature-aware skill may still be used without a feature directory when explicit paths, a non-feature default output container, or inline output are available.
 
 ## Skill bindings
 
 Keep only these bindings in the skill or its local references:
-- stage code;
+- artifact phase code;
 - default feature-dir output path or output container;
 - optional non-feature default output container;
 - optional `progress.md` checklist item;
-- optional stage `010` bootstrap allowance.
+- optional artifact phase `010` bootstrap allowance.
 Keep task-specific logic, content rules, and validations in the skill.
+Use `feature-artifact-phases.md` for artifact phase semantics and standard phase meanings.
 
 ## Shared lifecycle
 
 - If the user gave an explicit output path or output directory, keep it.
-- Otherwise resolve the active feature directory via `feature-workdir.md`.
-- If the active feature directory is resolved and the skill defines a default feature-dir output path or output container, use that binding.
-- If no active feature directory is resolved and the skill explicitly allows stage `010` bootstrap, it may create the feature directory before resolving the default stage output.
+- Otherwise resolve the active feature directory and active implementation stage via `feature-workdir.md`.
+- Treat an artifact as implementation-stage-specific only when the active feature is staged and the user invokes the skill for an active stage, a stage artifact, a selected progress stage, or one approved implementation slice.
+- Do not treat artifact phase code `020` or `030` alone as an implementation-stage selector.
+- Treat `010-feature-brief.md`, root `progress.md`, current status, target design, and cross-stage artifacts as feature-wide.
+- If an active implementation stage is resolved and the artifact is implementation-stage-specific, bind `<feature-dir>` in the skill output binding to `<feature-dir>/stage-<stage-code>`.
+- If the artifact is implementation-stage-specific, the active feature directory is resolved, and no active implementation stage is resolved, ask for the stage or first convert the feature directory to staged layout.
+- Otherwise, if the active feature directory is resolved and the skill defines a default feature-dir output path or output container, use that binding.
+- If no active feature directory is resolved and the skill explicitly allows artifact phase `010` bootstrap, it may create the feature directory before resolving the default output path.
 - If no active feature directory is resolved and the skill defines a non-feature default output container, use it.
 - If no output path is resolved and the skill can return the result inline, return it inline instead of forcing feature-dir flow.
-- Otherwise ask only for the missing feature directory or output path.
+- Otherwise ask only for the missing feature directory, implementation stage, or output path.
 
 ## Write and sync
 

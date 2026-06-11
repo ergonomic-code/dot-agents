@@ -50,10 +50,18 @@ They are not part of the output file.
 
 - Core sections are mandatory: `Контекст`, `Изменения в поведении системы`, `Бизнес-правила`, `Приёмочные проверки`.
 - `Изменения в UI`, `Термины`, and `Открытые вопросы` are optional but preferred when they add clarity.
+- `Этапы реализации` is optional and should be added only when the user explicitly asked for staged layout or explicitly approved adding stages.
 - Write only in end-user domain language.
 - Describe only behavior a user can trigger or observe through UI.
 - Translate technical source material into user-visible effects.
-- Do not add endpoint lists, API contracts, persistence details, or implementation design.
+- Do not add endpoint lists, API contracts, persistence details, or implementation design outside `Этапы реализации`.
+- Keep the feature flat by default and omit `Этапы реализации`.
+- Include `Этапы реализации` only when one feature needs several implementation slices and staged layout is explicit or approved.
+- If several implementation slices are implied but staged layout is not yet explicit or approved, propose it and wait.
+- In `Этапы реализации`, identify each stage as `<feature-code>/<stage-code>`, for example `014/01`.
+- Use exactly two digits for `<stage-code>`.
+- Each behavior stage covers at most one endpoint/API surface; large preparatory refactoring gets its own stage.
+- In `Этапы реализации`, exact endpoint/API names are allowed only as stage boundaries.
 - Keep scope boundaries explicit.
 - Put unresolved but non-blocking gaps into `Открытые вопросы`.
 - `Приёмочные проверки` use only short checks: `SUT`, then required properties, then optional variants.

@@ -11,21 +11,24 @@ Use it only for documentation formatting.
 If it conflicts with this skill or the feature-brief structure, keep this skill.
 Read `framework_checkout_root/src/conventions/feature-workdir.md`.
 Read `framework_checkout_root/src/conventions/feature-stage-skill.md`.
+Read `framework_checkout_root/src/conventions/feature-artifact-phases.md`.
 Read `./references/feature-brief-template.md`.
 Read `./references/feature-dir-progress-template.md`.
 
-## Feature-stage bindings
+## Feature artifact bindings
 
-- stage code: `010`
+- artifact phase code: `010`
 - default feature-dir output path: `<feature-dir>/010-feature-brief.md`
 - progress.md checklist item: `Фича-бриф`
-- stage `010` bootstrap: this skill may create the feature directory when unresolved
+- artifact phase `010` bootstrap: this skill may create the feature directory when unresolved
 
 ## Workflow
 
 - Treat an explicit feature directory or brief path as the target.
-- Otherwise use the shared feature-stage lifecycle for the default stage `010` brief.
+- Otherwise use the shared lifecycle from `feature-stage-skill.md` for the default artifact-phase `010` brief.
 - When this run creates a new feature directory, also create `<feature-dir>/progress.md` from the local template.
+- Create a flat feature directory by default.
+- If the user explicitly requests staged layout or explicitly approves adding stages, adapt the root brief and `progress.md` to staged layout per `feature-workdir.md`, using stage directories `stage-<stage-code>` and feature-stage identifiers `<feature-code>/<stage-code>`.
 - Create or update the resolved brief path.
 - Build context only from the user request, explicitly referenced files, files already inside the target feature directory when it exists, and interview answers.
 - Do not read code, OpenAPI, tests, or contracts to fill missing requirements.
@@ -33,12 +36,14 @@ Read `./references/feature-dir-progress-template.md`.
 - Ask only the smallest set of high-value questions.
 - If the feature changes UI and the user did not provide screenshots of the changed screens or states, ask for them.
 - Do not convert silence into approval.
-- If the request clearly contains several independent rollout steps, propose a split into subfeatures and wait for approval.
+- If one product change needs several implementation slices and staged layout is already explicit or approved, add `Этапы реализации` using feature-stage identifiers `<feature-code>/<stage-code>` instead of splitting the feature.
+- If one product change needs several implementation slices and staged layout is not yet explicit or approved, propose adding stages and wait for approval.
+- Propose subfeatures only for independent product changes.
 - Rewrite technical source statements into the end-user domain language.
 - Write only what changes in this feature.
 - Do not restate current behavior, static context, or unchanged flows unless they are needed to explain the change boundary.
 - Describe only behavior that the user can trigger or observe through UI.
-- Do not describe endpoints, methods, request parameters, tables, migrations, classes, packages, or storage strategy.
+- Do not describe endpoints, methods, request parameters, tables, migrations, classes, packages, or storage strategy, except exact endpoint/API names in `Этапы реализации` when they define stage boundaries.
 - Keep one consistent domain term per entity.
 - Preserve correct parts of an existing brief.
 - Rewrite only vague, conflicting, duplicated, overly technical, or scope-breaking parts.
@@ -55,6 +60,6 @@ Read `./references/feature-dir-progress-template.md`.
 - Write the brief in the language of the end user, not in API or implementation language.
 - Describe the delta from the current product state, not the whole feature area.
 - Keep the brief at UI and observable system behavior level.
-- Keep implementation design out of the brief unless the requirement explicitly makes it user-visible.
+- Keep implementation design out of the brief unless it is an explicit or approved stage boundary or a user-visible requirement.
 - Acceptance checks must describe observable behavior in domain language.
 - Cover the main flow, invariants, fallbacks, and important edge cases.

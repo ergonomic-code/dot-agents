@@ -10,6 +10,9 @@
 - Refactoring may change structure only and must preserve externally observable behavior.
 - Behavior changes must preserve structure and avoid refactoring.
 - If the requested behavior cannot be changed without structural change, stop and ask to split the work.
+- In one coding slice, change no more than one externally visible HTTP endpoint or API surface.
+- If a behavior change spans several endpoints or API surfaces, execute only the current or first explicit slice, then report the remaining slices.
+- Large preparatory refactorings must be separate refactor-only slices before dependent behavior slices.
 
 ## Write set
 

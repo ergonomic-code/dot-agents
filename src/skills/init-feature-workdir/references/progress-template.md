@@ -32,3 +32,9 @@ For `ru`, use the Russian text below.
 - [ ] Финализация
   - [ ] Залить/актуализировать артефакты
 ~~~
+
+## Agent Rules
+
+- Keep the default template flat.
+- For staged layout, group implementation cases under `Реализация` by `Этап <feature-code>/<stage-code>: <название>`.
+- Use exactly two digits for `<stage-code>`.
