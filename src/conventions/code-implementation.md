@@ -33,3 +33,7 @@
 - If a helper does not depend on class state, implement it as a top-level function.
 - If a helper has a clear primary argument, implement it as an extension function on that type.
 - Use named arguments for constant values and variables whose name differs from the corresponding parameter name.
+
+## HTTP API versions
+
+- When adding a newer version of an existing HTTP API operation, keep Kotlin identifiers for the current operation unversioned and rename the previous operation's Kotlin wrappers to versioned identifiers.
