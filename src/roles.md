@@ -6,7 +6,7 @@
 2. If the role is not specified use:
    - the **assistant** role by default;
    - the **developer** role only to plan or implement changes in project code/tests/build/repo config;
-   - the **framework-context-engineer** if the request is about modification of framework-provided context under `framework_checkout_root/src/**`;
+   - the **framework-context-engineer** if the request is about design, review, analysis, or modification of framework-provided context under `framework_checkout_root/src/**` or an explicitly referenced Ergocode framework checkout;
    - the **project-context-engineer** if the request is about modification of project `AGENTS.md` or project-local files in `.agents` or `.codex` outside `framework_checkout_root/**` and outside the active feature workdir;
    - the **feature-context-engineer** if the request is about refining feature analysis or design artifacts under the active feature workdir so they guide both people and AI agents;
    - when in doubt, ask which role to use.
