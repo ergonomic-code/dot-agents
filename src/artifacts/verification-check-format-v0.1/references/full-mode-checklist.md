@@ -7,6 +7,7 @@
 - `When` describes the action on the SUT.
 - Read-after-write command checks put the public observation operation in `And`.
 - If command-returned data is checked before observation, the block uses `When`, `Then`, `And`, `Then`.
+- If several observation endpoint calls are needed, each observation action is in its own `And` and each observed result is in the following `Then`.
 - Other composite flows split sequential actions across `When` and following `And`.
 - `Then` describes observable results.
 - No assertion depends on internal implementation instead of contract.

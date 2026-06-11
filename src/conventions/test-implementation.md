@@ -6,6 +6,7 @@
 - Put setup under `Given`, the action under `When`, and verification under `Then`.
 - In command tests with a public observation API, prefer two public API actions: put the target command under `// When` and the observation operation under `// And when`.
 - If command-returned data must be checked before observation, use `// When`, `// Then`, `// And when`, `// Then`.
+- If observing the result requires several endpoint calls, render each observation endpoint under its own `// And when` followed by its own `// Then`.
 
 ## Fixture setup
 
