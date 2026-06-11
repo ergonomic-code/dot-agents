@@ -10,6 +10,7 @@ Keep only these bindings in the skill or its local references:
 - default feature-dir output path or output container;
 - optional non-feature default output container;
 - optional `progress.md` checklist item;
+- optional human-readable artifact title;
 - optional artifact phase `010` bootstrap allowance.
 Keep task-specific logic, content rules, and validations in the skill.
 Use `feature-artifact-phases.md` for artifact phase semantics and standard phase meanings.
@@ -28,6 +29,15 @@ Use `feature-artifact-phases.md` for artifact phase semantics and standard phase
 - If no active feature directory is resolved and the skill defines a non-feature default output container, use it.
 - If no output path is resolved and the skill can return the result inline, return it inline instead of forcing feature-dir flow.
 - Otherwise ask only for the missing feature directory, implementation stage, or output path.
+
+## Human-readable document title
+
+- Use this only when the skill defines a human-readable artifact title and needs a document title for a rendered artifact.
+- If `<active-feature-dir>/010-feature-brief.md` exists, read its first level-1 heading and use its text as `<feature-title>`.
+- If the artifact is implementation-stage-specific, derive the active stage label as `Этап <feature-code>/<stage-code>: <stage-name>` from the staged `progress.md` group or the `Этапы реализации` entry.
+- If `<feature-title>` and the active stage label are both available, use `<feature-title> — <active-stage-label> — <artifact-title>`.
+- Otherwise, if only `<feature-title>` is available, use `<feature-title> — <artifact-title>`.
+- Otherwise use `<artifact-title>`.
 
 ## Write and sync
 
