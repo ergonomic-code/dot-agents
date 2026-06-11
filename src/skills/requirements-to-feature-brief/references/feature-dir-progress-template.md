@@ -32,3 +32,9 @@ This fenced block is the target file content.
       - [ ] Красный тест
       - [ ] Зелёный тест
 ~~~
+
+## Agent Rules
+
+- Keep the default template flat.
+- For staged layout, group implementation cases under `Реализация` by `Этап <feature-code>/<stage-code>: <название>`.
+- Use exactly two digits for `<stage-code>`.

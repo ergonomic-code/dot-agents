@@ -42,3 +42,10 @@ For `ru`, use the Russian text below.
 2. <ещё требование к поведению>
 
 ~~~
+
+## Agent Rules
+
+- Keep the default template flat.
+- Add `Этапы реализации` only when the user explicitly requested staged layout or listed implementation slices.
+- In `Этапы реализации`, identify each stage as `<feature-code>/<stage-code>`, for example `014/01`.
+- Use exactly two digits for `<stage-code>`.

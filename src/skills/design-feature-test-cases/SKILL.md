@@ -7,14 +7,15 @@ description: Design `030-test-cases-new.adoc` from a feature brief, implementati
 
 Read `framework_checkout_root/src/conventions/feature-workdir.md`.
 Read `framework_checkout_root/src/conventions/feature-stage-skill.md`.
+Read `framework_checkout_root/src/conventions/feature-artifact-phases.md`.
 Read `../design-test-case/SKILL.md`.
 Read the format reference at `../../artifacts/verification-check-format-v0.1/ARTIFACT.md`.
 Read `../../artifacts/verification-check-format-v0.1/references/source-reference.md`.
 When current cases come from test code and anchors must be recovered, use `../reverse-engineer-test-case/SKILL.md` anchor rules.
 
-## Feature-stage bindings
+## Feature artifact bindings
 
-- stage code: `030`
+- artifact phase code: `030`
 - default feature-dir output path: `<feature-dir>/030-test-cases-new.adoc`
 - progress.md checklist item: `Изменения тест-кейсов`
 

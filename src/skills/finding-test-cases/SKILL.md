@@ -7,10 +7,11 @@ description: Find existing test cases for modules present in a ready structural 
 
 Read `framework_checkout_root/src/conventions/feature-workdir.md`.
 Read `framework_checkout_root/src/conventions/feature-stage-skill.md`.
+Read `framework_checkout_root/src/conventions/feature-artifact-phases.md`.
 
-## Feature-stage bindings
+## Feature artifact bindings
 
-- stage code: `020`
+- artifact phase code: `020`
 - default feature-dir output path: `<feature-dir>/020-test-cases-current.md`
 - progress.md checklist item: `Текущие тест-кейсы`
 

@@ -10,7 +10,7 @@ Read `framework_checkout_root/src/conventions/feature-workdir.md`.
 ## Feature-directory behavior
 
 - default source artifact: `<feature-dir>/010-feature-brief.md`
-- This auxiliary mapping has no standard stage output path.
+- This auxiliary mapping has no standard artifact-phase output path.
 - Use an explicit output path when provided.
 - Otherwise return the artifact inline.
 

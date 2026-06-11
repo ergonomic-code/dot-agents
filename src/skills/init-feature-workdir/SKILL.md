@@ -17,8 +17,10 @@ Read `./references/feature-brief-template.md` and `./references/progress-templat
 - If the slug contains a path separator or escapes `./devlog`, ask for a corrected slug and stop.
 - Use target directory `./devlog/<feature-id>-<feature-slug>`.
 - If the target directory already exists, stop and report that no files were changed.
-- Create only the target directory, `010-feature-brief.md`, and `progress.md`.
+- Create only the target directory, `010-feature-brief.md`, `progress.md`, and, when staged layout is explicit, the required `stage-<stage-code>/` directories.
 - Copy the fenced file templates from the local references.
+- Create a flat feature directory by default.
+- If the user explicitly requests staged layout or lists implementation slices, adapt the copied `010-feature-brief.md` and `progress.md` to the staged layout from `feature-workdir.md`, using stage directories `stage-<stage-code>` and feature-stage identifiers `<feature-code>/<stage-code>`.
 - Keep placeholders unless the user explicitly provided exact values.
 - Do not inspect product code, infer requirements, or create extra files.
 - Verify that the directory and both files exist.
