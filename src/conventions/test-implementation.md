@@ -28,6 +28,7 @@
 - In verification block, including GWT-style `Then`, do not use magic constants for expected values.
   Do not put expected literals in `Then`.
   Bind each business value once in `Given` and reuse it in setup, request, and assertions.
+  Do not extract a self-evident expected literal used only once into a `Given` variable.
   If exact value is not the point, assert a property.
   If an expected value is derived, compute it in `Given`.
   If a literal is unavoidable, declare it in `Given` with a short rationale comment.
