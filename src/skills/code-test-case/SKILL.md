@@ -85,6 +85,7 @@ If update mode input contains zero or multiple `SUT`s for one existing Kotlin te
 - Render every generated or updated test method body with `// Given`, `// When`, and `// Then` section comments.
 - For read-after-write command tests with public observation, render the observation operation under `// And when`.
 - If command-returned data must be checked before observation, render `// When`, `// Then`, `// And when`, `// Then`.
+- If several observation endpoint calls are required, render each observation operation under its own `// And when` and place its assertions in the following `// Then`.
 - If the user explicitly asked for placeholders or skeletons, use only:
 
 ```kotlin
