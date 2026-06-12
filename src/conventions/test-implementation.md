@@ -18,6 +18,8 @@
 - If fixture setup code duplication exceeds 3 lines, it may be extracted into helpers.
 - In fixture setup specify only data relevant to the test-case.
 - If data in the fixture is related, derive it instead of copying.
+- Prefer values returned by fixture setup over extra observation calls when they identify the created data.
+- Do not broaden fixture data or add visibility-only fields only to make an incidental observation path work.
 
 ## Assertions
 
