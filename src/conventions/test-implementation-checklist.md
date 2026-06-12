@@ -7,6 +7,8 @@
 - For each named fixture constant or preset: is that exact named variant required?
 - If no, replace it with a role helper, factory, or fixture.
 - Is fixture setup minimal?
+- Does the test use setup-returned values instead of extra observation calls that require broader fixture data?
+- Are there no public read calls used only to discover setup-created ids or refs?
 - Is shared fixture state cleaned only by the shared setup/reset layer?
 - Are in-process mocks absent except for hard or expensive error simulation?
 - Are low-level setup and observation helpers absent from test classes?

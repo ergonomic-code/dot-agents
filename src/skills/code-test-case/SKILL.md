@@ -34,6 +34,7 @@ If a selected example cannot be repaired without inventing behavior, stop and as
 For HTTP API examples, before choosing or changing `*HttpApi` helpers, DTOs, schemas, or success assertions, resolve the active feature stage and read sibling `030-api-new.adoc` or `030-api-new-ir.json` when present.
 If such API artifact exists, use it as the target endpoint and response contract for the selected case.
 Before editing code, map case data roles to helpers, factories, or fixtures; keep exact literals, enum members, constants, codes, ids, dates, and names in the test body only when named by the case or public contract.
+If setup returns the required identifier or reference, use it directly; do not add a public read API call just to discover it.
 Do not add production repositories, DAOs, services, clients, application contexts, or DI lookups to test case classes for setup or observation.
 Put that access behind scoped `*TestApi` or `*FixturePresets`.
 Inspect available fixture APIs for generic role helpers before choosing named constants or presets.
