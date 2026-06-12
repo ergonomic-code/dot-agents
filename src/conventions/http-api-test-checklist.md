@@ -7,5 +7,6 @@
 - Are compatibility omissions isolated in explicit legacy, raw, or relaxed paths with separate compatibility tests?
 - Did each helper signature change touch only paths required by the selected case?
 - Do transport checks, schema validation, and body decoding stay inside `*HttpApi`?
+- If the case changes response shape, would the test fail on the old response shape?
 - Do status checks on the project error response body type use semantic project assertions instead of raw status field comparisons?
 - Were extra test-layer `*Request` or `*Response` DTOs avoided when the controller contract already defines the transport shape?

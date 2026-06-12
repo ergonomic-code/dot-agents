@@ -12,6 +12,7 @@ Read `../../artifacts/verification-check-format-v0.1/references/full-mode-checkl
 Read `../../artifacts/verification-check-format-v0.1/references/source-reference.md`.
 Read `../../conventions/feature-workdir.md`.
 Read `../../conventions/tests.md`.
+Read `references/response-contract-guard.md`.
 
 Accept one `verification-check-format-v0.1` artifact in `full` mode, or a feature progress/checklist item that links to one, and an optional existing Kotlin JUnit 5 test file.
 When given `progress.md` or a checklist item, resolve the selected entry to its linked full-mode check artifact before selecting the test case.
@@ -30,6 +31,8 @@ If any selected `Rule` lacks a full `Example` with `Given` / `When` / `Then`, st
 If full-mode input places a source reference under `Rule` instead of under the matching `Example`, stop and report the invalid artifact shape.
 If a selected example violates format but is repairable without changing behavior, stop and show the issue, the proposed corrected case header, and these choices: keep source wording as-is, use the proposed wording, or provide replacement wording.
 If a selected example cannot be repaired without inventing behavior, stop and ask for corrected case text.
+For HTTP API examples, before choosing or changing `*HttpApi` helpers, DTOs, schemas, or success assertions, resolve the active feature stage and read sibling `030-api-new.adoc` or `030-api-new-ir.json` when present.
+If such API artifact exists, use it as the target endpoint and response contract for the selected case.
 Before editing code, map case data roles to helpers, factories, or fixtures; keep exact literals, enum members, constants, codes, ids, dates, and names in the test body only when named by the case or public contract.
 Do not add production repositories, DAOs, services, clients, application contexts, or DI lookups to test case classes for setup or observation.
 Put that access behind scoped `*TestApi` or `*FixturePresets`.
