@@ -1,4 +1,4 @@
 interface:
   display_name: "Derive Endpoint Checks"
   short_description: "Derive concise endpoint checks from feature briefs"
-  default_prompt: "Use $derive-endpoint-checks-from-feature-brief to extract a complete, non-contradictory set of endpoint requirements from a feature brief and optional user test cases, rendering `verification-check-format-v0.1` in `short` mode by default."
+  default_prompt: "Use $derive-endpoint-checks-from-feature-brief to extract a complete, non-contradictory set of endpoint requirements from a feature brief and optional user test cases, rendering `verification-check-format-v0.1` Feature/Rule/Example output in `short` mode by default."

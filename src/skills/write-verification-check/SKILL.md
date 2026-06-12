@@ -1,6 +1,6 @@
 ---
 name: write-verification-check
-description: Write or normalize one or more `verification-check-format-v0.1` checks in `full` mode. Use when a user or another skill needs `SUT` / `Check` / optional `Variant` / `Given` / `When` / `Then` text rendered as concise, contract-based, implementation-light prose.
+description: Write or normalize one or more `verification-check-format-v0.1` checks in `full` mode. Use when a user or another skill needs `Feature` / `Rule` / `Example` / `Given` / `When` / `Then` text rendered as concise, contract-based, implementation-light prose.
 ---
 
 # Write Verification Check
@@ -13,24 +13,25 @@ Read `../../artifacts/verification-check-format-v0.1/references/full-mode-checkl
 ## Core Rules
 
 - Return `verification-check-format-v0.1` in `full` mode.
-- Keep one `Check` per materially distinct required property unless the calling skill explicitly narrows the set.
-- Use `Variant` only for materially distinct input or context classes of the same `Check`.
+- Keep one `Rule` per materially distinct required property unless the calling skill explicitly narrows the set.
+- Use named `Example` only for materially distinct input or context classes of the same `Rule`.
+- Use unnamed `Example:` when no example name is needed.
 - Do not mention test code, mocks, fixtures, helper names, or internal implementation details.
-- Do not copy request-local numbering, ticket ids, checklist markers, or similar bookkeeping tokens into `SUT`, `Check`, or `Variant` names unless they are part of the public contract.
+- Do not copy request-local numbering, ticket ids, checklist markers, or similar bookkeeping tokens into `Feature`, `Rule`, or `Example` names unless they are part of the public contract.
 
-## SUT Anchor Rule
+## Feature Anchor Rule
 
-Preserve an explicit or existing human-readable `SUT` anchor when it directly names the verified object.
-Valid anchors include artifact or progress `SUT`, class `@DisplayName`, named component, operation, endpoint, or API surface.
-For component tests, `SUT` may name the component anchor or the behavior surface; do not force the component symbol into `SUT` when the component is otherwise resolved.
-Apply the domain-language rule to `Check`, `Variant`, and steps after selecting `SUT`.
+Preserve an explicit or existing human-readable `Feature` anchor when it directly names the verified object.
+Valid anchors include artifact or progress `Feature`, class `@DisplayName`, named component, operation, endpoint, or API surface.
+For component tests, `Feature` may name the component anchor or the behavior surface; do not force the component symbol into `Feature` when the component is otherwise resolved.
+Apply the domain-language rule to `Rule`, `Example`, and steps after selecting `Feature`.
 
 ## Domain Language Rule
 
 Name behaviors in the domain language of the user-visible contract.
 Prefer business concepts, user-visible entities, public contract meanings, and documented domain terms over API, code, storage, transport, and implementation terms.
-In `Check`, `Variant`, and steps, do not mention class names, method names, field names, enum constants, table names, flag names, builder names, or helper names unless they are themselves part of the public contract or there is no stable domain equivalent.
-In `Check`, `Variant`, and step text, translate endpoint names, request parameters, response fields, DTO names, and payload structure into their user-observable meanings unless the exact contract member name is being validated.
+In `Rule`, `Example`, and steps, do not mention class names, method names, field names, enum constants, table names, flag names, builder names, or helper names unless they are themselves part of the public contract or there is no stable domain equivalent.
+In `Rule`, `Example`, and step text, translate endpoint names, request parameters, response fields, DTO names, and payload structure into their user-observable meanings unless the exact contract member name is being validated.
 If code uses technical names but the behavior is domain-facing, rewrite them into domain wording.
 If the checked obligation is technical, keep the technical term needed to make it precise.
 If several code symbols map to one domain concept, use the single domain concept instead of mirroring the code structure.
@@ -50,4 +51,4 @@ Avoid concrete parameter values, attribute values, identifiers, dates, statuses,
 When a concrete example is not essential, replace it with abstract wording such as `поддерживаемое значение параметра`, `неподдерживаемое значение параметра`, `значение на границе`, `значение вне допустимого диапазона`, or `сущность с признаком ...`.
 When the exact input value is not behaviorally relevant, describe it by role so downstream test code can bind it through a semantic helper, factory, or fixture instead of inventing an incidental sample value.
 When a code symbol is not essential, replace it with domain wording such as `получатель уведомления`, `признак архивности`, `внешний идентификатор`, or `запрос на создание`.
-If several concrete examples exercise the same behavior, merge them into one abstract check with variants only when the variants remain materially distinct.
+If several concrete examples exercise the same behavior, merge them into one abstract rule with named examples only when the examples remain materially distinct.

@@ -28,16 +28,16 @@ Use surrounding tests only after these rules to preserve local mechanics, import
 ## Formal case mapping
 
 - Use this section when coding from formal case artifacts, aligning existing tests to formal case names, or preserving already formal test anchors.
-- For existing tests without a formal artifact, first recover `SUT`, `Check`, and optional `Variant` from explicit anchors, source references, enclosing group names, or verified behavior.
-- After recovery, treat recovered `SUT`, `Check`, and `Variant` as source headers for this section.
-- If formal mapping applies and `SUT` or `Check` cannot be recovered confidently, stop and report the missing anchor.
-- For formal case artifacts, write class `@DisplayName` from raw `SUT` text without `SUT:`.
-- Copy `Check` and optional `Variant` header text verbatim after removing only the keyword prefix, one separator colon, and surrounding whitespace.
-- Do not paraphrase, normalize, translate, shorten, re-punctuate, or inflect `Check` or `Variant` text in display names.
-- If `Variant` is absent, set method `@DisplayName` to `<check>`.
-- If `Variant` is present, set method `@DisplayName` to `<check> :: <variant>`.
+- For existing tests without a formal artifact, first recover `Feature`, `Rule`, and optional named `Example` from explicit anchors, source references, enclosing group names, or verified behavior.
+- After recovery, treat recovered `Feature`, `Rule`, and `Example` as source headers for this section.
+- If formal mapping applies and `Feature` or `Rule` cannot be recovered confidently, stop and report the missing anchor.
+- For formal case artifacts, write class `@DisplayName` from raw `Feature` text without `Feature:`.
+- Copy `Rule` and optional named `Example` header text verbatim after removing only the keyword prefix, one separator colon, and surrounding whitespace.
+- Do not paraphrase, normalize, translate, shorten, re-punctuate, or inflect `Rule` or `Example` text in display names.
+- If `Example` is unnamed, absent, or empty, set method `@DisplayName` to `<rule>`.
+- If `Example` is named, set method `@DisplayName` to `<rule> :: <example>`.
 - Use `@Nested` only when the existing file already groups related cases this way.
 - Use the exact separator ` :: `.
-- If the source `Check` or `Variant` already contains `::`, stop and report ambiguity.
-- If `Variant` is absent, summarize the check in `<slug>`.
-- If `Variant` is present, summarize the check and variant in `<slug>`.
+- If the source `Rule` or named `Example` already contains `::`, stop and report ambiguity.
+- If `Example` is unnamed, absent, or empty, summarize the rule in `<slug>`.
+- If `Example` is named, summarize the rule and example in `<slug>`.

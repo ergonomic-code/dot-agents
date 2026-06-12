@@ -1,8 +1,8 @@
 # Source Reference
 
-Use this reference when a check must preserve the source location of a test or another evidence line.
+Use this reference when a rule or example must preserve the source location of a test or another evidence line.
 
-Attach at most one source reference to one `Check` block.
+Attach at most one source reference to one `Rule` or `Example` block.
 If the source location is unknown, omit the reference.
 
 ## Fields

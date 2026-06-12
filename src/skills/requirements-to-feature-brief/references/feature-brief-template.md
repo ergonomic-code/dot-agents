@@ -38,9 +38,9 @@ This fenced block is the target file content.
 
 ## Приёмочные проверки
 
-1. <SUT>
+1. <Feature>
    1. <проверяемое свойство>
-      1. <вариант проверки, если нужен>
+      1. <именованный пример проверки, если нужен>
 ~~~
 
 ## Agent Rules
@@ -64,5 +64,5 @@ They are not part of the output file.
 - In `Этапы реализации`, exact endpoint/API names are allowed only as stage boundaries.
 - Keep scope boundaries explicit.
 - Put unresolved but non-blocking gaps into `Открытые вопросы`.
-- `Приёмочные проверки` use only short checks: `SUT`, then required properties, then optional variants.
+- `Приёмочные проверки` use only short checks: `Feature`, then rules, then optional named examples.
 - Do not put `Given` / `When` / `Then` in the feature brief.

@@ -36,10 +36,10 @@ Do not edit tests, test fixtures, test data, assertions, display names, test ann
    If the test contradicts the feature design, requires test edits, or cannot be fixed within production code, stop and report the blocker.
 4. Rerun only the same selected test after each production-code change.
    If it passes, mark the matching green step (`Зелёный тест`) done in `<active-feature-dir>/progress.md` when present.
-   Mark the parent case done when all its child steps are done, and mark the SUT done when all its cases are done.
+   Mark the parent case done when all its child steps are done, and mark the `Feature` done when all its cases are done.
    Then stop.
    If the failure changes, stop immediately and report the new failure.
-   If the same failure remains after a production-code change, re-identify the current cause and continue only inside the same selected SUT boundary.
+   If the same failure remains after a production-code change, re-identify the current cause and continue only inside the same selected `Feature` boundary.
    Stop if the next fix requires changing a sibling endpoint, operation, mode, scenario, or a broader shared path not already inside that boundary.
 
 ## Constraints

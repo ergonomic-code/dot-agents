@@ -2,11 +2,14 @@
 
 Use this mode for executable or near-executable checks, reverse-engineered checks, and code generation input.
 
-Output `SUT`, `Check`, optional `Variant`, `Given`, `When`, `Then`, and `And`.
-An optional source reference line may appear immediately under `Check` or after its `Variant` per `references/source-reference.md`.
+Output `Feature`, `Rule`, `Example`, `Given`, `When`, `Then`, and `And`.
+Each `Rule` has at least one `Example`.
+Use `Example` with no name when no materially distinct input or context class name is needed.
+If a `Rule` has an unnamed `Example`, that unnamed example must be the only `Example` under that `Rule`.
+An optional source reference line may appear immediately under the matching `Example` per `references/source-reference.md`.
 
 Put only outcome-relevant preconditions in `Given`.
-Describe setup with concrete domain objects, states, and literals only when they materially affect the check.
+Describe setup with concrete domain objects, states, and literals only when they materially affect the example.
 Put the action under test in `When`.
 Prefer one action in `When`.
 Add a second action only for explicit read-after-write or another essential composite flow.

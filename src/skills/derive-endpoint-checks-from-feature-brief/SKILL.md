@@ -40,28 +40,28 @@ Keep only stable contract obligations for the requested target behavior.
 Keep atomic checks for request interpretation, authoritative data sources, decision logic, scope and selection of results, required response properties, ordering and cardinality, state changes, side effects, rejection conditions, explicit invariants, and representation of contract-visible values.
 Treat statements explicitly limited to the current phase, rollout step, migration window, temporary workaround, current implementation stage, or a later follow-up feature as transition notes rather than stable checks.
 Treat permissions, allowances, and exceptions phrased as temporary or stage-bound as non-check scope notes unless the user explicitly asks for interim or phase-specific contract behavior.
-Name `SUT`, `Check`, and `Variant` in domain language, not by raw API symbol names.
-For endpoint SUTs, keep the domain name first and add the HTTP method and route in parentheses only when it is needed to disambiguate.
-Write each endpoint `Check` as one required observable property.
+Name `Feature`, `Rule`, and `Example` in domain language, not by raw API symbol names.
+For endpoint features, keep the domain name first and add the HTTP method and route in parentheses only when it is needed to disambiguate.
+Write each endpoint `Rule` as one required observable property.
 When a request parameter, header, field, flag, enum value, or other wire symbol has a stable domain meaning, rewrite it into that meaning instead of copying the literal name.
 Prefer wording that keeps the contract role visible, such as request source, selected value, or controlled business concept, without mirroring the transport-level identifier.
 Keep the literal symbol only when it is itself the stable public contract term, there is no clear domain equivalent, or removing it would make the check ambiguous.
 Do not create a check whose only obligation is support for a value set, mode set, scope set, or context set.
-Use representative variants under the checks they can falsify.
-Name variants by semantic class when the literal identity is incidental.
+Use representative named examples under the rules they can falsify.
+Name examples by semantic class when the literal identity is incidental.
 Use external user test cases only as draft evidence.
 Add missing brief-backed checks.
 Drop unsupported candidate checks.
 Drop transition notes even if they are observable in the current brief scope, unless the user explicitly asked to capture the interim contract.
 Do not invent routes, statuses, defaults, validation, fallback behavior, or internal design.
-In `short` mode, keep only `SUT`, `Check`, and optional `Variant` lines.
-In `full` mode, add steps only when the user explicitly asked for executable or test-like detail.
+In `short` mode, keep only `Feature`, `Rule`, and optional named `Example` lines.
+In `full` mode, add `Example` blocks with steps only when the user explicitly asked for executable or test-like detail.
 
 ## Stop Conditions
 
 Stop and report issues instead of guessing when:
 - the covered endpoint set cannot be identified confidently;
-- a check is materially ambiguous;
+- a rule is materially ambiguous;
 - sources materially conflict;
 - a candidate check is supported only by lower-priority examples and not by the brief;
 - a materially important behavior is described only as a transition note and the user did not ask for an interim contract artifact.
@@ -69,18 +69,18 @@ Stop and report issues instead of guessing when:
 ## Before Finishing
 
 Check that:
-- each `SUT` names one concrete endpoint or other concrete API surface;
-- each `Check` states one observable required property;
-- every `Variant` belongs to its parent `Check`;
+- each `Feature` names one concrete endpoint or other concrete API surface;
+- each `Rule` states one observable required property;
+- every named `Example` belongs to its parent `Rule`;
 - the selected mode matches the user request;
 - `short` mode contains no steps;
-- `full` mode adds steps only under `Check`;
+- `full` mode adds steps only under `Example`;
 - all brief-backed behavior is covered;
 - unsupported example-derived checks were dropped;
-- no surviving checks contradict each other;
-- no surviving check encodes a temporary allowance, phase-bound permission, migration exception, or other transition-scoped note unless the user explicitly requested interim behavior;
+- no surviving rules contradict each other;
+- no surviving rule encodes a temporary allowance, phase-bound permission, migration exception, or other transition-scoped note unless the user explicitly requested interim behavior;
 - raw parameter, header, field, flag, and enum names were replaced with stable domain wording wherever that does not lose meaning;
-- variant sets use minimal semantic representatives instead of enumerating interchangeable literals;
+- example sets use minimal semantic representatives instead of enumerating interchangeable literals;
 - all wording stays domain-based and implementation-light.
 
 ## Output

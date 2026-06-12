@@ -48,10 +48,10 @@ Use this rule when the task may create files or depends on feature-local context
 - Unless the user gave another path, create implementation-stage task files in the active `stage-<stage-code>/`.
 - If a task is implementation-stage-specific and no active stage can be resolved, ask for the stage or first convert the feature directory to staged layout.
 - If a skill has a default `./tmp` output directory, treat it as `<active-feature-dir>/tmp` when the active feature directory is resolved.
-- In flat `progress.md`, group implementation cases under `Реализация` by `SUT: <название>`.
-- In staged `progress.md`, group implementation cases under `Реализация` by `Этап <feature-code>/<stage-code>: <название>`, then by `SUT: <название>`.
-- Under each SUT item, list cases; under each case, use `Красный тест` for the red step and `Зелёный тест` for the green step.
-- When all child items under a case, SUT, or stage are done, mark that parent item done too.
+- In flat `progress.md`, group implementation cases under `Реализация` by `Feature: <название>`.
+- In staged `progress.md`, group implementation cases under `Реализация` by `Этап <feature-code>/<stage-code>: <название>`, then by `Feature: <название>`.
+- Under each `Feature` item, list cases; under each case, use `Красный тест` for the red step and `Зелёный тест` for the green step.
+- When all child items under a case, `Feature`, or stage are done, mark that parent item done too.
 
 ## Implementation stages
 

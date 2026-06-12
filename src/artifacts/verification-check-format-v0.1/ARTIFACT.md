@@ -7,25 +7,27 @@ Use one format for requirement derivation, requirement review, test-case design,
 
 ## Structure
 
-Use one `SUT` per one concrete endpoint, API surface, component, operation, or other object under verification.
-Use one `Check` per one externally observable required property, invariant, rejection, side effect, or result obligation.
-Use `Variant` only to enumerate materially distinct input or context classes for the same `Check`.
-Do not use `Variant` for independent properties.
-Keep one abstraction level inside one `SUT`.
-Write `Check` in the obligation form of the artifact language when that language has one.
-For Russian `Check`, use `должен` or `должна`.
+Use one `Feature` per one concrete endpoint, API surface, component, operation, or other object under verification.
+Use one `Rule` per one externally observable required property, invariant, rejection, side effect, or result obligation.
+Use named `Example` only to enumerate materially distinct input or context classes for the same `Rule`.
+Use unnamed `Example` only as the full-mode case container when no example name is needed.
+If a `Rule` has an unnamed `Example`, that unnamed example must be the only `Example` under that `Rule`.
+Do not use `Example` for independent properties.
+Keep one abstraction level inside one `Feature`.
+Write `Rule` in the obligation form of the artifact language when that language has one.
+For Russian `Rule`, use `должен` or `должна`.
 Put any input or state condition either before the obligation or after the required output.
 Bare present-tense descriptions are nonconforming unless they are exact public contract wording.
 Write all human-readable text in the configured `artifact_language`.
-Use only the English keywords `SUT`, `Check`, `Variant`, `Given`, `When`, `Then`, and `And`.
+Use only the English keywords `Feature`, `Rule`, `Example`, `Given`, `When`, `Then`, and `And`.
 Read `references/layout.md` before rendering.
 
 ## Optional Source Reference
 
-One `Check` block may carry at most one optional source reference.
-Treat it as check metadata, not as a `Given` / `When` / `Then` step.
-In plain artifact text, place the machine form immediately under `Check` or after its `Variant`.
-When the surrounding container supports clickable links, the same metadata may be rendered in a container-native human form outside the raw check block.
+One `Rule` or `Example` block may carry at most one optional source reference.
+Treat it as metadata, not as a `Given` / `When` / `Then` step.
+In plain artifact text, place the machine form immediately under `Rule` when no `Example` is rendered, or immediately under the matching `Example`.
+When the surrounding container supports clickable links, the same metadata may be rendered in a container-native human form outside the raw artifact block.
 Read `references/source-reference.md`.
 
 ## Modes
@@ -34,9 +36,11 @@ This artifact has exactly two modes:
 - `short`
 - `full`
 
-Both modes require `SUT` and `Check`.
-`short` keeps only `SUT`, `Check`, and optional `Variant` lines.
-`full` adds `Given`, `When`, `Then`, and `And` under each `Check`.
+Both modes require `Feature` and `Rule`.
+`short` keeps only `Feature`, `Rule`, and optional named `Example` lines.
+If a `Rule` has exactly one unnamed `Example` in `full`, omit that `Example` in `short`.
+`full` adds one or more `Example` blocks with `Given`, `When`, `Then`, and `And` under each `Rule`.
+In `full`, unnamed examples render as `Example`.
 
 Read the mode rules in:
 - `references/mode-short.md`
@@ -55,4 +59,4 @@ Do not mention implementation structure, storage schema, helper names, mocks, fi
 Do not invent routes, statuses, defaults, validation, fallback behavior, or internal design.
 Keep behaviorally distinguishing literal values literal when they are part of the contract.
 Otherwise prefer abstract wording over incidental sample data.
-Merge near-duplicate checks into the smallest complete non-redundant set.
+Merge near-duplicate rules and examples into the smallest complete non-redundant set.
