@@ -33,6 +33,7 @@
 - If a helper does not depend on class state, implement it as a top-level function.
 - If a helper has a clear primary argument, implement it as an extension function on that type.
 - Use named arguments for constant values and variables whose name differs from the corresponding parameter name.
+- Do not change wildcard imports as style cleanup unless the user asks for it, local lint fails, or local configuration forbids them.
 
 ## HTTP API versions
 
