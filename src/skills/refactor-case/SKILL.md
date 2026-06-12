@@ -17,13 +17,14 @@ Accept either one commit or current uncommitted changes as the refactor target.
 
 1. Inspect the target diff and the selected case context when available.
 2. Find refactor-only problems inside the target boundary:
-   - duplication after the second occurrence;
+   - duplication after the second occurrence, including sibling code that repeats the same responsibility with different expressions;
    - mixed abstraction levels per `abstraction-level-boundaries.md`;
    - misplaced mechanics that belong behind an adapter, helper, mapper, value type, or collaborator.
-3. Propose a short refactor plan and wait for explicit approval before editing.
-4. After approval, change structure only.
+3. For duplication, propose one format and a narrow helper when behavior stays equivalent.
+4. Propose a short refactor plan and wait for explicit approval before editing.
+5. After approval, change structure only.
    Preserve observable behavior, public contracts, persistence shape, API responses, test intent, and progress state.
-5. Rerun the selected test.
+6. Rerun the selected test.
    If shared APIs or broad call sites changed, also run the smallest relevant compile or module test.
 
 ## Constraints
