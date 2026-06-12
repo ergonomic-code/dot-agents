@@ -28,7 +28,7 @@ Use this rule when the task may create files or depends on feature-local context
 - If the user gave a path inside `stage-<stage-code>`, a stage directory, or a file path inside a stage directory, use that active implementation stage.
 - Otherwise, if the current working directory is `stage-<stage-code>` or any descendant of it inside the active feature directory, use that stage ancestor.
 - Otherwise, if the current user request names a standalone `stage-<stage-code>`, `этап <stage-code>`, or `<feature-code>/<stage-code>` while the active feature directory is known, use that active implementation stage.
-- Otherwise, if a selected root `progress.md` entry is nested under `Этап <feature-code>/<stage-code>:`, use that stage.
+- Otherwise, if a selected root `progress.md` entry is or is nested under `Этап <feature-code>/<stage-code>:`, use that stage.
 - Otherwise leave the active implementation stage unresolved.
 
 ## Use active feature directory
@@ -47,6 +47,7 @@ Use this rule when the task may create files or depends on feature-local context
 - Unless the user gave another path, create feature-wide task files in the active feature directory root.
 - Unless the user gave another path, create implementation-stage task files in the active `stage-<stage-code>/`.
 - If a task is implementation-stage-specific and no active stage can be resolved, ask for the stage or first convert the feature directory to staged layout.
+- If an active implementation stage is resolved, use its `stage-<stage-code>/` as the default source for stage-specific `progress.md` and artifacts.
 - If a skill has a default `./tmp` output directory, treat it as `<active-feature-dir>/tmp` when the active feature directory is resolved.
 - In flat `progress.md`, group implementation cases under `Реализация` by `Feature: <название>`.
 - In staged `progress.md`, group implementation cases under `Реализация` by `Этап <feature-code>/<stage-code>: <название>`, then by `Feature: <название>`.
