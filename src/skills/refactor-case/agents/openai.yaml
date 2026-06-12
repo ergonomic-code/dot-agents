@@ -1,0 +1,4 @@
+interface:
+  display_name: "Refactor Case"
+  short_description: "Refactor a green case without changing behavior"
+  default_prompt: "Use $refactor-case after $code-test-case and $fix-red-case have made the selected case green, targeting one commit or current uncommitted changes."
