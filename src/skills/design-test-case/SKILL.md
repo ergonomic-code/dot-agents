@@ -7,12 +7,13 @@ description: Design one `verification-check-format-v0.1` full-mode test case fro
 
 Use this skill when the user gives a requirement, bug report, task brief, or desired behavior and needs one test case, but has not already provided one selected full-mode verification check.
 Read `../write-verification-check/SKILL.md`.
+Read `references/implementation-order.md`.
 
 ## Selection
 
 Design exactly one materially distinct target behavior case.
 For bugs, select the corrected target behavior; use the broken behavior only as evidence of the violated obligation.
-For new behavior, select the stable desired behavior.
+For new behavior, select the stable desired behavior and apply `references/implementation-order.md` when several valid cases are implied.
 If several independent obligations are implied and the target case is not selected, ask which one to design.
 
 ## Delegation

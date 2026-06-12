@@ -9,6 +9,7 @@ Read `framework_checkout_root/src/conventions/feature-workdir.md`.
 Read `framework_checkout_root/src/conventions/feature-stage-skill.md`.
 Read `framework_checkout_root/src/conventions/feature-artifact-phases.md`.
 Read `../design-test-case/SKILL.md`.
+Read `../design-test-case/references/implementation-order.md`.
 Read the format reference at `../../artifacts/verification-check-format-v0.1/ARTIFACT.md`.
 Read `../../artifacts/verification-check-format-v0.1/references/source-reference.md`.
 When current cases come from test code and anchors must be recovered, use `../reverse-engineer-test-case/SKILL.md` anchor rules.
@@ -59,6 +60,7 @@ Keep old cases unchanged unless they contradict new checks, would stop compiling
    - Cover only behavior that is actually implied by the inputs.
    - Add positive, negative, boundary, fallback, and compatibility cases only when the inputs justify them.
    - Merge duplicates and keep the smallest materially distinct `Rule` / `Example` set.
+   - Order new target cases by `../design-test-case/references/implementation-order.md` because `progress.md` and `$code-test-case` use source order.
    - Prefer abstract contract wording over literal sample data unless exact values are behaviorally required.
 5. Normalize current relevant cases if they exist.
    - If current cases come from test code, recover current `Feature` / `Rule` / `Example` anchors from the source before reusing an existing output artifact.
@@ -153,6 +155,7 @@ When current cases are absent, keep the first, second, and fourth sections expli
 
 Check all of these:
 - the target case set was designed before comparing old cases;
+- new target cases are ordered by implementation cost;
 - the target case set covers the feature brief, explicit API changes, and material compatibility/fallback behavior from the inputs;
 - no current or target case appears in more than one bucket;
 - every `changed` case has a reason and a concrete delta list;
