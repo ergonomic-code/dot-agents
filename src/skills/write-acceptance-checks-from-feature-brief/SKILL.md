@@ -1,6 +1,6 @@
 ---
 name: write-acceptance-checks-from-feature-brief
-description: Write acceptance verification checks from a feature brief, subfeature brief, or similar business requirements. Use when you need concise `SUT` / `Check` / optional `Variant` / `Given` / `When` / `Then` acceptance checks before implementation, review, or test coding.
+description: Write acceptance verification checks from a feature brief, subfeature brief, or similar business requirements. Use when you need concise `Feature` / `Rule` / `Example` / `Given` / `When` / `Then` acceptance checks before implementation, review, or test coding.
 ---
 
 # Write Acceptance Checks From Feature Brief
@@ -22,11 +22,12 @@ Read `../../artifacts/verification-check-format-v0.1/references/mode-full.md`.
 
 ## Writing Rules
 
-Use only `SUT`, `Check`, `Variant`, `Given`, `When`, `Then`, and `And`.
+Use only `Feature`, `Rule`, `Example`, `Given`, `When`, `Then`, and `And`.
 Write all human-readable text in the configured `artifact_language`.
-Name one concrete API surface or user-visible capability per `SUT`.
-Name one observable required property per `Check`, in the obligation form of that language.
-Use `Variant` only for materially distinct input or context classes of the same `Check`.
+Name one concrete API surface or user-visible capability per `Feature`.
+Name one observable required property per `Rule`, in the obligation form of that language.
+Use named `Example` only for materially distinct input or context classes of the same `Rule`.
+Use unnamed `Example:` when no example name is needed.
 Keep only outcome-relevant deviations from the valid default baseline in `Given`.
 Put the action under test in `When`.
 Put only observable results, side effects, rejections, ordering, and cardinality guarantees in `Then` and following `And`.
@@ -48,8 +49,8 @@ Keep only behavior observable from outside the system.
 Keep only behavior that a realistic actor or client can falsify through the product contract.
 Drop transition-only notes unless the user explicitly asks for interim behavior.
 Treat wording such as `пока`, `на этом этапе`, `в этой сабфиче`, `до следующего шага`, `временно`, `продолжает`, `позже`, and explicit references to later subfeatures as strong evidence of non-acceptance scope.
-Keep different surfaces in separate `SUT`s.
-Keep different observable properties in separate `Check`s even when they appear in one paragraph of the brief.
+Keep different surfaces in separate `Feature`s.
+Keep different observable properties in separate `Rule`s even when they appear in one paragraph of the brief.
 Do not mirror the brief structure mechanically if several statements describe one obligation.
 When a statement can be tested only by forcing impossible or product-invalid input combinations, treat it as non-acceptance scope.
 
@@ -64,18 +65,18 @@ Stop and report issues instead of guessing when:
 ## Before Finishing
 
 Check that:
-- each `SUT` is concrete;
-- each `Check` states exactly one observable required property;
-- every `Variant` belongs to its parent `Check`;
+- each `Feature` is concrete;
+- each `Rule` states exactly one observable required property;
+- every named `Example` belongs to its parent `Rule`;
 - all brief-backed stable behavior is covered;
-- no surviving check contradicts another;
+- no surviving rule contradicts another;
 - no transition-only note became a stable check unless explicitly requested;
-- no check exists only to confirm internal source selection or another non-falsifiable implementation detail;
-- no check exists only to freeze a temporary stage-bound fallback, simplification, or deferred feature;
+- no rule exists only to confirm internal source selection or another non-falsifiable implementation detail;
+- no rule exists only to freeze a temporary stage-bound fallback, simplification, or deferred feature;
 - wording stays domain-based and implementation-light;
 - the output is `verification-check-format-v0.1` in `full` mode.
 
 ## Output
 
-Return only the check text.
+Return only the artifact text.
 If a stop condition is hit, return only a short issue list.

@@ -49,8 +49,8 @@ Keep old cases unchanged unless they contradict new checks, would stop compiling
    - Treat it as previous output, not as current source cases, unless the user explicitly makes it the source.
 2. Read the feature brief and extract the target behavior.
    - Prefer explicit acceptance checks, business rules, invariants, compatibility constraints, and error conditions.
-   - Separate independent behavior properties into separate `Check`s.
-   - Use `Variant` only for materially distinct input or context classes of the same `Check`.
+   - Separate independent behavior properties into separate `Rule`s.
+   - Use named `Example` only for materially distinct input or context classes of the same `Rule`.
 3. Read the implementation summary and API IR.
    - Use them to refine the contract, identify touched surfaces, and detect migration-sensitive behavior.
    - Prefer the feature brief and explicit API requirements over narrative implementation details when they conflict.
@@ -58,11 +58,11 @@ Keep old cases unchanged unless they contradict new checks, would stop compiling
    - Use `../design-test-case/SKILL.md` for each full target case.
    - Cover only behavior that is actually implied by the inputs.
    - Add positive, negative, boundary, fallback, and compatibility cases only when the inputs justify them.
-   - Merge duplicates and keep the smallest materially distinct `Check` / `Variant` set.
+   - Merge duplicates and keep the smallest materially distinct `Rule` / `Example` set.
    - Prefer abstract contract wording over literal sample data unless exact values are behaviorally required.
 5. Normalize current relevant cases if they exist.
-   - If current cases come from test code, recover current `SUT` / `Check` / `Variant` anchors from the source before reusing an existing output artifact.
-   - If they are not already in artifact form, recover stable `SUT` / `Check` / `Variant` anchors without changing meaning.
+   - If current cases come from test code, recover current `Feature` / `Rule` / `Example` anchors from the source before reusing an existing output artifact.
+   - If they are not already in artifact form, recover stable `Feature` / `Rule` / `Example` anchors without changing meaning.
    - If they are already in artifact form and are the current source cases, treat their wording as canonical and keep it verbatim when reusing or citing them.
    - Treat any optional source reference as metadata, not as part of the canonical case wording.
    - Use the recovered anchor as the source reference in `changed` cases.
@@ -70,7 +70,7 @@ Keep old cases unchanged unless they contradict new checks, would stop compiling
    - `unchanged`: the current case stays valid as-is.
    - `changed`: the current case must change by the Core Rule.
    - `removed`: the current case no longer belongs to the target set.
-   - for `changed`, preserve the old `Check` unless the old wording becomes incorrect.
+   - for `changed`, preserve the old `Rule` unless the old wording becomes incorrect.
 7. Mark as `added` every target case that is not `changed` or `unchanged`.
 8. Render the four output lists.
 9. If an output path is resolved, write the result to that Markdown or AsciiDoc file.
@@ -111,11 +111,11 @@ Otherwise default to AsciiDoc.
 - In Markdown or AsciiDoc, use the human clickable form when the artifact output path is explicit or can be inferred.
 - In the human form, keep visible text `<commit>:<file-name>:<line-num>` and keep the target equal to the relative source file path resolved from the target artifact file directory.
 - When the artifact output path is missing or a safe clickable link cannot be rendered, use the machine form instead of dropping the source reference.
-- In AsciiDoc, render each check as its own `[source,text]` + `....` block.
-- Do not merge several checks into one source block even if they share `SUT`.
+- In AsciiDoc, render each example as its own `[source,text]` + `....` block.
+- Do not merge several examples into one source block even if they share `Feature`.
 
 For `removed` cases:
-- keep `SUT`, `Check`, and optional `Variant`;
+- keep `Feature`, `Rule`, and optional named `Example`;
 - omit `Given` / `When` / `Then`;
 - this is the only intentional `short`-mode output in this skill;
 - add one short line `Причина удаления: ...`;
@@ -136,7 +136,7 @@ For `changed` cases:
 - if the output is Markdown and a source reference is available, place it after the updated case body and after the reason/change notes.
 - do not prepend `Комментарий к коду:` unless the user explicitly asked for that wording.
 - keep the old case reference verbatim.
-- keep the updated `Check` name as close as possible to the source `Check` name when the behavior lineage is preserved.
+- keep the updated `Rule` name as close as possible to the source `Rule` name when the behavior lineage is preserved.
 
 For `added` cases:
 - render the full new case in artifact form;
@@ -157,14 +157,14 @@ Check all of these:
 - no current or target case appears in more than one bucket;
 - every `changed` case has a reason and a concrete delta list;
 - no current case is `changed` only because it is related to a new obligation, except baseline save/return cases for model field-set changes;
-- when a changed case keeps the same behavioral obligation, the old `Check` is preserved;
-- when current cases are source-derived, every reused source case `SUT` / `Check` / `Variant` anchor matches the current source;
-- every reused source case `SUT` / `Check` / `Variant` anchor is copied verbatim;
+- when a changed case keeps the same behavioral obligation, the old `Rule` is preserved;
+- when current cases are source-derived, every reused source case `Feature` / `Rule` / `Example` anchor matches the current source;
+- every reused source case `Feature` / `Rule` / `Example` anchor is copied verbatim;
 - every `unchanged` case body is copied verbatim from the source;
-- every `changed` case keeps the `Check` name as close as possible to the source unless the old wording is no longer correct;
+- every `changed` case keeps the `Rule` name as close as possible to the source unless the old wording is no longer correct;
 - every `removed` case has a removal reason and no `Given` / `When` / `Then`;
 - every `unchanged` case is truly reusable without behavioral edits;
-- in AsciiDoc, every check is rendered in its own `[source,text]` + `....` block and no block contains several checks;
+- in AsciiDoc, every example is rendered in its own `[source,text]` + `....` block and no block contains several examples;
 - every removed case is in `short` mode and every added, changed, or unchanged case is in `full` mode;
 - when output is AsciiDoc, every `changed` case is rendered in the `|===` table shape with `a|` content cells, the `Было` cell contains the source reference when available, and the `Стало` cell does not repeat the old case reference or contain the source reference;
 - when output is AsciiDoc, the document starts with `= <document-title>` derived by the human-readable document title rule from `framework_checkout_root/src/conventions/feature-stage-skill.md`;

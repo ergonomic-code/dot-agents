@@ -17,9 +17,9 @@ If several independent obligations are implied and the target case is not select
 
 ## Delegation
 
-Map the selected obligation to `SUT`, `Check`, optional `Variant`, `Given`, `When`, and `Then`.
+Map the selected obligation to `Feature`, `Rule`, optional named `Example`, `Given`, `When`, and `Then`.
 Then render through `../write-verification-check/SKILL.md`.
-Do not add sibling checks or variants unless the user explicitly asks for more than one case.
+Do not add sibling rules or examples unless the user explicitly asks for more than one case.
 
 ## Output
 

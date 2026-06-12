@@ -1,10 +1,12 @@
 # Full Mode Checklist
 
-- `SUT` names the object under verification directly.
-- `Check` expresses one required observable property in the artifact-language obligation form.
-- `Variant` is absent or names one semantic input or context class for that `Check`.
-- All meaningful check differences are in `Given` or `Variant`.
-- `When` describes the action on the SUT.
+- `Feature` names the object under verification directly.
+- `Rule` expresses one required observable property in the artifact-language obligation form.
+- Each `Rule` has at least one `Example`.
+- Named `Example` lines name semantic input or context classes for their `Rule`.
+- Unnamed `Example` is used only when no example name is needed.
+- All meaningful example differences are in `Given` or named `Example`.
+- `When` describes the action on the `Feature`.
 - Read-after-write command checks put the public observation operation in `And`.
 - If command-returned data is checked before observation, the block uses `When`, `Then`, `And`, `Then`.
 - If several observation endpoint calls are needed, each observation action is in its own `And` and each observed result is in the following `Then`.
@@ -12,12 +14,12 @@
 - `Then` describes observable results.
 - No assertion depends on internal implementation instead of contract.
 - No precondition is irrelevant to the outcome.
-- No assertion is outside the scope of the `Check`.
+- No assertion is outside the scope of the `Rule`.
 - No positive result is paired with a mirrored absence assertion unless the absence is a distinct contract obligation.
 - Each negative path states the absence of the required side effect.
 - Layout matches `references/layout.md`.
 - Wording is short, domain-based, and implementation-light.
-- Raw request, response, code, storage, helper, flag, timestamp, and field symbols are absent unless the check is about that named contract member or value.
-- Check and step wording has no avoidable endpoint, parameter, field, DTO, payload, or response-model names.
+- Raw request, response, code, storage, helper, flag, timestamp, and field symbols are absent unless the rule is about that named contract member or value.
+- Rule, Example, and step wording has no avoidable endpoint, parameter, field, DTO, payload, or response-model names.
 - Entity names, flags, statuses, and errors match the contract.
-- A single check block can be implemented as a test without guessing intended behavior.
+- A single `Example` block can be implemented as a test without guessing intended behavior.
