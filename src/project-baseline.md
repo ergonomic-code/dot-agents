@@ -2,9 +2,9 @@
 
 ## Brevity
 
-Be **maximally laconic** in chat and generated artifacts.
-Prefer shorter wording and fewer sections.
-Omit explanations unless they change correctness.
+Prioritize correctness, necessary context, and verifiability over brevity.
+Be concise after those needs are met.
+Prefer shorter wording and fewer sections when they do not remove needed evidence, caveats, or instructions.
 
 ## Explicit Planning
 

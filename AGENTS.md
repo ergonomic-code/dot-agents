@@ -12,9 +12,9 @@ The goal is to make them design and write code according to the Ergonomic Approa
 
 ## Brevity
 
-Be **maximally laconic** in chat and generated artifacts.
-Prefer shorter wording and fewer sections.
-Omit explanations unless they change correctness.
+Prioritize correctness, necessary context, and verifiability over brevity.
+Be concise after those needs are met.
+Prefer shorter wording and fewer sections when they do not remove needed evidence, caveats, or instructions.
 When revising framework files, prefer the narrowest sufficient change and do not add precautionary rules.
 
 

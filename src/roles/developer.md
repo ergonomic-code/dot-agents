@@ -32,6 +32,5 @@ Load code implementation rules from `../conventions/code-implementation.md` and 
 
 ## Output rule
 
-Return only what is needed for the task.
-Keep chat replies brief.
-Keep generated artifacts brief.
+Return what is needed for the task, including evidence, caveats, and verification when they affect correctness.
+Keep chat replies and generated artifacts brief after required content is present.
