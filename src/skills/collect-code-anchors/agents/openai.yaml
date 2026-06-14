@@ -1,0 +1,4 @@
+interface:
+  display_name: "Collect Code Anchors"
+  short_description: "Create an auxiliary behavior-to-code anchor list"
+  default_prompt: "Use $collect-code-anchors to create or update the Markdown code-anchor list for the target or related behavior, writing the default 020-code-anchors.md when a feature directory resolves. Use concrete code starting points from this prompt; feature ids, issue ids, briefs, and requirements docs are not starting points. If no code starting points are present, ask me for them before searching."
