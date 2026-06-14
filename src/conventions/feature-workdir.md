@@ -60,8 +60,8 @@ Use this rule when the task may create files or depends on feature-local context
 - Use `<feature-code>` as the three-digit feature id from the feature directory.
 - Use `<stage-code>` as an exactly two-digit implementation-stage code.
 - Use `<feature-code>/<stage-code>` as the canonical feature-stage identifier, for example `014/01`.
-- Use the canonical feature-stage identifier in `Этапы реализации`, staged `progress.md`, and user-facing status updates about a specific implementation stage.
-- Add `Этапы реализации` to root `010-feature-brief.md` only when the user explicitly asked for staged layout or explicitly approved adding stages.
+- Use the canonical feature-stage identifier in staged `progress.md` and user-facing status updates about a specific implementation stage.
+- Keep implementation-stage breakdown out of root `010-feature-brief.md`.
 - Each behavior stage changes no more than one externally visible endpoint or API surface.
 - Put large preparatory refactoring into its own refactor-only stage before dependent behavior stages.
 - Keep cross-stage status and target design in root, not in stage directories.
@@ -74,6 +74,6 @@ Use this rule when the task may create files or depends on feature-local context
 - Derive stages only from explicit user intent, feature artifacts, and existing progress.
 - Create one `stage-<stage-code>/` per endpoint/API-surface behavior slice and one per large preparatory refactor.
 - Move only stage-local artifacts to the matching `stage-<stage-code>/`; leave shared artifacts in root.
-- Update root `010-feature-brief.md` with `Этапы реализации` and root `progress.md` with stage groups and links.
+- Update root `progress.md` with stage groups and links.
 - If an artifact can belong to several stages, keep it in root or ask.
 - Do not edit product code during layout conversion.

@@ -11,18 +11,23 @@ This fenced block is the target file content.
 ~~~md
 # <YYMMDD — краткое название - фича-бриф|сабфича-бриф>
 
+## Заказчик
+
+<заказчик: продакт для роли конечного пользователя или стейкхолдера, либо техлид>
+
 ## Контекст
 
 <что уже есть, что меняется сейчас, и границы этой итерации>
 
-## Изменения в UI
+## Целевые изменения
 
-<что пользователь делает и что видит>
+1. <изменение в терминах заказчика>
+2. <ещё изменение>
 
-## Изменения в поведении системы
+## Точки наблюдения
 
-1. <наблюдаемое правило поведения>
-2. <ещё правило>
+- UI: <экран, фрагмент UI, состояние или действие пользователя, если меняется пользовательская фича>
+- Интеграции: <внешняя система, с которой взаимодействует целевая система, если меняется интеграция>
 
 ## Бизнес-правила
 
@@ -30,17 +35,12 @@ This fenced block is the target file content.
 
 ## Термины
 
-- `<термин>` — <точное пользовательское значение>
+- `<термин>` — <точное значение в языке заказчика>
 
-## Открытые вопросы
+## Критерии приёмки
 
-1. <что ещё нужно уточнить>
-
-## Приёмочные проверки
-
-1. <Feature>
-   1. <проверяемое свойство>
-      1. <именованный пример проверки, если нужен>
+1. <критерий, по которому заказчик сможет принять изменение>
+2. <ещё критерий>
 ~~~
 
 ## Agent Rules
@@ -48,21 +48,28 @@ This fenced block is the target file content.
 The rules below guide how to fill the template.
 They are not part of the output file.
 
-- Core sections are mandatory: `Контекст`, `Изменения в поведении системы`, `Бизнес-правила`, `Приёмочные проверки`.
-- `Изменения в UI`, `Термины`, and `Открытые вопросы` are optional but preferred when they add clarity.
-- `Этапы реализации` is optional and should be added only when the user explicitly asked for staged layout or explicitly approved adding stages.
-- Write only in end-user domain language.
-- Describe only behavior a user can trigger or observe through UI.
-- Translate technical source material into user-visible effects.
-- Do not add endpoint lists, API contracts, persistence details, or implementation design outside `Этапы реализации`.
-- Keep the feature flat by default and omit `Этапы реализации`.
-- Include `Этапы реализации` only when one feature needs several implementation slices and staged layout is explicit or approved.
-- If several implementation slices are implied but staged layout is not yet explicit or approved, propose it and wait.
-- In `Этапы реализации`, identify each stage as `<feature-code>/<stage-code>`, for example `014/01`.
-- Use exactly two digits for `<stage-code>`.
-- Each behavior stage covers at most one endpoint/API surface; large preparatory refactoring gets its own stage.
-- In `Этапы реализации`, exact endpoint/API names are allowed only as stage boundaries.
+- Core sections are mandatory: `Заказчик`, `Контекст`, `Целевые изменения`, `Точки наблюдения`, `Критерии приёмки`.
+- `Бизнес-правила` and `Термины` are optional but preferred when they add clarity.
+- `Открытые вопросы` is optional and allowed only when the user explicitly asked to leave a question open.
+- Use `Заказчик` for the accepting role: product-side customer for an end-user or stakeholder role, or technical lead for technical/internal engineering work.
+- Do not use an issue reporter, assignee, author, or commenter as the customer unless the source explicitly names them as that accepting role.
+- Write in the feature customer's language.
+- Use end-user domain language for user-facing product changes.
+- Keep technical terms, classes, contracts, and integration names when they are part of the customer's requested change.
+- Keep the brief short.
+- Deduplicate semantically across `Целевые изменения`, `Бизнес-правила`, and `Критерии приёмки`.
+- If two bullets would be true or false together, keep one bullet and fold in only the unique detail.
+- Do not split one scenario into separate bullets for the action, successful outcome, and missing error.
+- Use `Точки наблюдения` only for UI screens, UI fragments, user actions, or external systems that interact with the target system.
+- In `Интеграции`, list only external systems named in project context or by the user.
+- Do not list backend, frontend, system layers, internal operations, endpoints, methods, update actions, results, classes, or code contracts as observation points.
+- Do not invent observation points.
+- Do not add implementation-stage breakdown to the feature brief.
 - Keep scope boundaries explicit.
-- Put unresolved but non-blocking gaps into `Открытые вопросы`.
-- `Приёмочные проверки` use only short checks: `Feature`, then rules, then optional named examples.
+- Confirm assumptions in chat before writing them as facts or requirements.
+- Keep business rules distinct.
+- Keep `Бизнес-правила` for stable rules, invariants, conditions, and exclusions that are not already clear from target changes.
+- `Критерии приёмки` describe customer-acceptable outcomes.
+- Keep `Критерии приёмки` to the smallest set of independently checkable outcomes, preferably one end-to-end criterion per scenario.
+- Put absence of an error inside the same acceptance criterion as the successful scenario unless that absence is the only accepted outcome.
 - Do not put `Given` / `When` / `Then` in the feature brief.
