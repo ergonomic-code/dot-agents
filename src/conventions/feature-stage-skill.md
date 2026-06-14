@@ -34,7 +34,7 @@ Use `feature-artifact-phases.md` for artifact phase semantics and standard phase
 
 - Use this only when the skill defines a human-readable artifact title and needs a document title for a rendered artifact.
 - If `<active-feature-dir>/010-feature-brief.md` exists, read its first level-1 heading and use its text as `<feature-title>`.
-- If the artifact is implementation-stage-specific, derive the active stage label as `Этап <feature-code>/<stage-code>: <stage-name>` from the staged `progress.md` group or the `Этапы реализации` entry.
+- If the artifact is implementation-stage-specific, derive the active stage label as `Этап <feature-code>/<stage-code>: <stage-name>` from the staged `progress.md` group.
 - If `<feature-title>` and the active stage label are both available, use `<feature-title> — <active-stage-label> — <artifact-title>`.
 - Otherwise, if only `<feature-title>` is available, use `<feature-title> — <artifact-title>`.
 - Otherwise use `<artifact-title>`.
