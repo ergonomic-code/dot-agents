@@ -37,8 +37,7 @@ Do not edit tests, test fixtures, test data, assertions, display names, test ann
    Do not implement predicted later design changes before rerunning the selected test.
    If the test contradicts the feature design, requires test edits, or cannot be fixed within production code, stop and report the blocker.
 4. Rerun only the same selected test after each production-code change.
-   If it passes, mark the matching green step (`Зелёный тест`) done in `<active-feature-dir>/progress.md` when present.
-   Mark the parent case done when all its child steps are done, and mark the `Feature` done when all its cases are done.
+   If it passes, remove the matching child steps named exactly `Красный тест` and `Зелёный тест` from the selected progress case when present.
    Then stop.
    If the failure changes, stop immediately and report the new failure.
    If the same failure remains after a production-code change, re-identify the current cause and continue only inside the same selected `Feature` boundary.
@@ -50,7 +49,7 @@ Do not edit tests, test fixtures, test data, assertions, display names, test ann
 - Keep scope to the selected failing case and the nearest production change points.
 - Do not degrade, bypass, or special-case working production code to reduce the current slice.
 - Do not refactor, redesign, or broaden behavior beyond what the case and feature design require.
-- Do not change feature artifacts under this skill except the required completion marks in `<active-feature-dir>/progress.md`.
+- Do not change feature artifacts under this skill except the required selected-case progress update in `<active-feature-dir>/progress.md`.
 
 ## Output
 

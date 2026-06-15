@@ -1,0 +1,4 @@
+interface:
+  display_name: "Choose Next TDD Increment"
+  short_description: "Pick and track the next TDD increment"
+  default_prompt: "Use $choose-next-tdd-increment to propose concise next TDD increments from feature context and add the chosen one to progress.md."
