@@ -37,6 +37,7 @@ If the request or referenced material mentions Ergonomic Architecture, `EA`, `EP
 - Do not read code, OpenAPI, tests, or contracts to discover missing requirements.
 - If a technical task needs code anchors outside `Точки наблюдения`, use only current classes, contracts, or files named by the source material or ask for them.
 - If a technical task is constrained by a named architecture source, derive the brief's architecture constraints and technical acceptance criteria from the applicable rules in that source instead of inventing local shape checks.
+- If a technical task is constrained by a named architecture source, preserve that source's component terminology in the brief and do not introduce adjacent local synonyms or alternative taxonomy.
 - Work in interview mode before writing or updating the brief.
 - If customer, scope, target changes, observation points, assumptions, or acceptance criteria are unclear, ask the first blocking question and stop.
 - Ask exactly one question per turn.
