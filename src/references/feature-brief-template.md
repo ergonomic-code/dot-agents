@@ -61,8 +61,9 @@ They are not part of the output file.
 - If two bullets would be true or false together, keep one bullet and fold in only the unique detail.
 - Do not split one scenario into separate bullets for the action, successful outcome, and missing error.
 - Use `Точки наблюдения` only for UI screens, UI fragments, user actions, or external systems that interact with the target system.
+- For technical or internal engineering work accepted by a technical lead, `Точки наблюдения` may instead name the relevant code anchors when the source material names them and the acceptance is architectural.
 - In `Интеграции`, list only external systems named in project context or by the user.
-- Do not list backend, frontend, system layers, internal operations, endpoints, methods, update actions, results, classes, or code contracts as observation points.
+- Do not list backend, frontend, system layers, internal operations, endpoints, methods, update actions, results, classes, or code contracts as observation points outside that technical-task exception.
 - Do not invent observation points.
 - Do not add implementation-stage breakdown to the feature brief.
 - Keep scope boundaries explicit.
