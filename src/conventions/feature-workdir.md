@@ -24,35 +24,35 @@ Use this rule when the task may create files or depends on feature-local context
 
 ## Resolve active implementation stage
 
-- Use implementation stages only for a staged feature directory.
-- If the user gave a path inside `stage-<stage-code>`, a stage directory, or a file path inside a stage directory, use that active implementation stage.
-- Otherwise, if the current working directory is `stage-<stage-code>` or any descendant of it inside the active feature directory, use that stage ancestor.
+- Use implementation stages only when root `progress.md` has stage headings or the user names a stage explicitly.
 - Otherwise, if the current user request names a standalone `stage-<stage-code>`, `этап <stage-code>`, or `<feature-code>/<stage-code>` while the active feature directory is known, use that active implementation stage.
-- Otherwise, if a selected root `progress.md` entry is or is nested under `Этап <feature-code>/<stage-code>:`, use that stage.
+- Otherwise, if a selected root `progress.md` section is or is under `### Этап <feature-code>/<stage-code>: <название>`, use that stage.
 - Otherwise leave the active implementation stage unresolved.
 
 ## Use active feature directory
 
 - Treat `progress.md` in the feature directory root as the standard feature-directory overview file.
 - Use `progress.md` for the current feature checklist and work status.
-- Keep feature-wide artifacts in the feature directory root.
 - Standard root artifacts are `010-feature-brief.md` and `progress.md`.
-- Root may also contain current status, target design, or shared artifacts not bound to one implementation stage.
+- Keep feature artifacts in the feature directory root unless the user gave an explicit output path.
 - Use `feature-artifact-phases.md` for artifact-phase-coded file names such as `010-*`, `020-*`, and `030-*`.
-- By default, keep the feature directory flat.
-- Create `stage-<stage-code>/` directories only when the user explicitly asked for staged layout during initialization, explicitly asked to split the feature, or explicitly approved adding stages after a proposal grounded in the feature brief.
-- For staged implementation, use `stage-<stage-code>/` directories, where `<stage-code>` is an exactly two-digit implementation-stage code.
-- Each `stage-<stage-code>/` contains artifacts for exactly that implementation slice.
+- Keep the feature directory flat.
 - Skills that write default artifact-phase outputs use `feature-stage-skill.md` for write and overview-file sync.
-- Unless the user gave another path, create feature-wide task files in the active feature directory root.
-- Unless the user gave another path, create implementation-stage task files in the active `stage-<stage-code>/`.
-- If a task is implementation-stage-specific and no active stage can be resolved, ask for the stage or first convert the feature directory to staged layout.
-- If an active implementation stage is resolved, use its `stage-<stage-code>/` as the default source for stage-specific `progress.md` and artifacts.
+- Unless the user gave another path, create task files in the active feature directory root.
+- If a task is implementation-stage-specific and no active stage can be resolved, ask for the stage.
 - If a skill has a default `./tmp` output directory, treat it as `<active-feature-dir>/tmp` when the active feature directory is resolved.
-- In flat `progress.md`, group implementation cases under `Реализация` by `Feature: <название>`.
-- In staged `progress.md`, group implementation cases under `Реализация` by `Этап <feature-code>/<stage-code>: <название>`, then by `Feature: <название>`.
-- Under each `Feature` item, list cases; under each case, use `Красный тест` for the red step and `Зелёный тест` for the green step.
-- When all child items under a case, `Feature`, or stage are done, mark that parent item done too.
+- In `progress.md`, use level-2 headings for workflow phases and level-3 headings for implementation stages or phase-local subdivisions.
+- Use this level-2 workflow order: `Прояснение требований`, `Понимание текущего устройства реализации`, `Выбор принципиального направления решения`, `Предварительный рефакторинг`, `Реализация`.
+- Track refactor-only preparation under `Предварительный рефакторинг`.
+- Track TDD increments under `Реализация`.
+- Keep todo lists short.
+- Do not nest checklist items to model phases, stages, or features.
+- Use nested checklist items only for the temporary TDD child items below one tested-behavior parent.
+- In `Предварительный рефакторинг`, write refactor work as flat items named `Рефакторинг: <краткий инкремент>`.
+- In `Реализация`, add each TDD increment as one parent item named by the tested behavior.
+- When adding a TDD increment, add child items `красный кейс` and `зелёный кейс`.
+- After coding the red case, mark only `красный кейс` done.
+- After the case is green, remove both child items and mark the parent behavior item done.
 
 ## Implementation stages
 
@@ -60,20 +60,18 @@ Use this rule when the task may create files or depends on feature-local context
 - Use `<feature-code>` as the three-digit feature id from the feature directory.
 - Use `<stage-code>` as an exactly two-digit implementation-stage code.
 - Use `<feature-code>/<stage-code>` as the canonical feature-stage identifier, for example `014/01`.
-- Use the canonical feature-stage identifier in staged `progress.md` and user-facing status updates about a specific implementation stage.
+- Use `### Этап <feature-code>/<stage-code>: <название>` in root `progress.md`.
+- Use the canonical feature-stage identifier in user-facing status updates about a specific implementation stage.
 - Keep implementation-stage breakdown out of root `010-feature-brief.md`.
 - Each behavior stage changes no more than one externally visible endpoint or API surface.
 - Put large preparatory refactoring into its own refactor-only stage before dependent behavior stages.
-- Keep cross-stage status and target design in root, not in stage directories.
 - Stage names state the boundary or outcome, not the internal implementation plan.
 
-## Convert flat feature directory to staged
+## Add implementation stages
 
-- Use this workflow when asked to split a feature directory into stages or when the user explicitly approves a proposal to add stages because the feature scope contains several implementation slices.
-- Preserve root `010-feature-brief.md`, `progress.md`, and feature-wide shared artifacts in root.
+- Use this workflow when asked to split feature implementation into stages or when the user explicitly approves a proposal to add stages because the feature scope contains several implementation slices.
 - Derive stages only from explicit user intent, feature artifacts, and existing progress.
-- Create one `stage-<stage-code>/` per endpoint/API-surface behavior slice and one per large preparatory refactor.
-- Move only stage-local artifacts to the matching `stage-<stage-code>/`; leave shared artifacts in root.
-- Update root `progress.md` with stage groups and links.
-- If an artifact can belong to several stages, keep it in root or ask.
-- Do not edit product code during layout conversion.
+- Add one `### Этап <feature-code>/<stage-code>: <название>` heading per endpoint/API-surface behavior slice and one per large preparatory refactor.
+- Keep artifacts in root unless the user gives explicit paths.
+- If one root artifact would ambiguously mix several stages, ask for an explicit artifact path or split the content by headings inside the artifact.
+- Do not edit product code while changing progress layout.

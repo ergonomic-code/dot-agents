@@ -13,7 +13,7 @@ Read `framework_checkout_root/src/conventions/feature-artifact-phases.md`.
 
 - artifact phase code: `020`
 - default feature-dir output path: `<feature-dir>/020-test-cases-current.md`
-- progress.md checklist item: `Текущие тест-кейсы`
+- progress.md checklist item: `Тесты целевых компонентов`
 
 Input is an existing structural diagram.
 Prefer `structure-chart/v1` YAML when available.

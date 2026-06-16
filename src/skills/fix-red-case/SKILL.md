@@ -20,9 +20,11 @@ Do not edit tests, test fixtures, test data, assertions, display names, test ann
 1. Reproduce or inspect the failing selected test and identify the current failure cause.
 2. Resolve the active feature directory and active implementation stage via `feature-workdir.md`.
    If the feature directory is resolved, read `<active-feature-dir>/progress.md` when present.
-   If an active implementation stage is resolved, read its `progress.md` and `030*` artifacts when present.
-   Otherwise read every `<active-feature-dir>/030*` artifact that exists.
-   If no feature or stage design artifact exists, continue from the failing test, current code, and loaded conventions.
+   If no active implementation stage is resolved, read every `<active-feature-dir>/030*` artifact that exists.
+   If an active implementation stage is resolved, read only the `030*` artifacts or artifact sections explicitly scoped to that stage.
+   For shared root artifacts, use only the sections under the matching `### Этап <feature-code>/<stage-code>: <название>` heading or another explicit stage marker for that same stage.
+   Read cross-stage root artifacts only when they are clearly shared constraints for the selected stage.
+   If no feature design artifact exists, continue from the failing test, current code, and loaded conventions.
 3. Make only the smallest production-code change that addresses the currently observed failure cause and is consistent with the selected case, progress state, and feature design when they exist.
    Before editing production code, apply the loaded ergonomic, boundary, and code implementation conventions.
    Keep this skill's test-edit ban and selected-case scope as stricter constraints.
@@ -37,7 +39,7 @@ Do not edit tests, test fixtures, test data, assertions, display names, test ann
    Do not implement predicted later design changes before rerunning the selected test.
    If the test contradicts the feature design, requires test edits, or cannot be fixed within production code, stop and report the blocker.
 4. Rerun only the same selected test after each production-code change.
-   If it passes, remove the matching child steps named exactly `Красный тест` and `Зелёный тест` from the selected progress case when present.
+   If it passes, remove the matching `красный кейс` and `зелёный кейс` child items from `progress.md` and mark their parent behavior item done when present.
    Then stop.
    If the failure changes, stop immediately and report the new failure.
    If the same failure remains after a production-code change, re-identify the current cause and continue only inside the same selected `Feature` boundary.

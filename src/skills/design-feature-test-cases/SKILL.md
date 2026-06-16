@@ -9,7 +9,7 @@ Read `framework_checkout_root/src/conventions/feature-workdir.md`.
 Read `framework_checkout_root/src/conventions/feature-stage-skill.md`.
 Read `framework_checkout_root/src/conventions/feature-artifact-phases.md`.
 Read `../design-test-case/SKILL.md`.
-Read `../design-test-case/references/implementation-order.md`.
+Read `framework_checkout_root/src/references/test-case-implementation-order.md`.
 Read the format reference at `../../artifacts/verification-check-format-v0.1/ARTIFACT.md`.
 Read `../../artifacts/verification-check-format-v0.1/references/source-reference.md`.
 When current cases come from test code and anchors must be recovered, use `../reverse-engineer-test-case/SKILL.md` anchor rules.
@@ -18,7 +18,6 @@ When current cases come from test code and anchors must be recovered, use `../re
 
 - artifact phase code: `030`
 - default feature-dir output path: `<feature-dir>/030-test-cases-new.adoc`
-- progress.md checklist item: `Изменения тест-кейсов`
 - human-readable artifact title: `Изменения тест-кейсов`
 
 ## Inputs
@@ -60,7 +59,7 @@ Keep old cases unchanged unless they contradict new checks, would stop compiling
    - Cover only behavior that is actually implied by the inputs.
    - Add positive, negative, boundary, fallback, and compatibility cases only when the inputs justify them.
    - Merge duplicates and keep the smallest materially distinct `Rule` / `Example` set.
-   - Order new target cases by `../design-test-case/references/implementation-order.md` because `progress.md` and `$code-test-case` use source order.
+   - Order new target cases by `framework_checkout_root/src/references/test-case-implementation-order.md` because `progress.md` and `$code-test-case` use source order.
    - Prefer abstract contract wording over literal sample data unless exact values are behaviorally required.
 5. Normalize current relevant cases if they exist.
    - If current cases come from test code, recover current `Feature` / `Rule` / `Example` anchors from the source before reusing an existing output artifact.

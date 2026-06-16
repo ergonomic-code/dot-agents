@@ -10,20 +10,19 @@ Read `framework_checkout_root/src/conventions/feature-workdir.md`.
 Read `framework_checkout_root/src/conventions/feature-stage-skill.md`.
 Read `framework_checkout_root/src/conventions/feature-artifact-phases.md`.
 Read `../write-verification-check/SKILL.md`.
-Read `references/implementation-order.md`.
+Read `framework_checkout_root/src/references/test-case-implementation-order.md`.
 
 ## Feature artifact bindings
 
 - artifact phase code: `030`
 - default feature-dir output path: `<feature-dir>/030-test-cases-new.adoc`
-- progress.md checklist item: `Изменения тест-кейсов`
 - human-readable artifact title: `Изменения тест-кейсов`
 
 ## Selection
 
 Design exactly one materially distinct target behavior case.
 For bugs, select the corrected target behavior; use the broken behavior only as evidence of the violated obligation.
-For new behavior, select the stable desired behavior and apply `references/implementation-order.md` when several valid cases are implied.
+For new behavior, select the stable desired behavior and apply `framework_checkout_root/src/references/test-case-implementation-order.md` when several valid cases are implied.
 If several independent obligations are implied and the target case is not selected, ask which one to design.
 
 ## Delegation
@@ -41,9 +40,9 @@ If that section already contains a source block for the same `Feature`, insert o
 Otherwise add one source block in the artifact's existing container format.
 Preserve all other sections and cases.
 After updating a cases artifact, update the active feature `progress.md` when it exists.
-Add the case under `Реализация` in the matching `Feature` group and active stage group when staged.
-Create only missing stage, `Feature`, and case checklist entries.
-Under the case, add unchecked `Красный тест` and `Зелёный тест` child items.
-Do not duplicate an existing case entry.
+Add the case under `## Реализация` or the matching `### Этап <feature-code>/<stage-code>: <название>` heading when an active stage is resolved.
+Create only missing headings and TDD checklist entries.
+Add one unchecked parent item named by the tested behavior.
+Under it, add unchecked child items `красный кейс` and `зелёный кейс`.
 If the resolved output path is not a cases artifact, write only the case text to that file.
 If no output path is resolved, return only one full-mode `verification-check-format-v0.1` case, or the missing selection issue.
