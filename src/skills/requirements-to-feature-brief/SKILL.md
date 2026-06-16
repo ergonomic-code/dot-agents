@@ -15,6 +15,7 @@ Read `framework_checkout_root/src/conventions/feature-artifact-phases.md`.
 Read `framework_checkout_root/src/references/feature-brief-template.md`.
 Read `framework_checkout_root/src/references/progress-template.md`.
 Treat `framework_checkout_root/src/references/feature-brief-template.md` as the source of truth for brief-content rules, including `Точки наблюдения`, customer wording, deduplication, and acceptance-criteria shape.
+If the request or referenced material mentions Ergonomic Architecture, `EA`, `EP`, aggregates, operations, resources, DOPs, target architecture, architecture refactoring, or acceptance by tech lead through code shape, also read `framework_checkout_root/src/conventions/ergonomic-architecture.md` before writing.
 
 ## Feature artifact bindings
 
@@ -35,6 +36,7 @@ Treat `framework_checkout_root/src/references/feature-brief-template.md` as the 
 - Use loaded project context only to identify named external systems for integration observation points.
 - Do not read code, OpenAPI, tests, or contracts to discover missing requirements.
 - If a technical task needs code anchors outside `Точки наблюдения`, use only current classes, contracts, or files named by the source material or ask for them.
+- If a technical task is constrained by a named architecture source, derive the brief's architecture constraints and technical acceptance criteria from the applicable rules in that source instead of inventing local shape checks.
 - Work in interview mode before writing or updating the brief.
 - If customer, scope, target changes, observation points, assumptions, or acceptance criteria are unclear, ask the first blocking question and stop.
 - Ask exactly one question per turn.
