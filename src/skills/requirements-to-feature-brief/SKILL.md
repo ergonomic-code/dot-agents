@@ -14,6 +14,7 @@ Read `framework_checkout_root/src/conventions/feature-stage-skill.md`.
 Read `framework_checkout_root/src/conventions/feature-artifact-phases.md`.
 Read `framework_checkout_root/src/references/feature-brief-template.md`.
 Read `framework_checkout_root/src/references/progress-template.md`.
+Treat `framework_checkout_root/src/references/feature-brief-template.md` as the source of truth for brief-content rules, including `Точки наблюдения`, customer wording, deduplication, and acceptance-criteria shape.
 
 ## Feature artifact bindings
 
@@ -33,7 +34,7 @@ Read `framework_checkout_root/src/references/progress-template.md`.
 - Build context only from the user request, explicitly referenced files, files already inside the target feature directory when it exists, and interview answers.
 - Use loaded project context only to identify named external systems for integration observation points.
 - Do not read code, OpenAPI, tests, or contracts to discover missing requirements.
-- If a technical task needs code anchors, use only classes, contracts, or files named by the source material or ask for them, but do not put them into `Точки наблюдения`.
+- If a technical task needs code anchors outside `Точки наблюдения`, use only current classes, contracts, or files named by the source material or ask for them.
 - Work in interview mode before writing or updating the brief.
 - If customer, scope, target changes, observation points, assumptions, or acceptance criteria are unclear, ask the first blocking question and stop.
 - Ask exactly one question per turn.
@@ -43,30 +44,11 @@ Read `framework_checkout_root/src/references/progress-template.md`.
 - Do not write unconfirmed assumptions into the brief.
 - Do not convert silence into approval.
 - Propose subfeatures only for independent product changes.
-- Write the brief in the feature customer's language.
-- Use end-user domain language for user-facing product changes.
-- Preserve technical terms, classes, contracts, and integration names when the customer is technical or when they are part of the requested change.
 - Write only the target changes in this feature.
-- Keep the brief short.
-- Before writing, deduplicate semantically across `Целевые изменения`, `Бизнес-правила`, and `Критерии приёмки`.
-- If two bullets would be true or false together, keep one bullet and fold in only the unique detail.
-- Do not split one scenario into separate bullets for the action, successful outcome, and missing error.
 - Do not restate current behavior, static context, or unchanged flows unless they are needed to explain the change boundary.
-- Use `Точки наблюдения` only for places outside the implementation where the target change can be observed or agreed: UI screens, UI fragments, user actions, or external systems that interact with the target system.
-- For technical or internal engineering work accepted by a technical lead, `Точки наблюдения` may instead name the relevant code anchors when the source material names them and the acceptance is architectural.
-- Do not use backend, frontend, a system layer, internal operation, endpoint, method, update action, result, class, or code contract as an observation point outside that technical-task exception.
-- If no UI, external-system, or allowed technical-task observation point is known, ask instead of inventing one.
 - Treat integrations only as external systems named in project context or by the user.
 - Do not label an internal operation, endpoint, method, or update action as an integration.
 - Do not describe implementation strategy, task sequence, storage strategy, or migrations unless the customer explicitly requires them as acceptance scope.
-- Keep one consistent domain term per entity.
-- Identify and record the feature customer as the accepting role: product-side customer for an end-user or stakeholder role, or technical lead for technical/internal engineering work.
-- Do not use an issue reporter, assignee, author, or commenter as the customer unless the source explicitly names them as that accepting role.
-- Make acceptance criteria explicit.
-- Keep business rules distinct.
-- Keep `Бизнес-правила` for stable rules, invariants, conditions, and exclusions that are not already clear from target changes.
-- Keep `Критерии приёмки` to the smallest set of independently checkable outcomes, preferably one end-to-end criterion per scenario.
-- Put absence of an error inside the same acceptance criterion as the successful scenario unless that absence is the only accepted outcome.
 - Preserve correct parts of an existing brief.
 - Rewrite only vague, conflicting, duplicated, overly technical, or scope-breaking parts.
 - Always produce a complete formal brief with the core sections from the template.
@@ -79,11 +61,9 @@ Read `framework_checkout_root/src/references/progress-template.md`.
 ## Output Rules
 
 - Write the brief in `artifact_language`.
-- Write the brief in the language of the feature customer.
 - Describe the delta from the current product, integration, or code state, not the whole feature area.
 - Keep the brief at target-change and acceptance level.
 - Keep implementation planning and stage breakdown out of the brief.
-- Acceptance criteria must describe customer-acceptable outcomes.
 - Do not include unresolved assumptions.
 - Do not include open questions unless explicitly requested by the user.
 - Cover the main flow, invariants, fallbacks, and important edge cases.
