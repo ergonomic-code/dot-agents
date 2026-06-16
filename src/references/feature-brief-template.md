@@ -62,7 +62,9 @@ They are not part of the output file.
 - Do not split one scenario into separate bullets for the action, successful outcome, and missing error.
 - Use `Точки наблюдения` only for UI screens, UI fragments, user actions, or external systems that interact with the target system.
 - For technical or internal engineering work accepted by a technical lead, `Точки наблюдения` may instead use architectural observation anchors.
+- For such technical work, render `Точки наблюдения` as a compact deduplicated list under one shared section label, not as repeated per-line prefixes like `Архитектурные якоря:`.
 - Allowed architectural observation anchors are stable refactor-resistant anchors, current target code anchors that already exist in the current codebase, or high-level human-readable anchors on operations, resources, or target modules.
+- Treat each architectural observation anchor as an observation root covering the reachable current call tree from that root, not only the single named port method itself.
 - Do not use future, planned, target-only, renamed, or nonexistent code symbols as observation points, even if they are named in requirement notes, target-design files, or similar source material.
 - In `Интеграции`, list only external systems named in project context or by the user.
 - Do not list backend, frontend, system layers, internal operations, endpoints, methods, update actions, results, classes, or code contracts as observation points outside that technical-task exception.
@@ -72,6 +74,7 @@ They are not part of the output file.
 - Confirm assumptions in chat before writing them as facts or requirements.
 - Keep business rules distinct.
 - Keep `Бизнес-правила` for stable rules, invariants, conditions, and exclusions that are not already clear from target changes.
+- For technical or internal engineering work, omit `Бизнес-правила` when the task has no separate stable business or domain rules beyond scope limits and architecture or implementation constraints already covered elsewhere in the brief.
 - `Критерии приёмки` describe customer-acceptable outcomes.
 - Keep `Критерии приёмки` to the smallest set of independently checkable outcomes, preferably one end-to-end criterion per scenario.
 - For technical or internal engineering work accepted by a technical lead, derive acceptance criteria from the applicable architecture or design constraints named by the source material when such a source is provided.
