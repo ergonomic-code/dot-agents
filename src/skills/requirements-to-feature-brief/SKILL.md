@@ -53,8 +53,9 @@ Read `framework_checkout_root/src/references/progress-template.md`.
 - Do not split one scenario into separate bullets for the action, successful outcome, and missing error.
 - Do not restate current behavior, static context, or unchanged flows unless they are needed to explain the change boundary.
 - Use `Точки наблюдения` only for places outside the implementation where the target change can be observed or agreed: UI screens, UI fragments, user actions, or external systems that interact with the target system.
-- Do not use backend, frontend, a system layer, internal operation, endpoint, method, update action, result, class, or code contract as an observation point.
-- If no UI or external-system observation point is known, ask instead of inventing one.
+- For technical or internal engineering work accepted by a technical lead, `Точки наблюдения` may instead name the relevant code anchors when the source material names them and the acceptance is architectural.
+- Do not use backend, frontend, a system layer, internal operation, endpoint, method, update action, result, class, or code contract as an observation point outside that technical-task exception.
+- If no UI, external-system, or allowed technical-task observation point is known, ask instead of inventing one.
 - Treat integrations only as external systems named in project context or by the user.
 - Do not label an internal operation, endpoint, method, or update action as an integration.
 - Do not describe implementation strategy, task sequence, storage strategy, or migrations unless the customer explicitly requires them as acceptance scope.
