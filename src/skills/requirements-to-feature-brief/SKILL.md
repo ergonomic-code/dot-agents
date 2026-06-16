@@ -12,8 +12,8 @@ If it conflicts with this skill or the feature-brief structure, keep this skill.
 Read `framework_checkout_root/src/conventions/feature-workdir.md`.
 Read `framework_checkout_root/src/conventions/feature-stage-skill.md`.
 Read `framework_checkout_root/src/conventions/feature-artifact-phases.md`.
-Read `./references/feature-brief-template.md`.
-Read `./references/feature-dir-progress-template.md`.
+Read `framework_checkout_root/src/references/feature-brief-template.md`.
+Read `framework_checkout_root/src/references/progress-template.md`.
 
 ## Feature artifact bindings
 
@@ -25,9 +25,9 @@ Read `./references/feature-dir-progress-template.md`.
 ## Workflow
 
 - Treat an explicit feature directory or brief path as the target.
-- When this run creates a new feature directory, also create `<feature-dir>/progress.md` from the local template.
+- When this run creates a new feature directory, also create `<feature-dir>/progress.md` from the loaded progress template.
 - Create a flat feature directory by default.
-- If the user explicitly requests staged layout or explicitly approves adding stages, adapt `progress.md` and stage directories per `feature-workdir.md`.
+- If the user explicitly requests or approves implementation stages, adapt root `progress.md` with stage headings per `feature-workdir.md`.
 - Keep implementation-stage breakdown out of the feature brief.
 - Create or update the resolved brief path.
 - Build context only from the user request, explicitly referenced files, files already inside the target feature directory when it exists, and interview answers.

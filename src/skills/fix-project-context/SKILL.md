@@ -5,8 +5,8 @@ description: Analyze a project-context problem from `problem`, `target behavior`
 
 # Fix project context
 
-Read `../fix-framework-context/references/minimality.md`.
-Read `../fix-framework-context/references/shared-workflow.md`.
+Read `framework_checkout_root/src/references/context-fix-minimality.md`.
+Read `framework_checkout_root/src/references/context-fix-workflow.md`.
 
 This skill always resolves the role to `project-context-engineer`.
 Before task triage, load `framework_checkout_root/src/roles/project-context-engineer.md`.

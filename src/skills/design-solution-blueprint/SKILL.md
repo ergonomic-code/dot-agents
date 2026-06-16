@@ -52,7 +52,7 @@ Optional:
 - Add implementation stages only when the chosen approach needs coarse decomposition.
 - Treat stages as large slices: roughly `5+` TDD cycles, one endpoint/API surface, a group of similar endpoints or similar endpoint edits, or a large self-contained refactor.
 - Do not turn ordinary red-green-refactor steps, one endpoint fix, or the verification command into stages.
-- Do not create `stage-*` directories or convert layout.
+- If progress needs stages, use level-3 `Этап <feature-code>/<stage-code>: <название>` headings in root `progress.md`.
 - Keep preliminary refactoring separate from behavior changes.
 - State assumptions and open questions instead of hiding them in a chosen design.
 - Do not invent requirements, code anchors, APIs, storage, migrations, or tests.
@@ -82,4 +82,5 @@ Check that:
 - every approach is traceable to the brief and anchors;
 - rejected alternatives are preserved only in the appendix;
 - `Этапы` is present only for coarse decomposition and does not mutate feature layout;
+- progress stages use root `progress.md` headings;
 - `progress.md` is updated when the lifecycle permits it.

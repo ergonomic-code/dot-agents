@@ -11,7 +11,7 @@ Read `framework_checkout_root/src/conventions/feature-workdir.md`.
 
 Resolve the active feature directory and optional implementation stage through `feature-workdir.md`.
 Use an explicitly named `progress.md`.
-Otherwise use the single relevant `progress.md` from the active stage or feature directory.
+Otherwise use the root `progress.md` from the active feature directory.
 If zero or several progress files remain possible, stop and ask for the target file.
 
 Discover required context near the active feature/stage:
@@ -51,16 +51,16 @@ If the user chooses `Судя по всему фича реализована п
 Do not create or edit code, tests, test-case artifacts, brief files, design docs, or other progress files.
 The user's choice authorizes the write; do not ask for a second confirmation.
 
-Insert the item into the matching implementation queue, stage, or `Feature` group.
+Insert the item into the matching `## Реализация` section or stage heading.
 If the insertion point is ambiguous, stop and ask where to place it.
-Preserve existing indentation and checklist style.
+Preserve existing TDD checklist style.
 
 Use exactly this shape:
 
 ```markdown
-- [ ] <short increment title>
-  - [ ] Красный тест
-  - [ ] Зелёный тест
+- [ ] <short tested behavior>
+  - [ ] красный кейс
+  - [ ] зелёный кейс
 ```
 
 After writing, report the updated progress path and the added increment title.

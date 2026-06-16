@@ -1,12 +1,13 @@
 ---
 name: init-feature-workdir
-description: Create a new feature workdir under `devlog/NNN-slug` with `010-feature-brief.md` and `progress.md` from local templates. Use when the user asks to create, initialize, or bootstrap a feature directory, feature workdir, or devlog entry and provides, or must be asked for, a three-digit feature id and slug.
+description: Create a new feature workdir under `devlog/NNN-slug` with `010-feature-brief.md` and `progress.md` from framework templates. Use when the user asks to create, initialize, or bootstrap a feature directory, feature workdir, or devlog entry and provides, or must be asked for, a three-digit feature id and slug.
 ---
 
 # Init Feature Workdir
 
 Read `framework_checkout_root/src/conventions/feature-workdir.md`.
-Read `./references/feature-brief-template.md` and `./references/progress-template.md`.
+Read `framework_checkout_root/src/references/feature-brief-template.md`.
+Read `framework_checkout_root/src/references/progress-template.md`.
 
 ## Workflow
 
@@ -17,10 +18,10 @@ Read `./references/feature-brief-template.md` and `./references/progress-templat
 - If the slug contains a path separator or escapes `./devlog`, ask for a corrected slug and stop.
 - Use target directory `./devlog/<feature-id>-<feature-slug>`.
 - If the target directory already exists, stop and report that no files were changed.
-- Create only the target directory, `010-feature-brief.md`, `progress.md`, and, when staged layout is explicit, the required `stage-<stage-code>/` directories.
-- Copy the fenced file templates from the local references.
+- Create only the target directory, `010-feature-brief.md`, and `progress.md`.
+- Copy the fenced file templates from the loaded references.
 - Create a flat feature directory by default.
-- If the user explicitly requests staged layout or lists implementation slices, adapt `progress.md` to the staged layout from `feature-workdir.md`, using stage directories `stage-<stage-code>` and feature-stage identifiers `<feature-code>/<stage-code>`.
+- If the user explicitly requests implementation stages or lists implementation slices, adapt `progress.md` with `### Этап <feature-code>/<stage-code>: <название>` headings from `feature-workdir.md`.
 - Keep implementation-stage breakdown out of `010-feature-brief.md`.
 - Keep placeholders unless the user explicitly provided exact values.
 - Do not inspect product code, infer requirements, or create extra files.

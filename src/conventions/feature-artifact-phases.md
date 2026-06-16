@@ -4,10 +4,9 @@ Use this rule for phase-coded artifacts inside a feature workdir.
 
 - Artifact phase codes are independent from implementation stages.
 - Artifact phase code is the numeric file name prefix such as `010`, `020`, or `030`.
-- Implementation stage code is the two-digit code used in `stage-<stage-code>` and `<feature-code>/<stage-code>`.
+- Implementation stage code is the two-digit code used in root `progress.md` headings and `<feature-code>/<stage-code>` labels.
 - Resolve artifact phase from the skill binding, artifact purpose, or explicit output path, not from the implementation stage.
 - Use the artifact phase code as the file name prefix unless the user gave an explicit path.
-- In staged layout, keep the same phase-coded artifact names inside `stage-<stage-code>/`, for example `stage-01/020-api-current.md` or `stage-01/030-api-new.adoc`.
 
 ## Standard artifact phases
 

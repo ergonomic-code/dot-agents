@@ -5,8 +5,8 @@ description: Analyze a problem in feature analysis or design artifacts from `pro
 
 # Fix feature context
 
-Read `../fix-framework-context/references/minimality.md`.
-Read `../fix-framework-context/references/shared-workflow.md`.
+Read `framework_checkout_root/src/references/context-fix-minimality.md`.
+Read `framework_checkout_root/src/references/context-fix-workflow.md`.
 Read `framework_checkout_root/src/conventions/feature-workdir.md`.
 
 This skill always resolves the role to `feature-context-engineer`.

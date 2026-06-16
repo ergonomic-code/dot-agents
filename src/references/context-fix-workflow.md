@@ -47,6 +47,7 @@ Add extras only when materially different.
 When needed, prefer these canonical extras instead of inventing near-synonyms:
 - `architecturally-correct` — the best option from an architecture standpoint, even if it requires substantial framework reshaping, new artifact types, routing changes, or similar deep structural changes.
 - `out-of-system` — a fundamentally different solution outside the current framework boundary, such as solving the problem at another layer, reframing it, or removing the need for the current change.
+
 Do not restate the same solution with cosmetic wording changes.
 Each option must include candidate files or areas, classification summary, delta, why it fits its class, benefits, and risks.
 

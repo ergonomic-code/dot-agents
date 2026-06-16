@@ -14,7 +14,7 @@ Read `framework_checkout_root/src/conventions/feature-artifact-phases.md`.
 - artifact phase code: `020` or `030` by artifact purpose
 - default feature-dir output container: `<feature-dir>`
 - non-feature default output container: `./tmp`
-- progress.md checklist item: `Текущее API` for artifact phase `020`; `Изменения API` for artifact phase `030`
+- progress.md checklist item: `Целевые компоненты` for artifact phase `020`
 
 Resolve `<default-output-dir>` via the shared lifecycle from `feature-stage-skill.md` and these bindings.
 Create that directory if missing.

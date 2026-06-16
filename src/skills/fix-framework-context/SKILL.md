@@ -5,8 +5,8 @@ description: Analyze a framework-context fix or feature request from `problem`, 
 
 # Fix or extend framework context
 
-Read `references/minimality.md`.
-Read `references/shared-workflow.md`.
+Read `framework_checkout_root/src/references/context-fix-minimality.md`.
+Read `framework_checkout_root/src/references/context-fix-workflow.md`.
 
 This skill always resolves the role to `framework-context-engineer`.
 Before task triage, load `framework_checkout_root/src/roles/framework-context-engineer.md`.
