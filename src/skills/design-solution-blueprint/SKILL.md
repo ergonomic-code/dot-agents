@@ -48,6 +48,7 @@ Optional:
 
 - Compare directions, not detailed implementation plans.
 - Keep options grounded in the feature brief and verified code anchors.
+- If the brief or user constraints cite a named architecture source, preserve that source's component terminology in the blueprint and do not introduce adjacent local synonyms or alternative taxonomy.
 - Prefer approaches that preserve task boundaries, one externally visible API surface per behavior slice, ergonomic state/data design, and simple dependency shape.
 - Add implementation stages only when the chosen approach needs coarse decomposition.
 - Treat stages as large slices: roughly `5+` TDD cycles, one endpoint/API surface, a group of similar endpoints or similar endpoint edits, or a large self-contained refactor.

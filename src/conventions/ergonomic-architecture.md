@@ -39,9 +39,38 @@ Do not treat it as a replacement for narrower conventions such as `operations-de
 - Do not hide core dependencies behind incidental facades when direct operation-to-resource wiring is the intended shape.
 - Keep each subprogram on one abstraction level.
 
+## Terminology
+
+ Use these EA terms by default when the named source does not define another vocabulary.
+
+### Data structure projection terminology
+
+- `entities` — domain objects with identity.
+- `value objects` — immutable domain objects without identity that are compared by value.
+- `aggregates` — persistence and loading units of the domain model that are loaded and saved as a whole.
+- `aspect entities` — technical or design-driven entity slices that reuse the identity of another entity instead of defining a new one.
+- `anchor entities` — the ordinary entities whose identity is reused by aspect entities.
+
+### State structure projection terminology
+
+- `ports` — entry points that receive external signals and delegate to one operation or one resource method.
+- `operations` — top-level scenario components that orchestrate one use case over resources.
+- `domain operations` (`DOPs`) — reusable lower-level effect sequences that are shared by multiple operations.
+- `resources` — stateful or externally connected runtime components that expose explicit effects over aggregates, integrations, or other state.
+- `primitive resources` — resources that are internal implementation parts of a higher-level resource.
+- `infrastructure resources` — project-owned infrastructure-facing resources reused as implementation parts of multiple domain-facing resources.
+
+### Behavior structure projection terminology
+
+- `input` — behavior code that loads data into program memory.
+- `transformation` — behavior code that transforms data or makes decisions without performing I/O.
+- `output` — behavior code that modifies external state.
+- `orchestration` — behavior code that routes data through input, transformation, and output steps.
+
 ## How to use in artifacts
 
 - In technical feature briefs, use this summary to translate architecture goals into explicit constraints and acceptance criteria.
 - Cite only the constraints that are relevant to the requested change.
 - Do not restate the whole architecture.
 - If the source material names a more specific EA target, combine that target with the applicable rules from this summary.
+- Preserve component vocabulary from the named EA source and this summary instead of introducing adjacent local synonyms or alternative taxonomy.
