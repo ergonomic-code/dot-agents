@@ -8,6 +8,7 @@ description: Review and refactor code after `$code-test-case` and `$fix-red-case
 Read `../../conventions/code-implementation.md`.
 Read `../../conventions/ergonomic-approach-rules.md`.
 Read `../../conventions/ergonomic-architecture.md`.
+Follow its projection-specific loading rules.
 Read `../../conventions/task-boundaries.md`.
 Read `../../conventions/abstraction-level-boundaries.md`.
 Read `../../conventions/test-fixture-architecture.md`.
@@ -28,7 +29,7 @@ Accept either one commit or current uncommitted changes as the refactor target.
    - duplication after the second occurrence, including sibling code that repeats the same responsibility with different expressions;
    - mixed abstraction levels per `abstraction-level-boundaries.md`;
    - misplaced mechanics that belong behind an adapter, helper, mapper, value type, or collaborator;
-   - violations of `ergonomic-architecture.md`, especially unclear operation/resource boundaries, peer horizontal dependencies, mixed orchestration and infrastructure concerns, or hidden direct dependencies that should stay explicit.
+   - violations of loaded EA conventions, especially unclear operation/resource boundaries, peer horizontal dependencies, mixed orchestration and infrastructure concerns, or hidden direct dependencies that should stay explicit.
 4. In `test` mode, find refactor-only problems inside the target boundary:
    - violations of `test-fixture-architecture.md`, especially `*TestApi` scope leaks, cross-scope orchestration inside `*TestApi`, or setup that belongs in `*FixturePresets`;
    - violations of other loaded test conventions when they materially apply, especially `http-api-test-rules.md` for HTTP boundary tests and `*HttpApi` helpers.

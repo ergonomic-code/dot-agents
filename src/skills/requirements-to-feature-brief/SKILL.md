@@ -15,7 +15,7 @@ Read `framework_checkout_root/src/conventions/feature-artifact-phases.md`.
 Read `framework_checkout_root/src/references/feature-brief-template.md`.
 Read `framework_checkout_root/src/references/progress-template.md`.
 Treat `framework_checkout_root/src/references/feature-brief-template.md` as the source of truth for brief-content rules, including `Точки наблюдения`, customer wording, deduplication, and acceptance-criteria shape.
-If the request or referenced material mentions Ergonomic Architecture, `EA`, `EP`, aggregates, operations, resources, DOPs, target architecture, architecture refactoring, or acceptance by tech lead through code shape, also read `framework_checkout_root/src/conventions/ergonomic-architecture.md` before writing.
+If the request or referenced material mentions Ergonomic Architecture, `EA`, `EP`, aggregates, operations, resources, DOPs, target architecture, architecture refactoring, or acceptance by tech lead through code shape, also read `framework_checkout_root/src/conventions/ergonomic-architecture.md` and follow its projection-specific loading rules before writing.
 
 ## Feature artifact bindings
 
