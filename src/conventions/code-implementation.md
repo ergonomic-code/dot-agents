@@ -7,6 +7,7 @@
 - If the task changes or adds production database schema migrations, or production persistence changes require a schema change, load `./db-schema-migrations.md`.
 - If the task changes or adds a database-backed read, changes a query-mapped type, or changes ordering, filtering, pagination, result limiting, deduplication, or existence checks of database-backed data, load `./db-query-shaping.md` and `./db-read-model-boundaries.md`.
 - If the task changes or adds a persistence-backed class, constructor, factory, repository mapping, serializer, or persistence adapter, load `./persistence-models.md`.
+- If the task changes or adds a production operation, operation helper, or workflow method that reads, calculates, writes, or returns domain data, load `./operations-design.md`.
 
 ## Reuse
 
