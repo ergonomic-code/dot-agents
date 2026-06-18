@@ -78,6 +78,6 @@ They are not part of the output file.
 - `Критерии приёмки` describe customer-acceptable outcomes.
 - Keep `Критерии приёмки` to the smallest set of independently checkable outcomes, preferably one end-to-end criterion per scenario.
 - For technical or internal engineering work accepted by a technical lead, derive acceptance criteria from the applicable architecture or design constraints named by the source material when such a source is provided.
-- When `framework_checkout_root/src/conventions/ergonomic-architecture.md` was loaded for the task, use its relevant constraints to ground technical acceptance criteria instead of writing only ad hoc code-shape checks.
+- When `framework_checkout_root/src/conventions/ergonomic-architecture.md` and projection-specific EA conventions were loaded for the task, use their relevant constraints to ground technical acceptance criteria instead of writing only ad hoc code-shape checks.
 - Put absence of an error inside the same acceptance criterion as the successful scenario unless that absence is the only accepted outcome.
 - Do not put `Given` / `When` / `Then` in the feature brief.
