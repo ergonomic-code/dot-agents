@@ -12,6 +12,7 @@ Read `../../conventions/task-boundaries.md`.
 Read `../../conventions/abstraction-level-boundaries.md`.
 Read `../../conventions/test-fixture-architecture.md`.
 Read `../../conventions/http-api-test-rules.md`.
+Read `./references/api-alignment.md`.
 
 Use this skill only after the selected case is green.
 Accept either one commit or current uncommitted changes as the refactor target.
@@ -22,7 +23,7 @@ Accept either one commit or current uncommitted changes as the refactor target.
 2. Classify the iteration as exactly one refactor mode:
    - `production` when the intended structural change is in production code;
    - `test` when the intended structural change is in test code;
-   - stop if the iteration needs both, except for minimal test updates required to reflect an updated production API.
+   - stop if the iteration needs both, except for the minimal test updates required by `references/api-alignment.md`.
 3. In `production` mode, find refactor-only problems inside the target boundary:
    - duplication after the second occurrence, including sibling code that repeats the same responsibility with different expressions;
    - mixed abstraction levels per `abstraction-level-boundaries.md`;
@@ -43,7 +44,7 @@ Accept either one commit or current uncommitted changes as the refactor target.
 - Do not add behavior, cases, assertions, migrations, endpoint contracts, config, retries, defaults, or compatibility branches.
 - Do not weaken, rewrite, skip, or delete tests.
 - In one iteration, refactor either production code or test code, not both.
-- In `production` mode, do not change test structure except for the minimal updates required to reflect an updated production API.
+- In `production` mode, do not change test structure except for the minimal updates required by `references/api-alignment.md`.
 - In `test` mode, do not change production code.
 - Do not broaden beyond the commit or uncommitted diff except for compile-required call-site propagation.
 - Prefer moving, extracting, renaming, or introducing a narrow helper over new framework abstractions.
