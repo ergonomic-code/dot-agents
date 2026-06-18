@@ -62,6 +62,7 @@ Optional:
 
 Write the blueprint in Markdown and in the configured `artifact_language`.
 Use compact one-sentence-per-line prose.
+Structure dense technical detail with headings, short paragraphs, and lists so the document stays scannable.
 Include these sections:
 - `# Принципиальное решение`
 - `## Контекст`
@@ -70,10 +71,13 @@ Include these sections:
 - `## Приложение: отброшенные варианты`
 
 Add `## Этапы` before `## Открытые вопросы` only when coarse implementation stages are needed.
-In `Выбранный подход`, record the final decision and why it was chosen.
+In `Контекст`, include the problem, decision drivers, and constraints needed to understand the chosen direction.
+In `Выбранный подход`, record the final decision, why it was chosen, and the technical details needed to implement it correctly.
+Split `Выбранный подход` into level-3 subsections when it contains several distinct concern groups, phases, boundaries, invariants, or validation criteria.
 In `Этапы`, write only a short ordered outline of coarse implementation slices.
 In `Открытые вопросы`, write `Нет.` when no material question remains.
 In `Приложение: отброшенные варианты`, preserve the rejected chat-presented approaches with their main pros, cons, and rejection reason.
+Do not render important technical detail as one long prose block.
 
 ## Before Finishing
 
@@ -82,6 +86,7 @@ Check that:
 - the user explicitly chose the final approach;
 - every approach is traceable to the brief and anchors;
 - rejected alternatives are preserved only in the appendix;
+- dense technical detail is split into meaningful subsections, lists, or short paragraphs;
 - `Этапы` is present only for coarse decomposition and does not mutate feature layout;
 - progress stages use root `progress.md` headings;
 - `progress.md` is updated when the lifecycle permits it.
