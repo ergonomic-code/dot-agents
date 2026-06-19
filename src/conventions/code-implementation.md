@@ -21,7 +21,9 @@
 ## Kotlin
 
 - Preserve existing blank separator lines in code.
-- Never make a property nullable unless it is actually nullable in the domain.
+- Prefer `val` for fields, local values, parameters, configuration values, fixtures, and lifecycle values.
+- Never make a field, local value, parameter, configuration value, fixture value, or lifecycle value nullable unless absence is real behavior.
+- Do not encode delayed initialization, fixture setup, runtime startup, optional wiring, or convenience construction as nullable when a constructor, factory, provider, local `val`, explicit boundary check, or narrower scope can expose the value as non-null.
 - Treat default argument values in production callables as behavior, not compile, source/API compatibility, or call-site propagation fixes.
 - Add or change a default argument only when current client usage shows that more than half of clients intentionally pass the same value, that value is explicit target behavior for omitted calls, and omission is safe.
 - Omission is safe only when forgetting to pass the argument cannot cause unexpected side effects or hide a required behavior choice.
