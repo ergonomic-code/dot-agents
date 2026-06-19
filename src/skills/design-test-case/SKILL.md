@@ -31,6 +31,12 @@ Map the selected obligation to `Feature`, `Rule`, optional named `Example`, `Giv
 Then render through `../write-verification-check/SKILL.md`.
 Do not add sibling rules or examples unless the user explicitly asks for more than one case.
 
+## Scope Boundary
+
+This skill is design-only.
+Do not create, modify, plan, or announce test code or production code.
+After returning or writing the verification case and allowed progress checklist updates, stop.
+
 ## Output
 
 When invoked by `design-feature-test-cases` as an internal step, return the rendered case to that skill and do not write files.
