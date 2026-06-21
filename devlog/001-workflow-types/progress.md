@@ -13,3 +13,13 @@
 ## Выбор принципиального направления решения
 
 - [x] Принципиальное решение: [030-design-blueprint.md](030-design-blueprint.md)
+
+## Реализация
+
+- [ ] Завести самостоятельный refactor-flow без behavior changes
+- [ ] Подчистить preliminary refactoring в feature-flow и сослать его на refactor mechanics
+- [ ] Ввести базовый `Task flow` без breaking rename существующих paths
+- [ ] Привязать feature-flow к `Task flow`
+- [ ] Привязать refactor-flow к `Task flow`
+- [ ] Переименовать shared `feature-*` framework API в task/workflow-neutral paths
+- [ ] Проверить старую feature-as-base terminology и representative runtime skill loading paths

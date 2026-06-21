@@ -100,11 +100,31 @@ Then specialize skill behavior where current text still says feature when it mea
 
 ## Этапы
 
-1. Introduce the neutral workflow model and rename shared conventions/references.
-2. Migrate shared skills and baseline loading instructions to the neutral convention paths.
-3. Re-express feature-flow, refactor-flow, and bug-fix-as-feature as specializations.
-4. Update templates and progress guidance so universal tasks are not forced through feature wording.
-5. Validate by searching old feature-as-base terminology and checking representative runtime skill loading paths.
+Реализация должна идти инкрементально.
+После каждого этапа framework должен оставаться рабочим и применимым к новым задачам.
+Нельзя делать промежуточное состояние, в котором старый feature-flow уже сломан, а новый task/workflow-neutral flow ещё не подключён.
+
+1. Add standalone refactor flow.
+   Этап добавляет самостоятельный structural-change workflow без behavior changes.
+   Feature-flow продолжает работать по старым правилам.
+2. Clean feature-flow preliminary refactoring through refactor flow.
+   Этап убирает локальные дублирующие правила предварительного рефакторинга из feature-flow и ссылает его на refactor mechanics.
+   Feature-flow всё ещё остаётся самостоятельным рабочим workflow.
+3. Add base `Task flow` without breaking existing paths.
+   Этап вводит общий conceptual source of truth для target state, current state, solution direction, optional preparation и execution.
+   Существующие `feature-*` conventions и новый refactor-flow остаются рабочими напрямую.
+4. Make feature-flow specialize `Task flow`.
+   Этап привязывает feature-flow к базовым фазам.
+   Preparation специализируется как preliminary refactoring, execution как TDD implementation.
+5. Make refactor-flow specialize `Task flow`.
+   Этап привязывает refactor-flow к тем же базовым фазам.
+   Execution уточняется как structural change without behavior change.
+6. Rename shared `feature-*` framework API to task/workflow-neutral paths and update references.
+   Этап выполняется только после того, как feature-flow и refactor-flow уже выражены через `Task flow`.
+   Rename становится mechanical cleanup, а не одновременной semantic migration.
+7. Validate by searching old feature-as-base terminology and checking representative runtime skill loading paths.
+   Этап проверяет, что старые имена не остались владельцами общей mechanics.
+   Feature-specific terminology допускается только там, где речь действительно о feature-flow.
 
 ## Приложение: отброшенные варианты
 
