@@ -73,11 +73,15 @@ Include these sections:
 Add `## Этапы` before `## Открытые вопросы` only when coarse implementation stages are needed.
 In `Контекст`, include the problem, decision drivers, and constraints needed to understand the chosen direction.
 In `Выбранный подход`, record the final decision, why it was chosen, and the technical details needed to implement it correctly.
+Use paragraphs as the primary structure for `Контекст` and `Выбранный подход`.
+Group adjacent sentences into one short paragraph when they explain the same concern, decision driver, boundary, invariant, or risk.
 Split `Выбранный подход` into level-3 subsections when it contains several distinct concern groups, phases, boundaries, invariants, or validation criteria.
+Use lists only for ordered sequences, comparable alternatives, stages, checklists, or compact enumerations that would be harder to scan as prose.
 In `Этапы`, write only a short ordered outline of coarse implementation slices.
 In `Открытые вопросы`, write `Нет.` when no material question remains.
 In `Приложение: отброшенные варианты`, preserve the rejected chat-presented approaches with their main pros, cons, and rejection reason.
 Do not render important technical detail as one long prose block.
+Do not render a design section as a flat stream of isolated one-sentence paragraphs.
 
 ## Before Finishing
 
@@ -87,6 +91,7 @@ Check that:
 - every approach is traceable to the brief and anchors;
 - rejected alternatives are preserved only in the appendix;
 - dense technical detail is split into meaningful subsections, lists, or short paragraphs;
+- `Контекст` and `Выбранный подход` use paragraphs grouped by concern instead of flat sentence streams;
 - `Этапы` is present only for coarse decomposition and does not mutate feature layout;
 - progress stages use root `progress.md` headings;
 - `progress.md` is updated when the lifecycle permits it.
