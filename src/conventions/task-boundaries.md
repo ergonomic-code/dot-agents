@@ -13,6 +13,7 @@
 - In one coding slice, change no more than one externally visible HTTP endpoint or API surface.
 - If a behavior change spans several endpoints or API surfaces, execute only the current or first explicit slice, then report the remaining slices.
 - Large preparatory refactorings must be separate refactor-only slices before dependent behavior slices.
+- For standalone refactor-only tasks and large preparatory refactorings, apply `refactor-flow.md`.
 
 ## Write set
 

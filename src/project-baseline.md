@@ -19,6 +19,7 @@ A tool task list does not satisfy the request.
 - If an activated skill defines loading instructions, follow the skill first.
 - Resolve the active role from the current user request.
 - Before the first substantive response and before task triage, read `framework_checkout_root/src/roles/<role>.md`.
+- For standalone refactor-only tasks, apply `framework_checkout_root/src/conventions/refactor-flow.md`.
 - When the task may create files or depends on feature-local context, apply `framework_checkout_root/src/conventions/feature-workdir.md`.
 - Apply `framework_checkout_root/src/conventions/feature-stage-skill.md` and `framework_checkout_root/src/conventions/feature-artifact-phases.md` when a skill writes default artifact-phase outputs into a feature workdir.
 - Treat `feature-workdir.md` as the single source of truth for active feature directory resolution and default placement of new task files.

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Requirements to Refactor Brief"
+  short_description: "Формализует требования в бриф рефакторинга"
+  default_prompt: "Use $requirements-to-refactor-brief to write or update a formal standalone refactor brief from these raw requirements."
