@@ -2,6 +2,7 @@
 
 - Do all changed HTTP boundary tests avoid direct calls to `WebTestClient` and `RestTestClient`?
 - Does each changed `*HttpApi` operation keep one canonical `*ForResponse` request builder that typed overloads delegate to?
+- Do expected negative cases use `*ForError` instead of ad-hoc status-return helpers?
 - Do public typed `*HttpApi` methods mirror the controller contract by parameters and result type?
 - Do current-client parameters stay required in public typed `*HttpApi` methods without default argument values?
 - Are compatibility omissions isolated in explicit legacy, raw, or relaxed paths with separate compatibility tests?

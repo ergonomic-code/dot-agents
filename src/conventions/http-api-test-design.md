@@ -17,6 +17,7 @@
 - `*ForResponse` must build the HTTP request and return a response spec.
 - A typed success method must delegate to `*ForResponse`, check the expected status, validate the schema, and decode the body into the controller type.
 - Use `*ForError` for expected negative cases.
+- Do not introduce ad-hoc status-return helpers for expected negative cases when a `*ForError` path can hold the status check.
 - Use `*ForOutcome` when either success or an expected error is legitimate and the result should stay typed instead of throwing on an expected error.
 
 ## Builders and overloads
