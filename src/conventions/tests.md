@@ -9,6 +9,6 @@ Before planning, adding, or changing tests, read:
 - `./test-naming.md` for class, case, method, and `@DisplayName` naming.
 - `./test-implementation.md` for test bodies and helper method implementation rules.
 - During the final self-check for test changes, also read `./test-implementation-checklist.md`.
-- When planning, adding, or changing HTTP boundary tests or `*HttpApi`, also read `./http-api-test-design.md` and `./http-api-test-rules.md`.
+- When planning, adding, or changing HTTP boundary tests, `*HttpApi`, or test helpers that call HTTP clients, also read `./http-api-test-design.md` and `./http-api-test-rules.md`.
 - When planning, adding, or changing HTTP JSON API error response tests, also read `../patterns/http-json-api/error-response-body-format.md`.
 - During the final self-check for such changes, also read `./http-api-test-checklist.md`.
