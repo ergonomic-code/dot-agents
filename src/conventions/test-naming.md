@@ -10,6 +10,7 @@ Use surrounding tests only after these rules to preserve local mechanics, import
 - Keep class, file, and method identifiers, including Kotlin backticked method names and `test_<slug>`, in the repository's technical naming style unless the user explicitly asks to rename identifiers outside `@DisplayName`.
 - For existing Kotlin test files, keep the existing class and file name unless the user explicitly asks to rename technical identifiers.
 - Name class `@DisplayName` by the behavior container, feature, operation, or API method under test.
+- For endpoint test classes from `Feature` starting with `Метод API`, name class `@DisplayName` as `Метод API <человеческое название метода> (<HTTP method> <path>)`.
 - For component tests, class `@DisplayName` may name the behavior surface instead of the component symbol when the target component is resolved elsewhere.
 - Name case `@DisplayName` as a specification of observable behavior or result property.
 - For Russian case names, use `должен` or `должна`.
