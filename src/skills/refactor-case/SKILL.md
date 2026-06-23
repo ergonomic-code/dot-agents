@@ -37,7 +37,9 @@ Accept either one commit or current uncommitted changes as the refactor target.
 6. Propose a short refactor plan and wait for explicit approval before editing.
 7. After approval, change structure only.
    Preserve observable behavior, public contracts, persistence shape, API responses, test intent, and progress state.
-8. Rerun the selected test.
+8. Before finalizing, re-check the target diff and close the remaining refactor-only problems that still fall inside the approved boundary and chosen mode.
+   If a remaining problem would require behavior change, wider redesign, or crossing the chosen mode boundary, stop and report it instead of finalizing as fully refactored.
+9. Rerun the selected test.
    If shared APIs or broad call sites changed, also run the smallest relevant compile or module test.
 
 ## Constraints
@@ -49,6 +51,7 @@ Accept either one commit or current uncommitted changes as the refactor target.
 - In `test` mode, do not change production code.
 - Do not broaden beyond the commit or uncommitted diff except for compile-required call-site propagation.
 - Prefer moving, extracting, renaming, or introducing a narrow helper over new framework abstractions.
+- Do not treat first green or first successful compile as sufficient completion when the approved refactor target still contains unresolved refactor-only problems inside the selected boundary.
 - Stop if a desired cleanup requires behavior clarification or wider redesign.
 
 ## Output

@@ -25,6 +25,7 @@ Load code implementation rules from `../conventions/code-implementation.md` and 
 ## Working rules
 
 * Do not broaden scope without explicit request.
+* If the user asks to refactor one existing commit or the current uncommitted diff after the selected case is already green, use `../skills/refactor-case/SKILL.md` instead of treating the request as ordinary implementation continuation.
 * Before `git add`, `git commit`, `git rebase`, `git cherry-pick`, and other git operations, load and follow project-local git conventions if project context declares them.
   Do not run those git operations before loading them.
 * During the final self-check, load `../conventions/ergonomic-approach-checklist.md` and apply it.
