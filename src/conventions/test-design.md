@@ -40,6 +40,7 @@
 - `*TestApi` is a typed helper for fixture setup and observation.
 - `*FixturePresets` materialize reused or complex test state.
 - `*Assertions` hold reusable domain assertions.
+- If three or more consecutive assertions verify one correspondence between two object groups, extract them into a named domain assertion.
 - Helper methods such as `*ForResponse` and `*ForError` may be used inside typed boundary helpers to separate reusable operation-level verification paths from test cases.
 
 ## Observation
