@@ -59,7 +59,7 @@ Keep old cases unchanged unless they contradict new checks, would stop compiling
    - Cover only behavior that is actually implied by the inputs.
    - Add positive, negative, boundary, fallback, and compatibility cases only when the inputs justify them.
    - Merge duplicates and keep the smallest materially distinct `Rule` / `Example` set.
-   - Order new target cases by `framework_checkout_root/src/references/test-case-implementation-order.md` because `progress.md` and `$code-test-case` use source order.
+   - Order new target cases by `framework_checkout_root/src/references/test-case-implementation-order.md` because unmarked `progress.md` fallback uses source order; an explicit `- [~]` marker takes priority.
    - Prefer abstract contract wording over literal sample data unless exact values are behaviorally required.
 5. Normalize current relevant cases if they exist.
    - If current cases come from test code, recover current `Feature` / `Rule` / `Example` anchors from the source before reusing an existing output artifact.

@@ -54,11 +54,13 @@ The user's choice authorizes the write; do not ask for a second confirmation.
 Insert the item into the matching `## Реализация` section or stage heading.
 If the insertion point is ambiguous, stop and ask where to place it.
 Preserve existing TDD checklist style.
+Mark the chosen next increment parent item as `- [~]`.
+If the same `progress.md` already has another pending `- [~]` parent item, change that older marker back to `- [ ]` so the file keeps one next task.
 
 Use exactly this shape:
 
 ```markdown
-- [ ] <short tested behavior>
+- [~] <short tested behavior>
   - [ ] красный кейс
   - [ ] зелёный кейс
 ```

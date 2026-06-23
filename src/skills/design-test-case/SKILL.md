@@ -48,7 +48,8 @@ Preserve all other sections and cases.
 After updating a cases artifact, update the active feature `progress.md` when it exists.
 Add the case under `## Реализация` or the matching `### Этап <feature-code>/<stage-code>: <название>` heading when an active stage is resolved.
 Create only missing headings and TDD checklist entries.
-Add one unchecked parent item named by the tested behavior.
+If no pending `- [~]` parent item already exists in that `progress.md`, add the new parent item as `- [~]`.
+Otherwise add it as `- [ ]` and preserve the existing next-task marker.
 Under it, add unchecked child items `красный кейс` and `зелёный кейс`.
 If the resolved output path is not a cases artifact, write only the case text to that file.
 If no output path is resolved, return only one full-mode `verification-check-format-v0.1` case, or the missing selection issue.

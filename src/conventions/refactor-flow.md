@@ -25,6 +25,7 @@ Use `task-boundaries.md` for coding-slice boundaries while applying this flow.
 - Use level-3 headings only for phase-local subdivisions when they materially improve navigation.
 - Track each structural increment as one flat checklist item named `Рефакторинг: <краткий инкремент>`.
 - Keep todo lists short.
+- Use checklist status markers from `../references/progress-template.md`.
 
 Use these phases for a standalone refactor task:
 

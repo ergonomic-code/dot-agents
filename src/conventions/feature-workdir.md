@@ -46,10 +46,12 @@ Use this rule when the task may create files or depends on feature-local context
 - Track refactor-only preparation under `Предварительный рефакторинг`.
 - Track TDD increments under `Реализация`.
 - Keep todo lists short.
+- Use checklist status markers from `../references/progress-template.md`.
 - Do not nest checklist items to model phases, stages, or features.
 - Use nested checklist items only for the temporary TDD child items below one tested-behavior parent.
 - In `Предварительный рефакторинг`, write refactor work as flat items named `Рефакторинг: <краткий инкремент>`.
 - In `Реализация`, add each TDD increment as one parent item named by the tested behavior.
+- When selecting the next task explicitly, mark that parent item as `- [~]`.
 - When adding a TDD increment, add child items `красный кейс` and `зелёный кейс`.
 - After coding the red case, mark only `красный кейс` done.
 - After the case is green, remove both child items and mark the parent behavior item done.

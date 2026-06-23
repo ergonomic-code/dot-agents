@@ -39,6 +39,8 @@ For `ru`, use the Russian text below.
 ## Agent Rules
 
 - Keep checklist items short.
+- Use `- [ ]` for queued pending work, `- [~]` for the single next task to execute, and `- [x]` for done work.
+- Keep at most one `- [~]` item in one `progress.md`.
 - Use nested checklist items only for the temporary TDD child items below one tested-behavior parent.
 - Use level-2 headings for workflow phases.
 - Use level-3 headings for implementation stages or phase-local subdivisions.

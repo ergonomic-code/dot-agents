@@ -19,7 +19,8 @@ When given `progress.md` or a checklist item, resolve the selected entry to its 
 Ignore one optional source reference line immediately under each selected `Example` per `../../artifacts/verification-check-format-v0.1/references/source-reference.md`.
 Default to coding exactly one test case, where one full `Example` block is one test case.
 If the user did not explicitly select several examples, all examples, or a named multi-case set, code only the explicitly selected `Example`.
-If none is selected and `progress.md` has unchecked TDD parent items with unchecked child `красный кейс` under implementation sections, collect those cases first.
+If none is selected and `progress.md` has TDD parent items marked `- [~]` with unchecked child `красный кейс` under implementation sections, collect those cases first.
+Otherwise, if `progress.md` has unchecked TDD parent items with unchecked child `красный кейс` under implementation sections, collect those cases first.
 Before coding the first such case, check whether a test already matches it by display name, method name, Russian backticked name, or verified behavior.
 If it exists, stop, list stale implemented candidates as `1. <parent progress item title> - <file>:<line>`, offer to mark their `красный кейс` child items done in `progress.md`, and name the first later unchecked tested-behavior parent without implementation evidence as the next case to code.
 If no unchecked `красный кейс` without implementation evidence exists, stop and report stale progress.
