@@ -10,11 +10,14 @@
 
 ## Fixture setup
 
-- Each test case must set up its own fixture.
+- Each test case must explicitly establish its required fixture.
+- Establishing a fixture may reuse shared setup state instead of creating new DB data.
 - Do not add per-test cleanup for shared fixture state.
   Use or extend the shared fixture setup/reset layer.
 - Before adding cleanup for shared fixture state, inspect the selected test container's setup/reset path, including superclasses, test extensions, and called reset/init helpers.
 - If that path already resets the state, rely on it.
+- Before creating fixture data in DB, check whether shared setup already provides a semantically suitable entity or value.
+- Reuse shared fixture state when the entity identity itself is not the behavior under test.
 - If fixture setup code duplication exceeds 3 lines, it may be extracted into helpers.
 - In fixture setup specify only data relevant to the test-case.
 - If data in the fixture is related, derive it instead of copying.

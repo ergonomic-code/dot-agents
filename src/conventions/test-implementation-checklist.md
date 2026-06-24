@@ -7,6 +7,7 @@
 - For each named fixture constant or preset: is that exact named variant required?
 - If no, replace it with a role helper, factory, or fixture.
 - Is fixture setup minimal?
+- Does the test reuse suitable shared fixture state instead of creating duplicate DB data?
 - Does the test use setup-returned values instead of extra observation calls that require broader fixture data?
 - Are there no public read calls used only to discover setup-created ids or refs?
 - Is shared fixture state cleaned only by the shared setup/reset layer?
