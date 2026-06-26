@@ -54,6 +54,7 @@ If the request or referenced material mentions Ergonomic Architecture, `EA`, `EP
 - Do not describe implementation strategy, task sequence, storage strategy, or migrations unless the customer explicitly requires them as acceptance scope.
 - Preserve correct parts of an existing brief.
 - Rewrite only vague, conflicting, duplicated, overly technical, or scope-breaking parts.
+- Before writing or point-editing the brief, run the template's section-responsibility and deduplication rules across `Целевые изменения`, `Бизнес-правила`, and `Критерии приёмки`.
 - Before writing a technical brief for tech-lead acceptance, check three things explicitly:
 - `Точки наблюдения` are deduplicated roots, not repeated-labeled per-method bullets.
 - Each such root stands for the reachable current call tree from that root, not only the named method.

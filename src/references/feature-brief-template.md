@@ -57,7 +57,11 @@ They are not part of the output file.
 - Use end-user domain language for user-facing product changes.
 - Keep technical terms, classes, contracts, and integration names when they are part of the customer's requested change.
 - Keep the brief short.
-- Deduplicate semantically across `Целевые изменения`, `Бизнес-правила`, and `Критерии приёмки`.
+- Deduplicate semantically across `Целевые изменения`, `Бизнес-правила`, and `Критерии приёмки` by assigning each fact to one canonical section.
+- Use `Целевые изменения` only for customer-visible target results and scope changes.
+- Use `Бизнес-правила` as the canonical place for stable details, constraints, formats, mappings, limits, fallbacks, and exclusions.
+- Use `Критерии приёмки` for independently checkable scenarios or outcomes, not as a copy of the detailed specification.
+- When an acceptance criterion needs detailed rules already stated in `Бизнес-правила`, reference the rule group briefly instead of repeating every detail.
 - If two bullets would be true or false together, keep one bullet and fold in only the unique detail.
 - Do not split one scenario into separate bullets for the action, successful outcome, and missing error.
 - Use `Точки наблюдения` only for UI screens, UI fragments, user actions, or external systems that interact with the target system.
