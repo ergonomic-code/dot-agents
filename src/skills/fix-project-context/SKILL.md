@@ -19,7 +19,6 @@ Treat editable roots as:
 - `./README.md` only when it is an active agent-facing entry point or the narrowest consistent location.
 
 If the case is about framework-provided context under `framework_checkout_root/src/**`, stop and tell the user to use `$fix-framework-context`.
-If the case is about feature-local context under `./devlog/**`, stop and tell the user to use `$fix-feature-context`.
 
 ## Skill-specific scope and classification
 

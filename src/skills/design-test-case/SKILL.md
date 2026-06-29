@@ -39,7 +39,7 @@ After returning or writing the verification case and allowed progress checklist 
 
 ## Output
 
-When invoked by `design-feature-test-cases` as an internal step, return the rendered case to that skill and do not write files.
+When invoked by another skill as an internal step, return the rendered case to that caller and do not write files.
 If the resolved output path is `030-test-cases-new.*`, update that cases artifact instead of returning the case inline.
 In an existing cases artifact, add only the new case under the added-cases section.
 If that section already contains a source block for the same `Feature`, insert only the new `Rule` into that block.

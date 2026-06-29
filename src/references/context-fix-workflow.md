@@ -1,6 +1,6 @@
 # Shared context-change workflow
 
-Use this workflow for `$fix-framework-context`, `$fix-project-context`, and `$fix-feature-context`.
+Use this workflow for `$fix-framework-context` and `$fix-project-context`.
 Each concrete skill defines its own role, editable roots, redirect rules, file scope, and layer values.
 
 ## Required input
