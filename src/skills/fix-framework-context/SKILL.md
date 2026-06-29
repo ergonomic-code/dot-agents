@@ -19,7 +19,6 @@ Treat framework-context fixes and new framework-context capabilities under `fram
 For new capability work without a defect, treat the missing capability or limitation as the `problem`.
 
 If the case is about current-repo `AGENTS.md`, or project-local `.agents/**` or `.codex/**` outside `framework_checkout_root/**` and outside `./devlog/**`, stop and tell the user to use `$fix-project-context`.
-If the case is about feature-local context under `./devlog/**`, stop and tell the user to use `$fix-feature-context`.
 
 ## Skill-specific scope and classification
 
