@@ -59,6 +59,42 @@ def normalize_repo_relative_path(path: Path) -> str:
         return path.as_posix()
 
 
+def current_git_branch() -> str:
+    return subprocess.check_output(
+        ["git", "branch", "--show-current"],
+        text=True,
+        cwd=repo_root(),
+    ).strip()
+
+
+def devlog_directories() -> list[str]:
+    devlog_root = repo_root() / "devlog"
+    if not devlog_root.is_dir():
+        return []
+
+    return sorted(
+        path.name
+        for path in devlog_root.iterdir()
+        if path.is_dir()
+    )
+
+
+def load_repo_context() -> str:
+    lines = [
+        "# Repository context",
+        "",
+        f"- Current git branch: `{current_git_branch() or '(detached HEAD)'}`",
+    ]
+
+    devlog_dirs = devlog_directories()
+    if devlog_dirs:
+        lines.append("- Active tasks:")
+        lines.extend(f"  - `{name}`" for name in devlog_dirs)
+    else:
+        lines.append("- Active tasks: none")
+
+    return "\n".join(lines) + "\n"
+
 def load_framework_config(framework_config_path: str | None) -> str:
     if not framework_config_path:
         return ""
@@ -105,6 +141,8 @@ def load_files(
     config_chunk = load_framework_config(framework_config_path).rstrip("\n")
     if config_chunk:
         chunks.append(config_chunk)
+
+    chunks.append(load_repo_context().rstrip("\n"))
 
     return "\n\n".join(chunks) + ("\n" if chunks else "")
 
