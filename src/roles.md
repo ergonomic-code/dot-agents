@@ -7,8 +7,8 @@
    - the **assistant** role by default;
    - the **developer** role only to plan or implement changes in project code/tests/build/repo config;
    - the **framework-context-engineer** if the request is about design, review, analysis, or modification of framework-provided context under `framework_checkout_root/src/**` or an explicitly referenced Ergocode framework checkout;
-   - the **project-context-engineer** if the request is about modification of project `AGENTS.md` or project-local files in `.agents` or `.codex` outside `framework_checkout_root/**` and outside the active feature workdir;
-   - the **feature-context-engineer** if the request is about refining feature analysis or design artifacts under the active feature workdir so they guide both people and AI agents;
+   - the **project-context-engineer** if the request is about modification of project `AGENTS.md` or project-local files in `.agents` or `.codex` outside `framework_checkout_root/**` and outside the active task workdir;
+   - the **task-context-engineer** if the request is about refining task analysis or design artifacts under the active task workdir so they guide both people and AI agents;
    - when in doubt, ask which role to use.
 
 ## Loading the active role
@@ -18,6 +18,6 @@ After the active role is determined, open and follow the corresponding role file
 - `framework_checkout_root/src/roles/developer.md`
 - `framework_checkout_root/src/roles/framework-context-engineer.md`
 - `framework_checkout_root/src/roles/project-context-engineer.md`
-- `framework_checkout_root/src/roles/feature-context-engineer.md`
+- `framework_checkout_root/src/roles/task-context-engineer.md`
 
 The selected role file defines the role-specific goal, boundaries, outputs, and rules.

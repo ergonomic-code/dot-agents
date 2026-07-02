@@ -5,7 +5,6 @@ description: Fix production code for one red Kotlin JUnit case created or aligne
 
 # Fix Red Case
 
-Read `../../conventions/feature-workdir.md`.
 Read `../../conventions/tests.md`.
 Read `../../conventions/ergonomic-approach-rules.md`.
 Read `../../conventions/task-boundaries.md`.
@@ -17,30 +16,20 @@ Do not edit tests, test fixtures, test data, assertions, display names, test ann
 
 ## Workflow
 
-1. Reproduce or inspect the failing selected test and identify the current failure cause.
-2. Resolve the active feature directory and active implementation stage via `feature-workdir.md`.
-   If the feature directory is resolved, read `<active-feature-dir>/progress.md` when present.
-   If no active implementation stage is resolved, read every `<active-feature-dir>/030*` artifact that exists.
-   If an active implementation stage is resolved, read only the `030*` artifacts or artifact sections explicitly scoped to that stage.
-   For shared root artifacts, use only the sections under the matching `### Этап <feature-code>/<stage-code>: <название>` heading or another explicit stage marker for that same stage.
-   Read cross-stage root artifacts only when they are clearly shared constraints for the selected stage.
-   If no feature design artifact exists, continue from the failing test, current code, and loaded conventions.
-3. Make only the smallest production-code change that addresses the currently observed failure cause and is consistent with the selected case, progress state, and feature design when they exist.
+1. Reproduce or inspect the selected failing test and identify the current failure cause.
+2. Make only the smallest production-code change that addresses the currently observed failure cause and is consistent with the selected case, and task design when they exist.
    Before editing production code, apply the loaded ergonomic, boundary, and code implementation conventions.
    Keep this skill's test-edit ban and selected-case scope as stricter constraints.
-   Derive the selected behavior boundary from the failing test's entry point, endpoint, operation, scenario, and feature design when present.
-   Treat feature design as the source for behavior intent and production value sources; use the selected case and progress item only to choose the current slice and checks.
-   Do not replace a design-defined value source with a constant, default, or global setting derived from one case, example, or progress item.
+   Derive the selected behavior boundary from the failing test's entry point, endpoint, operation, scenario, and task design when present.
+   Treat task design as the source for behavior intent and production value sources; use the selected case only to choose the current slice and checks.
    Keep investigation and edits inside that boundary, except for compile-only call-site propagation forced by the chosen change.
    Smallest production change means the smallest coherent production fix, not the smallest shortcut that greens the selected test.
    Do not introduce temporary, test-shaped, or bypass behavior in production code to reduce the current green slice.
    If the selected test uses stale database setup after a production migration, fix the normal migration path used by the test; do not add production schema-existence branches.
    If the next necessary step would inspect or change a sibling endpoint, operation, mode, or scenario to justify the fix, stop and report the boundary instead of widening the implementation.
    Do not implement predicted later design changes before rerunning the selected test.
-   If the test contradicts the feature design, requires test edits, or cannot be fixed within production code, stop and report the blocker.
-4. Rerun only the same selected test after each production-code change.
-   If it passes, remove the matching `красный кейс` and `зелёный кейс` child items from `progress.md` and mark their parent behavior item done when present.
-   Then stop.
+   If the test contradicts the task design, requires test edits, or cannot be fixed within production code, stop and report the blocker.
+3. Rerun only the same selected test after each production-code change.
    If the failure changes, stop immediately and report the new failure.
    If the same failure remains after a production-code change, re-identify the current cause and continue only inside the same selected `Feature` boundary.
    Stop if the next fix requires changing a sibling endpoint, operation, mode, scenario, or a broader shared path not already inside that boundary.
@@ -50,8 +39,7 @@ Do not edit tests, test fixtures, test data, assertions, display names, test ann
 - Preserve the red case as the contract; do not weaken, skip, rewrite, or delete it.
 - Keep scope to the selected failing case and the nearest production change points.
 - Do not degrade, bypass, or special-case working production code to reduce the current slice.
-- Do not refactor, redesign, or broaden behavior beyond what the case and feature design require.
-- Do not change feature artifacts under this skill except the required selected-case progress update in `<active-feature-dir>/progress.md`.
+- Do not refactor, redesign, or broaden behavior beyond what the case and task design require.
 
 ## Output
 

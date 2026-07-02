@@ -1,6 +1,6 @@
 ---
 name: code-test-case
-description: Convert cases written in `verification-check-format-v0.1` in `full` mode into Kotlin JUnit test code. Use when the input is a verification check artifact with `Feature`, `Rule`, `Example`, `Given`, `When`, `Then`, and `And`, or when the user asks to code/закодировать the next/следующий or selected feature progress/checklist case backed by such an artifact.
+description: Convert cases written in `verification-check-format-v0.1` in `full` mode into Kotlin JUnit test code. Use when the input is a verification check artifact with `Feature`, `Rule`, `Example`, `Given`, `When`, `Then`, and `And`.
 ---
 
 # Code Test Case
@@ -10,28 +10,21 @@ Read `../../artifacts/verification-check-format-v0.1/ARTIFACT.md`.
 Read `../../artifacts/verification-check-format-v0.1/references/mode-full.md`.
 Read `../../artifacts/verification-check-format-v0.1/references/full-mode-checklist.md`.
 Read `../../artifacts/verification-check-format-v0.1/references/source-reference.md`.
-Read `../../conventions/feature-workdir.md`.
 Read `../../conventions/tests.md`.
 Read `references/response-contract-guard.md`.
 
-Accept one `verification-check-format-v0.1` artifact in `full` mode, or a feature progress/checklist item that links to one, and an optional existing Kotlin JUnit 5 test file.
-When given `progress.md` or a checklist item, resolve the selected entry to its linked full-mode check artifact before selecting the test case.
+Accept one `verification-check-format-v0.1` artifact in `full` mode, and an optional existing Kotlin JUnit 5 test file.
 Ignore one optional source reference line immediately under each selected `Example` per `../../artifacts/verification-check-format-v0.1/references/source-reference.md`.
 Default to coding exactly one test case, where one full `Example` block is one test case.
 If the user did not explicitly select several examples, all examples, or a named multi-case set, code only the explicitly selected `Example`.
-If none is selected and `progress.md` has unchecked TDD parent items with unchecked child `красный кейс` under implementation sections, collect those cases first.
 Before coding the first such case, check whether a test already matches it by display name, method name, Russian backticked name, or verified behavior.
-If it exists, stop, list stale implemented candidates as `1. <parent progress item title> - <file>:<line>`, offer to mark their `красный кейс` child items done in `progress.md`, and name the first later unchecked tested-behavior parent without implementation evidence as the next case to code.
-If no unchecked `красный кейс` without implementation evidence exists, stop and report stale progress.
-Otherwise code the first not-yet-implemented `Example` in source order, or the first `Example` if implementation status is unknown.
-Do not treat a feature directory, artifact file, progress checklist, or pending-case list as an explicit request to code multiple test cases.
 Before announcing a plan, choosing a target test class, scanning fixtures, or editing code, resolve selected examples and run input preflight.
 Input preflight must verify that each selected example is valid `verification-check-format-v0.1` full mode, including `Given` / `When` / `Then` and `Rule` obligation form.
 If any selected `Rule` lacks a full `Example` with `Given` / `When` / `Then`, stop and report that `short` mode cannot be converted into test code.
 If full-mode input places a source reference under `Rule` instead of under the matching `Example`, stop and report the invalid artifact shape.
 If a selected example violates format but is repairable without changing behavior, stop and show the issue, the proposed corrected case header, and these choices: keep source wording as-is, use the proposed wording, or provide replacement wording.
 If a selected example cannot be repaired without inventing behavior, stop and ask for corrected case text.
-For HTTP API examples, before choosing or changing `*HttpApi` helpers, DTOs, schemas, or success assertions, resolve the active feature stage and read sibling `030-api-new.adoc` or `030-api-new-ir.json` when present.
+For HTTP API examples, before choosing or changing `*HttpApi` helpers, DTOs, schemas, or success assertions, read `030-api-new.adoc` or `030-api-new-ir.json` when present.
 If such API artifact exists, use it as the target endpoint and response contract for the selected case.
 Before editing code, map case data roles to helpers, factories, or fixtures; keep exact literals, enum members, constants, codes, ids, dates, and names in the test body only when named by the case or public contract.
 If setup returns the required identifier or reference, use it directly; do not add a public read API call just to discover it.
@@ -121,4 +114,3 @@ For this skill, use the formal case mapping rules.
 - By default, after implementing a new or aligned case, the test should compile. The test may still fail for any reason until production behavior is aligned.
 
 Before finishing, read `../../conventions/test-implementation-checklist.md`, fix any failed item, and check: default scope produced exactly one example unless the user explicitly requested more, one class per selected `Feature`, one method per selected `Example`, fixture helper boundaries follow `../../conventions/test-fixture-architecture.md`, naming follows `../../conventions/test-naming.md`, new structured resources or schemas reuse or extract shared definitions instead of duplicating equivalent definitions, new or aligned tests compile, generate mode returns only Kotlin, and update mode accepts exactly one `Feature` per run and preserves the existing container code while editing in place.
-After the selected test case is created or aligned and the required validation is complete, mark the matching `красный кейс` child item done in `progress.md` when that item exists.

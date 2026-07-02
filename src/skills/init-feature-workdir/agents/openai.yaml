@@ -1,4 +1,0 @@
-interface:
-  display_name: "Init Feature Workdir"
-  short_description: "Создаёт devlog-директорию фичи"
-  default_prompt: "Use $init-feature-workdir to create a feature workdir for NNN-slug."

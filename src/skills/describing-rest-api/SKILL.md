@@ -5,27 +5,18 @@ description: Build REST API IR JSON for JSON over HTTP from code, OpenAPI, curl,
 
 # Describing REST API
 
-Read `framework_checkout_root/src/conventions/feature-workdir.md`.
-Read `framework_checkout_root/src/conventions/feature-stage-skill.md`.
-Read `framework_checkout_root/src/conventions/feature-artifact-phases.md`.
+## Task artifact bindings
 
-## Feature artifact bindings
+- Use `task-dir` as `default-output-dir` if present and `./tmp` otherwise.
+- if no task is resolved, use `./tmp` as the default output container.
+- basename:
+  - 020-api-current for artifacts completely reconstructed from code.
+  - 030-api-new for artifcats derived from prompt or task brief.
 
-- artifact phase code: `020` or `030` by artifact purpose
-- default feature-dir output container: `<feature-dir>`
-- non-feature default output container: `./tmp`
-- progress.md checklist item: `Целевые компоненты` for artifact phase `020`
-
-Resolve `<default-output-dir>` via the shared lifecycle from `feature-stage-skill.md` and these bindings.
 Create that directory if missing.
-Use artifact phase `020` for current relevant HTTP API analysis.
-Use artifact phase `030` for HTTP API change design.
-If the user gave an explicit artifact phase or file path, keep it.
-Use basename `020-api-current` for artifact phase `020`.
-Use basename `030-api-new` for artifact phase `030`.
 Use `<default-output-dir>/<basename>-ir.json` for IR.
-Use `<default-output-dir>/<basename>.md` for Markdown.
-Use `<default-output-dir>/<basename>.adoc` for AsciiDoc.
+Use `<default-output-dir>/<basename>.md` as target artifact path for Markdown.
+Use `<default-output-dir>/<basename>.adoc` as target artifact path for AsciiDoc.
 Use `references/rest-api-ir-schema.json`, `scripts/validate_json.py`, and `scripts/render_rest_api.py`.
 
 ## Hard Gate
@@ -39,10 +30,11 @@ Do not render the human-readable artifact before validation passes.
 ## Workflow
 
 1. Resolve `<basename>`, `<ir-path>`, and target artifact path.
+2. Choose artifact code 020 when reconstructing the current API from code; choose 030 when deriving a target API or before/ after diff from the prompt or task brief
 2. Build REST API IR JSON matching `references/rest-api-ir-schema.json`.
 3. Validate it with `python scripts/validate_json.py references/rest-api-ir-schema.json <ir-path>`.
-4. For artifact phase `020` or a requested Markdown artifact, render Markdown with `python scripts/render_rest_api.py <ir-path> > <default-output-dir>/<basename>.md`.
-5. For artifact phase `030`, a requested AsciiDoc artifact, or a before/after table, render AsciiDoc with `python scripts/render_rest_api.py --diff-format paired --output-format adoc <ir-path> > <default-output-dir>/<basename>.adoc`.
+4. For artifact type `020` or a requested Markdown artifact, render Markdown with `python scripts/render_rest_api.py <ir-path> > <default-output-dir>/<basename>.md`.
+5. For artifact type `030`, a requested AsciiDoc artifact, or a before/after table, render AsciiDoc with `python scripts/render_rest_api.py --diff-format paired --output-format adoc <ir-path> > <default-output-dir>/<basename>.adoc`.
 
 ## Contract Scope
 

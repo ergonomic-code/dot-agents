@@ -1,4 +1,0 @@
-interface:
-  display_name: "Design Solution Blueprint"
-  short_description: "Choose and record a solution approach"
-  default_prompt: "Use $design-solution-blueprint to choose the implementation approach for this feature."

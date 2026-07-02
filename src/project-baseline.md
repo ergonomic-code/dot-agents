@@ -18,10 +18,7 @@ A tool task list does not satisfy the request.
 - Use resolved framework values from the host context.
 - If an activated skill defines loading instructions, follow the skill first.
 - Resolve the active role from the current user request.
-- Before the first substantive response and before task triage, read `framework_checkout_root/src/roles/<role>.md`.
-- When the task may create files or depends on feature-local context, apply `framework_checkout_root/src/conventions/feature-workdir.md`.
-- Apply `framework_checkout_root/src/conventions/feature-stage-skill.md` and `framework_checkout_root/src/conventions/feature-artifact-phases.md` when a skill writes default artifact-phase outputs into a feature workdir.
-- Treat `feature-workdir.md` as the single source of truth for active feature directory resolution and default placement of new task files.
+- Before the first substantive response and before task triage, read `framework_checkout_root/src/roles/<role>.md` and `framework_checkout_root/src/conventions/process/tasks.md`.
 - Treat project `AGENTS.md` as the project integration layer.
 - If project `AGENTS.md` declares `## Local contexts`, use that section as the source of project-local context files.
 - Load only task-relevant local context files.
