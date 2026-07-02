@@ -23,6 +23,9 @@ Read `../../artifacts/verification-check-format-v0.1/references/full-mode-checkl
 
 Preserve an explicit or existing human-readable `Feature` anchor when it directly names the verified object.
 Valid anchors include artifact `Feature`, class `@DisplayName`, named component, operation, endpoint, or API surface.
+Use only evidence-backed anchors from explicit user input, existing artifacts, existing code, or explicitly planned target surfaces.
+Do not coin implementation surfaces such as renderers, factories, services, or operations from desired behavior unless evidence names that object as the target.
+When only domain behavior is known, use the stable boundary that exposes it or ask for the target surface.
 For component tests, `Feature` may name the component anchor or the behavior surface; do not force the component symbol into `Feature` when the component is otherwise resolved.
 Apply the domain-language rule to `Rule`, `Example`, and steps after selecting `Feature`.
 
