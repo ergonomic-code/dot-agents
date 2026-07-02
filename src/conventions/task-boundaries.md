@@ -20,6 +20,8 @@
 - If the request needs both tests and production behavior, execute only the current or first explicit slice, then stop and report the next slice.
 - Test-only slices may add only compile-only production surface needed by the selected test.
 - Compile-only production surface means required symbols, signatures, types, constructors, and used fields, with no behavior beyond `TODO` method bodies.
+- Compile-only production surface must extend the selected production path, not introduce a parallel entry point for the same behavior.
+- If a test-only case needs a new input for an existing operation, propagate that input through the existing call path only when propagation is compile-only.
 - Do not add or change production behavior to make a test-only slice pass.
 - If test-only changes require production behavior, stop with the failing tests and blocker.
 - Production-only slices must not edit tests, fixtures, test data, assertions, or test build configuration.

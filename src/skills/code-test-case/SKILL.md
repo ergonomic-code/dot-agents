@@ -106,6 +106,9 @@ For this skill, use the formal case mapping rules.
 - Do not weaken assertions only to keep tests green unless the user explicitly asked for that.
 - In update mode, do not replace implemented bodies with placeholder comments.
 - In production code, allow only compile-only surface needed by the selected test.
+- Before adding compile-only production surface, verify that the selected component symbol and direct call shape remain the test's system under test (SUT).
+- Do not add a sibling overload, method, class, or helper as a substitute for an existing SUT only to pass a new test input.
+- If the selected case needs a new input for an existing SUT, add or propagate that input through the existing call path only when this is compile-only; otherwise stop and report the blocker.
 - Keep production additions to required symbols, signatures, types, constructors, and fields used by the selected test.
 - Do not add production fields, parameters, enum values, or types not used by the selected test.
 - Put `TODO` inside newly added production method bodies unless the body is a trivial constructor, accessor, or data holder.
