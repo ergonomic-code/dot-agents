@@ -8,6 +8,7 @@
 - Are complex decisions kept in calculate branches and costly external dependency calls kept in read or write branches?
 - Are write-side humble objects limited to mapping already prepared result or display data into the target format?
 - Are values whose meaning, unit, range, or nullability is narrower than their primitive type represented by semantic types, or made explicit at required primitive boundaries?
+- Are domain states, variants, or semantic subgroups represented by explicit types instead of correlated nullable fields?
 
 ## Tests
 
