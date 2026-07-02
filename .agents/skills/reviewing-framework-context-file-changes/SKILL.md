@@ -1,6 +1,6 @@
 ---
 name: reviewing-framework-context-file-changes
-description: Review changes in framework context files for conciseness, minimality, task fit, framework integration, ambiguity, actionability, verifiability, contradictions, and scope clarity. Use when Codex reviews diffs or changed files in `.agents/`, `src/project-baseline.md`, `src/conventions/`, `src/roles/`, or framework templates.
+description: Review changes in framework context files for conciseness, minimality, task fit, framework integration, ambiguity, actionability, verifiability, contradictions, scope clarity, and non-English text. Use when Codex reviews diffs or changed files in `.agents/`, `src/project-baseline.md`, `src/conventions/`, `src/roles/`, or framework templates.
 ---
 
 # Review framework context file changes
@@ -31,10 +31,11 @@ If the original task is not explicit:
 
 Check that changes are:
 
-- concise
-- minimal and non-duplicating
+- written in English unless the file explicitly requires another language
 - effective for the stated task
 - integrated into the framework
+- concise
+- non-duplicating
 - unambiguous
 - actionable by an agent
 - verifiable from files or output
@@ -63,11 +64,12 @@ For each finding include:
 - file
 - issue
 - why it is a problem
-- minimal fix
+- minimal fix, including suggested English wording for non-English text
 
 ## Review rule
 
 Prefer deletion, shortening, reuse, and direct fixes over expansion.
-Treat ambiguity, non-actionability, non-verifiability, contradiction, unclear scope, and missing integration as defects.
+Treat ambiguity, non-actionability, non-verifiability, contradiction, unclear scope, missing integration, and unintended non-English text as defects.
+For non-English text findings, suggest an English rewrite that preserves intent and maximizes inference impact.
 Do not praise.
 Report only real issues.
