@@ -41,6 +41,7 @@ Check that changes are:
 - verifiable from files or output
 - non-contradictory to existing framework files
 - clear in scope of applicability
+- sufficient to detect under-typed data structures when changed code represents domain states, variants, or semantic subgroups with correlated nullable fields
 
 ## Integration
 

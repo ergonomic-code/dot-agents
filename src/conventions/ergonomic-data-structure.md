@@ -16,6 +16,10 @@ Use this file with `./ergonomic-architecture.md` when a task concerns domain dat
 - Entities and value objects should be effectively immutable.
 - Prefer a small number of meaningful fields.
 - Group cohesive fields into value objects.
+- Do not represent domain states, variants, or semantic subgroups as a flat set of nullable fields.
+- Treat two or more fields that are normally absent together or present together as an implicit invariant that needs an explicit type.
+- Prefer nested value objects, sealed variants, enum-backed subtypes, or separate DTOs or entities when they make invalid field combinations unrepresentable.
+- Keep nullable fields independent only when each absence is a separate behavior with no shared invariant.
 - Aggregates are the persistence unit and should be loaded and saved as a whole.
 - References inside an aggregate may be direct.
 - References between aggregates should go by identifier.
