@@ -23,6 +23,9 @@ If several independent obligations are implied and the target case is not select
 
 ## Delegation
 
+Before mapping `Feature`, resolve the verified object from explicit user input, an existing artifact `Feature`, a named endpoint, API surface, component, operation, or explicitly planned target surface.
+If no verified object can be resolved, ask for the target surface instead of inventing a component-like SUT.
+For new behavior, prefer the stable existing boundary or explicitly planned boundary over an inferred internal component.
 Map the selected obligation to `Feature`, `Rule`, optional named `Example`, `Given`, `When`, and `Then`.
 Then render through `../write-verification-check/SKILL.md`.
 Do not add sibling rules or examples unless the user explicitly asks for more than one case.
