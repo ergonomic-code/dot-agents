@@ -36,7 +36,7 @@ Accept either one commit or current uncommitted changes as the refactor target.
 5. For duplication, propose one format and a narrow helper when behavior stays equivalent.
 6. Propose a short refactor plan and wait for explicit approval before editing.
 7. After approval, change structure only.
-   Preserve observable behavior, public contracts, persistence shape, API responses, test intent, and progress state.
+   Preserve observable behavior, public contracts, persistence shape, API responses, test intent.
 8. Rerun the selected test.
    If shared APIs or broad call sites changed, also run the smallest relevant compile or module test.
 

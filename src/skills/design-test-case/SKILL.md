@@ -6,16 +6,12 @@ description: Design one `verification-check-format-v0.1` full-mode test case fro
 # Design Test Case
 
 Use this skill when the user gives a requirement, bug report, task brief, or desired behavior and needs one test case, but has not already provided one selected full-mode verification check.
-Read `framework_checkout_root/src/conventions/feature-workdir.md`.
-Read `framework_checkout_root/src/conventions/feature-stage-skill.md`.
-Read `framework_checkout_root/src/conventions/feature-artifact-phases.md`.
+
 Read `../write-verification-check/SKILL.md`.
 Read `framework_checkout_root/src/references/test-case-implementation-order.md`.
 
-## Feature artifact bindings
+## Task artifact bindings
 
-- artifact phase code: `030`
-- default feature-dir output path: `<feature-dir>/030-test-cases-new.adoc`
 - human-readable artifact title: `Изменения тест-кейсов`
 
 ## Selection
@@ -35,7 +31,7 @@ Do not add sibling rules or examples unless the user explicitly asks for more th
 
 This skill is design-only.
 Do not create, modify, plan, or announce test code or production code.
-After returning or writing the verification case and allowed progress checklist updates, stop.
+After returning or writing the verification case stop.
 
 ## Output
 
@@ -45,10 +41,5 @@ In an existing cases artifact, add only the new case under the added-cases secti
 If that section already contains a source block for the same `Feature`, insert only the new `Rule` into that block.
 Otherwise add one source block in the artifact's existing container format.
 Preserve all other sections and cases.
-After updating a cases artifact, update the active feature `progress.md` when it exists.
-Add the case under `## Реализация` or the matching `### Этап <feature-code>/<stage-code>: <название>` heading when an active stage is resolved.
-Create only missing headings and TDD checklist entries.
-Add one unchecked parent item named by the tested behavior.
-Under it, add unchecked child items `красный кейс` and `зелёный кейс`.
 If the resolved output path is not a cases artifact, write only the case text to that file.
 If no output path is resolved, return only one full-mode `verification-check-format-v0.1` case, or the missing selection issue.

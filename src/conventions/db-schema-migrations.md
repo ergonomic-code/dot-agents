@@ -6,8 +6,8 @@
 
 ## Migration file choice
 
-- Before adding a new migration, inspect the latest adjacent migrations for the same schema object or active feature.
-- If an existing migration belongs to the current unfinished feature and is not yet part of any deployed or externally applied schema history, amend that migration instead of adding a later migration.
+- Before adding a new migration, inspect the latest adjacent migrations for the same schema object or active task.
+- If an existing migration belongs to the current unfinished task and is not yet part of any deployed or externally applied schema history, amend that migration instead of adding a later migration.
 - If deployment or external application status is unclear, ask before creating or amending the migration.
 
 ## Required columns

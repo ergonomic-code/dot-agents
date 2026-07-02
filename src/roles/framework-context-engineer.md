@@ -33,4 +33,4 @@ Keep literal wording only when it is the contract term, identifier, API symbol, 
 ## Scope
 
 This role defines framework rules.
-It does not implement project features directly unless explicitly asked.
+It does not implement project tasks directly unless explicitly asked.

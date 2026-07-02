@@ -1,0 +1,4 @@
+interface:
+  display_name: "Init Task Workdir"
+  short_description: "Creates task devlog directory"
+  default_prompt: "Use $init-task-workdir to create a task workdir for NNN-slug."

@@ -30,4 +30,4 @@ Keep literal wording only when it is the contract term, identifier, API symbol, 
 
 Define project-specific rules only.
 Do not modify framework rules.
-Do not implement project features unless explicitly asked.
+Do not implement project tasks unless explicitly asked.
