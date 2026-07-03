@@ -9,7 +9,8 @@ Read `../../conventions/code-implementation.md`.
 Read `../../conventions/ergonomic-approach-rules.md`.
 Read `../../conventions/ergonomic-architecture.md`.
 Follow its projection-specific loading rules.
-Read `../../conventions/task-boundaries.md`.
+Read `../../conventions/process/production-code-refactoring.md`.
+Read `../../conventions/process/tests-refactoring.md`.
 Read `../../conventions/abstraction-level-boundaries.md`.
 Read `../../conventions/test-fixture-architecture.md`.
 Read `../../conventions/http-api-test-rules.md`.
