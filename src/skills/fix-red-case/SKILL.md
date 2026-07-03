@@ -7,7 +7,7 @@ description: Fix production code for one red Kotlin JUnit case created or aligne
 
 Read `../../conventions/tests.md`.
 Read `../../conventions/ergonomic-approach-rules.md`.
-Read `../../conventions/task-boundaries.md`.
+Read `../../conventions/process/production-code-development.md`.
 Read `../../conventions/code-implementation.md`.
 
 Use this skill only after `$code-test-case` has created or aligned one Kotlin JUnit case and that case is red.
@@ -24,7 +24,8 @@ Do not edit tests, test fixtures, test data, assertions, display names, test ann
    Treat task design as the source for behavior intent and production value sources; use the selected case only to choose the current slice and checks.
    Keep investigation and edits inside that boundary, except for compile-only call-site propagation forced by the chosen change.
    Smallest production change means the smallest coherent production fix, not the smallest shortcut that greens the selected test.
-   Do not introduce temporary, test-shaped, or bypass behavior in production code to reduce the current green slice.
+   Do not introduce temporary, test-shaped, or bypass behavior into existing production code or existing call paths to reduce the current green slice.
+   Placeholder behavior is allowed only where `production-code-development.md` allows it for newly introduced production code during selected red-case greening.
    If the selected test uses stale database setup after a production migration, fix the normal migration path used by the test; do not add production schema-existence branches.
    If the next necessary step would inspect or change a sibling endpoint, operation, mode, or scenario to justify the fix, stop and report the boundary instead of widening the implementation.
    Do not implement predicted later design changes before rerunning the selected test.
