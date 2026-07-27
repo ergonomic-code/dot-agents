@@ -3,7 +3,8 @@
 - Does each new or changed test-case method use `// Given`, `// When`, and `// Then` sections?
 - If a case observes the result through several endpoints, does each observation use its own `// And when` and following `// Then`?
 - Does each new or changed JUnit test class and test-case method put its human name in `@DisplayName` when supported?
-- Does each new or changed case `@DisplayName` start with a lowercase letter as a continuation of the class `@DisplayName`?
+- Does each new or changed class `@DisplayName` end with the SUT anchor required by `./test-naming.md`, including `(<HTTP method> <path>)` for an HTTP boundary?
+- Does each new or changed case `@DisplayName` begin with a lowercase letter as a continuation of the class `@DisplayName`?
 - For each literal, enum member, constant, code, id, date, or name: does the case or public contract name it?
 - For each named fixture constant or preset: is that exact named variant required?
 - If no, replace it with a role helper, factory, or fixture.
