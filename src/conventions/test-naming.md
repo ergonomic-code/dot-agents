@@ -38,12 +38,15 @@ Use surrounding tests only after these rules to preserve local mechanics, import
 - If formal mapping applies and `Feature` or `Rule` cannot be recovered confidently, stop and report the missing anchor.
 - If `Rule` does not start with a lowercase letter, stop and report that it cannot be copied verbatim into a conforming case `@DisplayName`.
 - For formal case artifacts, write class `@DisplayName` from raw `Feature` text without `Feature:`, then apply the class SUT suffix rule without duplicating an existing suffix.
-- Copy `Rule` and optional named `Example` header text verbatim after removing only the keyword prefix, one separator colon, and surrounding whitespace.
+- Copy `Rule` header text verbatim after removing only the keyword prefix, one separator colon, and surrounding whitespace.
+- For a non-parameterized named `Example`, copy its header text by the same rule.
 - Do not paraphrase, normalize, translate, shorten, re-punctuate, or inflect `Rule` or `Example` text in display names.
+- For an eligible parameterized set, set method `@DisplayName` to `<rule>` and use each exact named `Example` header as its invocation display name.
 - If `Example` is unnamed, absent, or empty, set method `@DisplayName` to `<rule>`.
-- If `Example` is named, set method `@DisplayName` to `<rule> :: <example>`.
+- If a non-parameterized `Example` is named, set method `@DisplayName` to `<rule> :: <example>`.
 - Use `@Nested` only when the existing file already groups related cases this way.
 - Use the exact separator ` :: `.
 - If the source `Rule` or named `Example` already contains `::`, stop and report ambiguity.
 - If `Example` is unnamed, absent, or empty, summarize the rule in `<slug>`.
-- If `Example` is named, summarize the rule and example in `<slug>`.
+- For an eligible parameterized set, summarize only the `Rule` in `<slug>`.
+- If a non-parameterized `Example` is named, summarize the rule and example in `<slug>`.
