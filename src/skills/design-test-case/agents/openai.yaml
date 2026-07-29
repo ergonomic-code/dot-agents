@@ -1,4 +1,4 @@
 interface:
   display_name: "Design Test Case"
-  short_description: "Design one Feature/Rule/Example verification case"
-  default_prompt: "Use $design-test-case to design one `verification-check-format-v0.1` full-mode Feature/Rule/Example test case from a requirement, bug report, or desired behavior description. This is design-only: do not code or announce coding next steps."
+  short_description: "Design one test-method-sized Feature/Rule check"
+  default_prompt: "Use $design-test-case to design one test-method-sized `verification-check-format-v0.1` full-mode Feature/Rule check from a requirement, bug report, or desired behavior description. Include a complete finite set of named Examples when applicable. This is design-only: do not code or announce coding next steps."

@@ -16,7 +16,8 @@ Read `references/response-contract-guard.md`.
 Accept one `verification-check-format-v0.1` artifact in `full` mode, and an optional existing Kotlin JUnit 5 test file.
 Ignore one optional source reference line immediately under each selected `Example` per `../../artifacts/verification-check-format-v0.1/references/source-reference.md`.
 Default to coding exactly one test case, where one full `Example` block is one test case.
-If the user did not explicitly select several examples, all examples, or a named multi-case set, code only the explicitly selected `Example`.
+Exception: when one `Rule` has a complete finite set of named `Example`s differing only by one input-or-context axis and its expected outcome, code that set as one parameterized test.
+Otherwise, if the user did not explicitly select several examples, all examples, or a named multi-case set, code only the explicitly selected `Example`.
 Before coding the first such case, check whether a test already matches it by display name, method name, Russian backticked name, or verified behavior.
 Before announcing a plan, choosing a target test class, scanning fixtures, or editing code, resolve selected examples and run input preflight.
 Input preflight must verify that each selected example is valid `verification-check-format-v0.1` full mode, including `Given` / `When` / `Then` and `Rule` obligation form.
@@ -45,7 +46,9 @@ Before editing, compare selected `Rule` and `Example` anchors with the candidate
 Before announcing a plan or adding fixture cleanup, trace the candidate test class setup/reset path: superclass hooks, test extensions, and reset/init helpers they call.
 If that path already resets the relevant state, rely on it.
 
-Map one selected `Feature` to one class and one selected `Example` block to one `@Test` method.
+Map one selected `Feature` to one class.
+Map one selected `Example` block to one `@Test` method, or one eligible parameterized set to one `@ParameterizedTest` method.
+For a parameterized set, make each argument row carry the exact named `Example` header for the invocation display name, the varying axis, and the expected outcome.
 Keep source order.
 In update mode, bind one artifact `Feature` to one existing Kotlin test class instead of creating or renaming another class.
 If several features must be applied to several existing test files, apply the skill sequentially, one `Feature` and one Kotlin test file per run.
@@ -53,7 +56,7 @@ If update mode input contains zero or multiple `Feature`s for one existing Kotli
 
 ## Generate
 
-- Build one Kotlin class per selected `Feature` and one test method per selected `Example` block.
+- Build one Kotlin class per selected `Feature` and one test method per selected `Example` block or eligible parameterized set.
 - Return only Kotlin code.
 - Implement bodies fully unless the user explicitly asked for skeletons or placeholders.
 - Apply the loaded test conventions in generated test code too, including fixture/helper extraction and test-data abstraction rules.
@@ -63,6 +66,7 @@ If update mode input contains zero or multiple `Feature`s for one existing Kotli
 - Read the existing file first and treat it as the baseline for package, imports, class/file name, constructor, fields, superclass, helpers, nested declarations, and working test code.
 - Treat the existing Kotlin file as the container for exactly one artifact `Feature`.
 - Match examples to existing methods by current `@DisplayName`, method name, Russian backticked name, and verified behavior.
+- For an eligible parameterized set, match all member examples together, consolidate matching managed methods into one `@ParameterizedTest`, and treat superseded methods as obsolete managed examples of the same artifact `Feature`.
 - Preserve matched bodies and adapt minimally.
 - Create a new method only when no existing implementation clearly matches.
 - Remove a method only on explicit strict sync or when it is an obsolete managed example of the same artifact `Feature`.
@@ -71,7 +75,10 @@ If update mode input contains zero or multiple `Feature`s for one existing Kotli
 
 ## Rendering
 
-- Import `org.junit.jupiter.api.DisplayName` and `org.junit.jupiter.api.Test`.
+- Import `org.junit.jupiter.api.DisplayName`.
+- Import `org.junit.jupiter.api.Test` when rendering an ordinary test.
+- For an eligible parameterized set, import `org.junit.jupiter.params.ParameterizedTest` and the narrowest suitable argument source used by local tests.
+- Configure `@ParameterizedTest` to use the carried exact `Example` header as the invocation display name.
 - Apply `../../conventions/test-naming.md` for class `@DisplayName`, method `@DisplayName`, and `test_<slug>` names.
 - Resolve class names from code symbols when possible. Use `UpperCamelCase`.
 - For component tests, name the class from the resolved component symbol when available; otherwise for non-API features use `<Feature>Test`.
@@ -116,4 +123,4 @@ For this skill, use the formal case mapping rules.
 - If tests require production behavior to compile or pass, stop and report the blocker instead of changing production behavior.
 - By default, after implementing a new or aligned case, the test should compile. The test may still fail for any reason until production behavior is aligned.
 
-Before finishing, read `../../conventions/test-implementation-checklist.md`, fix any failed item, and check: default scope produced exactly one example unless the user explicitly requested more, one class per selected `Feature`, one method per selected `Example`, fixture helper boundaries follow `../../conventions/test-fixture-architecture.md`, naming follows `../../conventions/test-naming.md`, new structured resources or schemas reuse or extract shared definitions instead of duplicating equivalent definitions, new or aligned tests compile, generate mode returns only Kotlin, and update mode accepts exactly one `Feature` per run and preserves the existing container code while editing in place.
+Before finishing, read `../../conventions/test-implementation-checklist.md`, fix any failed item, and check: default scope produced exactly one example unless an eligible parameterized set or an explicit multi-case selection applies, one class per selected `Feature`, one method per selected `Example` or eligible parameterized set, fixture helper boundaries follow `../../conventions/test-fixture-architecture.md`, naming follows `../../conventions/test-naming.md`, new structured resources or schemas reuse or extract shared definitions instead of duplicating equivalent definitions, new or aligned tests compile, generate mode returns only Kotlin, and update mode accepts exactly one `Feature` per run and preserves the existing container code while editing in place.
