@@ -7,7 +7,7 @@ Use this file with `./ergonomic-architecture.md` when a task concerns ports, ope
 - `ports` — entry points that receive external signals and delegate to one operation or one resource method.
 - `operations` — top-level scenario components that orchestrate one use case over resources.
 - `domain operations` (`DOPs`) — reusable lower-level effect sequences that are shared by multiple operations.
-- `resources` — stateful or externally connected runtime components that expose explicit effects over aggregates, integrations, or other state.
+- `resources` — runtime components that encapsulate stateful code or abstract another runtime dependency behind an explicit API, whether that dependency is stateful or stateless.
 - `complex resources` — domain-facing resources that expose one resource API over several lower-level resources or storage/integration mechanisms.
 - `primitive resources` — resources that are internal implementation parts of a higher-level resource.
 - `infrastructure resources` — project-owned infrastructure-facing resources reused as implementation parts of multiple domain-facing resources.
@@ -25,6 +25,14 @@ Use this file with `./ergonomic-architecture.md` when a task concerns ports, ope
 - Operations instantiate DOPs from dependencies already injected into the operation.
 - Keep infrastructure concerns behind infrastructure resources instead of leaking them into domain-facing resources or operations.
 - Do not hide core dependencies behind incidental facades when direct operation-to-resource wiring is the intended shape.
+
+## Resource class naming
+
+- Treat resource as an architectural category, not a concrete class role.
+- Never end a resource class name with `Resource`.
+- Name a resource class by its concrete role.
+- Common role suffixes are `Repo` for an entity repository, `Dao` for storage operations over data that do not fit the entity model, `Client` for an external-system client, `Service` for a composite resource, and `Channel` for a channel of domain-specific messages.
+- This suffix list is not exhaustive; use another role-specific name when it communicates the responsibility better.
 
 ## Typical component names
 
