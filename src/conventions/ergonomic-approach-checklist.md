@@ -10,6 +10,7 @@
 - Are write-side humble objects limited to mapping already prepared result or display data into the target format?
 - Are values whose meaning, unit, range, or nullability is narrower than their primitive type represented by semantic types, or made explicit at required primitive boundaries?
 - Are domain states, variants, or semantic subgroups represented by explicit types instead of correlated nullable fields?
+- When a domain specialization of a shared generic data structure fixes one or more type arguments, do that domain and its tests use a domain-named type alias instead of the expanded generic specialization?
 
 ## Tests
 
