@@ -16,7 +16,7 @@ Use this layout for every `verification-check-format-v0.1` output.
 - If the chat format requires a role prefix, put the artifact on the next line and keep `Feature` at column `0`.
 
 ```text
-Feature: <concrete surface or operation>
+Feature: <human-readable verified object> (<SUT reference>)
 
   Rule: <required property>
     Example: <optional semantic input or context class, or empty>

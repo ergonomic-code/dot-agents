@@ -1,6 +1,7 @@
 # Test naming
 
 Read this file before scanning existing tests for naming examples when the task asks to name, rename, or align a test class, case, method, or `@DisplayName`.
+Read `../artifacts/verification-check-format-v0.1/references/feature-naming.md` before naming a class `@DisplayName`.
 Use surrounding tests only after these rules to preserve local mechanics, imports, annotations, and report style.
 
 ## Human names
@@ -9,13 +10,9 @@ Use surrounding tests only after these rules to preserve local mechanics, import
 - Write only display text in the configured `artifact_language`: class and case `@DisplayName`, plus parameterized test display name text.
 - Keep class, file, and method identifiers, including Kotlin backticked method names and `test_<slug>`, in the repository's technical naming style unless the user explicitly asks to rename identifiers outside `@DisplayName`.
 - For existing Kotlin test files, keep the existing class and file name unless the user explicitly asks to rename technical identifiers.
-- Name class `@DisplayName` by the behavior container, feature, operation, or API method under test.
-- End class `@DisplayName` with the SUT anchor in parentheses unless that exact suffix is already present.
-- For component and unit tests, render the SUT anchor as `<ClassName>.<methodName>`.
-- For boundary tests, render the SUT anchor as `<HTTP method> <path>`.
-- For non-HTTP boundaries, render the closest stable boundary contract identifier, such as a command name, topic, route, CLI command, or external operation.
-- For endpoint test classes from `Feature` starting with `Метод API`, name class `@DisplayName` as `Метод API <человеческое название метода> (<HTTP method> <path>)`.
-- For component tests, class `@DisplayName` may name the behavior surface instead of the component symbol when the target component is resolved elsewhere.
+- Name class `@DisplayName` from the matching verification-check `Feature` when available.
+- Otherwise name it by the behavior container, feature, operation, or API method and append the SUT reference according to the loaded feature-naming rules.
+- For component tests, the human-readable part may name the behavior surface when the parenthesized SUT reference identifies the resolved component.
 - Name case `@DisplayName` as a continuation of the class `@DisplayName` that starts with a lowercase letter and specifies observable behavior or a result property.
 - For Russian case names, use `должен` or `должна`.
 - Put any input or state condition either before the obligation or after the required output.
@@ -37,7 +34,7 @@ Use surrounding tests only after these rules to preserve local mechanics, import
 - After recovery, treat recovered `Feature`, `Rule`, and `Example` as source headers for this section.
 - If formal mapping applies and `Feature` or `Rule` cannot be recovered confidently, stop and report the missing anchor.
 - If `Rule` does not start with a lowercase letter, stop and report that it cannot be copied verbatim into a conforming case `@DisplayName`.
-- For formal case artifacts, write class `@DisplayName` from raw `Feature` text without `Feature:`, then apply the class SUT suffix rule without duplicating an existing suffix.
+- For formal case artifacts, write class `@DisplayName` from raw `Feature` text without `Feature:`.
 - Copy `Rule` header text verbatim after removing only the keyword prefix, one separator colon, and surrounding whitespace.
 - For a non-parameterized named `Example`, copy its header text by the same rule.
 - Do not paraphrase, normalize, translate, shorten, re-punctuate, or inflect `Rule` or `Example` text in display names.
