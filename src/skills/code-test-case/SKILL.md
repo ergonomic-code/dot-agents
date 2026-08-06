@@ -13,7 +13,7 @@ Read `../../artifacts/verification-check-format-v0.1/references/source-reference
 Read `../../conventions/tests.md`.
 Read `references/response-contract-guard.md`.
 
-Accept one `verification-check-format-v0.1` artifact in `full` mode, and an optional existing Kotlin JUnit 5 test file.
+Accept one `verification-check-format-v0.1` artifact in `full` mode, and an optional existing Kotlin JUnit 5 test file or explicit target path for a new test file.
 Ignore one optional source reference line immediately under each selected `Example` per `../../artifacts/verification-check-format-v0.1/references/source-reference.md`.
 Default to coding exactly one test case, where one full `Example` block is one test case.
 Exception: when one `Rule` has a complete finite set of named `Example`s differing only by one input-or-context axis and its expected outcome, code that set as one parameterized test.
@@ -34,8 +34,8 @@ Put that access behind scoped `*TestApi` or `*FixturePresets`.
 Inspect available fixture APIs for generic role helpers before choosing named constants or presets.
 Before announcing a plan or editing code, if the test needs new or changed fixture helpers, check `../../conventions/test-fixture-architecture.md`:
 name each `*TestApi` scope, keep cross-scope creation/linking in `*FixturePresets`, and create missing sibling `*TestApi` helpers instead of expanding an existing one.
-Use generate mode when no `*.kt` test file is given.
-Use update mode when the user points to one or explicitly asks to update existing tests.
+Use update mode when the resolved target `*.kt` test file exists.
+Use generate mode otherwise.
 Before choosing or announcing the target Kotlin test class or test action, read `../../conventions/test-container-selection.md`.
 Infer the test kind from the explicit target class, explicit `Feature`, explicit target surface, and sibling test style.
 For a component test, resolve the concrete component symbol and planned `When` receiver before editing.
@@ -57,7 +57,9 @@ If update mode input contains zero or multiple `Feature`s for one existing Kotli
 ## Generate
 
 - Build one Kotlin class per selected `Feature` and one test method per selected `Example` block or eligible parameterized set.
-- Return only Kotlin code.
+- By default, return only Kotlin code.
+- When an invoking workflow supplies an explicit target path and requires repository changes, write the generated test to that path and return the path to the caller.
+- Keep other test-support and compile-only production edits within the write set granted by the invoking workflow and this skill's Output Discipline.
 - Implement bodies fully unless the user explicitly asked for skeletons or placeholders.
 - Apply the loaded test conventions in generated test code too, including fixture/helper extraction and test-data abstraction rules.
 
@@ -123,4 +125,4 @@ For this skill, use the formal case mapping rules.
 - If tests require production behavior to compile or pass, stop and report the blocker instead of changing production behavior.
 - By default, after implementing a new or aligned case, the test should compile. The test may still fail for any reason until production behavior is aligned.
 
-Before finishing, read `../../conventions/test-implementation-checklist.md`, fix any failed item, and check: default scope produced exactly one example unless an eligible parameterized set or an explicit multi-case selection applies, one class per selected `Feature`, one method per selected `Example` or eligible parameterized set, fixture helper boundaries follow `../../conventions/test-fixture-architecture.md`, naming follows `../../conventions/test-naming.md`, new structured resources or schemas reuse or extract shared definitions instead of duplicating equivalent definitions, new or aligned tests compile, generate mode returns only Kotlin, and update mode accepts exactly one `Feature` per run and preserves the existing container code while editing in place.
+Before finishing, read `../../conventions/test-implementation-checklist.md`, fix any failed item, and check: default scope produced exactly one example unless an eligible parameterized set or an explicit multi-case selection applies, one class per selected `Feature`, one method per selected `Example` or eligible parameterized set, fixture helper boundaries follow `../../conventions/test-fixture-architecture.md`, naming follows `../../conventions/test-naming.md`, new structured resources or schemas reuse or extract shared definitions instead of duplicating equivalent definitions, new or aligned tests compile, standalone generate mode returns only Kotlin, workflow-invoked generate mode writes the generated test to its explicit target path and keeps supporting edits within its granted write set, and update mode accepts exactly one `Feature` per run and preserves the existing container code while editing in place.

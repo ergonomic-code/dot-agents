@@ -1,0 +1,4 @@
+interface:
+  display_name: "Implement Task with TDD"
+  short_description: "Coordinate reviewed task implementation through TDD"
+  default_prompt: "Use $implement-task-tdd with a task directory to implement its remaining behavior through reviewed vertical TDD increments."
