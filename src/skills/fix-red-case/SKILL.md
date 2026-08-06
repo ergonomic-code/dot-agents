@@ -17,22 +17,19 @@ Do not edit tests, test fixtures, test data, assertions, display names, test ann
 ## Workflow
 
 1. Reproduce or inspect the selected failing test and identify the current failure cause.
-2. Make only the smallest production-code change that addresses the currently observed failure cause and is consistent with the selected case, and task design when they exist.
+2. Make the smallest coherent production-code change that implements the selected behavior slice and is consistent with the selected case and task design when they exist.
    Before editing production code, apply the loaded ergonomic, boundary, and code implementation conventions.
    Keep this skill's test-edit ban and selected-case scope as stricter constraints.
    Derive the selected behavior boundary from the failing test's entry point, endpoint, operation, scenario, and task design when present.
    Treat task design as the source for behavior intent and production value sources; use the selected case only to choose the current slice and checks.
    Keep investigation and edits inside that boundary, except for compile-only call-site propagation forced by the chosen change.
-   Smallest production change means the smallest coherent production fix, not the smallest shortcut that greens the selected test.
-   Do not introduce temporary, test-shaped, or bypass behavior into existing production code or existing call paths to reduce the current green slice.
-   Placeholder behavior is allowed only where `production-code-development.md` allows it for newly introduced production code during selected red-case greening.
+   The smallest coherent production fix may be a constant implementation when it is contract-correct for the whole selected behavior class and does not degrade behavior outside that class.
+   Do not introduce fixture-specific, test-shaped, or bypass behavior into existing production code or existing call paths to reduce the current green slice.
    If the selected test uses stale database setup after a production migration, fix the normal migration path used by the test; do not add production schema-existence branches.
    If the next necessary step would inspect or change a sibling endpoint, operation, mode, or scenario to justify the fix, stop and report the boundary instead of widening the implementation.
-   Do not implement predicted later design changes before rerunning the selected test.
    If the test contradicts the task design, requires test edits, or cannot be fixed within production code, stop and report the blocker.
-3. Rerun only the same selected test after each production-code change.
-   If the failure changes, stop immediately and report the new failure.
-   If the same failure remains after a production-code change, re-identify the current cause and continue only inside the same selected `Feature` boundary.
+3. Rerun only the same selected test after production-code changes.
+   If it still fails, re-identify the current cause and continue while the required change remains inside the same selected `Feature` boundary.
    Stop if the next fix requires changing a sibling endpoint, operation, mode, scenario, or a broader shared path not already inside that boundary.
 
 ## Constraints
@@ -44,4 +41,4 @@ Do not edit tests, test fixtures, test data, assertions, display names, test ann
 
 ## Output
 
-Report the failure cause, design context used or absent, production files changed, verification command, and whether the test passed or the failure changed.
+Report the failure causes addressed, design context used or absent, production files changed, verification command, and whether the selected test passed or the work was blocked.
