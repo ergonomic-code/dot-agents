@@ -125,4 +125,9 @@ For this skill, use the formal case mapping rules.
 - If tests require production behavior to compile or pass, stop and report the blocker instead of changing production behavior.
 - By default, after implementing a new or aligned case, the test should compile. The test may still fail for any reason until production behavior is aligned.
 
+Before finishing an HTTP API success case, determine whether a response schema exists.
+When it exists, inspect the typed `*HttpApi` success method used by the case and verify that it validates that schema before decoding the body.
+Treat missing schema validation as incomplete and fix it.
+When invoked by a workflow, report the schema path and validating helper, or explicitly report that no response schema exists.
+
 Before finishing, read `../../conventions/test-implementation-checklist.md`, fix any failed item, and check: default scope produced exactly one example unless an eligible parameterized set or an explicit multi-case selection applies, one class per selected `Feature`, one method per selected `Example` or eligible parameterized set, fixture helper boundaries follow `../../conventions/test-fixture-architecture.md`, naming follows `../../conventions/test-naming.md`, new structured resources or schemas reuse or extract shared definitions instead of duplicating equivalent definitions, new or aligned tests compile, standalone generate mode returns only Kotlin, workflow-invoked generate mode writes the generated test to its explicit target path and keeps supporting edits within its granted write set, and update mode accepts exactly one `Feature` per run and preserves the existing container code while editing in place.
