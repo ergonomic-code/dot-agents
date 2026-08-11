@@ -10,4 +10,4 @@
 - By default, enforce the condition and mutation atomically in the database with constraints, conditional write primitives, or both.
 - Do not enforce correctness with an application-level read, check, and write sequence because concurrent operations may change the state between calls.
 - A preceding read may provide inputs, but it must not be the sole enforcement of the write precondition.
-- When one atomic statement cannot express the transition, use a transaction with locking or isolation that preserves the invariant and state why it is necessary.
+- When one atomic statement cannot express the transition, use a transaction with locking or isolation that preserves the invariant, follow `./transaction-boundaries.md`, and state why the transaction is necessary.
