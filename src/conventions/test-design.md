@@ -61,7 +61,7 @@
 
 ## Invariants
 
-- Test cases must stay decoupled from internal implementation details.
+- Test cases must verify observable outcomes and stay decoupled from internal implementation details; do not assert calls between internal components, dependency wiring, or control flow.
 - Boundary tests must not bypass the external entry point.
 - Component tests must not drift into external transport concerns.
 - Pure computation tests must not drift into component or boundary setup.

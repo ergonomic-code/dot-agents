@@ -13,7 +13,12 @@
 - Does the test use setup-returned values instead of extra observation calls that require broader fixture data?
 - Are there no public read calls used only to discover setup-created ids or refs?
 - Is shared fixture state cleaned only by the shared setup/reset layer?
-- Are in-process mocks absent except for hard or expensive error simulation?
+- Do test cases assert observable outcomes without verifying calls between internal components, dependency wiring, or control flow?
+- Are in-process class or object mocks limited to behavior that is hard or expensive to reproduce with a real dependency, typically infrastructure failures, and absent for normal behavior?
+- Are interactions verified only at external-system boundaries and only for correctness of outgoing requests or messages?
+- Are Spring bean override mocks and spies absent?
+- When a class-level double is required, is the target dependency graph constructed from real dependencies in the existing application context with only the dependency whose behavior must be simulated substituted?
+- If that target requires framework proxies, is the explicitly constructed graph registered through existing test infrastructure in the same application context without overriding its beans?
 - Are low-level setup and observation helpers absent from test classes?
 - Are production dependencies and DI lookups absent from test classes for setup or observation?
 - Does each new or changed `*TestApi` stay inside one aggregate/resource scope?
