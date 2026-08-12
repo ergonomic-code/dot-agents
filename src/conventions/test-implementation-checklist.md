@@ -20,7 +20,7 @@
 - When a class-level double is required, is the target dependency graph constructed from real dependencies in the existing application context with only the dependency whose behavior must be simulated substituted?
 - If that target requires framework proxies, is the explicitly constructed graph registered through existing test infrastructure in the same application context without overriding its beans?
 - Are low-level setup and observation helpers absent from test classes?
-- Are production dependencies and DI lookups absent from test classes for setup or observation?
+- Does every setup or observation access to a production dependency go through a scoped `*TestApi`, with a missing `*TestApi` created instead of injecting the dependency into the test class?
 - Does each new or changed `*TestApi` stay inside one aggregate/resource scope?
 - Is each cross-scope setup helper implemented in `*FixturePresets`?
 - Are expected values bound in `Given` and reused?

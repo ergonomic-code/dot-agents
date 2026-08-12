@@ -8,7 +8,7 @@
 - Put low-level single-scope setup and observation helpers in the scoped `*TestApi`, not in test classes.
 - `*TestApi` must not orchestrate writes across multiple aggregates/resources.
 - Cross-aggregate/resource setup belongs in `*FixturePresets`.
-- `*FixturePresets` may compose multiple `*TestApi`, production calls, `*ObjectMother`, and `Mock*Server`.
+- `*FixturePresets` may compose multiple `*TestApi`, `*ObjectMother`, and `Mock*Server`.
 - Model complex setup as a declarative `*Fixture`; materialize it through `*FixturePresets`.
 - Do not introduce fixture aggregator components only to simplify injection.
 
@@ -23,6 +23,9 @@
 
 ## Test case usage
 
+- Test-case setup and observation must access production repositories, DAOs, services, clients and other compoents and stateful actions only through a scoped `*TestApi`.
+- Do not inject those production dependencies into a test class for setup or observation.
+- When planning such access, name the existing `*TestApi` or include creation of a scoped `*TestApi`; mention the production dependency only as its implementation detail.
 - Use direct `*TestApi` calls only for simple setup or observation.
 - Use `*FixturePresets` when setup creates a related graph, spans multiple aggregates/resources, configures stubs, or is reused.
 - Inject only the fixture helpers required by the test class.
