@@ -18,6 +18,7 @@
 - Are interactions verified only at external-system boundaries and only for correctness of outgoing requests or messages?
 - Are Spring bean override mocks and spies absent?
 - When a class-level double is required, is the target dependency graph constructed from real dependencies in the existing application context with only the dependency whose behavior must be simulated substituted?
+- Are real production collaborators used only to construct that graph resolved locally through the test superclass's `getBean<T>()`, with a missing helper added there instead of injecting those collaborators or the application context into the test class?
 - If that target requires framework proxies, is the explicitly constructed graph registered through existing test infrastructure in the same application context without overriding its beans?
 - Are low-level setup and observation helpers absent from test classes?
 - Does every setup or observation access to a production dependency go through a scoped `*TestApi`, with a missing `*TestApi` created instead of injecting the dependency into the test class?
