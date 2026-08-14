@@ -22,6 +22,9 @@
 - Are low-level setup and observation helpers absent from test classes?
 - Does every setup or observation access to a production dependency go through a scoped `*TestApi`, with a missing `*TestApi` created instead of injecting the dependency into the test class?
 - Does each new or changed `*TestApi` stay inside one aggregate/resource scope?
+- Does each reusable verification that obtains state use a `verify...` method of the scoped `*TestApi`?
+- Is each `*Assertions` helper stateless and limited to domain values supplied by its caller?
+- Are observations from different scopes verified separately instead of being combined into an assertion-specific data holder?
 - Is each cross-scope setup helper implemented in `*FixturePresets`?
 - Are expected values bound in `Given` and reused?
 - Are exact literals absent from `Then`?

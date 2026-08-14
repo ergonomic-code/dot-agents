@@ -39,8 +39,10 @@
 - `*HttpApi` is a typed helper for boundary tests that hides transport details from test cases.
 - `*TestApi` is a typed helper for fixture setup and observation.
 - `*FixturePresets` materialize reused or complex test state.
-- `*Assertions` hold reusable domain assertions.
-- If three or more consecutive assertions verify one correspondence between two object groups, extract them into a named domain assertion.
+- `*Assertions` are stateless reusable assertions over domain values supplied by the caller.
+- `*Assertions` must not fetch state or depend on `*TestApi`, repositories, services, clients, or other stateful helpers.
+- Put reusable single-scope verification that must obtain state in a `verify...` method of that scope's `*TestApi`.
+- If three or more consecutive assertions verify one correspondence between two object groups already available to the test, extract them into a named domain assertion.
 - Helper methods such as `*ForResponse` and `*ForError` may be used inside typed boundary helpers to separate reusable operation-level verification paths from test cases.
 
 ## Observation
