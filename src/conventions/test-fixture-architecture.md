@@ -5,7 +5,10 @@
 - `*TestApi` is scoped to one aggregate, resource, or external system.
 - If setup or observation needs another aggregate/resource, create or use its own `*TestApi`.
 - `*TestApi` may contain reusable single-scope production calls for setup and observation.
+- `*TestApi` may expose `verify...` methods that obtain and assert state within its scope.
 - Put low-level single-scope setup and observation helpers in the scoped `*TestApi`, not in test classes.
+- `*Assertions` are stateless and operate only on domain values supplied by the caller.
+- `*Assertions` must not depend on `*TestApi` or production dependencies to obtain state.
 - `*TestApi` must not orchestrate writes across multiple aggregates/resources.
 - Cross-aggregate/resource setup belongs in `*FixturePresets`.
 - `*FixturePresets` may compose multiple `*TestApi`, `*ObjectMother`, and `Mock*Server`.
@@ -20,6 +23,7 @@
 - Method shapes like `createXForY`, `addXToY`, `bindXToY`, or `attachXToY` are `*FixturePresets` unless `X` and `Y` are inside the same aggregate/resource.
 - A `*TestApi` constructor depending on repositories, clients, or APIs from several scopes is a boundary violation.
 - If no `*TestApi` exists for the other scope, create it instead of expanding the current one.
+- Do not combine observations from multiple scopes into an assertion-specific data holder; keep them as separate calls to the scoped `*TestApi.verify...` methods.
 
 ## Test case usage
 

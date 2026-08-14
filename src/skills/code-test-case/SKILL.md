@@ -90,7 +90,8 @@ If update mode input contains zero or multiple `Feature`s for one existing Kotli
 - Use `@Nested` classes only when this matches the existing file style and keeps repeated rule or example names shorter.
 - Preserve existing fixtures, assertions, helpers, and supporting code in update mode.
 - Render every generated or updated test method body with `// Given`, `// When`, and `// Then` section comments.
-- Extract any three or more consecutive assertions that verify one correspondence between two object groups into a named domain assertion.
+- Extract three or more consecutive assertions that verify one correspondence into a named domain assertion only when it is stateless and receives the already observed domain values.
+- If reusable verification must obtain state, put it in a `verify...` method of the scoped `*TestApi`; for several scopes, call each scoped verification separately instead of creating a cross-scope assertion data holder.
 - For read-after-write command tests with public observation, render the observation operation under `// And when`.
 - If command-returned data must be checked before observation, render `// When`, `// Then`, `// And when`, `// Then`.
 - If several observation endpoint calls are required, render each observation operation under its own `// And when` and place its assertions in the following `// Then`.
