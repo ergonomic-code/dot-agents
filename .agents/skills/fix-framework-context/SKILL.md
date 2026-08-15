@@ -29,6 +29,14 @@ If `framework surface` is `authoring-context`, treat editable roots as:
 
 If `framework surface` is `runtime-context`, treat editable roots as:
 - `./src/**`
+- `./README.md` only when required by `README synchronization`
 
 For `authoring-context`, use layers (`agents-root` | `agents-dir` | `codex-dir` | `readme` | `reference`).
 For `runtime-context`, reuse the runtime skill classification.
+
+## README synchronization
+
+Before finishing an implementation, assess whether the change affects user-facing framework capabilities, installation, usage, supported scope, or documented entry points.
+If it does, update `./README.md` in the same change.
+If it does not, leave `./README.md` unchanged.
+Report the decision and its file evidence in `Impact check`.

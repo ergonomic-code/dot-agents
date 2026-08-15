@@ -1,6 +1,6 @@
 ---
 name: reviewing-framework-context-file-changes
-description: Review changes in framework context files for conciseness, minimality, task fit, framework integration, ambiguity, actionability, verifiability, contradictions, scope clarity, and non-English text. Use when Codex reviews diffs or changed files in `.agents/`, `src/project-baseline.md`, `src/conventions/`, `src/roles/`, or framework templates.
+description: Review changes in framework context files for conciseness, minimality, task fit, framework integration, ambiguity, actionability, verifiability, contradictions, scope clarity, and language consistency. Use when Codex reviews diffs or changed files in `.agents/`, `src/project-baseline.md`, `src/conventions/`, `src/roles/`, framework templates, or `README.md`.
 ---
 
 # Review framework context file changes
@@ -12,6 +12,7 @@ Treat these as framework context files:
 - `.agents/**`
 - `src/**`
 - `AGENTS.md`
+- `README.md`
 - `skills/installing-framework/**`
 
 ## Input
@@ -31,7 +32,7 @@ If the original task is not explicit:
 
 Check that changes are:
 
-- written in English unless the file explicitly requires another language
+- written in the file's explicitly required language or, when none is specified, its established language; default new files to English
 - effective for the stated task
 - integrated into the framework
 - concise
@@ -51,6 +52,8 @@ Verify:
 - new files are reachable from existing entry points when needed
 - old files were updated when new files replace or extend them
 - no orphan files were introduced
+- `README.md` is updated when changes affect user-facing framework capabilities, installation, usage, supported scope, or documented entry points
+- internal-only changes do not introduce speculative `README.md` edits
 
 ## Output
 
@@ -65,12 +68,12 @@ For each finding include:
 - file
 - issue
 - why it is a problem
-- minimal fix, including suggested English wording for non-English text
+- minimal fix, including suggested wording in the required or established language for unintended language deviations
 
 ## Review rule
 
 Prefer deletion, shortening, reuse, and direct fixes over expansion.
-Treat ambiguity, non-actionability, non-verifiability, contradiction, unclear scope, missing integration, and unintended non-English text as defects.
-For non-English text findings, suggest an English rewrite that preserves intent and maximizes inference impact.
+Treat ambiguity, non-actionability, non-verifiability, contradiction, unclear scope, missing integration, and unintended deviations from the required or established language as defects.
+For language-consistency findings, suggest a rewrite in the required or established language that preserves intent and maximizes inference impact.
 Do not praise.
 Report only real issues.
