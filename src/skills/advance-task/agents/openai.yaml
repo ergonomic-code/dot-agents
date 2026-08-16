@@ -1,0 +1,4 @@
+interface:
+  display_name: "Advance Task"
+  short_description: "Advance one verified TDD task stage"
+  default_prompt: "Use $advance-task with a task directory to execute exactly its next verified TDD stage."
