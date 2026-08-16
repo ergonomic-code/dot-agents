@@ -1,0 +1,4 @@
+interface:
+  display_name: "Plan Test Case Fixing"
+  short_description: "Plan a red test case fix without coding"
+  default_prompt: "Use $plan-test-case-fixing with one red test case to plan its production fix without changing code and synchronize resolved task briefs only when the user clarifies or changes task requirements or the implementation approach during planning."

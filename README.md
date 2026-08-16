@@ -40,7 +40,9 @@ ErgocodeAI учит ваших ИИ-агентов работать по [Эрг
 5. Проверить и улучшить получившийся инкремент через [`$refactor-case`](src/skills/refactor-case/SKILL.md).
 
 Перед основным циклом при необходимости можно описать API через [`$describing-rest-api`](src/skills/describing-rest-api/SKILL.md) или найти связанные участки кода через [`$collect-code-anchors`](src/skills/collect-code-anchors/SKILL.md).
-Можно пропускать, добавлять и переупорядочивать шаги в зависимости от задачи.
+Перед изменением production-кода можно подготовить план исправления одного красного кейса через [`$plan-test-case-fixing`](src/skills/plan-test-case-fixing/SKILL.md).
+$fix-red-case использует применимый план из текущего запроса, при его отсутствии — однозначно соответствующий кейсу план из директории задачи, и только затем планирует исправление заново.
+При наличии директории задачи скилл синхронизирует подтверждённые изменения требований и решения с соответствующими брифами.
 
 ### 3. Lightweight SDD
 
@@ -191,6 +193,7 @@ flowchart LR
 | [`$fix-red-case`](src/skills/fix-red-case/SKILL.md) | Изменяет production-код, чтобы сделать зелёным один красный Kotlin JUnit-тест, не меняя сам тест. |
 | [`$implement-task-tdd`](src/skills/implement-task-tdd/SKILL.md) | Координирует реализацию директории задачи минимальными TDD-инкрементами с субагентами и подтверждением каждой стадии. |
 | [`$init-task-workdir`](src/skills/init-task-workdir/SKILL.md) | Создаёт директорию задачи `devlog/NNN-slug` с обязательными рабочими файлами из шаблонов. |
+| [`$plan-test-case-fixing`](src/skills/plan-test-case-fixing/SKILL.md) | Исследует один красный тестовый кейс и составляет план исправления без изменения тестового и production-кода. |
 | [`$refactor-case`](src/skills/refactor-case/SKILL.md) | Проверяет и рефакторит ограниченный red-plus-green TDD-инкремент после достижения зелёного состояния. |
 | [`$select-next-increment`](src/skills/select-next-increment/SKILL.md) | Выбирает следующий минимальный нереализованный вертикальный инкремент без изменения файлов. |
 | [`$write-verification-check`](src/skills/write-verification-check/SKILL.md) | Создаёт или нормализует проверки `Feature` / `Rule` / `Example` / `Given` / `When` / `Then`. |
