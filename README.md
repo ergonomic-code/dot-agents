@@ -65,7 +65,7 @@ devlog/123-example-task/
 
 #### Итерация инкремента
 
-1. Выберите следующий минимальный инкремент из спецификации и `todo.md`.
+1. Выберите следующий минимальный инкремент из спецификации и `todo.md` через [`$select-next-increment`](src/skills/select-next-increment/SKILL.md).
 2. Спроектируйте проверку поведения через [`$design-test-case`](src/skills/design-test-case/SKILL.md) и при необходимости согласуйте изменения API через [`$describing-rest-api`](src/skills/describing-rest-api/SKILL.md).
 3. Реализуйте тест через [`$code-test-case`](src/skills/code-test-case/SKILL.md).
 4. Выполните тест и подтвердите, что он скомпилировался, был исполнен и упал из-за отсутствующего поведения.
@@ -192,4 +192,5 @@ flowchart LR
 | [`$implement-task-tdd`](src/skills/implement-task-tdd/SKILL.md) | Координирует реализацию директории задачи минимальными TDD-инкрементами с субагентами и подтверждением каждой стадии. |
 | [`$init-task-workdir`](src/skills/init-task-workdir/SKILL.md) | Создаёт директорию задачи `devlog/NNN-slug` с обязательными рабочими файлами из шаблонов. |
 | [`$refactor-case`](src/skills/refactor-case/SKILL.md) | Проверяет и рефакторит ограниченный red-plus-green TDD-инкремент после достижения зелёного состояния. |
+| [`$select-next-increment`](src/skills/select-next-increment/SKILL.md) | Выбирает следующий минимальный нереализованный вертикальный инкремент без изменения файлов. |
 | [`$write-verification-check`](src/skills/write-verification-check/SKILL.md) | Создаёт или нормализует проверки `Feature` / `Rule` / `Example` / `Given` / `When` / `Then`. |

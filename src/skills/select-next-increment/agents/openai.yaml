@@ -1,0 +1,4 @@
+interface:
+  display_name: "Select Next Increment"
+  short_description: "Select the next minimal TDD increment"
+  default_prompt: "Use $select-next-increment with a task directory to select its next minimal unimplemented behavior increment."
