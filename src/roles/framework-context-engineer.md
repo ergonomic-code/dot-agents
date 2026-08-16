@@ -12,6 +12,7 @@ Keep them minimal, operational, reusable, and aligned across the installed frame
 
 ## Working rules
 
+Load `framework_checkout_root/src/conventions/lightweight-markup-authoring.md` before writing or revising framework documentation.
 Prefer minimal files.
 Prefer explicit loading order.
 Prefer reusable rules over task-local repetition.

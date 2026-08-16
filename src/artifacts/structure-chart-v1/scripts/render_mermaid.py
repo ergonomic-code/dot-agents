@@ -84,7 +84,8 @@ def render_document(document: dict[str, object]) -> str:
     }
     module_order: list[str] = []
     module_parents: dict[str, str | None] = {}
-    root_lambdas: dict[str, list[dict[str, object]]] = defaultdict(list)
+    child_modules: dict[str, list[str]] = defaultdict(list)
+    owned_lambdas: dict[str, list[dict[str, object]]] = defaultdict(list)
 
     for module in modules:
         if not isinstance(module, dict) or "id" not in module:
@@ -94,31 +95,29 @@ def render_document(document: dict[str, object]) -> str:
         parent_id = module.get("parent")
         module_parents[module_id] = parent_id if isinstance(parent_id, str) else None
 
-    def top_ancestor(module_id: str) -> str:
-        current = module_id
-        while True:
-            parent_id = module_parents.get(current)
-            if parent_id is None:
-                return current
-            current = parent_id
+        if isinstance(parent_id, str):
+            child_modules[parent_id].append(module_id)
 
     for lambda_item in lambdas:
         if not isinstance(lambda_item, dict) or "id" not in lambda_item or "owner" not in lambda_item:
             continue
-        root_lambdas[top_ancestor(str(lambda_item["owner"]))].append(lambda_item)
+        owned_lambdas[str(lambda_item["owner"])].append(lambda_item)
 
     lines = [
         '%%{init: {"flowchart": {"nodeSpacing": 48, "rankSpacing": 72, "htmlLabels": true}, "themeCSS": ".edgeLabel rect, .edgeLabel .labelBkg { fill: transparent !important; stroke: transparent !important; } .edgeLabel p, .nodeLabel p, .label p { text-align: left !important; background: transparent !important; line-height: 1.35; }"}}%%',
         "flowchart LR",
     ]
 
-    def emit_root(module_id: str, indent: str) -> None:
+    def emit_module(module_id: str, indent: str) -> None:
         module = module_map[module_id]
-        lambda_items = root_lambdas.get(module_id, [])
+        children = child_modules.get(module_id, [])
+        lambda_items = owned_lambdas.get(module_id, [])
         label = escape_label(module_label(module))
 
-        if lambda_items:
+        if children or lambda_items:
             lines.append(f'{indent}subgraph {module_id}["{label}"]')
+            for child_id in children:
+                emit_module(child_id, indent + "    ")
             for lambda_item in lambda_items:
                 lambda_id = str(lambda_item["id"])
                 lambda_text = escape_label(lambda_label(lambda_item))
@@ -130,11 +129,7 @@ def render_document(document: dict[str, object]) -> str:
 
     for module_id in module_order:
         if module_parents.get(module_id) is None:
-            emit_root(module_id, "    ")
-            continue
-        module = module_map[module_id]
-        label = escape_label(module_label(module))
-        lines.append(f'    {module_id}["{label}"]')
+            emit_module(module_id, "    ")
 
     if calls:
         lines.append("")

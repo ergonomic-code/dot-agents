@@ -47,3 +47,7 @@ Otherwise add one source block in the artifact's existing container format.
 Preserve all other sections and cases.
 If the resolved output path is not a cases artifact, write only the case text to that file.
 If no output path is resolved, return only one full-mode `verification-check-format-v0.1` case, or the missing selection issue.
+
+## Before Finishing
+
+Read `../../artifacts/verification-check-format-v0.1/references/requirements-coverage-checklist.md` and apply it within the selected obligation.

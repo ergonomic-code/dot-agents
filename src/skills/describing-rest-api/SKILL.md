@@ -17,6 +17,7 @@ Create that directory if missing.
 Use `<default-output-dir>/<basename>-ir.json` for IR.
 Use `<default-output-dir>/<basename>.md` as target artifact path for Markdown.
 Use `<default-output-dir>/<basename>.adoc` as target artifact path for AsciiDoc.
+For Markdown output, read `references/rest-api-format.md` before building the IR or rendering it.
 Use `references/rest-api-ir-schema.json`, `scripts/validate_json.py`, and `scripts/render_rest_api.py`.
 
 ## Hard Gate
