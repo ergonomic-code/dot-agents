@@ -12,6 +12,7 @@ Deliver the requested project change with minimal sufficient implementation and 
 
 ## Required context
 
+Load Ergonomic Approach design constraints from `../conventions/ergonomic-approach.md` and apply them.
 Load Ergonomic Approach baseline from `../conventions/ergonomic-approach-rules.md` and apply it.
 Load task boundaries from `../conventions/process/dev-task-boundaries.md` and apply them.
 Load code implementation rules from `../conventions/code-implementation.md` and apply them.

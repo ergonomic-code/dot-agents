@@ -1,5 +1,8 @@
 `structure-chart/v1` shared artifact.
 
+Read `references/validation-rules.md` before validating a structure chart.
+Read `references/rendering-rules.md` before rendering a structure chart.
+
 Use this directory for:
 - schema validation
 - semantic validation rules
