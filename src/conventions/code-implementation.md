@@ -11,7 +11,7 @@
 - If the task changes or adds a database-backed mutation whose correctness depends on evaluating a precondition against current database state, load `./db-conditional-writes.md`.
 - If the task changes or adds a persistence-backed class, constructor, factory, repository mapping, serializer, or persistence adapter, load `./persistence-models.md`.
 - If the task changes or adds a production operation, operation helper, or workflow method that reads, calculates, writes, or returns domain data, load `./operations-design.md`.
-- If the task adds, changes, or names a production resource or its implementation, a DOP, production component dependency shape, or operation-resource wiring, load `./ergonomic-architecture.md` and `./ergonomic-component-structure.md`.
+- If the task adds, changes, or names a production port, operation, resource or resource implementation, DOP, component dependency shape, or operation-resource wiring, load `./ergonomic-architecture.md` and `./ergonomic-component-structure.md`.
 
 ## Reuse
 

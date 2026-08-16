@@ -14,10 +14,12 @@ Use this file with `./ergonomic-architecture.md` when a task concerns ports, ope
 
 ## Rules
 
+- Expose one public use-case method name from each operation; allow multiple overloads of that method when needed.
+- Keep the component dependency graph acyclic.
 - Use a complex resource when one domain resource must coordinate several primitive or infrastructure resources behind a single bounded API.
 - Keep primitive resources private to one higher-level resource unless the project intentionally creates multiple configured instances with non-overlapping state.
 - Do not let infrastructure API types leak through a domain-facing resource API.
-- User explicit behavior layering: operations on top, optional domain operations below them, resources below operations, and optional infrastructure resources below resources.
+- Use explicit behavior layering: operations on top, optional domain operations below them, resources below operations, and optional infrastructure resources below resources.
 - For each behavior layer except DOPs, forbid horizontal dependencies between peers on the same layer.
 - Inject the resources an operation uses directly into that operation.
 - Keep domain operations, when they exist, between orchestration-level operations and resources instead of mixing those responsibilities.
