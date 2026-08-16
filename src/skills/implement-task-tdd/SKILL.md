@@ -7,7 +7,6 @@ description: Coordinate implementation of a task directory through minimal revie
 
 Read `framework_checkout_root/src/roles/developer.md`.
 Read `framework_checkout_root/src/conventions/process/tasks.md`.
-Read `framework_checkout_root/src/references/test-case-implementation-order.md`.
 Read `references/stage-contracts.md`.
 
 ## Input
@@ -52,7 +51,7 @@ The pre-edit refactor plan is not a completed stage; after its approval, resume 
 
 ## Cycle
 
-1. Delegate selection of the next minimal increment.
+1. Delegate selection of the next minimal increment through `$select-next-increment`.
 2. Delegate one test-method-sized design through `$design-test-case`.
 3. Delegate design and artifact alignment for only the API surfaces required by the selected case.
 4. Delegate coding of the selected case through `$code-test-case` and prove its executed red state.

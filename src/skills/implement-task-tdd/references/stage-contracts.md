@@ -28,22 +28,10 @@ Subagent output is evidence to verify, not proof of completion.
 ## 1. Select increment
 
 Allow no file changes.
-Read the briefs, `todo.md`, current artifacts, working tree, and relevant Git history.
-Exclude behavior only when the current implementation or verified behavior proves it implemented.
-Treat commits, completed todo items, and artifacts as supporting evidence; return `status: blocked` when these sources disagree.
-Apply `framework_checkout_root/src/references/test-case-implementation-order.md`.
-
-Return `status: complete` with `outcome: increment-selected` and:
-
-- obligation and observable outcome;
-- external entry point and final effect;
-- minimal data and variant set, and smallest sufficient production behavior;
-- excluded later behavior;
-- expected test level and likely red cause;
-- evidence that its behavior remains unimplemented, the slice spans its external boundary and observable effect, and no contract-valid degenerate happy path requiring less production behavior remains.
-
-Return `status: complete` with `outcome: no-unimplemented-behavior` instead when no unimplemented behavior remains.
-Return `status: blocked` when selection requires resolving ambiguity or conflict.
+Invoke `$select-next-increment` with the task directory and shared handoff.
+Before independent verification, read `framework_checkout_root/src/skills/select-next-increment/SKILL.md` and its referenced selection policy.
+Verify the returned result against that contract and the actual task evidence.
+Return the full result unchanged.
 
 ## 2. Design case
 
