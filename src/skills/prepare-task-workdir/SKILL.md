@@ -38,12 +38,15 @@ Read `framework_checkout_root/src/references/solution-brief-template.md`.
 ## 1. Complete the task brief
 
 1. Compare the prompt and current `010-task-brief.md` with the task-brief template.
-2. Identify only missing or ambiguous information that affects terms, stakeholder intent, scope, observable changes, scenarios, boundaries, or errors.
+2. Identify only missing or ambiguous information that affects the task initiator, current state, task driver, intended outcome, relevant consequences, terms, scope, observable changes, scenarios, boundaries, or errors.
 3. Interview the user until those gaps are resolved.
-4. Update `010-task-brief.md` with confirmed requirements in the user's domain language.
-5. Keep solution and implementation choices out of the task brief.
-6. When a capability may use an API, capture only its actor, observable behavior, and contract-independent constraints.
-7. Present a compact summary and require the user to confirm that the task brief is sufficient before solution design.
+4. When requirements interact, restate their conditions, guarantees, and resulting behavior together and require explicit confirmation before drafting.
+5. Treat domain concepts and their configured or example values separately; do not replace one with the other.
+6. Before updating the artifact, check the draft against confirmed evidence and across sections for consistent causality, actors, terms, qualifiers, units, values, and formulas; ask about mismatches instead of guessing.
+7. Update `010-task-brief.md` with confirmed requirements in the user's domain language.
+8. Keep solution and implementation choices out of the task brief.
+9. When a capability may use an API, capture only its actor, observable behavior, and contract-independent constraints.
+10. Present a compact summary and require the user to confirm that the task brief is sufficient before solution design.
 
 If later research or solution discussion exposes a requirement ambiguity or changes scope, return to this stage and update the task brief only after user confirmation.
 
