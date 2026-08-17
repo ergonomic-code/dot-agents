@@ -1,6 +1,6 @@
 ---
 name: code-test-case
-description: Convert cases written in `verification-check-format-v0.1` in `full` mode into Kotlin JUnit test code. Use when the input is a verification check artifact with `Feature`, `Rule`, `Example`, `Given`, `When`, `Then`, and `And`.
+description: Convert cases written in `verification-check-format-v0.1` in `full` mode into Kotlin JUnit test code and, for repository-backed use, verify whether the selected test is expected red or already green. Use when the input is a verification check artifact with `Feature`, `Rule`, `Example`, `Given`, `When`, `Then`, and `And`.
 ---
 
 # Code Test Case
@@ -110,6 +110,26 @@ If update mode input contains zero or multiple `Feature`s for one existing Kotli
 Follow `../../conventions/test-naming.md`.
 For this skill, use the formal case mapping rules.
 
+## Behavior State Verification
+
+For repository-backed generate or update mode, after coding or confirming alignment of the selected case:
+
+1. Resolve the narrowest command that compiles the selected test.
+2. Compile the selected test.
+3. Execute the exact selected test case.
+4. Compare the observed result with the selected `Rule` and `Then`.
+
+Return `status: complete` with exactly one outcome:
+
+- `outcome: expected-red` only when the test compiled, executed, and failed because the selected behavior is missing;
+- `outcome: already-green` when the selected case passes.
+
+Return `status: pending` only when execution evidence is incomplete or a verified transient environmental failure can be retried without file changes.
+Return `status: blocked` for a compilation failure, fixture failure, unrelated assertion, non-transient environmental failure, or any other failure not attributable to the selected missing behavior.
+Report the compilation command, execution command, exact executed case, observed result, and its connection to the selected behavior.
+Do not weaken or otherwise edit the test to manufacture expected red.
+This verification does not apply to standalone generate mode without a repository target path; return only Kotlin code and do not claim a behavior state.
+
 ## Output Discipline
 
 - Keep new or newly aligned cases strict even if they fail against current production code.
@@ -124,11 +144,11 @@ For this skill, use the formal case mapping rules.
 - Put `TODO` inside newly added production method bodies unless the body is a trivial constructor, accessor, or data holder.
 - Do not add production behavior, control flow, persistence, external integrations, endpoint contracts, validation rules, migrations, configuration, generated/static API docs, controllers, services, repositories, or clients.
 - If tests require production behavior to compile or pass, stop and report the blocker instead of changing production behavior.
-- By default, after implementing a new or aligned case, the test should compile. The test may still fail for any reason until production behavior is aligned.
+- For repository-backed generate or update mode, do not finish before completing Behavior State Verification.
 
 Before finishing an HTTP API success case, determine whether a response schema exists.
 When it exists, inspect the typed `*HttpApi` success method used by the case and verify that it validates that schema before decoding the body.
 Treat missing schema validation as incomplete and fix it.
 When invoked by a workflow, report the schema path and validating helper, or explicitly report that no response schema exists.
 
-Before finishing, read `../../conventions/test-implementation-checklist.md`, fix any failed item, and check: default scope produced exactly one example unless an eligible parameterized set or an explicit multi-case selection applies, one class per selected `Feature`, one method per selected `Example` or eligible parameterized set, fixture helper boundaries follow `../../conventions/test-fixture-architecture.md`, naming follows `../../conventions/test-naming.md`, new structured resources or schemas reuse or extract shared definitions instead of duplicating equivalent definitions, new or aligned tests compile, standalone generate mode returns only Kotlin, workflow-invoked generate mode writes the generated test to its explicit target path and keeps supporting edits within its granted write set, and update mode accepts exactly one `Feature` per run and preserves the existing container code while editing in place.
+Before finishing, read `../../conventions/test-implementation-checklist.md`, fix any failed item, and check: default scope produced exactly one example unless an eligible parameterized set or an explicit multi-case selection applies, one class per selected `Feature`, one method per selected `Example` or eligible parameterized set, fixture helper boundaries follow `../../conventions/test-fixture-architecture.md`, naming follows `../../conventions/test-naming.md`, new structured resources or schemas reuse or extract shared definitions instead of duplicating equivalent definitions, repository-backed cases complete Behavior State Verification, standalone generate mode returns only Kotlin without claiming a behavior state, workflow-invoked generate mode writes the generated test to its explicit target path and keeps supporting edits within its granted write set, and update mode accepts exactly one `Feature` per run and preserves the existing container code while editing in place.

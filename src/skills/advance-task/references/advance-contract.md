@@ -37,40 +37,32 @@ Complete with `outcome: required-design-aligned` and report an explicit result f
 Return `status: blocked` when the required surface conflicts with the briefs or requires an unresolved user choice.
 Skip this stage when the existing design already covers the selected case.
 
-### 4. Code case
+### 4. Code and verify case
 
-Select this stage when the case and required design are complete but the selected Kotlin test is absent or not aligned.
+Select this stage when the case and required design are complete but the selected Kotlin test is absent or not aligned, or no current executed result proves its behavior state.
 Resolve one explicit target test path and load and follow `framework_checkout_root/src/skills/code-test-case/SKILL.md`.
 Permit only the selected test, required test infrastructure, and compile-only production surface allowed by that skill.
-Compile the selected test without implementing production behavior.
-Complete with `outcome: case-coded` only when the selected test compiles and its test method can be identified for execution.
-Do not claim or require an expected red result in this stage.
-
-### 5. Prove behavior state
-
-Select this stage when the selected test compiles but no current executed result proves whether it is red or green.
-Permit no file changes.
-Execute the narrowest command that runs the selected test and identify the exact executed case.
+When the selected test is already aligned and only its behavior state is unproven, permit no file changes.
 Complete with `outcome: expected-red` only when the test compiled, executed, and failed because the selected behavior is missing.
 Complete with `outcome: already-green` only when the selected case passes.
 Return `status: pending` only for incomplete execution evidence or a verified transient environmental failure that can be retried without file changes.
 Return `status: blocked` for a compilation failure, fixture failure, unrelated assertion, or non-transient environmental failure; name the invalidated prerequisite and the earliest stage that must be repeated.
 
-### 6. Plan production fix
+### 5. Plan production fix
 
 Select this stage when `expected-red` is proven and no current production-fix plan resolves for the selected case.
 Load and follow `framework_checkout_root/src/skills/plan-test-case-fixing/SKILL.md`.
 Permit only brief updates explicitly allowed by that skill.
 Complete with `outcome: production-fix-planned` only when the plan has no unresolved questions and includes the selected case, failure evidence, diagnosed cause, behavior boundary, selected fix, target production areas, and verification command.
 
-### 7. Make green
+### 6. Make green
 
 Select this stage when `expected-red` and a current production-fix plan are proven.
 Load and follow `framework_checkout_root/src/skills/fix-red-case/SKILL.md`, passing the verified plan explicitly.
 Permit production-code changes only and preserve the selected test unchanged.
 Complete with `outcome: selected-test-passes` only when the same selected test passes.
 
-### 8. Refactor increment
+### 7. Refactor increment
 
 Select this stage when the selected case is green after production changes and the bounded increment has not received a completed refactor review.
 Resolve the current increment diff from changes attributed to its case, production fix, and required design without including unrelated worktree changes.
@@ -81,7 +73,7 @@ Return `status: pending` while that approval or refactor verification is outstan
 Complete with `outcome: refactored` or `outcome: no-op` only after the selected test passes.
 Skip this stage for `already-green` when the increment has no production change to review.
 
-### 9. Complete increment
+### 8. Complete increment
 
 Select this stage after `already-green`, or after the green and refactor stages are complete.
 Rerun the selected test before changing task status.

@@ -64,10 +64,7 @@ Resolve the target Kotlin test file and invoke `$code-test-case` with its explic
 For a new file, require its workflow-invoked generate mode to write the generated code to that path.
 Allow changes only to the selected test, required test infrastructure, and minimal compile-only production surface permitted by that skill.
 Do not change production behavior.
-
-Compile the selected test and then execute it.
-Identify the exact test and command so the coordinator can rerun it.
-A red result is proven only when the test compiled, executed, and failed for the expected missing behavior.
+Require `$code-test-case` to compile and execute the exact selected test and classify its behavior state.
 Do not accept compilation failure, fixture failure, environmental failure, or an unrelated assertion as red.
 Do not weaken the test to manufacture the expected failure.
 
@@ -76,8 +73,8 @@ Return `status: complete` with exactly one outcome:
 - `outcome: expected-red`, with the observed failure and its connection to the selected behavior;
 - `outcome: already-green`, with the passing command and evidence.
 
-Return `status: pending` when compilation or expected-red proof is incomplete.
-Return `status: blocked` when the case or API design must change.
+Return `status: pending` only when execution evidence is incomplete or a verified transient environmental failure can be retried without file changes.
+Return `status: blocked` for a compilation failure, fixture failure, unrelated assertion, non-transient environmental failure, or when the case or API design must change.
 
 ## 5. Make green
 
