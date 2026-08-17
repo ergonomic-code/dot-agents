@@ -41,8 +41,9 @@ Read `framework_checkout_root/src/references/solution-brief-template.md`.
 2. Identify only missing or ambiguous information that affects terms, stakeholder intent, scope, observable changes, scenarios, boundaries, or errors.
 3. Interview the user until those gaps are resolved.
 4. Update `010-task-brief.md` with confirmed requirements in the user's domain language.
-5. Keep technical implementation choices out of the task brief.
-6. Present a compact summary and require the user to confirm that the task brief is sufficient before solution design.
+5. Keep solution and implementation choices out of the task brief.
+6. When a capability may use an API, capture only its actor, observable behavior, and contract-independent constraints.
+7. Present a compact summary and require the user to confirm that the task brief is sufficient before solution design.
 
 If later research or solution discussion exposes a requirement ambiguity or changes scope, return to this stage and update the task brief only after user confirmation.
 
@@ -67,9 +68,11 @@ Do not turn observed current behavior into a requirement without user confirmati
 5. Recommend one option and explain why it best balances task fit, maintainability, and change size.
 6. Discuss and revise the options with the user until the material decision boundaries are resolved.
 7. Require the user to select the final option explicitly.
-8. Do not record a selected approach while the choice is unresolved.
-9. Write the resulting context, selected approach, non-blocking open questions, and rejected alternatives to `030-solution-brief.md`.
-10. Do not finalize the solution brief while an open question can materially change the selected approach.
+8. Do not design an API contract before the final option is selected.
+9. After selection, design only API details required to make the selected approach coherent; defer the rest until the first implementation case for which that API is the SUT.
+10. Do not record a selected approach while the choice is unresolved.
+11. Write the resulting context, selected approach, non-blocking open questions, and rejected alternatives to `030-solution-brief.md`.
+12. Do not finalize the solution brief while an open question can materially change the selected approach.
 
 ## Finish
 
