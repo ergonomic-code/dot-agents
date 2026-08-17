@@ -80,11 +80,11 @@ devlog/123-example-task/
 1. Выбрать следующий минимальный инкремент из спецификации и `todo.md` ([`$select-next-increment`](src/skills/select-next-increment/SKILL.md)).
 2. Спроектировать тест-кейс проверки целевого поведения ([`$design-test-case`](src/skills/design-test-case/SKILL.md)).
 3. При необходимости, спроектировать и описать API ([`$describing-rest-api`](src/skills/describing-rest-api/SKILL.md)).
-5. Закодировать тест ([`$code-test-case`](src/skills/code-test-case/SKILL.md)).
-6. Спроектировать и спланировать реализацию кейса ([`$plan-test-case-fixing`](src/skills/plan-test-case-fixing/SKILL.md)).
-5. Реализовать кейс ([`$fix-red-case`](src/skills/fix-red-case/SKILL.md)).
-6. Отрефакторить реализацию ([`$refactor-case`](src/skills/refactor-case/SKILL.md)).
-7. Обновить `todo.md`.
+4. Закодировать тест ([`$code-test-case`](src/skills/code-test-case/SKILL.md)).
+5. Спроектировать и спланировать реализацию кейса ([`$plan-test-case-fixing`](src/skills/plan-test-case-fixing/SKILL.md)).
+6. Реализовать кейс ([`$fix-red-case`](src/skills/fix-red-case/SKILL.md)).
+7. Отрефакторить реализацию ([`$refactor-case`](src/skills/refactor-case/SKILL.md)).
+8. Обновить `todo.md`.
 
 Итерации можно вести в трёх режимах:
 
@@ -186,7 +186,7 @@ flowchart LR
 | Скилл | Назначение |
 | --- | --- |
 | [`$advance-task`](src/skills/advance-task/SKILL.md) | Определяет и выполняет одну следующую стадию TDD-инкремента. |
-| [`$code-test-case`](src/skills/code-test-case/SKILL.md) | Преобразует проверку в формате `verification-check-format-v0.1` в Kotlin JUnit-тест. |
+| [`$code-test-case`](src/skills/code-test-case/SKILL.md) | Преобразует проверку в формате `verification-check-format-v0.1` в Kotlin JUnit-тест, затем в репозитории проверяет, что тест падает из-за отсутствующего поведения или уже проходит. |
 | [`$collect-code-anchors`](src/skills/collect-code-anchors/SKILL.md) | Находит связанные с требуемым поведением участки кода, модели, запросы, таблицы, конфигурацию и другие якоря в коде. |
 | [`$describing-rest-api`](src/skills/describing-rest-api/SKILL.md) | Строит, валидирует и отображает описание REST API по коду, OpenAPI, требованиям или другим входным данным. |
 | [`$design-test-case`](src/skills/design-test-case/SKILL.md) | Проектирует одну проверку размером с тестовый метод по требованию, описанию ошибки или целевого поведения. |
