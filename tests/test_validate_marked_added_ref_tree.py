@@ -23,7 +23,7 @@ def test_validate_marked_added_ref_tree_requires_added_markers():
 
     errors = validator.validate_marked_added_ref_targets(document)
 
-    assert errors == [
+    assert sorted(errors) == sorted([
         (
             "$.sumTypes[0].change",
             "missing required change='added' for block referenced only from added content",
@@ -36,4 +36,4 @@ def test_validate_marked_added_ref_tree_requires_added_markers():
             "$.models[2].change",
             "missing required change='added' for block reachable only from added content",
         ),
-    ]
+    ])
