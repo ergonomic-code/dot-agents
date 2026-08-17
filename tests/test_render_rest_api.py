@@ -6,7 +6,7 @@ import pytest
 
 
 def _load_renderer_module():
-    script_path = Path(__file__).resolve().parents[1] / "src/skills/describing-rest-api/scripts/render_rest_api.py"
+    script_path = Path(__file__).resolve().parents[1] / "src/skills/describe-rest-api/scripts/render_rest_api.py"
     spec = importlib.util.spec_from_file_location("render_rest_api", script_path)
     module = importlib.util.module_from_spec(spec)
     assert spec is not None and spec.loader is not None

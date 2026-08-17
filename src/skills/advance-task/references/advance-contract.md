@@ -31,7 +31,7 @@ Complete only when the rendered case satisfies that skill's final checklist.
 Select this stage only when the designed case proves that a public contract, production signature, test API, fixture, or preset must be added or changed before the case can be coded.
 Write the approved case into the matching target test-case artifact when it is not already stored there.
 Inspect and align only task and target design artifacts required by the selected case.
-For a new or changed JSON-over-HTTP contract, load and follow `framework_checkout_root/src/skills/describing-rest-api/SKILL.md`.
+For a new or changed JSON-over-HTTP contract, load and follow `framework_checkout_root/src/skills/describe-rest-api/SKILL.md`.
 Do not write production code, test code, build configuration, migrations, schemas, or generated code.
 Complete with `outcome: required-design-aligned` and report an explicit result for every required surface.
 Return `status: blocked` when the required surface conflicts with the briefs or requires an unresolved user choice.

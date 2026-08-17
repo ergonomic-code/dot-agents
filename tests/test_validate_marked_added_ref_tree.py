@@ -4,7 +4,7 @@ from pathlib import Path
 
 
 def _load_validator_module():
-    script_path = Path(__file__).resolve().parents[1] / "src/skills/describing-rest-api/scripts/validate_json.py"
+    script_path = Path(__file__).resolve().parents[1] / "src/skills/describe-rest-api/scripts/validate_json.py"
     spec = importlib.util.spec_from_file_location("validate_json", script_path)
     module = importlib.util.module_from_spec(spec)
     assert spec is not None and spec.loader is not None

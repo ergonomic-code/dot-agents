@@ -47,7 +47,7 @@ Allow changes only to task, target API, target test-case, and solution artifacts
 Write the approved case into the corresponding target test-case artifact.
 Inspect the public contract, production types and signatures, and test-side `*HttpApi`, `*TestApi`, fixtures, and presets required by that case.
 Design only missing or changed surfaces required to compile and execute the selected case.
-When the case requires a new or changed JSON-over-HTTP public contract, invoke `$describing-rest-api` and use its validated IR and rendered target artifact.
+When the case requires a new or changed JSON-over-HTTP public contract, invoke `$describe-rest-api` and use its validated IR and rendered target artifact.
 Limit that contract change to the selected case.
 Update the corresponding task, API, and solution artifacts with those surfaces.
 Create a new convention-compliant `030-*` artifact only when no current target artifact can own the required design.
