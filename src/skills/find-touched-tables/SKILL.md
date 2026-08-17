@@ -1,5 +1,5 @@
 ---
-name: finding-touched-tables
+name: find-touched-tables
 description: Find database tables and views touched by code referenced from an existing `structure-chart/v1` diagram. Use when the input is a ready structure chart and you need the list of tables that are read or written along the charted execution path, including reads performed through SQL views and, when recoverable, the base tables behind those views.
 ---
 

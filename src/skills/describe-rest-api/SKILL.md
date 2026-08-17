@@ -1,5 +1,5 @@
 ---
-name: describing-rest-api
+name: describe-rest-api
 description: Build REST API IR JSON for JSON over HTTP from code, OpenAPI, curl, natural-language requirements, JSON Schema, or mixed inputs, then validate it and render Markdown.
 ---
 
