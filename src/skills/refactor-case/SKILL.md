@@ -22,7 +22,7 @@ Accept one commit, current uncommitted changes, or one coordinator-supplied boun
 1. Inspect the target diff and the selected case context when available.
    For a bounded TDD increment, inspect the full net diff from the red commit's parent through the green commit, including every intervening commit, and treat that range as the target boundary.
 2. Inspect production changes inside the target boundary for:
-   - duplication after the second occurrence, including sibling code that repeats the same responsibility with different expressions;
+   - duplication per `../../conventions/ergonomic-approach-rules.md`, including matches between changed and sibling code;
    - mixed abstraction levels per `abstraction-level-boundaries.md`;
    - misplaced mechanics that belong behind an adapter, helper, mapper, value type, or collaborator;
    - violations of loaded EA conventions, especially unclear operation/resource boundaries, peer horizontal dependencies, mixed orchestration and infrastructure concerns, or hidden direct dependencies that should stay explicit.
@@ -37,7 +37,7 @@ Accept one commit, current uncommitted changes, or one coordinator-supplied boun
 6. Load and apply exactly one matching rule file:
    - in `production` mode, read `../../conventions/process/production-code-refactoring.md`;
    - in `test` mode, read `../../conventions/process/tests-refactoring.md`.
-7. For duplication, propose one format and a narrow helper when behavior stays equivalent.
+7. For duplication, propose the narrowest shared implementation that owns the complete repeated responsibility while preserving behavior.
 8. Propose a short refactor plan and wait for explicit approval before editing.
 9. After approval, change structure only.
    Preserve observable behavior, public contracts, persistence shape, API responses, test intent.

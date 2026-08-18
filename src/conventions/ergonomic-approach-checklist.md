@@ -3,7 +3,7 @@
 ## General
 
 - Does every implementation-code change serve required behavior rather than only making tests pass?
-- Is there any duplication in the code beyond acceptable repetition of setup and assertions between test cases?
+- Except for test-case-local setup or assertions whose repetition improves readability, is each responsibility implemented once, including across paths that express it differently, with its complete shared behavior centralized rather than only a common inner fragment?
 - Are non-trivial operations shaped as explicit read-query, I/O-free pure-calculation-query, and write-command branches?
 - Are complex decisions kept in calculate branches and costly external dependency calls kept in read or write branches?
 - Are database state-dependent mutations enforced atomically by one database operation or explicit transaction locking or isolation instead of unprotected application-level read-check-write?
