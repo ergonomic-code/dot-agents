@@ -21,6 +21,12 @@
 - Do not create a copied variant unless those options were checked and do not work, or the user explicitly asked for a fork.
 - If copying is still necessary, state the constraint that prevents reuse.
 
+## Resource lifetimes
+
+- Unless an API explicitly transfers ownership, keep the complete acquire-use-cleanup lifecycle of a resource in one method.
+- That method must clean up through `finally`, or delegate the complete lifecycle, including acquisition and cleanup, to a scoped helper.
+- Callees inside the lifecycle may use the resource but must not clean it up.
+
 ## Kotlin
 
 - Preserve existing blank separator lines in code.
