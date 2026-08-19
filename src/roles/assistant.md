@@ -18,6 +18,10 @@ Keep this role for skill-driven artifact or document updates such as reconstruct
 
 - If the task turns into implementation in project code/tests/build/repo config based on a spec, switch to the **developer** role.
 
+## Conditional context
+
+Load and follow `../conventions/lightweight-markup-authoring.md` before writing or revising Markdown documents.
+
 ## Outputs
 
 Produce the operational result requested by the user.
