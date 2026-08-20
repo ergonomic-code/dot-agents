@@ -49,14 +49,14 @@ Read the mode rules in:
 
 ## Shared Content Rules
 
-Describe only externally observable contract behavior outside the required `Feature` SUT reference.
+Describe only externally observable contract behavior outside a materialized `Feature` SUT reference.
 Use domain language for the human-readable `Feature` name, `Rule`, `Example`, and steps.
-Outside the `Feature` SUT reference, mention technical details only when they are observable contract terms and no stable domain wording can express the same behavior.
+Outside a materialized `Feature` SUT reference, mention technical details only when they are observable contract terms and no stable domain wording can express the same behavior.
 When a request parameter, field, flag, enum value, status, timestamp, or other technical symbol has a stable domain meaning, write that meaning instead of the literal symbol.
 Do not keep a literal only because it appears in API, storage, code, or tests.
 Keep literal symbols only when the requirement is specifically about that named contract member or value, no clear domain equivalent exists, or replacing it would lose checked precision.
 Keep only contract-visible requirements about request interpretation, authoritative data sources, decision logic, result scope and selection, required response or returned-value properties, ordering, cardinality, state changes, side effects, rejection conditions, explicit invariants, and representation of contract-visible values.
-Outside the `Feature` SUT reference, do not mention implementation structure, storage schema, helper names, mocks, fixtures, or migration steps.
+Outside a materialized `Feature` SUT reference, do not mention implementation structure, storage schema, helper names, mocks, fixtures, or migration steps.
 Do not invent routes, statuses, defaults, validation, fallback behavior, or internal design.
 Keep behaviorally distinguishing literal values literal when they are part of the contract.
 Otherwise prefer abstract wording over incidental sample data.

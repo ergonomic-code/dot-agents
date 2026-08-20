@@ -53,7 +53,7 @@ The pre-edit refactor plan is not a completed stage; after its approval, resume 
 
 1. Delegate selection of the next minimal increment through `$select-next-increment`.
 2. Delegate one test-method-sized design through `$design-test-case`.
-3. Delegate alignment of only the production and test-side design required by the selected case.
+3. Delegate alignment of only the production and test-side design required by the selected case through `$align-required-design`.
 4. Delegate coding of the selected case through `$code-test-case` and prove its executed red state.
 5. Delegate greening through `$fix-red-case`.
 6. Delegate refactoring of the bounded red-plus-green increment through `$refactor-case`.

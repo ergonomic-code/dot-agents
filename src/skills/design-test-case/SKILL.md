@@ -27,6 +27,10 @@ When one obligation maps a finite set of mutually exclusive input or context sta
 Before mapping `Feature`, resolve the verified object from explicit user input, an existing artifact `Feature`, a named endpoint, API surface, component, operation, or explicitly planned target surface.
 If no verified object can be resolved, ask for the target surface instead of inventing a component-like SUT.
 For new behavior, prefer the stable existing boundary or explicitly planned boundary over an inferred internal component.
+When the verified object is an explicitly planned new SUT whose technical reference is not designed yet, write a provisional `Feature` without the parenthesized reference and leave its materialization to `$align-required-design`.
+Do not ask the user for the missing technical reference during behavior design.
+Carry technical and architecture choices into `$align-required-design`.
+Ask only when unresolved observable product behavior prevents stating the selected `Rule` or `Example`.
 Map the selected obligation to `Feature` and `Rule`, then to one `Example` or, when the finite-set rule applies, the complete set of named `Example`s, each with `Given`, `When`, and `Then`.
 Then render through `../write-verification-check/SKILL.md`.
 Do not add sibling rules or examples outside that selected obligation.

@@ -25,22 +25,21 @@ Select this stage when one increment is selected and no matching complete verifi
 Load and follow `framework_checkout_root/src/skills/design-test-case/SKILL.md` for exactly one test-method-sized case or one allowed complete parameterized set.
 When a task directory resolves, use `<task-dir>/030-test-cases-new.md` as the explicit target test-case artifact and write the case before completing the stage.
 Otherwise return the case in the stage result for reuse in the current session.
+Accept a provisional `Feature` only for an explicitly planned new SUT and carry its missing technical reference into `$align-required-design`.
 Complete only when the rendered case satisfies that skill's final checklist.
 
 ### 3. Align required design
 
-Select this stage only when the designed case proves that a public contract, production type or signature, test API, fixture, preset, or configuration surface must be added or changed before the case can be coded.
-Keep the case artifact written by the design stage unchanged unless required design alignment changes its approved contract.
-Read and apply `framework_checkout_root/src/references/required-design-alignment.md`.
-For a new or changed JSON-over-HTTP contract, load and follow `framework_checkout_root/src/skills/describe-rest-api/SKILL.md`.
-Do not write production code, test code, build configuration, migrations, schemas, or generated code.
-Complete with `outcome: required-design-aligned` and report an explicit result for every required surface.
-Return `status: blocked` when the required surface conflicts with the briefs or requires an unresolved user choice.
+Select this stage only when the designed case proves that a public contract, production type or signature, test API, fixture, preset, or configuration surface must be added or changed before the case can be coded, including when its `Feature` is provisional.
+Load and follow `framework_checkout_root/src/skills/align-required-design/SKILL.md` with the selected case, task directory, and target artifact paths.
+Complete only with that skill's `outcome: required-design-aligned` and an explicit result for every required surface.
+Return `status: blocked` only for the unresolved product behavior, approved-artifact conflict, or scope widening reported by that skill.
 Skip this stage when the existing design already covers the selected case.
 
 ### 4. Code and verify case
 
 Select this stage when the case and required design are complete but the selected Kotlin test is absent or not aligned, or no current executed result proves its behavior state.
+Do not select it while the selected `Feature` is provisional.
 Resolve one explicit target test path and load and follow `framework_checkout_root/src/skills/code-test-case/SKILL.md`.
 Permit only the selected test, required test infrastructure, and compile-only production surface allowed by that skill.
 When the selected test is already aligned and only its behavior state is unproven, permit no file changes.
