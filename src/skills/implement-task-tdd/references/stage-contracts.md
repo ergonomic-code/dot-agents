@@ -41,26 +41,23 @@ Treat the approved increment as selected and do not add sibling obligations.
 Return `status: complete` with `outcome: case-designed` and exactly one full-mode test-method-sized case or one allowed complete parameterized set.
 Return the rendered case to the coordinator without writing files.
 
-## 3. Design required APIs
+## 3. Align required design
 
-Allow changes only to task, target API, target test-case, and solution artifacts.
+Allow changes only to task, target API, target test-case, solution, and implementation-design artifacts.
 Write the approved case into the corresponding target test-case artifact.
-Inspect the public contract, production types and signatures, and test-side `*HttpApi`, `*TestApi`, fixtures, and presets required by that case.
-Design only missing or changed surfaces required to compile and execute the selected case.
+Read and apply `framework_checkout_root/src/references/required-design-alignment.md`.
 When the case requires a new or changed JSON-over-HTTP public contract, invoke `$describe-rest-api` and use its validated IR and rendered target artifact.
 Limit that contract change to the selected case.
-Update the corresponding task, API, and solution artifacts with those surfaces.
-Create a new convention-compliant `030-*` artifact only when no current target artifact can own the required design.
 Do not change requirements to make the selected case easier.
 Return `status: blocked` when a required surface is unsupported by or conflicts with the briefs.
 
 Do not write production code, test code, build configuration, migrations, schemas, or generated code.
 Do not add APIs for later increments.
-Return `status: complete` with `outcome: api-surfaces-aligned`, changed artifacts, and an explicit no-change result for each surface category already covered by existing design.
+Return `status: complete` with `outcome: required-design-aligned`, changed artifacts, and one `reuse`, `add`, `change`, or `no-change` decision for every examined surface.
 
 ## 4. Code and prove red
 
-Resolve the target Kotlin test file and invoke `$code-test-case` with its explicit path, the approved case, and API design.
+Resolve the target Kotlin test file and invoke `$code-test-case` with its explicit path, the approved case, and required design.
 For a new file, require its workflow-invoked generate mode to write the generated code to that path.
 Allow changes only to the selected test, required test infrastructure, and minimal compile-only production surface permitted by that skill.
 Do not change production behavior.
@@ -74,7 +71,7 @@ Return `status: complete` with exactly one outcome:
 - `outcome: already-green`, with the passing command and evidence.
 
 Return `status: pending` only when execution evidence is incomplete or a verified transient environmental failure can be retried without file changes.
-Return `status: blocked` for a compilation failure, fixture failure, unrelated assertion, non-transient environmental failure, or when the case or API design must change.
+Return `status: blocked` for a compilation failure, fixture failure, unrelated assertion, non-transient environmental failure, or when the case or required design must change.
 
 ## 5. Make green
 

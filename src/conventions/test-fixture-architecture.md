@@ -17,6 +17,9 @@
 
 ## Boundary check
 
+- Before designing a new helper method, inspect existing scoped helpers and their usages.
+- Reuse a generic setup method when the selected behavior does not distinguish the concrete data subtype.
+- Name a scoped helper by its action or observed state without repeating its owner scope or exposing storage topology that the selected behavior does not distinguish.
 - Before adding or changing a `*TestApi`, name its aggregate/resource scope.
 - If a helper method needs data from another scope, move that lookup to that scope's `*TestApi`.
 - If a helper method creates, links, binds, or updates objects from multiple scopes, move it to `*FixturePresets`.
