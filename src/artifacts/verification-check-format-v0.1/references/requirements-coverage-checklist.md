@@ -6,6 +6,7 @@
 - `Example` lines cover only materially distinct input or context classes for the same `Rule`.
 - Rule/example sets cover the smallest useful semantic classes that would expose plausible one-case, hard-coded, or overfit implementations.
 - Relevant inputs, context values, and preconditions that affect behavior are covered.
+- Preconditions state the required pre-action state directly instead of its setup history, unless the selected obligation makes that action sequence observable behavior.
 - Authoritative data sources and decision logic are reflected only through contract-visible behavior.
 - Result scope, filtering, selection, ordering, cardinality, and mandatory presence rules are covered.
 - Required and forbidden visible properties are covered.
