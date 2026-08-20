@@ -1,6 +1,6 @@
 ---
 name: implement-task-tdd
-description: Coordinate implementation of a task directory through minimal reviewed vertical TDD increments, with every selection, test design, required design alignment, red, green, and refactor stage delegated to a separate sequential subagent and committed at the defined boundaries. Use when the user asks to implement a task, todo, or briefs end to end through TDD with human approval after every stage.
+description: Coordinate implementation of a task directory through minimal reviewed vertical TDD increments, with every selection, test design, required design alignment, red, green, and refactor stage delegated to a separate sequential subagent and committed at the defined boundaries. Use when the user asks to implement a task, todo, or briefs end to end through TDD with human approval at defined review gates.
 ---
 
 # Implement Task with TDD
@@ -42,8 +42,8 @@ Give every subagent the fresh shared handoff, write set, stop conditions, and re
 
 After every subagent returns, apply the independent verification from `references/stage-contracts.md`.
 Only a result that satisfies its stage-specific completion condition completes the stage.
-After independently verifying a completed stage, report its result and stop for explicit human approval.
-Do not start the next stage before that approval.
+After independently verifying a completed stage, report its result and stop for explicit human approval, except for the green-to-refactor transition defined below.
+Do not start the next stage before that approval unless the completed stage is green.
 Approval of a stage authorizes only the transition and commit defined by this skill.
 For `pending` or `blocked`, stop with the same stage active; human approval cannot waive its completion condition.
 After the human resolves a blocker or requests continuation of a pending stage, rerun that stage in a new subagent with freshly verified state.
@@ -74,7 +74,7 @@ After approval of a proven red stage, commit together:
 - minimal compile-only production surface;
 - approved task, case, and required design artifacts.
 
-After approval of the green stage, create a separate commit containing only the coherent production change and compile-required production call-site propagation.
+Immediately after independently verifying the green stage, create a separate commit containing only the coherent production change and compile-required production call-site propagation.
 
 After final approval of the refactor result, update the matching `todo.md` item and create a separate commit containing only the refactoring and task-status update.
 Mark only the selected increment complete.
@@ -95,6 +95,8 @@ Do not create the commit when it would be empty.
 
 ## Refactor review
 
+Treat a completed green stage as a continuous transition, not a review gate.
+After creating and verifying the green commit, immediately start the refactor stage without waiting for human approval.
 Apply the refactor stage's nested pre-edit plan approval from `references/stage-contracts.md`.
 After the refactor result is complete, apply the normal final stage review before updating `todo.md` or committing.
 
@@ -119,4 +121,5 @@ Finish only when the briefs and `todo.md` contain no remaining unimplemented beh
 ## Output
 
 At every review gate, report the task directory, increment, current stage, status, outcome or pending reason, verified Git state, changed files, verification result, and the approval needed.
+For the continuous green-to-refactor transition, report the same verified state as a progress update without requesting approval.
 At completion, report the commits created, completed increments, final verification, remaining unrelated changes, and why no unimplemented behavior remains.
