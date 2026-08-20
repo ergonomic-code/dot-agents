@@ -95,7 +95,7 @@ devlog/123-example-task/
 Итерации можно вести в трёх режимах:
 
 1. Ручном - самостоятельно выбираете что делать дальше, вызываете соответствующий скилл и обновляете рабоиче файлы задачи;
-2. Полуавтоматическом - используйте скилл [`$implement-task-tdd`](src/skills/implement-task-tdd/SKILL.md), чтобы агент сам полностью реализовал задачу до конца, по умолчанию останавливаясь на ревью в ключевых точках.
+2. Полуавтоматическом - используйте скилл [`$implement-task-tdd`](src/skills/implement-task-tdd/SKILL.md), чтобы агент сам полностью реализовал задачу до конца, останавливаясь на ревью в ключевых точках, но не между озеленением кейса и запуском рефакторинга.
 3. Автоматическом - используйте скилл [`$implement-task-tdd`](src/skills/implement-task-tdd/SKILL.md) с указанием не останавливаться на ревью, чтобы агент сам полностью реализовал задачу до конца.
 
 > [!WARNING]
@@ -193,7 +193,7 @@ flowchart TD
 | [`$fix-framework-context`](src/skills/fix-framework-context/SKILL.md) | Анализирует и после выбора варианта изменяет общий runtime-контекст Ergocode. |
 | [`$fix-project-context`](src/skills/fix-project-context/SKILL.md) | Анализирует и после выбора варианта изменяет agent-facing контекст конкретного проекта. |
 | [`$fix-red-case`](src/skills/fix-red-case/SKILL.md) | Изменяет production-код, чтобы сделать зелёным один красный Kotlin JUnit-тест. |
-| [`$implement-task-tdd`](src/skills/implement-task-tdd/SKILL.md) | Координирует реализацию задачи минимальными TDD-инкрементами с субагентами и подтверждением каждой стадии. |
+| [`$implement-task-tdd`](src/skills/implement-task-tdd/SKILL.md) | Координирует реализацию задачи минимальными TDD-инкрементами с субагентами и ревью в определённых точках; после green сразу запускает рефакторинг. |
 | [`$init-task-workdir`](src/skills/init-task-workdir/SKILL.md) | Создаёт директорию задачи `devlog/NNN-slug` с обязательными рабочими файлами из шаблонов. |
 | [`$plan-test-case-fixing`](src/skills/plan-test-case-fixing/SKILL.md) | Исследует один красный тест-кейс и составляет план его реализации. |
 | [`$prepare-task-workdir`](src/skills/prepare-task-workdir/SKILL.md) | В диалоге подготавливает бриф задачи, якори в коде и выбранное направление решения. |
