@@ -197,6 +197,6 @@ flowchart TD
 | [`$init-task-workdir`](src/skills/init-task-workdir/SKILL.md) | Создаёт директорию задачи `devlog/NNN-slug` с обязательными рабочими файлами из шаблонов. |
 | [`$plan-test-case-fixing`](src/skills/plan-test-case-fixing/SKILL.md) | Исследует один красный тест-кейс и составляет план его реализации. |
 | [`$prepare-task-workdir`](src/skills/prepare-task-workdir/SKILL.md) | В диалоге подготавливает бриф задачи, якори в коде и выбранное направление решения. |
-| [`$refactor-case`](src/skills/refactor-case/SKILL.md) | Проверяет и рефакторит один TDD-инкремент после достижения зелёного состояния. |
+| [`$refactor-case`](src/skills/refactor-case/SKILL.md) | Полностью проверяет один зелёный TDD-инкремент, группирует совместимые узкие рефакторинги и сообщает оставшиеся кандидаты. |
 | [`$select-next-increment`](src/skills/select-next-increment/SKILL.md) | Выбирает следующий минимальный нереализованный вертикальный инкремент. |
 | [`$write-verification-check`](src/skills/write-verification-check/SKILL.md) | Описывает один тест-кейс в стандартном Gherkin-подобном формате. |
