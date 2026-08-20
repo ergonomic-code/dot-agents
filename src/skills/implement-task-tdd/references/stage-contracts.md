@@ -2,110 +2,88 @@
 
 Use these contracts only from `$implement-task-tdd`.
 
+## Responsibility boundary
+
+The invoked stage skill owns semantic correctness, evidence interpretation, and its `status` and `outcome` classification.
+The coordinator owns protocol, state transitions, Git isolation, write-set enforcement, required-command observation, review gates, and commits.
+The coordinator does not reproduce stage reasoning.
+
 ## Shared handoff
 
-Give every stage subagent a handoff containing:
+Give every stage subagent:
 
-- `task_dir`;
-- task brief, solution brief, `todo.md`, and relevant task artifacts;
-- verified `HEAD`, staged paths, unstaged paths, and unrelated changes to preserve;
-- selected increment, external boundary, final observable effect, and exclusions when available;
-- preceding stage result and unresolved findings when available;
+- `task_dir` and relevant task artifacts;
+- verified `HEAD`, staged and unstaged paths, and unrelated changes to preserve;
+- the preceding approved stage result;
 - allowed write set and forbidden actions;
 - required validation and output.
 
-Require the subagent to return:
+Require every stage subagent to return:
 
 - `status`: `complete`, `pending`, or `blocked`;
 - evidence used;
 - files changed;
-- commands run and their results;
-- `outcome`: the stage-specific result when `status` is `complete`;
+- commands run and observed results;
+- `outcome` when complete;
 - remaining blocker or uncertainty.
 
-Subagent output is evidence to verify, not proof of completion.
+## Stages
 
-## 1. Select increment
+### 1. Select increment
 
+Invoke `$select-next-increment`.
 Allow no file changes.
-Invoke `$select-next-increment` with the task directory and shared handoff.
-Before independent verification, read `framework_checkout_root/src/skills/select-next-increment/SKILL.md` and its referenced selection policy.
-Verify the returned result against that contract and the actual task evidence.
-Return the full result unchanged.
+Accept `status: complete` only with `outcome: increment-selected` or `outcome: no-unimplemented-behavior`.
 
-## 2. Design case
+### 2. Design case
 
-Allow changes only to `<task-dir>/030-test-cases-new.md`.
-Invoke `$design-test-case` with the approved increment, relevant artifacts, and `<task-dir>/030-test-cases-new.md` as its explicit output path.
-Treat the approved increment as selected and do not add sibling obligations.
-Require the selected case to be written to that artifact before returning `status: complete` with `outcome: case-designed` and exactly one full-mode test-method-sized case or one allowed complete parameterized set.
-Accept a provisional `Feature` only for an explicitly planned new SUT and carry its missing technical reference into `$align-required-design`.
-Return the rendered case and changed artifact path to the coordinator.
+Invoke `$design-test-case` with the approved increment and `<task-dir>/030-test-cases-new.md` as its output path.
+Allow changes only to that artifact.
+Accept `status: complete` only with `outcome: case-designed`.
 
-## 3. Align required design
+### 3. Align required design
 
-Allow changes only to task, target API, target test-case, solution, and implementation-design artifacts.
-Invoke `$align-required-design` with the selected case, task directory, explicit target artifact paths, and shared handoff.
-Require that skill to limit every contract change to the selected case and preserve its behavior.
-Return its `status: blocked` only for unresolved product behavior, an approved-artifact conflict, or required scope widening.
-Return `status: complete` with `outcome: required-design-aligned` only after every selected `Feature` has its SUT reference, together with changed artifacts and one `reuse`, `add`, `change`, or `no-change` decision for every examined surface.
+Invoke `$align-required-design` with the selected case, task directory, and explicit target artifact paths.
+Allow changes only to required task, target API, target test-case, solution, and implementation-design artifacts.
+Accept `status: complete` only with `outcome: required-design-aligned`.
 
-## 4. Code and prove red
+### 4. Code and prove red
 
-Do not start this stage while the selected `Feature` is provisional.
-Resolve the target Kotlin test file and invoke `$code-test-case` with its explicit path, the approved case, and required design.
-For a new file, require its workflow-invoked generate mode to write the generated code to that path.
-Allow changes only to the selected test, required test infrastructure, and minimal compile-only production surface permitted by that skill.
-Do not change production behavior.
-Require `$code-test-case` to compile and execute the exact selected test and classify its behavior state.
-Do not accept compilation failure, fixture failure, environmental failure, or an unrelated assertion as red.
-Do not weaken the test to manufacture the expected failure.
+Invoke `$code-test-case` with the selected case, required design, and explicit Kotlin test path.
+Allow changes only to the selected test, required test infrastructure, and compile-only production surface allowed by that skill.
+Require reported compilation and exact-test execution commands.
+Accept `status: complete` only with `outcome: expected-red` or `outcome: already-green`.
 
-Return `status: complete` with exactly one outcome:
+### 5. Make green
 
-- `outcome: expected-red`, with the observed failure and its connection to the selected behavior;
-- `outcome: already-green`, with the passing command and evidence.
-
-Return `status: pending` only when execution evidence is incomplete or a verified transient environmental failure can be retried without file changes.
-Return `status: blocked` for a compilation failure, fixture failure, unrelated assertion, non-transient environmental failure, or when the case or required design must change.
-
-## 5. Make green
-
-Invoke `$fix-red-case` only for a proven and approved red case.
+Invoke `$fix-red-case` with the approved red-stage result.
 Allow production-code changes only.
-Preserve the selected test and its intent unchanged.
-Make the smallest coherent production change for the approved vertical slice, including a contract-complete constant implementation when sufficient.
-Do not implement later variants or obligations.
+Require the exact selected-test command.
+Accept `status: complete` only with `outcome: selected-test-passes`.
 
-Run the selected test.
-Return `status: complete` with `outcome: selected-test-passes` only when the same selected test passes.
-Return `status: pending` only when implementation or verification is interrupted while further work remains inside the same boundary.
-Return `status: blocked` if green requires widening the increment or changing the test.
+### 6. Refactor increment
 
-## 6. Refactor increment
+Invoke `$refactor-case` with the red and green boundary commits.
+Use the net diff from the red commit's parent through the green commit.
+Allow changes only within the coordinator-approved refactor write set and forbid `todo.md` changes.
 
-Invoke `$refactor-case` with the red and green boundary commits as one bounded TDD increment.
-Use the net diff from the red commit's parent through the green commit so the range includes the red commit and every intervening commit.
-Allow no behavior or test-intent changes.
-When editing, keep its one-mode-per-iteration rule.
+When the skill returns `status: pending` with `pending_reason: refactor-plan-approval`, stop for approval and then resume the same subagent.
+Require the exact selected-test command for a completed result.
+Accept `status: complete` only with `outcome: refactored` or `outcome: no-op`.
 
-If there is no useful narrow refactoring, make no edits, run the selected test, and return `status: complete` with `outcome: no-op`.
-Otherwise, before edits, return `status: pending` with `pending_reason: refactor-plan-approval` and the required refactor plan.
-After approval, resume the same subagent.
-Run the selected test after edits.
-Do not update `todo.md`; the coordinator updates it only after final human review.
-Return `status: complete` with `outcome: refactored` or `outcome: no-op` only after the required verification passes.
-Return `status: pending` when verification is incomplete, or `status: blocked` when refactoring would violate this boundary.
+## Mechanical verification
 
-## Independent verification
+After every subagent:
 
-After every subagent, compare actual state with the pre-stage handoff:
-
-- verify `HEAD` and inspect the latest commit to detect unauthorized commits;
+- verify that `HEAD` did not change and inspect the latest commit;
 - inspect staged and unstaged status and diffs;
-- attribute every changed hunk to the approved write set;
-- confirm unrelated user changes are byte-for-byte preserved where practical;
-- rerun the narrowest required compile or test command;
-- compare the observed result with the stage-specific completion condition.
+- verify every path and hunk changed since the pre-stage snapshot is within the stage write set;
+- verify earlier approved and unrelated changes remain preserved where practical;
+- verify every required command was actually run;
+- rerun the required compile or exact-test command for stages 4-6;
+- compare only the observed command state with the reported outcome.
 
-Do not advance on report-only evidence.
+For `expected-red`, require successful compilation and an executed failing selected test.
+For `already-green`, `selected-test-passes`, `refactored`, and `no-op`, require the selected test to pass.
+Do not independently classify the failure cause or reassess selection, design, alignment, minimality, or remaining behavior.
+Do not advance on report-only evidence or any mechanical mismatch.

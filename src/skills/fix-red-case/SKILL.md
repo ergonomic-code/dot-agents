@@ -36,3 +36,6 @@ If selecting among task plans is ambiguous, ask the user instead of choosing one
 ## Output
 
 Report the plan source (`prompt`, task directory, or new planning), failure causes addressed, design context used or absent, production files changed, verification command, and whether the selected test passed or the work was blocked.
+When invoked by another skill, return `status: complete` with `outcome: selected-test-passes` only when the same selected test passes.
+Return `status: pending` only when implementation or verification is interrupted while work remains inside the selected behavior boundary.
+Return `status: blocked` when planning has an unresolved question or blocker, or green requires changing the selected test or widening the behavior boundary.
