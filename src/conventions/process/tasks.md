@@ -40,9 +40,18 @@ Each file in a task directory should have a filename prefix that identifies its 
 - 030 - target-state description.
   Artifacts that describe the target solution, such as the solution brief, target API, new test cases, target architecture, and similar design context.
   Keep `030-solution-brief.md` at the overall solution direction and system-level tradeoffs.
-  Keep selected-case signatures, helpers, fixture configuration, and other implementation details in a separate target design artifact.
-  When creating that artifact, add only the newly required design details instead of moving existing task content into it.
-  Maintain it as the current accumulated design across later increments, not as a narration or changelog of those increments.
+  Keep `030-implementation-design.md` as the current accumulated design across later increments.
+  Structure it by implementation level, not by increment, test case, or kind of code.
+  Use only applicable non-empty sections, in this order:
+    - Data model.
+      Include a nested persistence model only when the used framework cannot map the correct domain model cleanly.
+    - REST API.
+      Include nested input and output DTOs when applicable.
+    - Component diagram as a UML object diagram of runtime objects.
+    - Operation call-structure diagram.
+    - TestApi.
+  When a selected case requires new design, update only the applicable sections and do not name or narrate the case or increment.
+  Add only newly required design instead of moving existing task content into the artifact.
 - 040 - implementation working files.
 
 ### Standard Task Files
@@ -61,4 +70,4 @@ Depending on the task type and nature, a task may also have:
 - 020-test-cases-current.md - current relevant test cases.
 - 030-api-new.adoc - target REST API.
 - 030-test-cases-new.md - new test cases.
-- 030-implementation-design.md - current accumulated implementation design required by selected cases.
+- 030-implementation-design.md - current accumulated implementation design structured by the implementation levels above.
