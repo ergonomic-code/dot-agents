@@ -19,6 +19,7 @@ Load code implementation rules from `../conventions/code-implementation.md` and 
 
 ## Conditional context
 
+* Load and follow `../conventions/lightweight-markup-authoring.md` before writing or revising Markdown documents.
 * Load and follow `../conventions/operations-design.md` when planning or implementing changes in production operations.
 * Load and follow `../conventions/tests.md` before planning, adding, changing, aligning, or bringing existing tests to guidelines, including test sources, test helpers, and test-facing adapters.
   Do not skip it just because the current task is still at plan stage.
