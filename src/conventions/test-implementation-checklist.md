@@ -14,6 +14,8 @@
 - Are there no public read calls used only to discover setup-created ids or refs?
 - Is shared fixture state cleaned only by the shared setup/reset layer?
 - Do test cases assert observable outcomes without verifying calls between internal components, dependency wiring, or control flow?
+- Is every fake, stub, or mock necessary because neither an existing production component nor one required by the selected design can reproduce the selected behavior safely within the applicable test budgets, with pending implementation and easier setup, control, or observation rejected as justifications?
+- Did no test double cause a production interface to be introduced or generalized?
 - Are in-process class or object mocks limited to behavior that is hard or expensive to reproduce with a real dependency, typically infrastructure failures, and absent for normal behavior?
 - Are interactions verified only at external-system boundaries and only for correctness of outgoing requests or messages?
 - Are Spring bean override mocks and spies absent?
