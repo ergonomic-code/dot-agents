@@ -1,6 +1,6 @@
 ---
 name: implement-task-tdd
-description: Coordinate implementation of a task directory through minimal reviewed vertical TDD increments, with every selection, test design, API design, red, green, and refactor stage delegated to a separate sequential subagent and committed at the defined boundaries. Use when the user asks to implement a task, todo, or briefs end to end through TDD with human approval after every stage.
+description: Coordinate implementation of a task directory through minimal reviewed vertical TDD increments, with every selection, test design, required design alignment, red, green, and refactor stage delegated to a separate sequential subagent and committed at the defined boundaries. Use when the user asks to implement a task, todo, or briefs end to end through TDD with human approval after every stage.
 ---
 
 # Implement Task with TDD
@@ -53,7 +53,7 @@ The pre-edit refactor plan is not a completed stage; after its approval, resume 
 
 1. Delegate selection of the next minimal increment through `$select-next-increment`.
 2. Delegate one test-method-sized design through `$design-test-case`.
-3. Delegate design and artifact alignment for only the API surfaces required by the selected case.
+3. Delegate alignment of only the production and test-side design required by the selected case.
 4. Delegate coding of the selected case through `$code-test-case` and prove its executed red state.
 5. Delegate greening through `$fix-red-case`.
 6. Delegate refactoring of the bounded red-plus-green increment through `$refactor-case`.
@@ -72,7 +72,7 @@ After approval of a proven red stage, commit together:
 - the selected test;
 - required test infrastructure;
 - minimal compile-only production surface;
-- approved task, case, API, and solution artifacts.
+- approved task, case, and required design artifacts.
 
 After approval of the green stage, create a separate commit containing only the coherent production change and compile-required production call-site propagation.
 
