@@ -29,20 +29,29 @@ Accept one commit, current uncommitted changes, or one coordinator-supplied boun
 3. Inspect test changes inside the target boundary for:
    - violations of `test-fixture-architecture.md`, especially `*TestApi` scope leaks, cross-scope orchestration inside `*TestApi`, or setup that belongs in `*FixturePresets`;
    - violations of other loaded test conventions when they materially apply, especially `http-api-test-rules.md` for HTTP boundary tests and `*HttpApi` helpers.
-4. If there is no useful narrow refactoring inside the target boundary, make no edits, rerun the selected test, and return a verified `no-op` without selecting a mode or requesting edit approval.
-5. Otherwise classify the selected refactoring as exactly one mode:
+4. Complete every applicable inspection above before selecting a refactoring.
+   Do not stop at the first useful finding.
+   Record every candidate with its location, triggering rule or concrete structural evidence, structural delta, mode, disposition, and disposition rationale.
+   Use exactly one disposition: `eligible`, `behavior-or-design-blocked`, or `out-of-boundary`.
+5. Select the largest coherent group of mutually compatible `eligible` candidates in one mode that can all be changed and verified inside the target boundary.
+   Do not exclude a compatible candidate merely to keep the plan smaller.
+   Preserve unselected candidates in the report.
+6. If the completed inspection has no `eligible` candidate, make no edits, rerun the selected test, and return a verified `no-op` without selecting a mode or requesting edit approval.
+7. Otherwise classify the selected refactoring as exactly one mode:
    - `production` when the intended structural change is in production code;
    - `test` when the intended structural change is in test code;
    - stop if the iteration needs both, except for the minimal test updates required by `references/api-alignment.md`.
-6. Load and apply exactly one matching rule file:
+8. Load and apply exactly one matching rule file:
    - in `production` mode, read `../../conventions/process/production-code-refactoring.md`;
    - in `test` mode, read `../../conventions/process/tests-refactoring.md`.
-7. For duplication, propose the narrowest shared implementation that owns the complete repeated responsibility while preserving behavior.
-8. Propose a short refactor plan and wait for explicit approval before editing.
-9. After approval, change structure only.
+9. For duplication, propose the narrowest shared implementation that owns the complete repeated responsibility while preserving behavior.
+10. Propose a short refactor plan and wait for explicit approval before editing.
+11. After approval, change structure only.
    Preserve observable behavior, public contracts, persistence shape, API responses, test intent.
-10. Rerun the selected test.
+12. Rerun the selected test.
    If shared APIs or broad call sites changed, also run the smallest relevant compile or module test.
+13. Repeat steps 2-4 against the entire refactored target boundary without making unapproved edits.
+   Replace the previous inventory with every current remaining candidate so the next invocation can continue from current code and reach a verified `no-op`.
 
 ## Constraints
 
@@ -57,6 +66,6 @@ Accept one commit, current uncommitted changes, or one coordinator-supplied boun
 
 ## Output
 
-Before edits, report the target, chosen refactor mode, findings, proposed refactor steps, and validation plan.
-For a no-op, report the target, absence of a useful narrow refactoring, and validation result.
-After edits, report files changed and validation result.
+Before edits, report the target, complete candidate inventory, chosen refactor mode and group, proposed refactor steps, and validation plan.
+For a no-op, report the target, completed inspection, absence of an `eligible` candidate, and validation result.
+After edits, report files changed, validation result, and the remaining candidate inventory from the repeated inspection.
