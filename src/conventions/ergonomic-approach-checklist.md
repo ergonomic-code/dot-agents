@@ -2,6 +2,8 @@
 
 ## General
 
+- Is `port` used only for an entry point that receives an external signal, with outbound and internal dependencies modeled as resources?
+- Is every new component interface supported by current requirements, the selected design, or verified production code indicating at least two production implementations, excluding test doubles?
 - Does every implementation-code change serve required behavior rather than only making tests pass?
 - Except for test-case-local setup or assertions whose repetition improves readability, is each responsibility implemented once, including across paths that express it differently, with its complete shared behavior centralized rather than only a common inner fragment?
 - Are non-trivial operations shaped as explicit read-query, I/O-free pure-calculation-query, and write-command branches?

@@ -14,6 +14,9 @@ Use this file with `./ergonomic-architecture.md` when a task concerns ports, ope
 
 ## Rules
 
+- Reserve `port` for an entry point that receives an external signal; model outbound and internal dependencies as resources, not ports.
+- Introduce a component interface only when current requirements, the selected design, or verified production code indicate at least two production implementations; test doubles do not count as production implementations.
+- When a design artifact needs to show one not-yet-implemented component, use a concrete class declaration or explicitly labeled pseudocode instead of an interface.
 - Expose one public use-case method name from each operation; allow multiple overloads of that method when needed.
 - Keep the component dependency graph acyclic.
 - Use a complex resource when one domain resource must coordinate several primitive or infrastructure resources behind a single bounded API.
