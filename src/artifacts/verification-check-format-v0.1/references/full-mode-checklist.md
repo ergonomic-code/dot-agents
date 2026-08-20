@@ -8,6 +8,7 @@
 - Named `Example` lines name semantic input or context classes for their `Rule`.
 - Unnamed `Example` is used only when no example name is needed.
 - All meaningful example differences are in `Given` or named `Example`.
+- `Given` states the pre-action state directly and includes its setup history only when the selected obligation makes that action sequence observable behavior.
 - `When` describes the action on the `Feature`.
 - Read-after-write command checks put the public observation operation in `And`.
 - If command-returned data is checked before observation, the block uses `When`, `Then`, `And`, `Then`.

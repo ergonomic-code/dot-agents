@@ -9,10 +9,12 @@ If a `Rule` has an unnamed `Example`, that unnamed example must be the only `Exa
 An optional source reference line may appear immediately under the matching `Example` per `references/source-reference.md`.
 
 Put only outcome-relevant preconditions in `Given`.
+Describe each precondition as the state present before the action under test.
+Do not include an earlier action only to establish that state; include it only when the selected obligation makes the action sequence observable behavior.
 Describe setup with concrete domain objects, states, and literals only when they materially affect the example.
 Put the action under test in `When`.
 Prefer one action in `When`.
-Add a second action only for explicit read-after-write or another essential composite flow.
+Add a second action only when the selected obligation makes the sequence observable behavior, including explicit read-after-write.
 In read-after-write command checks with a public observation operation, put the command in `When` and the observation operation in `And`.
 If command-returned data must be checked before observation, use `When`, `Then`, `And`, `Then`: command, command result, observation operation, observed state.
 If several observation endpoint calls are required, put each observation action in its own following `And`, with its result in the next `Then`.
