@@ -23,13 +23,14 @@ Complete with `outcome: increment-selected` or `outcome: no-unimplemented-behavi
 
 Select this stage when one increment is selected and no matching complete verification case is proven.
 Load and follow `framework_checkout_root/src/skills/design-test-case/SKILL.md` for exactly one test-method-sized case or one allowed complete parameterized set.
-Use a resolved target test-case artifact when available; otherwise return the case in the stage result for reuse in the current session.
+When a task directory resolves, use `<task-dir>/030-test-cases-new.md` as the explicit target test-case artifact and write the case before completing the stage.
+Otherwise return the case in the stage result for reuse in the current session.
 Complete only when the rendered case satisfies that skill's final checklist.
 
 ### 3. Align required design
 
 Select this stage only when the designed case proves that a public contract, production type or signature, test API, fixture, preset, or configuration surface must be added or changed before the case can be coded.
-Write the approved case into the matching target test-case artifact when it is not already stored there.
+Keep the case artifact written by the design stage unchanged unless required design alignment changes its approved contract.
 Read and apply `framework_checkout_root/src/references/required-design-alignment.md`.
 For a new or changed JSON-over-HTTP contract, load and follow `framework_checkout_root/src/skills/describe-rest-api/SKILL.md`.
 Do not write production code, test code, build configuration, migrations, schemas, or generated code.

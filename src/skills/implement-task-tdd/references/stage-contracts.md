@@ -35,16 +35,16 @@ Return the full result unchanged.
 
 ## 2. Design case
 
-Allow no code changes.
-Invoke `$design-test-case` with the approved increment and relevant artifacts.
+Allow changes only to `<task-dir>/030-test-cases-new.md`.
+Invoke `$design-test-case` with the approved increment, relevant artifacts, and `<task-dir>/030-test-cases-new.md` as its explicit output path.
 Treat the approved increment as selected and do not add sibling obligations.
-Return `status: complete` with `outcome: case-designed` and exactly one full-mode test-method-sized case or one allowed complete parameterized set.
-Return the rendered case to the coordinator without writing files.
+Require the selected case to be written to that artifact before returning `status: complete` with `outcome: case-designed` and exactly one full-mode test-method-sized case or one allowed complete parameterized set.
+Return the rendered case and changed artifact path to the coordinator.
 
 ## 3. Align required design
 
 Allow changes only to task, target API, target test-case, solution, and implementation-design artifacts.
-Write the approved case into the corresponding target test-case artifact.
+Keep the case artifact written by the design stage unchanged unless required design alignment changes its approved contract.
 Read and apply `framework_checkout_root/src/references/required-design-alignment.md`.
 When the case requires a new or changed JSON-over-HTTP public contract, invoke `$describe-rest-api` and use its validated IR and rendered target artifact.
 Limit that contract change to the selected case.
