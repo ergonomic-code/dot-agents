@@ -39,7 +39,8 @@ After returning or writing the verification case stop.
 
 ## Output
 
-When invoked by another skill as an internal step, return the rendered case to that caller and do not write files.
+When invoked by another skill with an explicit resolved output path, write the rendered case before returning it to that caller.
+When invoked by another skill without a resolved output path, return the rendered case without writing files.
 If the resolved output path is `030-test-cases-new.*`, update that cases artifact instead of returning the case inline.
 In an existing cases artifact, add only the new case under the added-cases section.
 If that section already contains a source block for the same `Feature`, insert only the new `Rule` into that block.
