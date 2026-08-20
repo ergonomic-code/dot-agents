@@ -39,24 +39,20 @@ Allow changes only to `<task-dir>/030-test-cases-new.md`.
 Invoke `$design-test-case` with the approved increment, relevant artifacts, and `<task-dir>/030-test-cases-new.md` as its explicit output path.
 Treat the approved increment as selected and do not add sibling obligations.
 Require the selected case to be written to that artifact before returning `status: complete` with `outcome: case-designed` and exactly one full-mode test-method-sized case or one allowed complete parameterized set.
+Accept a provisional `Feature` only for an explicitly planned new SUT and carry its missing technical reference into `$align-required-design`.
 Return the rendered case and changed artifact path to the coordinator.
 
 ## 3. Align required design
 
 Allow changes only to task, target API, target test-case, solution, and implementation-design artifacts.
-Keep the case artifact written by the design stage unchanged unless required design alignment changes its approved contract.
-Read and apply `framework_checkout_root/src/references/required-design-alignment.md`.
-When the case requires a new or changed JSON-over-HTTP public contract, invoke `$describe-rest-api` and use its validated IR and rendered target artifact.
-Limit that contract change to the selected case.
-Do not change requirements to make the selected case easier.
-Return `status: blocked` when a required surface is unsupported by or conflicts with the briefs.
-
-Do not write production code, test code, build configuration, migrations, schemas, or generated code.
-Do not add APIs for later increments.
-Return `status: complete` with `outcome: required-design-aligned`, changed artifacts, and one `reuse`, `add`, `change`, or `no-change` decision for every examined surface.
+Invoke `$align-required-design` with the selected case, task directory, explicit target artifact paths, and shared handoff.
+Require that skill to limit every contract change to the selected case and preserve its behavior.
+Return its `status: blocked` only for unresolved product behavior, an approved-artifact conflict, or required scope widening.
+Return `status: complete` with `outcome: required-design-aligned` only after every selected `Feature` has its SUT reference, together with changed artifacts and one `reuse`, `add`, `change`, or `no-change` decision for every examined surface.
 
 ## 4. Code and prove red
 
+Do not start this stage while the selected `Feature` is provisional.
 Resolve the target Kotlin test file and invoke `$code-test-case` with its explicit path, the approved case, and required design.
 For a new file, require its workflow-invoked generate mode to write the generated code to that path.
 Allow changes only to the selected test, required test infrastructure, and minimal compile-only production surface permitted by that skill.
