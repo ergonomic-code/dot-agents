@@ -66,6 +66,8 @@ Accept one commit, current uncommitted changes, or one coordinator-supplied boun
 
 ## Output
 
-Before edits, report the target, complete candidate inventory, chosen refactor mode and group, proposed refactor steps, and validation plan.
-For a no-op, report the target, completed inspection, absence of an `eligible` candidate, and validation result.
-After edits, report files changed, validation result, and the remaining candidate inventory from the repeated inspection.
+Before edits, return `status: pending` with `pending_reason: refactor-plan-approval`, the target, complete candidate inventory, chosen refactor mode and group, proposed refactor steps, and validation plan.
+For a no-op, return `status: complete` with `outcome: no-op`, the target, completed inspection, absence of an `eligible` candidate, and the passing selected-test command.
+After approved edits, return `status: complete` with `outcome: refactored`, files changed, the passing selected-test command, and the remaining candidate inventory from the repeated inspection.
+Return `status: pending` when required verification is incomplete.
+Return `status: blocked` when refactoring would violate the target boundary or requires behavior clarification.
