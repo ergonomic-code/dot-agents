@@ -38,8 +38,9 @@ Run stages strictly through this state machine:
 2. `$design-test-case`
 3. `$align-required-design`
 4. `$code-test-case`
-5. `$fix-red-case`
-6. `$refactor-case`
+5. `$plan-test-case-fixing`
+6. `$fix-red-case`
+7. `$refactor-case`
 
 Run stages sequentially and never in parallel.
 Run each stage in a new separate subagent, except when resuming an approved refactor plan.
@@ -72,6 +73,8 @@ After approval of `expected-red`, commit together:
 - the selected test;
 - required test infrastructure;
 - minimal compile-only production surface.
+
+After approval of `fix-planned`, commit only changed task and solution briefs.
 
 After a mechanically verified green stage, create a separate commit containing only the production change and compile-required production call-site propagation.
 Then immediately start refactoring without another review gate.
