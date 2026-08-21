@@ -54,14 +54,21 @@ Allow changes only to the selected test, required test infrastructure, and compi
 Require reported compilation and exact-test execution commands.
 Accept `status: complete` only with `outcome: expected-red` or `outcome: already-green`.
 
-### 5. Make green
+### 5. Plan production fix
 
-Invoke `$fix-red-case` with the approved red-stage result.
+Invoke `$plan-test-case-fixing` with the approved red-stage result and task directory.
+Allow changes only to `<task-dir>/010-task-brief.md` and `<task-dir>/030-solution-brief.md`.
+Require the exact selected-test command and reusable production-fix plan.
+Accept `status: complete` only with `outcome: fix-planned` and no unresolved questions or blockers.
+
+### 6. Make green
+
+Invoke `$fix-red-case` with the approved production-fix plan.
 Allow production-code changes only.
 Require the exact selected-test command.
 Accept `status: complete` only with `outcome: selected-test-passes`.
 
-### 6. Refactor increment
+### 7. Refactor increment
 
 Invoke `$refactor-case` with the red and green boundary commits.
 Use the net diff from the red commit's parent through the green commit.
@@ -80,10 +87,11 @@ After every subagent:
 - verify every path and hunk changed since the pre-stage snapshot is within the stage write set;
 - verify earlier approved and unrelated changes remain preserved where practical;
 - verify every required command was actually run;
-- rerun the required compile or exact-test command for stages 4-6;
+- rerun the required compile or exact-test command for stages 4-7;
 - compare only the observed command state with the reported outcome.
 
-For `expected-red`, require successful compilation and an executed failing selected test.
+For `expected-red` and `fix-planned`, require successful compilation and an executed failing selected test.
+For `fix-planned`, also require the plan-contract fields and no unresolved questions or blockers.
 For `already-green`, `selected-test-passes`, `refactored`, and `no-op`, require the selected test to pass.
 Do not independently classify the failure cause or reassess selection, design, alignment, minimality, or remaining behavior.
 Do not advance on report-only evidence or any mechanical mismatch.
