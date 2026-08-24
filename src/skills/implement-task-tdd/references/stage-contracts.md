@@ -13,6 +13,7 @@ The coordinator does not reproduce stage reasoning.
 Give every stage subagent:
 
 - `task_dir` and relevant task artifacts;
+- the current explicit user request and any unambiguous task-brief record of an earlier request for a specific implementation-detail test;
 - verified `HEAD`, staged and unstaged paths, and unrelated changes to preserve;
 - the preceding approved stage result;
 - allowed write set and forbidden actions;
@@ -33,7 +34,13 @@ Require every stage subagent to return:
 
 Invoke `$select-next-increment`.
 Allow no file changes.
-Accept `status: complete` only with `outcome: increment-selected` or `outcome: no-unimplemented-behavior`.
+Accept `status: complete` only with `outcome: increment-selected`, `outcome: non-test-step-selected`, or `outcome: no-unimplemented-work`.
+
+### Non-test branch
+
+For `non-test-step-selected`, follow `framework_checkout_root/src/references/non-test-task-step.md` and do not invoke stages 2-7.
+Allow only the selected production or task-artifact write set and mechanically required adaptations of existing behavior tests; forbid new or changed coverage of the selected detail and `todo.md` changes during execution.
+Accept `status: complete` only with `outcome: non-test-step-complete` and the required observed verification.
 
 ### 2. Design case
 
@@ -89,6 +96,8 @@ After every subagent:
 - verify every required command was actually run;
 - rerun the required compile or exact-test command for stages 4-7;
 - compare only the observed command state with the reported outcome.
+
+For `non-test-step-complete`, also verify the selected result, the absence of new or changed coverage of the selected detail, and the existing-check or transient-diagnostic evidence required by its contract.
 
 For `expected-red` and `fix-planned`, require successful compilation and an executed failing selected test.
 For `fix-planned`, also require the plan-contract fields and no unresolved questions or blockers.

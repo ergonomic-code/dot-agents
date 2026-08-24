@@ -1,5 +1,6 @@
 # Test implementation checklist
 
+- Is every new or changed test backed by behavior or a contract from the current explicit user request or task brief, backed by a current or unambiguously recorded earlier explicit request to test that specific implementation detail, or only mechanically adapted to keep an existing behavior check compiling and passing without a new observation or assertion?
 - Does each new or changed test-case method use `// Given`, `// When`, and `// Then` sections?
 - If a case observes the result through several endpoints, does each observation use its own `// And when` and following `// Then`?
 - Does each new or changed JUnit test class and test-case method put its human name in `@DisplayName` when supported?
@@ -13,11 +14,11 @@
 - Does the test use setup-returned values instead of extra observation calls that require broader fixture data?
 - Are there no public read calls used only to discover setup-created ids or refs?
 - Is shared fixture state cleaned only by the shared setup/reset layer?
-- Do test cases assert observable outcomes without verifying calls between internal components, dependency wiring, or control flow?
+- Except for a specifically requested implementation-detail assertion, do test cases assert observable outcomes without verifying calls between internal components, dependency wiring, or control flow?
 - Is every fake, stub, or mock necessary because neither an existing production component nor one required by the selected design can reproduce the selected behavior safely within the applicable test budgets, with pending implementation and easier setup, control, or observation rejected as justifications?
 - Did no test double cause a production interface to be introduced or generalized?
-- Are in-process class or object mocks limited to behavior that is hard or expensive to reproduce with a real dependency, typically infrastructure failures, and absent for normal behavior?
-- Are interactions verified only at external-system boundaries and only for correctness of outgoing requests or messages?
+- Are in-process class or object mocks limited to behavior that is hard or expensive to reproduce with a real dependency, typically infrastructure failures, or to the smallest mechanism for a specifically requested internal-interaction test, and otherwise absent for normal behavior?
+- Except for a specifically requested internal-interaction test, are interactions verified only at external-system boundaries and only for correctness of outgoing requests or messages?
 - Are Spring bean override mocks and spies absent?
 - When a class-level double is required, is the target dependency graph constructed from real dependencies in the existing application context with only the dependency whose behavior must be simulated substituted?
 - Are real production collaborators used only to construct that graph resolved locally through the test superclass's `getBean<T>()`, with a missing helper added there instead of injecting those collaborators or the application context into the test class?

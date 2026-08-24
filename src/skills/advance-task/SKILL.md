@@ -1,6 +1,6 @@
 ---
 name: advance-task
-description: Advance a prepared Lightweight SDD task by identifying and executing exactly one next verified TDD increment stage, then stop. Use when the user asks to continue, advance, or take the next task step without delegating the whole task to `$implement-task-tdd`.
+description: Advance a prepared Lightweight SDD task by identifying and executing exactly one next verified behavioral or non-test stage, then stop. Use when the user asks to continue, advance, or take the next task step without delegating the whole task to `$implement-task-tdd`.
 ---
 
 # Advance Task
@@ -30,7 +30,7 @@ Do not clean, restore, stash, stage, or commit changes.
 Use `references/advance-contract.md` to select the earliest incomplete stage whose prerequisites are proven.
 Execute exactly that stage and do not begin another stage in the same invocation.
 Invocation of this skill authorizes execution of the selected stage, but not a nested approval required by a named stage skill.
-When the selected stage names a skill, load and follow it as its caller, passing the task directory, selected increment, prior verified outcomes, explicit target paths, and allowed write boundary.
+When the selected stage names a skill, load and follow it as its caller, passing the task directory, selected step, current explicit user request, prior verified outcomes, explicit target paths, and allowed write boundary.
 Apply that skill's stricter input, write, stop, validation, and output rules.
 Otherwise execute the stage contract directly.
 
@@ -44,7 +44,7 @@ Do not select or execute the following stage for a `pending` or `blocked` result
 Report:
 
 - task directory;
-- selected increment or `unresolved`;
+- selected step and its test eligibility, or `unresolved`;
 - selected stage;
 - `status`: `complete`, `pending`, or `blocked`;
 - evidence used to select the stage;
@@ -54,4 +54,4 @@ Report:
 - current `HEAD`, staged and unstaged paths, and unrelated changes preserved;
 - next stage when it is already determined, without starting it.
 
-When no unimplemented behavior remains, return `status: complete` with `outcome: task-complete` and make no changes.
+When no unfinished work remains, return `status: complete` with `outcome: task-complete` and make no changes.

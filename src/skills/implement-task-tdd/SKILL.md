@@ -1,6 +1,6 @@
 ---
 name: implement-task-tdd
-description: Coordinate a task directory through reviewed vertical TDD increments, delegating each stage to a separate sequential subagent and owning workflow state, Git isolation, and commit boundaries. Use when the user asks to implement a task, todo, or briefs end to end through TDD with review gates.
+description: Coordinate a task directory through reviewed TDD increments and non-test implementation steps, delegating each stage to a separate sequential subagent and owning workflow state, Git isolation, and commit boundaries. Use when the user asks to implement a task, todo, or briefs end to end with review gates.
 ---
 
 # Implement Task with TDD
@@ -8,6 +8,7 @@ description: Coordinate a task directory through reviewed vertical TDD increment
 Read `framework_checkout_root/src/roles/developer.md`.
 Read `framework_checkout_root/src/conventions/process/tasks.md`.
 Read `references/stage-contracts.md`.
+Read `framework_checkout_root/src/references/non-test-task-step.md`.
 
 ## Input
 
@@ -29,18 +30,21 @@ Do not clean, restore, stash, stage, or commit unrelated changes.
 ## Coordination
 
 The coordinator owns workflow state, review gates, Git isolation, write sets, and commits.
-Each stage skill owns the semantic correctness of its result.
+Each invoked stage skill or direct stage contract owns the semantic correctness of its result.
 Do not repeat its selection, design, failure-cause, minimality, alignment, or completion reasoning.
 
-Run stages strictly through this state machine:
+Run selection first through `$select-next-increment`.
+When it reports `increment-selected`, run the TDD stages strictly through this state machine:
 
-1. `$select-next-increment`
-2. `$design-test-case`
-3. `$align-required-design`
-4. `$code-test-case`
-5. `$plan-test-case-fixing`
-6. `$fix-red-case`
-7. `$refactor-case`
+1. `$design-test-case`
+2. `$align-required-design`
+3. `$code-test-case`
+4. `$plan-test-case-fixing`
+5. `$fix-red-case`
+6. `$refactor-case`
+
+When selection reports `non-test-step-selected`, execute only the non-test branch in `framework_checkout_root/src/references/non-test-task-step.md`.
+Do not enter test design, test coding, red/green, or case refactoring for that step.
 
 Run stages sequentially and never in parallel.
 Run each stage in a new separate subagent, except when resuming an approved refactor plan.
@@ -48,6 +52,7 @@ If separate subagents are unavailable, stop.
 Do not let subagents commit.
 
 Give each subagent the fresh handoff, write set, stop conditions, and required output from `references/stage-contracts.md`.
+Include the current explicit user request and any unambiguous task-brief record of an earlier explicit request so test eligibility is not inferred from agent-authored task artifacts.
 After it returns, apply only the mechanical verification defined there.
 Advance only when the stage reports `status: complete` and mechanical verification passes.
 
@@ -94,6 +99,11 @@ After approval of `already-green`, update the matching `todo.md` item and create
 Skip green and refactor, then return to selection.
 Do not create an empty commit.
 
+After approval of `non-test-step-complete`, commit only its verified implementation, task-artifact changes, and allowed mechanical adaptations of existing behavior tests.
+Then update the matching `todo.md` item and create a separate status commit.
+For a verification-only step with no tracked implementation change, create only the status commit.
+Do not stage or commit new tests or new or changed coverage of the selected detail for a non-test step.
+
 ## Refactor review
 
 Treat green-to-refactor as a continuous transition.
@@ -113,10 +123,10 @@ Stop with the current stage active when:
 Preserve verified commits when stopping.
 Report completed stages, active stage and status, worktree state, and exact blocker.
 
-Finish when `$select-next-increment` reports `outcome: no-unimplemented-behavior` and mechanical verification passes.
+Finish when `$select-next-increment` reports `outcome: no-unimplemented-work` and mechanical verification passes.
 
 ## Output
 
-At every review gate, report the task directory, increment, stage, status, outcome or pending reason, verified Git state, changed files, mechanical verification, and approval needed.
+At every review gate, report the task directory, selected step and its classification, stage, status, outcome or pending reason, verified Git state, changed files, mechanical verification, and approval needed.
 For green-to-refactor, report the same state as a progress update without requesting approval.
-At completion, report created commits, completed increments, final verification, and remaining unrelated changes.
+At completion, report created commits, completed task steps, final verification, and remaining unrelated changes.
