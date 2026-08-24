@@ -8,6 +8,7 @@ description: Design one test-method-sized `verification-check-format-v0.1` full-
 Use this skill when the user gives a requirement, bug report, task brief, or desired behavior and needs one test-method-sized check, but has not already provided one selected full-mode verification check.
 
 Read `../write-verification-check/SKILL.md`.
+Read `framework_checkout_root/src/conventions/test-design.md`.
 Read `framework_checkout_root/src/references/test-case-implementation-order.md`.
 
 ## Task artifact bindings
@@ -15,6 +16,11 @@ Read `framework_checkout_root/src/references/test-case-implementation-order.md`.
 - human-readable artifact title: `Изменения тест-кейсов`
 
 ## Selection
+
+Before designing, verify that the selected obligation is test-eligible under `framework_checkout_root/src/conventions/test-design.md`.
+Accept an implementation detail only when the user explicitly requests that specific test in the current conversation or an earlier explicit user request for it is unambiguously recorded in the task brief.
+Do not treat a `todo.md` item, solution or implementation design, implementation step, or verification instruction as a test obligation without an eligible requirement source.
+Return `status: blocked` with `reason: not-test-eligible` when this condition is not met.
 
 Design exactly one test-method-sized target behavior check.
 For bugs, select the corrected target behavior; use the broken behavior only as evidence of the violated obligation.
