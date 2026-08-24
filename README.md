@@ -88,7 +88,7 @@ devlog/123-example-task/
 2. Спроектировать и записать тест-кейс проверки целевого поведения в `030-test-cases-new.md` ([`$design-test-case`](src/skills/design-test-case/SKILL.md)).
 3. При необходимости согласовать требуемые интерфейсы ([`$align-required-design`](src/skills/align-required-design/SKILL.md)); скилл сам вызовет `$describe-rest-api` для нового или изменённого JSON-over-HTTP контракта.
 4. Закодировать тест ([`$code-test-case`](src/skills/code-test-case/SKILL.md)).
-5. Спроектировать и спланировать реализацию кейса ([`$plan-test-case-fixing`](src/skills/plan-test-case-fixing/SKILL.md)).
+5. Спроектировать и спланировать реализацию кейса ([`$plan-test-case-fixing`](src/skills/plan-test-case-fixing/SKILL.md)); при первом планировании скилл записывает как минимум операцию-оркестратор и её непосредственных подчинённых в `030-implementation-structure.yaml` формата `structure-chart/v1`, а отрендеренную диаграмму — в `030-implementation-design.md`.
 6. Реализовать кейс ([`$fix-red-case`](src/skills/fix-red-case/SKILL.md)).
 7. Отрефакторить реализацию ([`$refactor-case`](src/skills/refactor-case/SKILL.md)).
 8. Обновить `todo.md`.

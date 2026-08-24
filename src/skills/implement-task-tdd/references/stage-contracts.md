@@ -57,8 +57,8 @@ Accept `status: complete` only with `outcome: expected-red` or `outcome: already
 ### 5. Plan production fix
 
 Invoke `$plan-test-case-fixing` with the approved red-stage result and task directory.
-Allow changes only to `<task-dir>/010-task-brief.md` and `<task-dir>/030-solution-brief.md`.
-Require the exact selected-test command and reusable production-fix plan.
+Allow changes only to `<task-dir>/010-task-brief.md`, `<task-dir>/030-solution-brief.md`, `<task-dir>/030-implementation-design.md`, and `<task-dir>/030-implementation-structure.yaml`.
+Require the exact selected-test command, reusable production-fix plan, validated `structure-chart/v1` source, and its rendered Mermaid diagram.
 Accept `status: complete` only with `outcome: fix-planned` and no unresolved questions or blockers.
 
 ### 6. Make green
@@ -91,7 +91,7 @@ After every subagent:
 - compare only the observed command state with the reported outcome.
 
 For `expected-red` and `fix-planned`, require successful compilation and an executed failing selected test.
-For `fix-planned`, also require the plan-contract fields and no unresolved questions or blockers.
+For `fix-planned`, also require the plan-contract fields, successful structure-chart validation and rendering commands, and no unresolved questions or blockers.
 For `already-green`, `selected-test-passes`, `refactored`, and `no-op`, require the selected test to pass.
 Do not independently classify the failure cause or reassess selection, design, alignment, minimality, or remaining behavior.
 Do not advance on report-only evidence or any mechanical mismatch.

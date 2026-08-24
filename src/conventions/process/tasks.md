@@ -48,7 +48,8 @@ Each file in a task directory should have a filename prefix that identifies its 
     - REST API.
       Include nested input and output DTOs when applicable.
     - Component diagram as a UML object diagram of runtime objects.
-    - Operation call-structure diagram.
+    - Operation structure chart.
+      Keep its `structure-chart/v1` source in `030-implementation-structure.yaml` and its rendered Mermaid diagram in this section.
     - TestApi.
   When a selected case requires new design, update only the applicable sections and do not name or narrate the case or increment.
   Add only newly required design instead of moving existing task content into the artifact.
@@ -71,3 +72,4 @@ Depending on the task type and nature, a task may also have:
 - 030-api-new.adoc - target REST API.
 - 030-test-cases-new.md - new test cases.
 - 030-implementation-design.md - current accumulated implementation design structured by the implementation levels above.
+- 030-implementation-structure.yaml - accumulated operation structure in `structure-chart/v1` format, rendered into `030-implementation-design.md`.

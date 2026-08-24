@@ -52,8 +52,8 @@ Return `status: blocked` for a compilation failure, fixture failure, unrelated a
 
 Select this stage when `expected-red` is proven and no current production-fix plan resolves for the selected case.
 Load and follow `framework_checkout_root/src/skills/plan-test-case-fixing/SKILL.md`.
-Permit only brief updates explicitly allowed by that skill.
-Complete with `outcome: production-fix-planned` only when the plan has no unresolved questions and includes the selected case, failure evidence, diagnosed cause, behavior boundary, selected fix, target production areas, and verification command.
+Permit only brief and implementation-design artifact updates explicitly allowed by that skill.
+Complete with `outcome: production-fix-planned` only when the plan has no unresolved questions and includes the selected case, failure evidence, diagnosed cause, behavior boundary, selected fix, target production areas, verification command, validated `structure-chart/v1` source, and its rendered Mermaid diagram.
 
 ### 6. Make green
 
