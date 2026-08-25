@@ -30,6 +30,7 @@ Load code implementation rules from `../conventions/code-implementation.md` and 
 * Before `git add`, `git commit`, `git rebase`, `git cherry-pick`, and other git operations, load and follow project-local git conventions if project context declares them.
   Do not run those git operations before loading them.
 * During the final self-check, load `../conventions/ergonomic-approach-checklist.md` and apply it.
+* During the final self-check, also load `../conventions/code-implementation-checklist.md`, apply it to the final diff, and fix every failed applicable item.
 * Do not finalize before that self-check is complete.
 
 ## Output rule
