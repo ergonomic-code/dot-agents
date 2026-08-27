@@ -1,13 +1,29 @@
-`structure-chart/v1` shared artifact.
+# Structure Chart
 
-Read `references/validation-rules.md` before validating a structure chart.
-Read `references/rendering-rules.md` before rendering a structure chart.
+Use `structure-chart/v1` to describe and agree on the high-level structure of a proposed solution.
+Write the artifact directly as a Mermaid flowchart in one `.mmd` file.
 
-Use this directory for:
-- schema validation
-- semantic validation rules
-- Mermaid rendering rules
-- example documents
-- reusable render/validate scripts
+## Content
 
-Skills should keep task-specific workflow in their own `SKILL.md` and reference this artifact for the format and shared tooling.
+Show only:
+- major solution modules;
+- module responsibilities in short labels;
+- containment when it clarifies ownership;
+- interactions material to the proposed solution;
+- conditions or transferred information when they clarify an interaction.
+
+Omit source references, internal representation, exhaustive call flows, and implementation detail that does not affect the high-level design.
+Prefer the smallest diagram sufficient for agreement.
+
+## Conventions
+
+- Start with `flowchart LR`.
+- Use stable descriptive `snake_case` identifiers.
+- Declare modules before interactions.
+- Keep related declarations adjacent and order them in the intended reading sequence.
+- Use `subgraph` only for meaningful containment.
+- Use `-->` for interactions.
+- Put a short interaction label on an edge only when an unlabeled edge is ambiguous.
+- Do not duplicate Mermaid content in metadata or another file.
+
+See `references/example-structure-chart.mmd` for the expected shape.
