@@ -66,7 +66,7 @@ Depending on the task type and nature, a task may also have:
 
 - 020-code-anchors.md - links to relevant source-code files.
   Target source files to change, example files, tests for the changed code, files for adding new tests, and similar code anchors.
-- 020-api-current.md - current REST API in Human-Readable REST API Format.
+- 020-api-current.md - current REST API in `humanistic-api/v1` format.
 - 020-test-cases-current.md - current relevant test cases.
 - 030-api-new.adoc - target REST API.
 - 030-test-cases-new.md - new test cases.

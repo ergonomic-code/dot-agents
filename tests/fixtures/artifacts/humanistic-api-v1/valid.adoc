@@ -1,0 +1,26 @@
+:max-width: 95%
+
+[cols="1,1", separator=!]
+|===
+!Было
+!Стало
+
+!
+[source,text]
+----
+Method GET /users/{id=String:UUID}
+
+<
+  200
+    <User>
+----
+!
+[source,text]
+----
+Method GET /users/{id=String:UUID}
+
+<
+  404
+    none
+----
+|===

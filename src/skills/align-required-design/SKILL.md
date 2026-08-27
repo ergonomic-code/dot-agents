@@ -19,7 +19,7 @@ When a task directory resolves, read its task brief, solution brief, current imp
 
 Design only the production and test-side interfaces, boundary data, and configuration required to code the selected case.
 When the case has a provisional `Feature`, design its missing SUT interface and append the resulting evidence-backed SUT reference to the target test-case artifact.
-For a new or changed JSON-over-HTTP contract, invoke `$describe-rest-api` and use its validated IR and rendered target artifact.
+For a new or changed JSON-over-HTTP contract, invoke `$describe-rest-api` and use its validated `humanistic-api/v1` artifact.
 Do not write production code, test code, build configuration, migrations, schemas, or generated code.
 Do not widen the selected behavior or design implementation details beyond the required interfaces.
 
