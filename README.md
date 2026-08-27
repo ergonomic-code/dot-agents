@@ -194,7 +194,6 @@ flowchart TD
 | [`$collect-code-anchors`](src/skills/collect-code-anchors/SKILL.md) | Находит связанные с требуемым поведением участки кода, модели, запросы, таблицы, конфигурацию и другие якоря в коде. |
 | [`$describe-rest-api`](src/skills/describe-rest-api/SKILL.md) | Строит, валидирует и отображает описание REST API по коду, OpenAPI, требованиям или другим входным данным. |
 | [`$design-test-case`](src/skills/design-test-case/SKILL.md) | Проектирует одну проверку размером с тестовый метод и при заданном пути записывает её в артефакт. |
-| [`$find-touched-tables`](src/skills/find-touched-tables/SKILL.md) | Определяет таблицы и представления, затрагиваемые кодом на готовой диаграмме `structure-chart/v1`. |
 | [`$fix-framework-context`](src/skills/fix-framework-context/SKILL.md) | Анализирует и после выбора варианта изменяет общий runtime-контекст Ergocode. |
 | [`$fix-project-context`](src/skills/fix-project-context/SKILL.md) | Анализирует и после выбора варианта изменяет agent-facing контекст конкретного проекта. |
 | [`$fix-red-case`](src/skills/fix-red-case/SKILL.md) | Изменяет production-код, чтобы сделать зелёным один красный Kotlin JUnit-тест. |
