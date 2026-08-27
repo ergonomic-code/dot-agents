@@ -1,0 +1,57 @@
+document       = { outside | markdown-block | asciidoc-block } ;
+markdown-block = "```text", newline, api-block, "```" ;
+asciidoc-block = "[source,text]", newline, "----", newline, api-block, "----" ;
+
+api-block      = endpoint | model | enum ;
+endpoint       = method, { query-param }, [ request ], response, [ rules ] ;
+method         = "Method", space, http-method, space, path, [ "?" ], newline ;
+query-param    = indent, name, "={", type, "}", [ "&" ], newline ;
+request        = ">", newline, [ headers ], [ body ] ;
+response       = "<", newline, response-item, { response-item } ;
+response-item  = indent, status-list, [ space, comment ], newline,
+                 [ indent, ( type | "none" | inline-object ), newline ] ;
+headers        = indent, "Headers:", newline, header, { header } ;
+header         = indent, name, ":", space, ( type | quoted-text ), newline ;
+body           = indent, "Body:", newline, indent,
+                 ( type | "none" | inline-object | multipart ), newline ;
+multipart      = "multipart/form-data", newline, part, { part } ;
+part           = indent, name, ":", space, type, newline ;
+
+model          = "Model", space, name, space, "=", newline,
+                 ( object | variants ), [ rules ] ;
+object         = "{", newline, [ field, { field } ], "}", newline ;
+field          = indent, quoted-name, ":", space, type, [ "," ],
+                 [ space, comment ], newline ;
+variants       = indent, name, { space, "|", newline, indent, name }, newline ;
+enum           = "Enum", space, name, space, "=", newline,
+                 indent, name, { newline, indent, name }, newline, [ rules ] ;
+rules          = "Rules:", newline, rule, { rule } ;
+rule           = indent, "-", space, text, newline ;
+
+type           = primary-type, [ "?" ] ;
+primary-type   = primitive | refined | reference | collection | inline-enum |
+                 inline-sum | inline-object ;
+primitive      = "String" | "Number" | "Boolean" | "Binary" | "Object" ;
+refined        = primitive, ":", name ;
+reference      = "<", name, ">" ;
+collection     = "[", type, "]" ;
+inline-enum    = "Enum<", name, { "|", name }, ">" ;
+inline-sum     = "<", name, { "|", name }, ">" ;
+inline-object  = "{", text, "}" ;
+
+http-method    = "GET" | "POST" | "PUT" | "PATCH" | "DELETE" |
+                 "HEAD" | "OPTIONS" | "TRACE" ;
+status-list    = digit, digit, digit, { ",", [ space ], digit, digit, digit } ;
+comment        = "//", text ;
+path           = "/", text ;
+name           = name-start, { name-char } ;
+quoted-name    = '"', text, '"' ;
+quoted-text    = '"', text, '"' ;
+indent         = space, { space } ;
+space          = " " ;
+newline        = "\n" ;
+digit          = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
+name-start     = letter | "_" ;
+name-char      = name-start | digit | "-" | "." ;
+outside        = ? any text outside recognized source blocks ? ;
+text           = ? non-empty text not including a newline ? ;
