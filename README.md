@@ -20,11 +20,10 @@ ErgocodeAI учит ваших ИИ-агентов работать по [Эрг
 
 ## Варианты использования фреймворка
 
-Фреймворк поддерживает три способа использования:
+Фреймворк поддерживает два способа использования:
 
 1. Prompt-driven — вы ставите задачи как привыкли, агент автоматичски применяет релевантные соглашения фреймворка.
 2. Skill-driven — вы явно выбираете скилл для решения очередной задачи.
-3. Workflow-driven — агент идёт сам по процессу фреймворка, обращаясь к вам с вопросами и останавливаясь для ревью в ключевых точках.
 
 Помимо этого вы можете взять фреймворк в качестве основы, а потом "доработать напильником" или полностью заменить отдельные его части: разделение на роли, роутинг контекста, конвенции дизайна и кодирования, конвенции процесса работы, скиллы и артефакты.
 
@@ -35,17 +34,15 @@ ErgocodeAI учит ваших ИИ-агентов работать по [Эрг
 Базовый поток реализации одного изменения:
 
 1. Спроектировать тест-кейс проверки наблюдаемого поведения через [`$design-test-case`](src/skills/design-test-case/SKILL.md).
-2. При необходимости согласовать требуемые интерфейсы через [`$align-required-design`](src/skills/align-required-design/SKILL.md).
-3. Закодировать кейс через [`$code-test-case`](src/skills/code-test-case/SKILL.md).
-4. Реализовать кейс минимальным изменением production-кода через [`$fix-red-case`](src/skills/fix-red-case/SKILL.md).
-5. Выполнить рефакторинг через [`$refactor-case`](src/skills/refactor-case/SKILL.md).
+2. Закодировать кейс через [`$code-test-case`](src/skills/code-test-case/SKILL.md).
+3. Реализовать кейс минимальным изменением production-кода через [`$fix-red-case`](src/skills/fix-red-case/SKILL.md).
+4. Выполнить рефакторинг через [`$refactor-case`](src/skills/refactor-case/SKILL.md).
 
 Перед основным циклом при необходимости можно описать API через [`$describe-rest-api`](src/skills/describe-rest-api/SKILL.md) или найти связанные участки кода через [`$collect-code-anchors`](src/skills/collect-code-anchors/SKILL.md).
-Перед изменением production-кода можно подготовить план исправления одного красного кейса через [`$plan-test-case-fixing`](src/skills/plan-test-case-fixing/SKILL.md).
 
-### Работа с фреймворком в Workflow-driven варианте
+### Работа по спецификации задачи
 
-В этом варианте реализация задачи идёт по спецификации.
+В Skill-driven варианте реализацию задачи можно вести по спецификации.
 Но в отличие от традиционного SDD, в ErgocodeAI используется более лёгкий и гибкий подход — на первом этапе описываются только основные треобования, а так же общие направление и ограничения решения.
 
 Затем, по мере реализации, спецификации задачи и решения дополняются деталями или даже сущственно меняются, если в процессе реализации выяснилось, что первоначальный план оказался неудачным.
@@ -86,24 +83,12 @@ devlog/123-example-task/
 
 1. Выбрать следующий минимальный инкремент из спецификации и `todo.md` ([`$select-next-increment`](src/skills/select-next-increment/SKILL.md)).
 2. Спроектировать и записать тест-кейс проверки целевого поведения в `030-test-cases-new.md` ([`$design-test-case`](src/skills/design-test-case/SKILL.md)).
-3. При необходимости согласовать требуемые интерфейсы ([`$align-required-design`](src/skills/align-required-design/SKILL.md)); скилл сам вызовет `$describe-rest-api` для нового или изменённого JSON-over-HTTP контракта.
-4. Закодировать тест ([`$code-test-case`](src/skills/code-test-case/SKILL.md)).
-5. Спроектировать и спланировать реализацию кейса ([`$plan-test-case-fixing`](src/skills/plan-test-case-fixing/SKILL.md)).
-6. Реализовать кейс ([`$fix-red-case`](src/skills/fix-red-case/SKILL.md)).
-7. Отрефакторить реализацию ([`$refactor-case`](src/skills/refactor-case/SKILL.md)).
-8. Обновить `todo.md`.
+3. Закодировать тест ([`$code-test-case`](src/skills/code-test-case/SKILL.md)).
+4. Реализовать кейс ([`$fix-red-case`](src/skills/fix-red-case/SKILL.md)).
+5. Отрефакторить реализацию ([`$refactor-case`](src/skills/refactor-case/SKILL.md)).
+6. Обновить `todo.md`.
 
-Для явно нового SUT тест-кейс может сначала содержать `Feature` без технической ссылки.
-`$align-required-design` проектирует недостающий интерфейс и дополняет `Feature` точной ссылкой на SUT; до этого кодирование теста не начинается.
-
-Итерации можно вести в трёх режимах:
-
-1. Ручном - самостоятельно выбираете что делать дальше, вызываете соответствующий скилл и обновляете рабоиче файлы задачи;
-2. Полуавтоматическом - используйте скилл [`$implement-task-tdd`](src/skills/implement-task-tdd/SKILL.md), чтобы агент сам полностью реализовал задачу до конца, останавливаясь на ревью после записи тест-кейса и в других ключевых точках, но не между озеленением кейса и запуском рефакторинга.
-3. Автоматическом - используйте скилл [`$implement-task-tdd`](src/skills/implement-task-tdd/SKILL.md) с указанием не останавливаться на ревью, чтобы агент сам полностью реализовал задачу до конца.
-
-> [!WARNING]
-> Автоматический режим очень жадный до токенов и может сжечь весь недельный лимит на одной задаче.
+Итерации выполняются вручную: самостоятельно выбирайте следующее действие, вызывайте соответствующий скилл и обновляйте рабочие файлы задачи.
 
 ## Доработка контекста
 
@@ -188,8 +173,6 @@ flowchart TD
 
 | Скилл | Назначение |
 | --- | --- |
-| [`$advance-task`](src/skills/advance-task/SKILL.md) | Определяет и выполняет одну следующую стадию TDD-инкремента. |
-| [`$align-required-design`](src/skills/align-required-design/SKILL.md) | Проектирует и фиксирует только интерфейсы, необходимые для кодирования одного выбранного тест-кейса. |
 | [`$code-test-case`](src/skills/code-test-case/SKILL.md) | Преобразует проверку в формате `verification-check-format-v0.1` в Kotlin JUnit-тест, затем в репозитории проверяет, что тест падает из-за отсутствующего поведения или уже проходит. |
 | [`$collect-code-anchors`](src/skills/collect-code-anchors/SKILL.md) | Находит связанные с требуемым поведением участки кода, модели, запросы, таблицы, конфигурацию и другие якоря в коде. |
 | [`$describe-rest-api`](src/skills/describe-rest-api/SKILL.md) | Пишет и валидирует человекочитаемое описание REST API по коду, OpenAPI, требованиям или другим входным данным. |
@@ -197,9 +180,7 @@ flowchart TD
 | [`$fix-framework-context`](src/skills/fix-framework-context/SKILL.md) | Анализирует и после выбора варианта изменяет общий runtime-контекст Ergocode. |
 | [`$fix-project-context`](src/skills/fix-project-context/SKILL.md) | Анализирует и после выбора варианта изменяет agent-facing контекст конкретного проекта. |
 | [`$fix-red-case`](src/skills/fix-red-case/SKILL.md) | Изменяет production-код, чтобы сделать зелёным один красный Kotlin JUnit-тест. |
-| [`$implement-task-tdd`](src/skills/implement-task-tdd/SKILL.md) | Координирует реализацию задачи минимальными TDD-инкрементами с субагентами и ревью в определённых точках; после green сразу запускает рефакторинг. |
 | [`$init-task-workdir`](src/skills/init-task-workdir/SKILL.md) | Создаёт директорию задачи `devlog/NNN-slug` с обязательными рабочими файлами из шаблонов. |
-| [`$plan-test-case-fixing`](src/skills/plan-test-case-fixing/SKILL.md) | Исследует один красный тест-кейс и составляет план его реализации. |
 | [`$prepare-task-workdir`](src/skills/prepare-task-workdir/SKILL.md) | В диалоге подготавливает бриф задачи, якори в коде и выбранное направление решения. |
 | [`$refactor-case`](src/skills/refactor-case/SKILL.md) | Полностью проверяет один зелёный TDD-инкремент, группирует совместимые узкие рефакторинги и сообщает оставшиеся кандидаты. |
 | [`$select-next-increment`](src/skills/select-next-increment/SKILL.md) | Выбирает следующий минимальный нереализованный вертикальный инкремент. |

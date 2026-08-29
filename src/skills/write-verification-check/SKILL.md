@@ -25,8 +25,8 @@ Resolve the human-readable verified object from an explicit or existing artifact
 Render `Feature` and its SUT reference according to the artifact's feature-naming rules.
 Use only evidence-backed anchors from explicit user input, existing artifacts, existing code, or explicitly planned target surfaces.
 Do not coin implementation surfaces such as renderers, factories, services, or operations from desired behavior unless evidence names that object as the target.
-When an explicitly planned new SUT has no designed technical reference yet, render its provisional `Feature` without a parenthesized suffix as allowed by the feature-naming rules.
-Do not put a placeholder in that suffix or infer the missing reference.
+When an explicitly planned new SUT has no designed technical reference yet, stop and ask for that reference.
+Do not use a placeholder or infer the missing reference.
 When only domain behavior is known and no new SUT is explicitly planned, use the stable boundary that exposes it or ask for the target surface.
 Apply the domain-language rule to `Rule`, `Example`, and steps after selecting `Feature`.
 
