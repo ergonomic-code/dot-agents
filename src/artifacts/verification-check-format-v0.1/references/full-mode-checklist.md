@@ -2,7 +2,7 @@
 
 - `Feature` names the object under verification directly.
 - `Feature` is evidence-backed and not an invented implementation surface.
-- `Feature` ends with the evidence-backed SUT reference in parentheses, or is a permitted provisional `Feature` for an explicitly planned new SUT.
+- `Feature` ends with the evidence-backed SUT reference in parentheses.
 - `Rule` expresses one required observable property in the artifact-language obligation form.
 - Each `Rule` has at least one `Example`.
 - Named `Example` lines name semantic input or context classes for their `Rule`.

@@ -21,7 +21,7 @@ Otherwise, if the user did not explicitly select several examples, all examples,
 Before coding the first such case, check whether a test already matches it by display name, method name, Russian backticked name, or verified behavior.
 Before announcing a plan, choosing a target test class, scanning fixtures, or editing code, resolve selected examples and run input preflight.
 Input preflight must verify that each selected example is valid `verification-check-format-v0.1` full mode, including `Given` / `When` / `Then` and `Rule` obligation form.
-If a selected `Feature` is provisional and lacks its parenthesized SUT reference, stop before choosing a target or coding and report that `$align-required-design` must materialize it.
+If a selected `Feature` lacks its parenthesized SUT reference, stop before choosing a target or coding and report the missing technical anchor.
 If any selected `Rule` lacks a full `Example` with `Given` / `When` / `Then`, stop and report that `short` mode cannot be converted into test code.
 If full-mode input places a source reference under `Rule` instead of under the matching `Example`, stop and report the invalid artifact shape.
 If a selected example violates format but is repairable without changing behavior, stop and show the issue, the proposed corrected case header, and these choices: keep source wording as-is, use the proposed wording, or provide replacement wording.

@@ -3,7 +3,7 @@
 Use this layout for every `verification-check-format-v0.1` output.
 
 - `Feature` starts at column `0`.
-- A provisional `Feature` permitted by `feature-naming.md` ends after its human-readable verified object; otherwise append the parenthesized SUT reference shown below.
+- Append the parenthesized SUT reference shown below to `Feature`.
 - Put one blank line after `Feature` before its first `Rule`.
 - Indent `Rule` by `2` spaces under its `Feature`.
 - Indent `Example` and `Rule`-owned source references by `4` spaces under their `Rule`.

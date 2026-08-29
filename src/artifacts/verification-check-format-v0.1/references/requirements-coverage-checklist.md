@@ -1,7 +1,7 @@
 # Requirements Coverage Checklist
 
 - `Feature` names the concrete endpoint, API surface, component, operation, or other object under verification.
-- `Feature` ends with the evidence-backed SUT reference in parentheses, or is a permitted provisional `Feature` for an explicitly planned new SUT.
+- `Feature` ends with the evidence-backed SUT reference in parentheses.
 - `Rule` states one contract-visible required property.
 - `Example` lines cover only materially distinct input or context classes for the same `Rule`.
 - Rule/example sets cover the smallest useful semantic classes that would expose plausible one-case, hard-coded, or overfit implementations.

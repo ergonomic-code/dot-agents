@@ -1,4 +1,0 @@
-interface:
-  display_name: "Align Required Design"
-  short_description: "Align interfaces required by one test case"
-  default_prompt: "Use $align-required-design to design and record only the interfaces required to code one selected verification check, including materializing a provisional Feature SUT reference."
