@@ -54,6 +54,10 @@ Verify:
 - no orphan files were introduced
 - `README.md` is updated when changes affect user-facing framework capabilities, installation, usage, supported scope, or documented entry points
 - internal-only changes do not introduce speculative `README.md` edits
+- dependency direction remains `baseline -> role -> skill -> conventions and artifacts`
+- generic skills under `src/skills/**` do not resolve tasks, discover task artifacts, choose task paths, or select or load roles
+- task layout and progress knowledge is confined to `src/task-workdir/**`, whose skills are exempt from the generic-skill restriction
+- task-workdir context is conditional and supplies concrete bindings to roles before generic skills receive semantic inputs and caller-selected outputs
 
 ## Output
 
@@ -73,7 +77,7 @@ For each finding include:
 ## Review rule
 
 Prefer deletion, shortening, reuse, and direct fixes over expansion.
-Treat ambiguity, non-actionability, non-verifiability, contradiction, unclear scope, missing integration, and unintended deviations from the required or established language as defects.
+Treat ambiguity, non-actionability, non-verifiability, contradiction, unclear scope, missing integration, context-layering violations, and unintended deviations from the required or established language as defects.
 For language-consistency findings, suggest a rewrite in the required or established language that preserves intent and maximizes inference impact.
 Do not praise.
 Report only real issues.

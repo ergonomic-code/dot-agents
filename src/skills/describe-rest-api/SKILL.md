@@ -7,16 +7,14 @@ description: Write and validate a humanistic-api/v1 description of a JSON-over-H
 
 Read `../../artifacts/humanistic-api-v1/ARTIFACT.md` before writing the artifact.
 
-## Task Artifact Bindings
+## Inputs and destination
 
-- Use `task-dir` as `default-output-dir` if present and `./tmp` otherwise.
-- If no task is resolved, use `./tmp` as the default output container.
-- Use basename `020-api-current` for a contract completely reconstructed from code.
-- Use basename `030-api-new` for a contract derived from a prompt or task brief.
-- Use `<default-output-dir>/<basename>.md` for a current-state or explicitly requested Markdown artifact.
-- Use `<default-output-dir>/<basename>.adoc` for a target change, before/after description, or explicitly requested AsciiDoc artifact.
+- Accept code, OpenAPI, curl, requirements, JSON Schema, or mixed contract evidence.
+- Accept an explicit output path and optional existing API artifact.
+- If no output path is supplied, ask for one before repository-backed generation or return the artifact inline for standalone generation.
+- Use Markdown for a current-state description and AsciiDoc for a target change or before/after description unless the caller selects a format.
 
-Create the output directory if missing.
+When writing to a supplied output path, create its parent directory if missing.
 Write the final `humanistic-api/v1` artifact directly.
 Do not create an intermediate representation or a parallel machine-readable artifact.
 
@@ -32,7 +30,7 @@ If validation fails, fix the artifact and rerun validation until it passes.
 
 ## Workflow
 
-1. Resolve the basename, output format, and target artifact path.
+1. Resolve the output format and use the caller-supplied target path when writing.
 2. Derive the externally observable contract from the available evidence.
 3. For a change, derive before and after independently and compute only the observable difference.
 4. Write the final artifact directly in `humanistic-api/v1`.

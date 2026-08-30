@@ -1,16 +1,15 @@
 ---
 name: fix-framework-context
-description: Analyze a framework-context fix or feature request from `problem`, `target behavior`, and optional `codex session id`; load `framework-context-engineer`; propose `minimal`, `systemic`, and `optimal` changes; wait for explicit choice; then implement it.
+description: Analyze a framework-context fix or feature request from `problem`, `target behavior`, and optional `codex session id` in the caller-selected `framework-context-engineer` role; propose `minimal`, `systemic`, and `optimal` changes; wait for explicit choice; then implement it.
 ---
 
 # Fix or extend framework context
 
 Read `framework_checkout_root/src/references/context-fix-minimality.md`.
 Read `framework_checkout_root/src/references/context-fix-workflow.md`.
+Read `framework_checkout_root/src/references/context-layering.md`.
 
-This skill always resolves the role to `framework-context-engineer`.
-Before task triage, load `framework_checkout_root/src/roles/framework-context-engineer.md`.
-If that file is missing, say so and stop.
+Require the caller to invoke this skill from the `framework-context-engineer` role.
 
 Treat editable roots as:
 - `framework_checkout_root/src/**`
@@ -18,9 +17,18 @@ Treat editable roots as:
 Treat framework-context fixes and new framework-context capabilities under `framework_checkout_root/src/**` as in scope.
 For new capability work without a defect, treat the missing capability or limitation as the `problem`.
 
-If the case is about current-repo `AGENTS.md`, or project-local `.agents/**` or `.codex/**` outside `framework_checkout_root/**` and outside `./devlog/**`, stop and tell the user to use `$fix-project-context`.
+If the case is about current-repo `AGENTS.md`, or project-local `.agents/**` or `.codex/**` outside `framework_checkout_root/**`, stop and tell the user to use `$fix-project-context`.
 
 ## Skill-specific scope and classification
 
 Work from the smallest relevant framework file set under `framework_checkout_root/src/**`.
 Classify each candidate by layer (`project-baseline` | `roles-index` | `role` | `convention` | `skill` | `artifact` | `reference`).
+
+## Architecture boundary
+
+- Treat skills under `framework_checkout_root/src/skills/**` as generic and independent of task-workdir storage.
+- Allow task layout, filenames, artifact codes, and progress rules under `framework_checkout_root/src/task-workdir/**`.
+- Keep implicit task resolution in the baseline and concrete task bindings in task-workdir context.
+- Require roles to receive those bindings and pass explicit semantic inputs and output destinations to generic skills.
+- Do not make any skill select or load a role.
+- Do not report task-workdir skills as generic-skill violations.
