@@ -5,15 +5,14 @@ description: Select and classify the next minimal unfinished task step from a pr
 
 # Select Next Increment
 
-Read `framework_checkout_root/src/roles/developer.md`.
-Read `framework_checkout_root/src/conventions/process/tasks.md`.
+Read `framework_checkout_root/src/task-workdir/context.md`.
 Read `framework_checkout_root/src/conventions/test-design.md`.
 Read `framework_checkout_root/src/references/test-case-implementation-order.md`.
 
 ## Input
 
 Require one task directory.
-Resolve it through `framework_checkout_root/src/conventions/process/tasks.md`.
+Use the directory explicitly supplied by the caller or resolved by the baseline.
 Require `<task-dir>/010-task-brief.md`, `<task-dir>/030-solution-brief.md`, and `<task-dir>/todo.md`.
 If any required file is missing, return `status: blocked` and name it.
 

@@ -88,10 +88,10 @@ def load_repo_context() -> str:
 
     devlog_dirs = devlog_directories()
     if devlog_dirs:
-        lines.append("- Active tasks:")
+        lines.append("- Task directory candidates (not active by existence):")
         lines.extend(f"  - `{name}`" for name in devlog_dirs)
     else:
-        lines.append("- Active tasks: none")
+        lines.append("- Task directory candidates: none")
 
     return "\n".join(lines) + "\n"
 

@@ -1,6 +1,6 @@
 # Test implementation checklist
 
-- Is every new or changed test backed by behavior or a contract from the current explicit user request or task brief, backed by a current or unambiguously recorded earlier explicit request to test that specific implementation detail, or only mechanically adapted to keep an existing behavior check compiling and passing without a new observation or assertion?
+- Is every new or changed test backed by behavior or a contract from the current explicit user request or supplied requirements, backed by a current or unambiguously recorded earlier explicit request to test that specific implementation detail, or only mechanically adapted to keep an existing behavior check compiling and passing without a new observation or assertion?
 - Does each new or changed test-case method use `// Given`, `// When`, and `// Then` sections?
 - If a case observes the result through several endpoints, does each observation use its own `// And when` and following `// Then`?
 - Does each new or changed JUnit test class and test-case method put its human name in `@DisplayName` when supported?

@@ -49,7 +49,7 @@ ErgocodeAI учит ваших ИИ-агентов работать по [Эрг
 
 #### Подготовка задачи
 
-1. Подготовьте рабочую директорию с помощью [`$prepare-task-workdir`](src/skills/prepare-task-workdir/SKILL.md).
+1. Подготовьте рабочую директорию с помощью [`$prepare-task-workdir`](src/task-workdir/skills/prepare-task-workdir/SKILL.md).
    Скилл в диалоге заполняет `010-task-brief.md`, при необходимости собирает `020-code-anchors.md`, формирует варианты решения и после явного выбора заполняет `030-solution-brief.md`.
 2. При необходимости добавьте другие артефакты `010-*`, `020-*` и `030-*` с существенными сведениями о задаче, текущей реализации и целевом решении.
 3. При необходимости добавьте стартовые задачи в todo.md.
@@ -65,8 +65,8 @@ ErgocodeAI учит ваших ИИ-агентов работать по [Эрг
 >- `040-*` — рабочие файлы реализации.
 
 Файл `todo.md` хранит прогресс реализации и используется без числового кода.
-Полный контракт рабочей директории описан в [соглашении о задачах](src/conventions/process/tasks.md).
-Для создания пустой рабочей директории без подготовки брифов используйте [`$init-task-workdir`](src/skills/init-task-workdir/SKILL.md).
+Полный контракт рабочей директории описан в [соглашении о задачах](src/task-workdir/context.md).
+Для создания пустой рабочей директории без подготовки брифов используйте [`$init-task-workdir`](src/task-workdir/skills/init-task-workdir/SKILL.md).
 
 Минимальная директория задачи имеет следующий вид:
 
@@ -81,7 +81,7 @@ devlog/123-example-task/
 
 #### Поток реализации одного шага задачи
 
-1. Выбрать следующий минимальный инкремент из спецификации и `todo.md` ([`$select-next-increment`](src/skills/select-next-increment/SKILL.md)).
+1. Выбрать следующий минимальный инкремент из спецификации и `todo.md` ([`$select-next-increment`](src/task-workdir/skills/select-next-increment/SKILL.md)).
 2. Спроектировать и записать тест-кейс проверки целевого поведения в `030-test-cases-new.md` ([`$design-test-case`](src/skills/design-test-case/SKILL.md)).
 3. Закодировать тест ([`$code-test-case`](src/skills/code-test-case/SKILL.md)).
 4. Реализовать кейс ([`$fix-red-case`](src/skills/fix-red-case/SKILL.md)).
@@ -116,12 +116,17 @@ flowchart TD
     Project[Контекст проекта<br/>AGENTS.md, .agents/, .codex/] --> Baseline[Базовый контекст<br/>project-baseline.md]
     Baseline --> Roles[Индекс ролей<br/>roles.md]
     Roles --> Role[Роль<br/>roles/*.md]
-    Role --> Conventions[Конвенции<br/>conventions/**]
-    Skill[Скилл<br/>skills/**/SKILL.md] --> Role
+    Baseline -. при наличии задачи .-> TaskModule[Модуль task-workdir<br/>task-workdir/context.md]
+    TaskModule --> Role
+    Role --> Skill[Скилл<br/>skills/**/SKILL.md]
     Skill --> Conventions
     Skill --> Artifacts[Форматы артефактов<br/>artifacts/**]
-    Skill <--> Task[Контекст задачи<br/>devlog/**]
+    TaskModule <--> Task[Контекст задачи<br/>devlog/**]
 ```
+
+Baseline активирует модуль task-workdir только при явном указании задачи, cwd внутри её рабочей директории или уверенном совпадении запроса, ветки и задачи.
+Само наличие директорий в `devlog/` модуль не активирует.
+После разрешения задачи модуль передаёт выбранной роли конкретные привязки артефактов, а роль вызывает generic-скиллы с явными смысловыми входами и путями результатов.
 
 | Слой | Назначение |
 | --- | --- |
@@ -129,7 +134,8 @@ flowchart TD
 | `src/project-baseline.md` | Задаёт минимальные правила загрузки контекста и работы с задачами. |
 | `src/roles/` | Определяет ответственность и границы текущей роли агента. |
 | `src/conventions/` | Хранит архитектурные, кодовые, тестовые и процессные соглашения. |
-| `src/skills/` | Описывает воспроизводимые рабочие процессы с входами, этапами, проверками и результатами. |
+| `src/skills/` | Содержит generic-скиллы с явными смысловыми входами и выбранными вызывающей стороной результатами. |
+| `src/task-workdir/` | Содержит условный контекст, task-workdir-скиллы и шаблоны стандартных артефактов задачи. |
 | `src/artifacts/` | Задаёт форматы проверяемых промежуточных результатов. |
 | `devlog/` целевого проекта | Хранит постановку, анализ, целевое решение и прогресс конкретной задачи. |
 | `AGENTS.md` целевого проекта | Интегрирует фреймворк с проектными и локальными правилами. |
@@ -164,9 +170,10 @@ flowchart TD
 
 3. Ответьте на вопросы установщика о расположении framework config, если они появятся.
 
-Установщик идемпотентно обновляет framework-секцию в `AGENTS.md`, подключает скиллы и настраивает Codex hook, сохраняя несвязанные проектные инструкции.
+Установщик идемпотентно обновляет framework-секцию в `AGENTS.md`, подключает generic-скиллы через `.agents/skills/ergo`, task-workdir-скиллы через `.agents/skills/ergo-task-workdir` и настраивает Codex hook, сохраняя несвязанные проектные инструкции.
+Обе коллекции подключаются отдельными прямыми symlink, поэтому установка не зависит от рекурсивного обнаружения скиллов.
 
-## Текущие скиллы
+## Generic-скиллы
 
 | Скилл | Назначение |
 | --- | --- |
@@ -177,8 +184,15 @@ flowchart TD
 | [`$fix-framework-context`](src/skills/fix-framework-context/SKILL.md) | Анализирует и после выбора варианта изменяет общий runtime-контекст Ergocode. |
 | [`$fix-project-context`](src/skills/fix-project-context/SKILL.md) | Анализирует и после выбора варианта изменяет agent-facing контекст конкретного проекта. |
 | [`$fix-red-case`](src/skills/fix-red-case/SKILL.md) | Изменяет production-код, чтобы сделать зелёным один красный Kotlin JUnit-тест. |
-| [`$init-task-workdir`](src/skills/init-task-workdir/SKILL.md) | Создаёт директорию задачи `devlog/NNN-slug` с обязательными рабочими файлами из шаблонов. |
-| [`$prepare-task-workdir`](src/skills/prepare-task-workdir/SKILL.md) | В диалоге подготавливает бриф задачи, якори в коде и выбранное направление решения. |
 | [`$refactor-case`](src/skills/refactor-case/SKILL.md) | Полностью проверяет один зелёный TDD-инкремент, группирует совместимые узкие рефакторинги и сообщает оставшиеся кандидаты. |
-| [`$select-next-increment`](src/skills/select-next-increment/SKILL.md) | Выбирает следующий минимальный нереализованный вертикальный инкремент. |
 | [`$write-verification-check`](src/skills/write-verification-check/SKILL.md) | Описывает один тест-кейс в стандартном Gherkin-подобном формате. |
+
+## Task-workdir-скиллы
+
+Эти скиллы сохраняют знание структуры `devlog/**`, стандартных имён артефактов и правил прогресса.
+
+| Скилл | Назначение |
+| --- | --- |
+| [`$init-task-workdir`](src/task-workdir/skills/init-task-workdir/SKILL.md) | Создаёт директорию задачи `devlog/NNN-slug` с обязательными рабочими файлами из шаблонов. |
+| [`$prepare-task-workdir`](src/task-workdir/skills/prepare-task-workdir/SKILL.md) | В диалоге подготавливает бриф задачи, якори в коде и выбранное направление решения. |
+| [`$select-next-increment`](src/task-workdir/skills/select-next-increment/SKILL.md) | Выбирает следующий минимальный нереализованный вертикальный инкремент. |

@@ -5,9 +5,9 @@ description: Create a new task workdir under `devlog/NNN-slug` with `010-task-br
 
 # Init Task Workdir
 
-Read `framework_checkout_root/src/references/task-brief-template.md`.
-Read `framework_checkout_root/src/references/solution-brief-template.md`.
-Read `framework_checkout_root/src/references/todo-template.md`.
+Read `framework_checkout_root/src/task-workdir/references/task-brief-template.md`.
+Read `framework_checkout_root/src/task-workdir/references/solution-brief-template.md`.
+Read `framework_checkout_root/src/task-workdir/references/todo-template.md`.
 
 ## Workflow
 

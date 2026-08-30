@@ -5,13 +5,11 @@ description: Collect concrete code anchors for target or related behavior. Use w
 
 # Collect Requirement Code Anchors
 
-## Task-directory behavior
+## Inputs
 
-- default source artifact: `<task-dir>/010-task-brief.md`
-- default output artifact: `<task-dir>/020-code-anchors.md`
-- Use an explicit output path when provided.
-- Otherwise, write the default output artifact to `<task-dir>/020-code-anchors.md` when a task directory resolves .
-- Return the artifact inline only when no output path or task directory resolves.
+- Accept target behavior, concrete code starting points, optional requirements, an optional existing anchor artifact, and an optional output path.
+- Use only inputs supplied by the caller.
+- Return the artifact inline when no output path is supplied.
 
 ## Scope
 
@@ -23,11 +21,11 @@ description: Collect concrete code anchors for target or related behavior. Use w
 
 ## Workflow
 
-1. Identify the target behavior from the prompt and, when useful, from the source artifact named in the prompt or from the default source artifact.
-2. Resolve the output path from the prompt or from the default output artifact.
+1. Identify the target behavior from the prompt and supplied requirements.
+2. Use the caller-supplied output path when present.
 3. If the output artifact already exists, read it before editing.
 4. Extract concrete code starting points from the prompt, such as source/test paths, endpoints, classes, methods, operations, DTOs, table names, config keys, i18n keys, logs, or exact code search strings.
-5. Do not count task ids, issue ids, task directories, source artifacts, briefs, todo files, requirements text, or docs as code starting points.
+5. Do not count issue ids, requirements, or documentation as code starting points.
 6. If the prompt has no concrete code starting points, ask the user for one or more and stop.
 7. Search from the provided starting points and read only code needed to verify anchors.
 8. Collect the narrowest concrete anchors where target or related behavior is exposed, enforced, stored, configured, localized, or scheduled.
