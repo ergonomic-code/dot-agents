@@ -5,7 +5,7 @@ description: Fix production code for one red Kotlin JUnit case created or aligne
 
 # Fix Red Case
 
-Read `framework_checkout_root/src/references/red-case-fix-planning.md`.
+Read `framework_checkout_root/src/references/red-case-fix-selection.md`.
 
 Use this skill only after `$code-test-case` has created or aligned one Kotlin JUnit case and that case is red.
 Fix production code only.
@@ -13,25 +13,23 @@ Do not edit tests, test fixtures, test data, assertions, display names, test ann
 
 ## Input
 
-Accept the selected red case, current failure evidence, optional design context, and an optional production-fix plan.
-Use only a plan explicitly supplied by the caller.
+Accept the selected red case, current failure evidence, and optional design context.
 
 ## Workflow
 
-1. Establish the current failure through `Current failure` in `framework_checkout_root/src/references/red-case-fix-planning.md`.
-2. If an existing plan resolves, follow only `Reuse an existing plan`; otherwise follow `Create a plan` in the same reference.
-3. If the selected branch reports an unresolved question or blocker, stop without changing production code.
-4. Implement the selected production fix inside its behavior boundary while preserving the planning result and constraints.
+1. Establish the current failure and select a fix through `framework_checkout_root/src/references/red-case-fix-selection.md`.
+2. If selection reports an unresolved question or blocker, stop without changing production code.
+3. Implement the selected production fix inside its behavior boundary while preserving the selection constraints.
    Apply the loaded ergonomic, boundary, and code implementation conventions before editing production code.
    Keep this skill's test-edit ban and selected-case scope as stricter constraints.
-5. Rerun only the same selected test after production-code changes.
-   If it still fails, re-establish the current failure and follow `Create a plan` for that failure.
+4. Rerun only the same selected test after production-code changes.
+   If it still fails, re-establish the current failure and select the next fix for that failure.
    Stop if it reports an unresolved question or blocker, or if the selected fix requires changing a sibling endpoint, operation, mode, scenario, or a broader shared path outside the selected behavior boundary.
    Otherwise implement the next selected fix and repeat the same test.
 
 ## Output
 
-Report the plan source (`supplied` or new planning), failure causes addressed, design context used or absent, production files changed, verification command, and whether the selected test passed or the work was blocked.
+Report failure causes addressed, design context used or absent, production files changed, verification command, and whether the selected test passed or the work was blocked.
 When invoked by another skill, return `status: complete` with `outcome: selected-test-passes` only when the same selected test passes.
 Return `status: pending` only when implementation or verification is interrupted while work remains inside the selected behavior boundary.
-Return `status: blocked` when planning has an unresolved question or blocker, or green requires changing the selected test or widening the behavior boundary.
+Return `status: blocked` when fix selection has an unresolved question or blocker, or green requires changing the selected test or widening the behavior boundary.

@@ -63,10 +63,10 @@
 
 ## Invariants
 
-- Create or change persistent coverage only for behavior or a contract required by the current explicit user request or the task brief, or for a specifically requested implementation detail as defined below.
+- Create or change persistent coverage only for behavior or a contract required by the current explicit user request or supplied requirements, or for a specifically requested implementation detail as defined below.
 - During a non-test step, change an existing test or test helper only as mechanically required to keep existing behavior checks compiling and passing; add no new observation or assertion.
 - A progress item, solution or implementation design, implementation step, or verification instruction does not by itself create a test obligation.
-- Do not test an implementation detail unless the user explicitly requests that specific test in the current conversation or an earlier explicit user request for it is unambiguously recorded in the task brief.
+- Do not test an implementation detail unless the user explicitly requests that specific test in the current conversation or an earlier explicit user request for it is unambiguously recorded in supplied requirements.
 - Agent-authored progress, solution, implementation-design, or test-case text is not evidence of that exception.
 - Except for a specifically requested implementation-detail assertion, test cases must verify observable outcomes and stay decoupled from internal implementation details; do not assert calls between internal components, dependency wiring, or control flow.
 - Boundary tests must not bypass the external entry point.

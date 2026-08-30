@@ -34,7 +34,6 @@ When an active task resolves, supply the selected role with concrete content or 
 - `020-api-current.*` -> current API-description input or output
 - `030-api-new.*` -> target API-description or API-contract input or output
 - `030-test-cases-new.md` -> existing cases input or designed-case output
-- an applicable plan in supplied task artifacts -> optional production-fix plan input.
 
 Resolve only bindings relevant to the request and selected role.
 The role passes the resolved content or concrete path to a generic skill.

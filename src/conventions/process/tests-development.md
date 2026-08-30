@@ -3,7 +3,7 @@
 In this mode, change only tests and test-supporting code.
 This includes test cases, object mothers, test APIs, HTTP APIs, fixtures, and fixture presets.
 
-Production code is outside this mode unless the active task workflow explicitly grants a bounded compile-only production write set for one selected test.
+Production code is outside this mode unless the invoking workflow explicitly grants a bounded compile-only production write set for one selected test.
 Under that exception, change only the production surface required for that test to compile and do not add or change production behavior.
 
 Test semantics may change when required by the task.
