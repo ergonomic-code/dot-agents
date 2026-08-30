@@ -1,6 +1,6 @@
 ---
 name: installing-framework
-description: Install the Ergocode AI Agent Framework into a repository. Use when Codex must install the runtime payload under `framework_checkout_root/src`, ensure `AGENTS.md` contains the Ergocode framework section, ensure `skills_symlink_path` points to `framework_checkout_root/src/skills`, and install Codex session hooks. Keep installation idempotent and patch existing `AGENTS.md` minimally.
+description: Install the Ergocode AI Agent Framework into a repository. Use when Codex must install the runtime payload, expose separate generic and task-workdir skill collections, patch the Ergocode `AGENTS.md` section, and install Codex session hooks. Keep installation idempotent.
 ---
 
 # Core specification
@@ -12,6 +12,7 @@ Inputs:
 - `framework_checkout_root`
 - `agents_md_path`
 - `skills_symlink_path`
+- `task_workdir_skills_symlink_path`
 - `framework_config_path` (optional)
 - `codex_hooks_path` (optional)
 - `codex_session_start_hook_script_path` (optional)
@@ -21,6 +22,7 @@ Defaults:
 - `framework_checkout_root=./.agents/ergo`
 - `agents_md_path=./AGENTS.md`
 - `skills_symlink_path=./.agents/skills/ergo`
+- `task_workdir_skills_symlink_path=./.agents/skills/ergo-task-workdir`
 - `codex_hooks_path=./.codex/hooks.json`
 - `codex_session_start_hook_script_path=./.codex/session_start_load_project_baseline.py`
 
@@ -28,6 +30,7 @@ Checks:
 - resolve all paths from `repo_root`
 - require `framework_checkout_root/src/project-baseline.md`
 - require `framework_checkout_root/src/skills` as the intended symlink target
+- require `framework_checkout_root/src/task-workdir/skills` as the task-workdir symlink target
 - require installer template `bootstrap/ergo-config.yaml.template`
 - require installer template `bootstrap/hooks/hooks.json`
 - require installer template `bootstrap/hooks/session_start_load_project_baseline.py`
@@ -45,6 +48,8 @@ Effects:
 - ensure `framework_checkout_root/src/project-baseline.md`
 - ensure `agents_md_path`
 - ensure `skills_symlink_path` is a symlink to `framework_checkout_root/src/skills`
+- ensure `task_workdir_skills_symlink_path` is a symlink to `framework_checkout_root/src/task-workdir/skills`
+- verify that skills in both collections are discoverable through their direct collection symlinks
 - ensure `.codex/` directory exists at `repo_root/.codex`
 - ensure `codex_session_start_hook_script_path`
 - ensure `codex_hooks_path` contains the mandatory framework SessionStart hook
@@ -79,10 +84,12 @@ AGENTS.md patch algorithm:
   - never duplicate the framework section
 
 Symlink algorithm:
-- ensure parent directories for `skills_symlink_path`
-- if `skills_symlink_path` is a symlink to `framework_checkout_root/src/skills`, leave it unchanged
-- if `skills_symlink_path` is a symlink to another target, replace it
-- if `skills_symlink_path` is a regular file or directory, fail
+- for each mapping, `skills_symlink_path` to `framework_checkout_root/src/skills` and `task_workdir_skills_symlink_path` to `framework_checkout_root/src/task-workdir/skills`:
+  - ensure the symlink's parent directory
+  - if it already points to the intended target, leave it unchanged
+  - if it points elsewhere, replace it
+  - if it is a regular file or directory, fail
+- inspect each direct target through its symlink and verify that its skill directories are visible without recursive discovery
 
 Codex hooks algorithm:
 - resolve `codex_hooks_path` and `codex_session_start_hook_script_path` from `repo_root`
@@ -104,6 +111,9 @@ Failure conditions:
 - multiple matching framework sections exist in `AGENTS.md`
 - `skills_symlink_path` exists as a regular file
 - `skills_symlink_path` exists as a directory
+- `task_workdir_skills_symlink_path` exists as a regular file
+- `task_workdir_skills_symlink_path` exists as a directory
+- either installed skill collection is not discoverable through its direct symlink
 - `AGENTS.md` cannot be patched without changing content outside the detected framework section
 - `codex_hooks_path` exists but is not valid JSON
 - `codex_session_start_hook_script_path` exists as a directory
@@ -113,6 +123,9 @@ Final report:
 - `framework_checkout_root`
 - `agents_md`
 - `skills_symlink`
+- `task_workdir_skills_symlink`
+- `generic_skills_discoverable`
+- `task_workdir_skills_discoverable`
 - `codex_hooks`
 - `warnings`
 - `errors`

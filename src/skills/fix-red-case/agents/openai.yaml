@@ -1,4 +1,4 @@
 interface:
   display_name: "Fix Red Case"
   short_description: "Fix one red case through production code"
-  default_prompt: "Use $fix-red-case after $code-test-case when the selected Kotlin JUnit case is red and only production code may be changed; reuse an applicable production-fix plan from the current request or resolved task directory before planning a new fix."
+  default_prompt: "Use $fix-red-case after $code-test-case when the selected Kotlin JUnit case is red and only production code may be changed; reuse an applicable caller-supplied production-fix plan before planning a new fix."

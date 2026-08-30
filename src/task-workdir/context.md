@@ -1,8 +1,9 @@
 # Tasks
 
-## Overview
+## Activation and resolution
 
-Framework work is organized around tasks.
+Load this module only when the baseline found a task candidate.
+The existence of directories under `./devlog` alone does not activate it.
 
 Resolve the task number primarily from explicit user input.
 If the user gave exactly one output path, task dir, or file inside a task dir, use that task dir.
@@ -18,6 +19,26 @@ If zero matches exist, state that no active task directory was resolved and cont
 If several matches exist, stop and ask which task directory to use.
 
 If no task directory can be resolved with high confidence, state that in chat and continue without an active task.
+
+Only the baseline uses these rules for implicit resolution on ordinary requests.
+Task-workdir skills receive an explicitly resolved or requested task directory, except `$init-task-workdir`, which resolves its new target from an explicit task id and slug.
+
+## Role bindings
+
+When an active task resolves, supply the selected role with concrete content or paths for applicable bindings:
+
+- `010-task-brief.md` -> requirements input
+- `030-solution-brief.md` or `030-implementation-design.md` -> design-context input
+- `todo.md` -> progress input or progress output
+- `020-code-anchors.md` -> existing code-anchors input or code-anchors output
+- `020-api-current.*` -> current API-description input or output
+- `030-api-new.*` -> target API-description or API-contract input or output
+- `030-test-cases-new.md` -> existing cases input or designed-case output
+- an applicable plan in supplied task artifacts -> optional production-fix plan input.
+
+Resolve only bindings relevant to the request and selected role.
+The role passes the resolved content or concrete path to a generic skill.
+Generic skills do not infer these mappings.
 
 ## Task Memory
 

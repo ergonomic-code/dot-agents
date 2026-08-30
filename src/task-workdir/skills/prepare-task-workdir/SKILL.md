@@ -5,11 +5,11 @@ description: Prepare a new or existing Lightweight SDD task workdir through a gu
 
 # Prepare Task Workdir
 
-Read `framework_checkout_root/src/conventions/process/tasks.md`.
-Read `framework_checkout_root/src/skills/init-task-workdir/SKILL.md`.
+Read `framework_checkout_root/src/task-workdir/context.md`.
+Read `framework_checkout_root/src/task-workdir/skills/init-task-workdir/SKILL.md`.
 Read `framework_checkout_root/src/skills/collect-code-anchors/SKILL.md`.
-Read `framework_checkout_root/src/references/task-brief-template.md`.
-Read `framework_checkout_root/src/references/solution-brief-template.md`.
+Read `framework_checkout_root/src/task-workdir/references/task-brief-template.md`.
+Read `framework_checkout_root/src/task-workdir/references/solution-brief-template.md`.
 
 ## Scope
 
@@ -20,7 +20,7 @@ Read `framework_checkout_root/src/references/solution-brief-template.md`.
 
 ## Resolve the task workdir
 
-1. Resolve an existing task directory through `framework_checkout_root/src/conventions/process/tasks.md`.
+1. Use an existing task directory explicitly requested by the user or resolved by the baseline.
 2. When an existing task directory resolves, require `010-task-brief.md`, `030-solution-brief.md`, and `todo.md` and read their current content.
 3. When no existing task directory resolves, require an explicit task id and slug and follow `$init-task-workdir` only to validate the target and create the standard files.
 4. If required input is missing or conflicting, ask only for that input and stop.

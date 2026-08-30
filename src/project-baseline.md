@@ -17,8 +17,15 @@ A tool task list does not satisfy the request.
 
 - Use resolved framework values from the host context.
 - If an activated skill defines loading instructions, follow the skill first.
-- Resolve the active role from the current user request.
-- Before the first substantive response and before task triage, read `framework_checkout_root/src/roles/<role>.md` and `framework_checkout_root/src/conventions/process/tasks.md`.
+- Before selecting a role, decide whether the request has a task candidate.
+- A task candidate exists only from an explicit task input, cwd inside a task workdir, or a high-confidence semantic match among the request, current branch, and one task directory.
+- The existence of task directories alone is not a task candidate.
+- If no candidate exists, do not load task-workdir context.
+- If a candidate exists, read `framework_checkout_root/src/task-workdir/context.md` and use it to resolve the active task.
+- Resolve the active role from the current request after task detection and resolution.
+- Read `framework_checkout_root/src/roles/<role>.md` before the first substantive response.
+- When an active task resolves, inject the task-workdir context's concrete input and output bindings into the selected role.
+- The role invokes skills with explicit semantic inputs and concrete output destinations.
 - Treat project `AGENTS.md` as the project integration layer.
 - If project `AGENTS.md` declares `## Local contexts`, use that section as the source of project-local context files.
 - Load only task-relevant local context files.

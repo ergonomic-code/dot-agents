@@ -13,7 +13,7 @@ Read `../../artifacts/verification-check-format-v0.1/references/source-reference
 Read `../../conventions/tests.md`.
 Read `references/response-contract-guard.md`.
 
-Accept one `verification-check-format-v0.1` artifact in `full` mode, and an optional existing Kotlin JUnit 5 test file or explicit target path for a new test file.
+Accept one `verification-check-format-v0.1` artifact in `full` mode, an optional API contract, and an optional existing Kotlin JUnit 5 test file or explicit target path for a new test file.
 Ignore one optional source reference line immediately under each selected `Example` per `../../artifacts/verification-check-format-v0.1/references/source-reference.md`.
 Default to coding exactly one test case, where one full `Example` block is one test case.
 Exception: when one `Rule` has a complete finite set of named `Example`s differing only by one input-or-context axis and its expected outcome, code that set as one parameterized test.
@@ -26,8 +26,7 @@ If any selected `Rule` lacks a full `Example` with `Given` / `When` / `Then`, st
 If full-mode input places a source reference under `Rule` instead of under the matching `Example`, stop and report the invalid artifact shape.
 If a selected example violates format but is repairable without changing behavior, stop and show the issue, the proposed corrected case header, and these choices: keep source wording as-is, use the proposed wording, or provide replacement wording.
 If a selected example cannot be repaired without inventing behavior, stop and ask for corrected case text.
-For HTTP API examples, before choosing or changing `*HttpApi` helpers, DTOs, schemas, or success assertions, read `030-api-new.adoc` or `030-api-new-ir.json` when present.
-If such API artifact exists, use it as the target endpoint and response contract for the selected case.
+For HTTP API examples, use a caller-supplied API contract as the target endpoint and response shape when present; otherwise use the controller contract.
 Before editing code, map case data roles to helpers, factories, or fixtures; keep exact literals, enum members, constants, codes, ids, dates, and names in the test body only when named by the case or public contract.
 If setup returns the required identifier or reference, use it directly; do not add a public read API call just to discover it.
 Do not add production repositories, DAOs, services, clients, application contexts, or DI lookups to test case classes for setup or observation.

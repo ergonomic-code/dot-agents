@@ -5,21 +5,17 @@ description: Design one test-method-sized `verification-check-format-v0.1` full-
 
 # Design Test Case
 
-Use this skill when the user gives a requirement, bug report, task brief, or desired behavior and needs one test-method-sized check, but has not already provided one selected full-mode verification check.
+Use this skill when the user gives requirements, a bug report, or desired behavior and needs one test-method-sized check, but has not already provided one selected full-mode verification check.
 
 Read `../write-verification-check/SKILL.md`.
 Read `framework_checkout_root/src/conventions/test-design.md`.
 Read `framework_checkout_root/src/references/test-case-implementation-order.md`.
 
-## Task artifact bindings
-
-- human-readable artifact title: `Изменения тест-кейсов`
-
 ## Selection
 
 Before designing, verify that the selected obligation is test-eligible under `framework_checkout_root/src/conventions/test-design.md`.
-Accept an implementation detail only when the user explicitly requests that specific test in the current conversation or an earlier explicit user request for it is unambiguously recorded in the task brief.
-Do not treat a `todo.md` item, solution or implementation design, implementation step, or verification instruction as a test obligation without an eligible requirement source.
+Accept an implementation detail only when the user explicitly requests that specific test or supplied requirements unambiguously record an earlier explicit request for it.
+Do not treat progress, design context, an implementation step, or a verification instruction as a test obligation without an eligible requirement source.
 Return `status: blocked` with `reason: not-test-eligible` when this condition is not met.
 
 Design exactly one test-method-sized target behavior check.
@@ -49,8 +45,8 @@ After returning or writing the verification case stop.
 
 When invoked by another skill with an explicit resolved output path, write the rendered case before returning it to that caller.
 When invoked by another skill without a resolved output path, return the rendered case without writing files.
-If the resolved output path is `030-test-cases-new.*`, update that cases artifact instead of returning the case inline.
-In an existing cases artifact, add only the new case under the added-cases section.
+When the caller identifies the output as an existing cases artifact, update it instead of returning the case inline.
+In that artifact, add only the new case under the caller-selected added-cases section.
 If that section already contains a source block for the same `Feature`, insert only the new `Rule` into that block.
 Otherwise add one source block in the artifact's existing container format.
 Preserve all other sections and cases.

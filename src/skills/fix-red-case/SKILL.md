@@ -6,7 +6,6 @@ description: Fix production code for one red Kotlin JUnit case created or aligne
 # Fix Red Case
 
 Read `framework_checkout_root/src/references/red-case-fix-planning.md`.
-Read `framework_checkout_root/src/conventions/process/tasks.md`.
 
 Use this skill only after `$code-test-case` has created or aligned one Kotlin JUnit case and that case is red.
 Fix production code only.
@@ -14,11 +13,8 @@ Do not edit tests, test fixtures, test data, assertions, display names, test ann
 
 ## Input
 
-Resolve an optional task directory through `framework_checkout_root/src/conventions/process/tasks.md`.
-Use a production-fix plan explicitly included in the current request as the existing plan.
-Otherwise, when a task directory resolves, inspect its briefs and relevant task artifacts for plans whose request, artifact, or containing section identifies the selected case.
-If exactly one such plan exists, use it as the existing plan.
-If selecting among task plans is ambiguous, ask the user instead of choosing one.
+Accept the selected red case, current failure evidence, optional design context, and an optional production-fix plan.
+Use only a plan explicitly supplied by the caller.
 
 ## Workflow
 
@@ -35,7 +31,7 @@ If selecting among task plans is ambiguous, ask the user instead of choosing one
 
 ## Output
 
-Report the plan source (`prompt`, task directory, or new planning), failure causes addressed, design context used or absent, production files changed, verification command, and whether the selected test passed or the work was blocked.
+Report the plan source (`supplied` or new planning), failure causes addressed, design context used or absent, production files changed, verification command, and whether the selected test passed or the work was blocked.
 When invoked by another skill, return `status: complete` with `outcome: selected-test-passes` only when the same selected test passes.
 Return `status: pending` only when implementation or verification is interrupted while work remains inside the selected behavior boundary.
 Return `status: blocked` when planning has an unresolved question or blocker, or green requires changing the selected test or widening the behavior boundary.
