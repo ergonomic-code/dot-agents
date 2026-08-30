@@ -1,7 +1,6 @@
 # Structure Chart
 
 Use `structure-chart/v1` to describe and agree on the high-level structure of a proposed solution.
-Write the artifact directly as a Mermaid flowchart in one `.mmd` file.
 
 ## Content
 
