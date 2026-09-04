@@ -1,7 +1,5 @@
 # Test naming
 
-Read this file before scanning existing tests for naming examples when the task asks to name, rename, or align a test class, case, method, or `@DisplayName`.
-Read `../artifacts/verification-check-format-v0.1/references/feature-naming.md` before naming a class `@DisplayName`.
 Use surrounding tests only after these rules to preserve local mechanics, imports, annotations, and report style.
 
 ## Human names

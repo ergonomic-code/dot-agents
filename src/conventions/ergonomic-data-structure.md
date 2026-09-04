@@ -1,7 +1,5 @@
 # Ergonomic data structure projection
 
-Use this file with `./ergonomic-architecture.md` when a task concerns domain data shape, entities, value objects, aggregates, references, or persistence boundaries.
-
 ## Terminology
 
 - `entities` — domain objects with identity.

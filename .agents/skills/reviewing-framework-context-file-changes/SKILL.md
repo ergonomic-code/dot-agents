@@ -1,6 +1,6 @@
 ---
 name: reviewing-framework-context-file-changes
-description: Review changes in framework context files for conciseness, minimality, task fit, framework integration, ambiguity, actionability, verifiability, contradictions, scope clarity, and language consistency. Use when Codex reviews diffs or changed files in `.agents/`, `src/project-baseline.md`, `src/conventions/`, `src/roles/`, framework templates, or `README.md`.
+description: Review changes in framework context files for conciseness, minimality, task fit, framework integration, ambiguity, actionability, verifiability, contradictions, scope clarity, and language consistency. Use when Codex reviews diffs or changed files in `.agents/`, `src/project-baseline.md`, `src/context/`, `src/conventions/`, `src/roles/`, framework templates, or `README.md`.
 ---
 
 # Review framework context file changes
@@ -54,10 +54,18 @@ Verify:
 - no orphan files were introduced
 - `README.md` is updated when changes affect user-facing framework capabilities, installation, usage, supported scope, or documented entry points
 - internal-only changes do not introduce speculative `README.md` edits
-- dependency direction remains `baseline -> role -> skill -> conventions and artifacts`
+- dependency direction remains `baseline -> role`, `baseline -> context routing -> conventions and references`, `role -> skill`, and `skill -> intrinsic dependencies`
+- the baseline reaches and orchestrates the root context index without duplicating topical conditions
+- every topical index is reachable from the root, all matching indexes compose, and the index layer is neither deep nor split without an applicability boundary
+- roles do not route engineering context
+- generic skills do not route general task context, and their convention or reference dependencies are intrinsic to the skill
+- conventions define rules rather than general applicability routing, with no routing conditions duplicated across layers
+- selective routing preserves intersections without loading unrelated branches, including separating tests from production code
 - generic skills under `src/skills/**` do not resolve tasks, discover task artifacts, choose task paths, or select or load roles
 - task layout and progress knowledge is confined to `src/task-workdir/**`, whose skills are exempt from the generic-skill restriction
 - task-workdir context is conditional and supplies concrete bindings to roles before generic skills receive semantic inputs and caller-selected outputs
+- task-workdir-specific routing remains under `src/task-workdir/**`
+- project-local context continues to compose through project `AGENTS.md`
 
 ## Output
 

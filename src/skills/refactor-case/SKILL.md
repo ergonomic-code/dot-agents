@@ -5,13 +5,8 @@ description: Review and refactor code after `$code-test-case` and `$fix-red-case
 
 # Refactor Case
 
-Read `../../conventions/code-implementation.md`.
 Read `../../conventions/ergonomic-approach-rules.md`.
-Read `../../conventions/ergonomic-architecture.md`.
-Follow its projection-specific loading rules.
 Read `../../conventions/abstraction-level-boundaries.md`.
-Read `../../conventions/test-fixture-architecture.md`.
-Read `../../conventions/http-api-test-rules.md`.
 Read `./references/api-alignment.md`.
 
 Use this skill only after the selected case is green.
@@ -41,16 +36,13 @@ Accept one commit, current uncommitted changes, or one coordinator-supplied boun
    - `production` when the intended structural change is in production code;
    - `test` when the intended structural change is in test code;
    - stop if the iteration needs both, except for the minimal test updates required by `references/api-alignment.md`.
-8. Load and apply exactly one matching rule file:
-   - in `production` mode, read `../../conventions/process/production-code-refactoring.md`;
-   - in `test` mode, read `../../conventions/process/tests-refactoring.md`.
-9. For duplication, propose the narrowest shared implementation that owns the complete repeated responsibility while preserving behavior.
-10. Propose a short refactor plan and wait for explicit approval before editing.
-11. After approval, change structure only.
+8. For duplication, propose the narrowest shared implementation that owns the complete repeated responsibility while preserving behavior.
+9. Propose a short refactor plan and wait for explicit approval before editing.
+10. After approval, change structure only.
    Preserve observable behavior, public contracts, persistence shape, API responses, test intent.
-12. Rerun the selected test.
+11. Rerun the selected test.
    If shared APIs or broad call sites changed, also run the smallest relevant compile or module test.
-13. Repeat steps 2-4 against the entire refactored target boundary without making unapproved edits.
+12. Repeat steps 2-4 against the entire refactored target boundary without making unapproved edits.
    Replace the previous inventory with every current remaining candidate so the next invocation can continue from current code and reach a verified `no-op`.
 
 ## Constraints

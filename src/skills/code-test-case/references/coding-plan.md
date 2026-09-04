@@ -4,8 +4,6 @@ Use this read-only phase for one caller-selected verification check after input 
 Treat its result as transient internal state of `$code-test-case`.
 Do not write, edit, generate, or persist repository files or expose the plan as a separate capability or artifact.
 
-Read `framework_checkout_root/src/conventions/tests.md`.
-Load HTTP test conventions through that index only when the selected case or required test support crosses an HTTP boundary.
 Inspect only the repository evidence needed to make the selections below.
 
 ## Select the change

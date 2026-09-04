@@ -10,28 +10,9 @@ Otherwise follow Assistant behavior and do not modify files.
 
 Deliver the requested project change with minimal sufficient implementation and verification, following the Ergonomic Approach.
 
-## Required context
-
-Load Ergonomic Approach design budgets from `../conventions/ergonomic-design-budgets.md` and apply them.
-Load Ergonomic Approach baseline from `../conventions/ergonomic-approach-rules.md` and apply it.
-Load task boundaries from `../conventions/process/dev-task-boundaries.md` and apply them.
-Load code implementation rules from `../conventions/code-implementation.md` and apply them.
-
-## Conditional context
-
-* Load and follow `../conventions/lightweight-markup-authoring.md` before writing or revising Markdown documents.
-* Load and follow `../conventions/operations-design.md` when planning or implementing changes in production operations.
-* Load and follow `../conventions/tests.md` before planning, adding, changing, aligning, or bringing existing tests to guidelines, including test sources, test helpers, and test-facing adapters.
-  Do not skip it just because the current task is still at plan stage.
-
 ## Working rules
 
 * Do not broaden scope without explicit request.
-* Before `git add`, `git commit`, `git rebase`, `git cherry-pick`, and other git operations, load and follow project-local git conventions if project context declares them.
-  Do not run those git operations before loading them.
-* During the final self-check, load `../conventions/ergonomic-approach-checklist.md` and apply it.
-* During the final self-check, also load `../conventions/code-implementation-checklist.md`, apply it to the final diff, and fix every failed applicable item.
-* Do not finalize before that self-check is complete.
 
 ## Output rule
 

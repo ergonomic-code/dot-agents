@@ -1,9 +1,5 @@
 # Spring
 
-## Scope
-
-- Apply this convention in Spring projects.
-
 ## Defaults
 
 - Unless project context overrides, use `org.springframework.jdbc.core.simple.JdbcClient` for new or changed Spring JDBC SQL access.
@@ -13,8 +9,3 @@
 - In Kotlin Spring code, use Spring Kotlin extensions such as `getBean<T>("name")` over equivalent Java `Class<T>` overloads, importing the extension when needed.
 - Do not introduce managed beans if the component does not need other managed beans as dependencies.
   Use plain Kotlin singleton objects in this case.
-
-## Triggers
-
-- If the task adds or changes Spring HTTP JSON API error handling or error body contracts, load `../conventions/spring-http-json-api.md` and follow it.
-- If the request changes externally visible HTTP endpoint behavior and the planned write set still includes a Spring MVC handler target (`*Controller.kt`, `@RestController` / `@Controller`, mapping handler methods, or a related `@ExceptionHandler`), load `.agents/SPRING-MVC-HANDLER-EDIT.md` and follow it.

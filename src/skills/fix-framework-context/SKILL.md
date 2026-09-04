@@ -22,10 +22,14 @@ If the case is about current-repo `AGENTS.md`, or project-local `.agents/**` or 
 ## Skill-specific scope and classification
 
 Work from the smallest relevant framework file set under `framework_checkout_root/src/**`.
-Classify each candidate by layer (`project-baseline` | `roles-index` | `role` | `convention` | `skill` | `artifact` | `reference`).
+Classify each candidate by layer (`project-baseline` | `roles-index` | `role` | `context-index` | `convention` | `skill` | `artifact` | `reference` | `task-workdir`).
 
 ## Architecture boundary
 
+- Use the dependency invariant in `context-layering.md` when analyzing options and implementing the selected change.
+- Put applicability based on what requested or planned work touches in context indexes.
+- Keep topical routing out of roles, generic skills, conventions, and baseline orchestration.
+- Keep intrinsic skill dependencies in the skill.
 - Treat skills under `framework_checkout_root/src/skills/**` as generic and independent of task-workdir storage.
 - Allow task layout, filenames, artifact codes, and progress rules under `framework_checkout_root/src/task-workdir/**`.
 - Keep implicit task resolution in the baseline and concrete task bindings in task-workdir context.
