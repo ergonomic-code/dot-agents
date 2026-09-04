@@ -1,3 +1,9 @@
+---
+keywords:
+  - http-api
+  - tests
+---
+
 # HTTP API test rules
 
 - For HTTP boundary tests and `*HttpApi` changes, design public typed `*HttpApi` methods to mirror the controller contract by parameters and result type.

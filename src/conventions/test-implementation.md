@@ -1,3 +1,9 @@
+---
+keywords:
+  - tests
+  - implementation
+---
+
 # Test implementation
 
 ## Test case body
@@ -48,10 +54,6 @@
 - Treat named fixture constants and presets as exact input values.
 - Otherwise encode the data role in a helper, factory, or fixture.
 - Prefer generic role helpers over incidental named samples.
-
-## Test doubles
-
-Follow `./test-doubles.md`.
 
 ## Determinism
 

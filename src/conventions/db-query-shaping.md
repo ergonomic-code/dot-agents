@@ -1,10 +1,10 @@
+---
+keywords:
+  - database
+  - query-shaping
+---
+
 # Database query shaping
-
-## Scope
-
-- Apply this convention when a read path is backed by a database query or repository call.
-- Apply it especially when behavior mentions sorting, filtering, pagination, result limiting, deduplication, or existence checks.
-- Pair this convention with `db-read-model-boundaries.md` when the task introduces or changes query-mapped return types, projections, views, or row-mapper targets.
 
 ## Rules
 

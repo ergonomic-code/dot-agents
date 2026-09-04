@@ -1,3 +1,8 @@
+---
+keywords:
+  - lightweight-markup
+---
+
 # Documentation formatting
 
 ## One Sentence Per Line

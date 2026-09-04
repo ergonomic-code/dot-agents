@@ -1,3 +1,9 @@
+---
+keywords:
+  - production-code
+  - refactoring-process
+---
+
 # Production Code Refactoring
 
 In this mode, the task is changing the structure, shape, or names of production code without changing behavior.

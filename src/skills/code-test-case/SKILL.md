@@ -35,11 +35,10 @@ For `blocked`, report the blocker and any completed evidence without claiming a 
 1. Validate that the selected check is one unambiguous full-mode case with a technical SUT anchor and an observable obligation.
 2. Produce the internal read-only plan through `references/coding-plan.md`.
 3. If planning reports a blocker, return `blocked` without materializing changes.
-4. Read `framework_checkout_root/src/conventions/tests.md` and materialize only the planned test case, test support, and compile-only production surface.
-   Load production implementation conventions only when the plan includes production-surface changes.
+4. Materialize only the planned test case, test support, and compile-only production surface using the context routed for the planned write set.
 5. When the target test container exists, match the selected case before adding it, preserve unrelated declarations, stop on ambiguous mapping, and do not delete unrelated tests.
    Otherwise create the planned container at the authorized path.
-6. Apply the final checks loaded through the test convention index, compile the exact selected test, and then execute that exact test.
+6. Apply the routed final checks, compile the exact selected test, and then execute that exact test.
 7. Return `expected-red`, `already-green`, or `blocked` according to the observed evidence.
 
 ## Boundaries

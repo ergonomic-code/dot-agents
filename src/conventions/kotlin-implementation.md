@@ -1,33 +1,10 @@
-# Code implementation
+---
+keywords:
+  - kotlin
+  - implementation
+---
 
-## Loading
-
-- If the task adds or changes production values, parameters, fields, DTOs, API contracts, repository methods, or persistence bindings whose primitive type would hide meaning, unit, range, or nullability, load `./semantic-value-types.md`.
-- If the task adds or changes a data structures, load `./ergonomic-data-structure.md`.
-- If the project repository uses Spring, load `./spring.md`.
-- If the task changes or adds production database schema migrations, or production persistence changes require a schema change, load `./db-schema-migrations.md`.
-- If the task adds or changes a database transaction boundary or a database-backed mutation, load `./transaction-boundaries.md`.
-- If the task changes or adds a database-backed read, changes a query-mapped type, or changes ordering, filtering, pagination, result limiting, deduplication, or existence checks of database-backed data, load `./db-query-shaping.md` and `./db-read-model-boundaries.md`.
-- If the task changes or adds a database-backed mutation whose correctness depends on evaluating a precondition against current database state, load `./db-conditional-writes.md`.
-- If the task changes or adds a persistence-backed class, constructor, factory, repository mapping, serializer, or persistence adapter, load `./persistence-models.md`.
-- If the task changes or adds a production operation, operation helper, or workflow method that reads, calculates, writes, or returns domain data, load `./operations-design.md`.
-- If the task adds, changes, or names a production port, operation, resource or resource implementation, DOP, component dependency shape, or operation-resource wiring, load `./ergonomic-architecture.md` and `./ergonomic-component-structure.md`.
-
-## Reuse
-
-- Prefer changing existing code over adding new abstractions.
-- Before copying any existing artifact, prefer reuse, move, reference, extraction, or parametrization.
-- For structured artifacts that support references or imports, reuse or extract shared definitions instead of duplicating equivalent definitions.
-- Do not create a copied variant unless those options were checked and do not work, or the user explicitly asked for a fork.
-- If copying is still necessary, state the constraint that prevents reuse.
-
-## Resource lifetimes
-
-- Unless an API explicitly transfers ownership, keep the complete acquire-use-cleanup lifecycle of a resource in one method.
-- That method must clean up through `finally`, or delegate the complete lifecycle, including acquisition and cleanup, to a scoped helper.
-- Callees inside the lifecycle may use the resource but must not clean it up.
-
-## Kotlin
+# Kotlin implementation
 
 - Preserve existing blank separator lines in code.
 - Prefer `val` for fields, local values, parameters, configuration values, fixtures, and lifecycle values.
@@ -53,7 +30,4 @@
 - Use named arguments for constant values and variables whose name differs from the corresponding parameter name.
 - Do not leave fully qualified names at Kotlin use sites; use imports or import aliases instead.
 - Do not change wildcard imports as import-style cleanup, including wildcard imports introduced by the target diff, unless the user asks for it, local lint fails, or local configuration forbids them.
-
-## HTTP API versions
-
 - When adding a newer version of an existing HTTP API operation, keep Kotlin identifiers for the current operation unversioned and rename the previous operation's Kotlin wrappers to versioned identifiers.

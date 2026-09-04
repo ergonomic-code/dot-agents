@@ -1,3 +1,9 @@
+---
+keywords:
+  - ergonomic-approach
+  - checklist
+---
+
 # Ergonomic Approach checklist
 
 ## General

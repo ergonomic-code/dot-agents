@@ -1,3 +1,10 @@
+---
+keywords:
+  - tests
+  - implementation
+  - checklist
+---
+
 # Test implementation checklist
 
 - Is every new or changed test backed by behavior or a contract from the current explicit user request or supplied requirements, backed by a current or unambiguously recorded earlier explicit request to test that specific implementation detail, or only mechanically adapted to keep an existing behavior check compiling and passing without a new observation or assertion?
