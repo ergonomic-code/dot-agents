@@ -177,7 +177,7 @@ Baseline активирует модуль task-workdir только при яв
 
 | Скилл | Назначение |
 | --- | --- |
-| [`$code-test-case`](src/skills/code-test-case/SKILL.md) | Преобразует проверку в формате `verification-check-format-v0.1` в Kotlin JUnit-тест, затем в репозитории проверяет, что тест падает из-за отсутствующего поведения или уже проходит. |
+| [`$code-test-case`](src/skills/code-test-case/SKILL.md) | Материализует одну выбранную проверку в привязанном репозитории как компилируемый Kotlin JUnit-тест и возвращает `expected-red`, `already-green` или `blocked` с доказательствами. |
 | [`$collect-code-anchors`](src/skills/collect-code-anchors/SKILL.md) | Находит связанные с требуемым поведением участки кода, модели, запросы, таблицы, конфигурацию и другие якоря в коде. |
 | [`$describe-rest-api`](src/skills/describe-rest-api/SKILL.md) | Пишет и валидирует человекочитаемое описание REST API по коду, OpenAPI, требованиям или другим входным данным. |
 | [`$design-test-case`](src/skills/design-test-case/SKILL.md) | Проектирует одну проверку размером с тестовый метод и при заданном пути записывает её в артефакт. |
