@@ -1,6 +1,10 @@
-# Ergonomic behavior structure projection
+---
+keywords:
+  - ergonomic-architecture
+  - behavior-structure
+---
 
-Use this file with `./ergonomic-architecture.md` when a task concerns input, transformation, output, orchestration, method structure, or behavior decomposition.
+# Ergonomic behavior structure projection
 
 ## Terminology
 
@@ -13,3 +17,4 @@ Use this file with `./ergonomic-architecture.md` when a task concerns input, tra
 
 - Decompose behavior into operations, DOPs, resources, and ports with explicit responsibilities.
 - Keep each subprogram on one abstraction level.
+- Keep cognitive complexity at most 4 for subprograms that perform I/O or change observable state and at most 15 for I/O-free pure computations.

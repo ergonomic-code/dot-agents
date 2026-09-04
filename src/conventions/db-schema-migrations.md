@@ -1,8 +1,10 @@
+---
+keywords:
+  - database
+  - schema-migrations
+---
+
 # DB schema migrations
-
-## Scope
-
-- Apply this convention when changing or adding production database schema migrations for tables that may already contain rows.
 
 ## Migration file choice
 

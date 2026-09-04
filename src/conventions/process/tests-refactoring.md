@@ -1,3 +1,9 @@
+---
+keywords:
+  - tests
+  - refactoring-process
+---
+
 # Test Refactoring
 
 In this mode, change only tests and test-supporting code.

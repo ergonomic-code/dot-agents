@@ -1,3 +1,9 @@
+---
+keywords:
+  - tests
+  - fixture-architecture
+---
+
 # Test fixture architecture
 
 ## Helper boundaries

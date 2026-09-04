@@ -1,3 +1,9 @@
+---
+keywords:
+  - production-code
+  - development-process
+---
+
 # Production Code Development
 
 In this mode, the primary task is changing production behavior.
