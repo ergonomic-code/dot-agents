@@ -1,9 +1,5 @@
 # DB read-model boundaries
 
-## Scope
-
-- Apply this convention when a task changes a database-backed read, a repository/query return type, a `rowMapperClass`, or a class mapped directly from SQL/JDBC/SDJ results.
-
 ## Rules
 
 - Keep query-mapped read models, views, projections, and row DTOs as plain carriers of selected fields and query-derived values.

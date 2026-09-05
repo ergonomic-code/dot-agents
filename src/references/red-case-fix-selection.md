@@ -1,10 +1,5 @@
 # Red Case Fix Selection
 
-Read `framework_checkout_root/src/conventions/tests.md`.
-Read `framework_checkout_root/src/conventions/ergonomic-approach-rules.md`.
-Read `framework_checkout_root/src/conventions/process/production-code-development.md`.
-Read `framework_checkout_root/src/conventions/code-implementation.md`.
-
 Use this phase only for one selected Kotlin JUnit case created or aligned by `$code-test-case` and proven red.
 Do not edit source, test, or configuration files during this phase.
 

@@ -1,7 +1,5 @@
 # Ergonomic component structure projection
 
-Use this file with `./ergonomic-architecture.md` when a task concerns ports, operations, DOPs, resources, component dependencies, or effect graph shape.
-
 ## Terminology
 
 - `ports` — entry points that receive external signals and delegate to one operation or one resource method.

@@ -1,7 +1,5 @@
 # Ergonomic behavior structure projection
 
-Use this file with `./ergonomic-architecture.md` when a task concerns input, transformation, output, orchestration, method structure, or behavior decomposition.
-
 ## Terminology
 
 - `input` — behavior code that loads data into program memory.

@@ -49,10 +49,6 @@
 - Otherwise encode the data role in a helper, factory, or fixture.
 - Prefer generic role helpers over incidental named samples.
 
-## Test doubles
-
-Follow `./test-doubles.md`.
-
 ## Determinism
 
 - Do not use non-deterministic randomness.

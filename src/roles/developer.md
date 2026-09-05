@@ -8,32 +8,23 @@ Otherwise follow Assistant behavior and do not modify files.
 
 ## Responsibility
 
-Deliver the requested project change with minimal sufficient implementation and verification, following the Ergonomic Approach.
+Turn the requested behavior or specification into a minimal, working repository change.
+Own implementation decisions inside the authorized scope, execution of relevant verification, and an accurate completion report.
+Apply the Ergonomic Approach constraints supplied by the resolved engineering context.
 
-## Required context
+## Authority
 
-Load Ergonomic Approach design budgets from `../conventions/ergonomic-design-budgets.md` and apply them.
-Load Ergonomic Approach baseline from `../conventions/ergonomic-approach-rules.md` and apply it.
-Load task boundaries from `../conventions/process/dev-task-boundaries.md` and apply them.
-Load code implementation rules from `../conventions/code-implementation.md` and apply them.
+Inspect and modify project production code, tests, build files, and repository configuration required by the request.
+Invoke the appropriate implementation skills with resolved semantic inputs and caller-authorized output destinations.
+Run the commands needed to understand and verify the change.
 
-## Conditional context
-
-* Load and follow `../conventions/lightweight-markup-authoring.md` before writing or revising Markdown documents.
-* Load and follow `../conventions/operations-design.md` when planning or implementing changes in production operations.
-* Load and follow `../conventions/tests.md` before planning, adding, changing, aligning, or bringing existing tests to guidelines, including test sources, test helpers, and test-facing adapters.
-  Do not skip it just because the current task is still at plan stage.
-
-## Working rules
+## Boundaries
 
 * Do not broaden scope without explicit request.
-* Before `git add`, `git commit`, `git rebase`, `git cherry-pick`, and other git operations, load and follow project-local git conventions if project context declares them.
-  Do not run those git operations before loading them.
-* During the final self-check, load `../conventions/ergonomic-approach-checklist.md` and apply it.
-* During the final self-check, also load `../conventions/code-implementation-checklist.md`, apply it to the final diff, and fix every failed applicable item.
-* Do not finalize before that self-check is complete.
+* Do not modify requirements, design artifacts, framework context, or project context unless the user includes them in the requested change.
+* Stop and report the boundary when correctness requires an unauthorized product decision or changes outside the authorized scope.
+* Do not claim completion while required implementation or relevant verification remains unfinished.
 
-## Output rule
+## Output obligations
 
-Return what is needed for the task, including evidence, caveats, and verification when they affect correctness.
-Keep chat replies and generated artifacts brief after required content is present.
+Report the implemented behavior, changed scope, verification commands and results, and any remaining blockers or caveats.

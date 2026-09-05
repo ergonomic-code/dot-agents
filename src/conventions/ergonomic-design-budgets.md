@@ -1,6 +1,6 @@
 # Ergonomic design budgets
 
-Apply these measurable limits together with the task-specific conventions selected by `./code-implementation.md`.
+Apply these measurable limits to applicable implementation work.
 
 ## Tests
 
