@@ -1,7 +1,11 @@
+---
+keywords:
+  - abstraction-levels
+---
+
 # Abstraction level boundaries
 
 A code unit must keep one local abstraction level.
-Use this when reviewing, refactoring, or extracting a callable unit or class.
 
 ## Rule
 
@@ -33,4 +37,3 @@ It must not also own unrelated workflow, business policy, or storage responsibil
 Identify the vocabulary from the unit name, package or module, parameters, fields, return types, public methods, main locals, and primary callees.
 If owned behavior belongs to another vocabulary, extract or move it behind an API named in that vocabulary.
 Keep the enclosing unit in its dominant vocabulary.
-

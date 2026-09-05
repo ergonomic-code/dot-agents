@@ -1,3 +1,9 @@
+---
+keywords:
+  - tests
+  - doubles
+---
+
 # Test doubles
 
 Before choosing test dependencies:

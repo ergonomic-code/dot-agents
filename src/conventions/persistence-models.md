@@ -1,3 +1,9 @@
+---
+keywords:
+  - kotlin
+  - persistence-models
+---
+
 # Persistence models
 
 ## Kotlin

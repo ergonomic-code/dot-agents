@@ -1,3 +1,9 @@
+---
+keywords:
+  - tests
+  - design
+---
+
 # Test design
 
 ## Test kinds

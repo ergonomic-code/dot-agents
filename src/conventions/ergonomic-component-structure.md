@@ -1,3 +1,9 @@
+---
+keywords:
+  - ergonomic-architecture
+  - component-structure
+---
+
 # Ergonomic component structure projection
 
 ## Terminology
