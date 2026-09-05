@@ -1,9 +1,5 @@
 # DB schema migrations
 
-## Scope
-
-- Apply this convention when changing or adding production database schema migrations for tables that may already contain rows.
-
 ## Migration file choice
 
 - Before adding a new migration, inspect the latest adjacent migrations for the same schema object or requested change.

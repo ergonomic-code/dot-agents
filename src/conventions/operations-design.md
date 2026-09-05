@@ -10,7 +10,7 @@
 - A command abstraction may internally use balanced form when its external contract is state-changing and it does not expose domain reads as output.
 - Judge operation orchestration by helper contracts and visible dependency-call order, not by requiring every nested read, calculation, and write to be expanded inline.
 - Prefer completing reads before calculations and writes after calculations.
-- Do not split a database conditional write into read, calculation, and write steps when the database can enforce the condition and mutation atomically; follow `./db-conditional-writes.md`.
+- Do not split a database conditional write into read, calculation, and write steps when the database can enforce the condition and mutation atomically.
 - Keep exceptions to read-calculate-write order explicit and confined.
 - Keep costly dependency calls out of calculate branches.
 - Keep complex classification, localization, aggregation, filtering, default selection, and domain decisions out of read and write branches.
