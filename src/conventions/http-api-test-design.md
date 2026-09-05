@@ -1,8 +1,11 @@
+---
+keywords:
+  - http-api
+  - tests
+  - design
+---
+
 # HTTP API test design
-
-## Scope
-
-- These rules apply to HTTP boundary tests and `*HttpApi` helpers.
 
 ## Public contract
 

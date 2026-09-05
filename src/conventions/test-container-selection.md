@@ -1,3 +1,9 @@
+---
+keywords:
+  - tests
+  - container-selection
+---
+
 # Test container selection
 
 - Infer the test kind from an explicit target class, explicit `Feature`, explicit target surface, and sibling test style before choosing the container.

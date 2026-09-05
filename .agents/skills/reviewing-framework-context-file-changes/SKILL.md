@@ -60,6 +60,7 @@ Verify:
 - roles do not route engineering context
 - generic skills do not route general task context, and their convention or reference dependencies are intrinsic to the skill
 - conventions define rules rather than general applicability routing, with no routing conditions duplicated across layers
+- every convention declares one to three YAML front-matter keywords, every rule in the file concerns every keyword, and rules with a different keyword intersection are split and routed independently
 - selective routing preserves intersections without loading unrelated branches, including separating tests from production code
 - generic skills under `src/skills/**` do not resolve tasks, discover task artifacts, choose task paths, or select or load roles
 - task layout and progress knowledge is confined to `src/task-workdir/**`, whose skills are exempt from the generic-skill restriction

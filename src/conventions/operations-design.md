@@ -1,3 +1,9 @@
+---
+keywords:
+  - operations
+  - design
+---
+
 # Operations design
 
 ## Balanced form

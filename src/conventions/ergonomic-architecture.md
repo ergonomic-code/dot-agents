@@ -1,3 +1,8 @@
+---
+keywords:
+  - ergonomic-architecture
+---
+
 # Ergonomic Architecture summary
 
 Use it as a compact framework-owned summary for brief writing and architecture decisions.

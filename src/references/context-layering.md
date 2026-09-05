@@ -6,6 +6,9 @@ The root index classifies the requested and planned work and loads every matchin
 Roles define responsibility and behavioral boundaries; they do not route engineering context.
 Generic skills load only dependencies intrinsic to their operation, artifact format, algorithm, or skill-specific guard.
 Conventions define rules; applicability based on what work touches belongs to context routing.
+Every convention declares one to three keywords in YAML front matter.
+Treat the keywords as an intersection: every rule in the file must concern every declared keyword.
+Split rules with a different keyword intersection into a separate convention and route each convention independently.
 Treat `task-workdir` as an optional integration module beside generic skills.
 The baseline alone resolves an implicit active task and loads task-workdir context.
 The conditional module supplies concrete artifact bindings to the selected role.
