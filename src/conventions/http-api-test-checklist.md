@@ -1,3 +1,10 @@
+---
+keywords:
+  - http-api
+  - tests
+  - checklist
+---
+
 # HTTP API test checklist
 
 - Do all changed HTTP boundary tests avoid direct calls to `WebTestClient` and `RestTestClient`?

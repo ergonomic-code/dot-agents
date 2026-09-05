@@ -1,3 +1,8 @@
+---
+keywords:
+  - ergonomic-approach
+---
+
 # Ergonomic Approach rules
 
 ## General rules

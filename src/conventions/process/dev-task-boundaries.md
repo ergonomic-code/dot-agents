@@ -1,3 +1,9 @@
+---
+keywords:
+  - development
+  - task-boundaries
+---
+
 # Development task boundaries
 
 Each coding slice has two independent axes:

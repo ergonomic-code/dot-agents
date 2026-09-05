@@ -1,3 +1,8 @@
+---
+keywords:
+  - semantic-value-types
+---
+
 # Semantic value types
 
 ## Rules

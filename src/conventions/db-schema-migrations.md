@@ -1,3 +1,9 @@
+---
+keywords:
+  - database
+  - schema-migrations
+---
+
 # DB schema migrations
 
 ## Migration file choice

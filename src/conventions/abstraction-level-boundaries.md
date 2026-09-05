@@ -1,3 +1,8 @@
+---
+keywords:
+  - abstraction-levels
+---
+
 # Abstraction level boundaries
 
 A code unit must keep one local abstraction level.

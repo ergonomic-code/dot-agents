@@ -1,3 +1,9 @@
+---
+keywords:
+  - spring
+  - http-json-api
+---
+
 # Spring HTTP JSON API
 
 ## Error responses

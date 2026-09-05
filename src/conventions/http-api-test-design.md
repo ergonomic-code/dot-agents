@@ -1,3 +1,10 @@
+---
+keywords:
+  - http-api
+  - tests
+  - design
+---
+
 # HTTP API test design
 
 ## Public contract

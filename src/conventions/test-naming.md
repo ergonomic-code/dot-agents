@@ -1,3 +1,9 @@
+---
+keywords:
+  - tests
+  - naming
+---
+
 # Test naming
 
 Use surrounding tests only after these rules to preserve local mechanics, imports, annotations, and report style.

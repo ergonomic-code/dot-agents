@@ -1,3 +1,9 @@
+---
+keywords:
+  - ergonomic-architecture
+  - behavior-structure
+---
+
 # Ergonomic behavior structure projection
 
 ## Terminology

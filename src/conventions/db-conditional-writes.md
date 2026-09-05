@@ -1,3 +1,9 @@
+---
+keywords:
+  - database
+  - conditional-writes
+---
+
 # Database conditional writes
 
 ## Definition

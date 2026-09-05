@@ -1,3 +1,9 @@
+---
+keywords:
+  - database
+  - transaction-boundaries
+---
+
 # Transaction boundaries
 
 ## Rules
