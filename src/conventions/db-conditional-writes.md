@@ -1,8 +1,7 @@
 # Database conditional writes
 
-## Scope
+## Definition
 
-- Apply this convention when the correctness of a database-backed mutation depends on evaluating a precondition against current database state.
 - Treat insert-if-absent, first-writer-wins, deduplication, compare-and-set, and conditional update or delete as conditional writes.
 
 ## Rules

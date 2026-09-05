@@ -1,9 +1,5 @@
 # Transaction boundaries
 
-## Scope
-
-- Apply this convention when adding or changing a database transaction boundary or a database-backed mutation.
-
 ## Rules
 
 - Keep a database transaction limited to database interactions and bounded in-process work required for their atomicity.

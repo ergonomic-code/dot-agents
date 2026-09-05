@@ -1,9 +1,5 @@
 # HTTP API test design
 
-## Scope
-
-- These rules apply to HTTP boundary tests and `*HttpApi` helpers.
-
 ## Public contract
 
 - A public typed `*HttpApi` method must mirror the controller contract by using the same logical parameters and the same result type.

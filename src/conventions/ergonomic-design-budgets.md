@@ -1,7 +1,5 @@
 # Ergonomic design budgets
 
-Apply these measurable limits to applicable implementation work.
-
 ## Tests
 
 - At least 90% of tests must have an average execution time under 50 ms on a modern high-end machine.
