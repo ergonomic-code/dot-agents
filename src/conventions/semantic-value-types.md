@@ -1,8 +1,9 @@
+---
+keywords:
+  - semantic-value-types
+---
+
 # Semantic value types
-
-## Scope
-
-- Apply this convention when a task adds or changes a value whose meaning, unit, range, or nullability is narrower than its primitive type.
 
 ## Rules
 

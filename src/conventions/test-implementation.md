@@ -1,3 +1,9 @@
+---
+keywords:
+  - tests
+  - implementation
+---
+
 # Test implementation
 
 ## Test case body

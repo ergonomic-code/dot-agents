@@ -1,3 +1,9 @@
+---
+keywords:
+  - ergonomic-architecture
+  - data-structure
+---
+
 # Ergonomic data structure projection
 
 ## Terminology

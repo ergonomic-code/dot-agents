@@ -1,3 +1,9 @@
+---
+keywords:
+  - database
+  - query-shaping
+---
+
 # Database query shaping
 
 ## Rules

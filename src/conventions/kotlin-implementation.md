@@ -1,20 +1,10 @@
-# Code implementation
+---
+keywords:
+  - kotlin
+  - implementation
+---
 
-## Reuse
-
-- Prefer changing existing code over adding new abstractions.
-- Before copying any existing artifact, prefer reuse, move, reference, extraction, or parametrization.
-- For structured artifacts that support references or imports, reuse or extract shared definitions instead of duplicating equivalent definitions.
-- Do not create a copied variant unless those options were checked and do not work, or the user explicitly asked for a fork.
-- If copying is still necessary, state the constraint that prevents reuse.
-
-## Resource lifetimes
-
-- Unless an API explicitly transfers ownership, keep the complete acquire-use-cleanup lifecycle of a resource in one method.
-- That method must clean up through `finally`, or delegate the complete lifecycle, including acquisition and cleanup, to a scoped helper.
-- Callees inside the lifecycle may use the resource but must not clean it up.
-
-## Kotlin
+# Kotlin implementation
 
 - Preserve existing blank separator lines in code.
 - Prefer `val` for fields, local values, parameters, configuration values, fixtures, and lifecycle values.
@@ -40,7 +30,3 @@
 - Use named arguments for constant values and variables whose name differs from the corresponding parameter name.
 - Do not leave fully qualified names at Kotlin use sites; use imports or import aliases instead.
 - Do not change wildcard imports as import-style cleanup, including wildcard imports introduced by the target diff, unless the user asks for it, local lint fails, or local configuration forbids them.
-
-## HTTP API versions
-
-- When adding a newer version of an existing HTTP API operation, keep Kotlin identifiers for the current operation unversioned and rename the previous operation's Kotlin wrappers to versioned identifiers.
