@@ -54,7 +54,7 @@ Verify:
 - no orphan files were introduced
 - `README.md` is updated when changes affect user-facing framework capabilities, installation, usage, supported scope, or documented entry points
 - internal-only changes do not introduce speculative `README.md` edits
-- dependency direction remains `baseline -> role`, `baseline -> context routing -> conventions, references, patterns, and artifact references`, `role -> skill`, and `skill -> intrinsic dependencies`
+- dependency direction remains `baseline -> task resolver -> optional task-workdir context`, `baseline -> role`, `baseline -> context routing -> conventions, references, patterns, and artifact references`, `role -> skill`, and `skill -> intrinsic dependencies`
 - the baseline reaches and orchestrates the root context index without duplicating topical conditions
 - every topical index is reachable from the root, all matching indexes compose, and the index layer is neither deep nor split without an applicability boundary
 - roles do not route engineering context

@@ -1,7 +1,8 @@
 # Context layering
 
-Use dependency direction `baseline -> role`, `baseline -> context routing -> conventions, references, patterns, and artifact references`, `role -> skill`, and `skill -> intrinsic dependencies`.
-The baseline resolves task and role context, loads the role, and invokes the root context index.
+Use dependency direction `baseline -> task resolver -> optional task-workdir context`, `baseline -> role`, `baseline -> context routing -> conventions, references, patterns, and artifact references`, `role -> skill`, and `skill -> intrinsic dependencies`.
+The baseline invokes task resolution once for the initial request, conditionally loads task context, loads the role, and invokes the root context index.
+The task resolver alone detects and selects active tasks.
 The root index classifies the requested and planned work and loads every matching topical index.
 Roles define responsibility and behavioral boundaries; they do not route engineering context.
 Generic skills load only dependencies intrinsic to their operation, artifact format, algorithm, or skill-specific guard.
@@ -12,7 +13,7 @@ Add a keyword to the taxonomy only when it is needed to distinguish a new conven
 Create a convention file only when its topic has at least two rules; otherwise put the rule in the most relevant existing convention.
 Split rules with a different keyword intersection into a separate convention and route each convention independently.
 Treat `task-workdir` as an optional integration module beside generic skills.
-The baseline alone resolves an implicit active task and loads task-workdir context.
+The baseline orchestrates the resolver but does not implement its algorithm.
 The conditional module supplies concrete artifact bindings to the selected role.
 Roles pass explicit semantic inputs and caller-selected outputs to generic skills.
 Generic skills do not resolve tasks, discover task artifacts, choose task paths, or select or load roles.
