@@ -36,7 +36,7 @@ Classify each candidate by layer (`project-baseline` | `roles-index` | `role` | 
 - Keep intrinsic skill dependencies in the skill.
 - Treat skills under `framework_checkout_root/src/skills/**` as generic and independent of task-workdir storage.
 - Allow task layout, filenames, artifact codes, and progress rules under `framework_checkout_root/src/task-workdir/**`.
-- Keep implicit task resolution in the baseline and concrete task bindings in task-workdir context.
+- Keep task detection and selection in the task resolver, its one-time invocation in the baseline, and concrete task bindings in task-workdir context.
 - Require roles to receive those bindings and pass explicit semantic inputs and output destinations to generic skills.
 - Do not make any skill select or load a role.
 - Do not report task-workdir skills as generic-skill violations.
