@@ -42,6 +42,12 @@ def test_standalone_id_line_resolves_without_model(tmp_path):
     assert resolver.resolve_task("Please implement\n123\nThanks", tmp_path, fail_if_called) == task
 
 
+def test_id_between_escaped_newlines_resolves_without_model(tmp_path):
+    task = make_task(tmp_path, "123-example")
+    prompt = r"123\n\nPlease implement devlog/123-example/040-plan.md"
+    assert resolver.resolve_task(prompt, tmp_path, fail_if_called) == task
+
+
 def test_id_after_skill_invocation_resolves(tmp_path):
     task = make_task(tmp_path, "123-example")
     assert resolver.resolve_task("Use $implement-task 123", tmp_path, fail_if_called) == task
