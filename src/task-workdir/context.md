@@ -1,27 +1,7 @@
 # Tasks
 
-## Activation and resolution
-
-Load this module only when the baseline found a task candidate.
-The existence of directories under `./devlog` alone does not activate it.
-
-Resolve the task number primarily from explicit user input.
-If the user gave exactly one output path, task dir, or file inside a task dir, use that task dir.
-If cwd is inside devlog/<task-id>-<slug>, use that ancestor.
-Valid explicit signals include a dangling number, number in parentheses at the end of a line, a line that contains only the number, or a number placed after a skill reference.
-
-If the user did not explicitly name a task number, compare the request meaning with the current git branch and the current task slug in the devlog.
-If they match with high confidence, state in chat that you inferred the active task implicitly and continue within that task.
-
-If an explicit task number is known and no task directory was given, search direct children of ./devlog for a basename equal to <task-id> or starting with <task-id>-.
-If exactly one match exists, use it as the active task directory.
-If zero matches exist, state that no active task directory was resolved and continue without an active task unless the current skill requires one.
-If several matches exist, stop and ask which task directory to use.
-
-If no task directory can be resolved with high confidence, state that in chat and continue without an active task.
-
-Only the baseline uses these rules for implicit resolution on ordinary requests.
-Task-workdir skills receive an explicitly resolved or requested task directory, except `$init-task-workdir`, which resolves its new target from an explicit task id and slug.
+Load this module only after the baseline's task resolver returned an active task directory.
+Task-workdir skills receive that directory explicitly, except `$init-task-workdir`, which resolves its new target from an explicit task id and slug.
 
 ## Role bindings
 
@@ -43,7 +23,7 @@ Generic skills do not infer these mappings.
 
 Task memory is stored under `./devlog` relative to the repository root.
 
-Active task memory directories use the `<task-num>-<slug>` naming pattern.
+Active task memory directories use the `<task-num>` or `<task-num>-<slug>` naming pattern.
 
 Completed and paused tasks live under `done` and `on-hold` respectively.
 

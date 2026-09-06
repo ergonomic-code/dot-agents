@@ -16,12 +16,11 @@ A tool task list does not satisfy the request.
 ## Context
 
 - Use resolved framework values from the host context.
-- Before selecting a role, decide whether the request has a task candidate.
-- A task candidate exists only from an explicit task input, cwd inside a task workdir, or a high-confidence semantic match among the request, current branch, and one task directory.
-- The existence of task directories alone is not a task candidate.
-- If no candidate exists, do not load task-workdir context.
-- If a candidate exists, read `framework_checkout_root/src/task-workdir/context.md` and use it to resolve the active task.
-- Resolve the active role from the current request after task detection and resolution.
+- Before role selection or routed-context loading, pass the initial user request through stdin to `framework_checkout_root/src/task-workdir/resolve_task.py --repo-root "$(git rev-parse --show-toplevel)"` exactly once.
+- Reuse that result for the session and never rerun task resolution for subsequent user messages.
+- If the resolver returns a task directory, treat it as the active task, then read `framework_checkout_root/src/task-workdir/context.md` and `<task-dir>/010-task-brief.md`.
+- If the resolver returns `n/a`, state in chat that no active task was resolved and continue without task context.
+- Resolve the active role from the current request after task resolution.
 - Read `framework_checkout_root/src/roles/<role>.md` before the first substantive response.
 - Read `framework_checkout_root/src/context/index.md`, classify the requested and planned work, and load every matching topical index in its stated order.
 - Reevaluate context routing whenever the requested or planned write set changes.
