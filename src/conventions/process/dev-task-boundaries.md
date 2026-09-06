@@ -1,6 +1,5 @@
 ---
 keywords:
-  - development
   - task-boundaries
 ---
 

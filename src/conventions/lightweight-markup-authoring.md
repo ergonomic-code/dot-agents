@@ -1,7 +1,6 @@
 ---
 keywords:
   - lightweight-markup
-  - authoring
 ---
 
 # Documentation formatting

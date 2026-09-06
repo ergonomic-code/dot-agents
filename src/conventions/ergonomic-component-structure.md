@@ -29,6 +29,7 @@ keywords:
 - Use explicit behavior layering: operations on top, optional domain operations below them, resources below operations, and optional infrastructure resources below resources.
 - For each behavior layer except DOPs, forbid horizontal dependencies between peers on the same layer.
 - Inject the resources an operation uses directly into that operation.
+- Keep each component to at most 10 direct component dependencies.
 - Keep domain operations, when they exist, between orchestration-level operations and resources instead of mixing those responsibilities.
 - Do not register DOPs in the DI container.
 - Operations instantiate DOPs from dependencies already injected into the operation.

@@ -30,3 +30,4 @@ keywords:
 - Use named arguments for constant values and variables whose name differs from the corresponding parameter name.
 - Do not leave fully qualified names at Kotlin use sites; use imports or import aliases instead.
 - Do not change wildcard imports as import-style cleanup, including wildcard imports introduced by the target diff, unless the user asks for it, local lint fails, or local configuration forbids them.
+- When adding a newer version of an existing HTTP API operation, keep Kotlin identifiers for the current operation unversioned and rename the previous operation's Kotlin wrappers to versioned identifiers.

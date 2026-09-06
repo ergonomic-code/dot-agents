@@ -1,7 +1,6 @@
 ---
 keywords:
-  - resources
-  - lifetimes
+  - resource-lifetimes
 ---
 
 # Resource lifetimes

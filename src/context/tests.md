@@ -12,8 +12,6 @@ Read:
 - `../conventions/test-naming.md`;
 - `../conventions/test-implementation.md`.
 
-When changing test subprograms, read `../conventions/subprogram-complexity-budgets.md`.
-When changing test components or their dependencies, read `../conventions/component-dependency-budgets.md`.
 When naming, renaming, or aligning a test class, case, method, or `@DisplayName`, also read `../artifacts/verification-check-format-v0.1/references/feature-naming.md` before selecting a class `@DisplayName`.
 For test development, read `../conventions/process/tests-development.md`.
 For test refactoring, read `../conventions/process/tests-refactoring.md`.

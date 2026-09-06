@@ -18,7 +18,7 @@ keywords:
 
 - Model the domain with entities, value objects, and aggregates.
 - Entities and value objects should be effectively immutable.
-- Prefer a small number of meaningful fields.
+- Prefer no more than 10 meaningful fields per production data type.
 - When the language supports type aliases and a domain specialization of a shared generic data structure fixes one or more type arguments, define a domain-named type alias and use it instead of the expanded generic specialization throughout that domain and its tests.
 - Group cohesive fields into value objects.
 - Do not represent domain states, variants, or semantic subgroups as a flat set of nullable fields.
