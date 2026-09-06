@@ -12,7 +12,9 @@ import tempfile
 
 NO_TASK = "n/a"
 TASK_DIRECTORY = re.compile(r"^(?P<id>[0-9]+)(?:-.+)?$")
-STANDALONE_ID = re.compile(r"(?m)^\s*(?P<id>[0-9]+)\s*$")
+STANDALONE_ID = re.compile(
+    r"(?m)(?:^|\\n)[ \t]*(?P<id>[0-9]+)[ \t]*(?=$|\\n)"
+)
 SKILL_ID = re.compile(
     r"(?:"
     r"`?\$[A-Za-z0-9][A-Za-z0-9_-]*`?"
