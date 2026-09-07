@@ -54,8 +54,8 @@ Verify:
 - no orphan files were introduced
 - `README.md` is updated when changes affect user-facing framework capabilities, installation, usage, supported scope, or documented entry points
 - internal-only changes do not introduce speculative `README.md` edits
-- dependency direction remains `baseline -> task-context loader`, `task-context loader -> task resolver`, `task-context loader -> task-workdir context`, `baseline -> context routing -> conventions, references, patterns, and artifact references`, `caller -> skill or operation`, and `skill -> intrinsic dependencies`
-- the baseline reaches and orchestrates the root context index without duplicating topical conditions
+- dependency direction remains `SessionStart -> baseline`, `SessionStart -> root context index`, `baseline -> task-context loader`, `task-context loader -> task resolver`, `task-context loader -> task-workdir context`, `root context index -> topical indexes -> conventions, references, patterns, and artifact references`, `caller -> skill or operation`, and `skill -> intrinsic dependencies`
+- SessionStart injects the baseline and root context index deterministically, while the baseline does not duplicate or initiate topical routing
 - applicability based on actual requested or planned work appears only in context indexes
 - every topical index is reachable from the root, all matching indexes compose, and the index layer is neither deep nor split without an applicability boundary
 - no roles, profiles, modes, personas, or other request classifiers mediate between requested work, routed context, and operations
