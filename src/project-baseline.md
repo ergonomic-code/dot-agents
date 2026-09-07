@@ -26,10 +26,9 @@ A tool task list does not satisfy the request.
 ## Context
 
 - Use resolved framework values from the host context.
-- Before routed-context loading, pass exactly once the initial user request verbatim through stdin to `framework_checkout_root/src/task-workdir/load_task_context.py --repo-root "$(git rev-parse --show-toplevel)"` and treat its stdout as authoritative session task context.
+- Pass exactly once the initial user request verbatim through stdin to `framework_checkout_root/src/task-workdir/load_task_context.py --repo-root "$(git rev-parse --show-toplevel)"` and treat its stdout as authoritative session task context.
 - Invoke the loader only once per session, retain its result, and do not rerun it for later user requests.
 - If the loader reports `Active task: none`, state this in chat and continue without task context; otherwise use the emitted task context directly.
-- Read `framework_checkout_root/src/context/index.md`, classify the requested and planned work, and load every matching topical index in its stated order.
 - Apply every loaded framework and project instruction that is relevant to the requested or planned work.
 - Reevaluate context routing whenever the requested or planned write set changes.
 - When an active task resolves, use the task-workdir context to resolve only the artifact bindings applicable to the requested operation.

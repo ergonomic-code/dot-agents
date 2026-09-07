@@ -29,6 +29,7 @@ Defaults:
 Checks:
 - resolve all paths from `repo_root`
 - require `framework_checkout_root/src/project-baseline.md`
+- require `framework_checkout_root/src/context/index.md`
 - require `framework_checkout_root/src/skills` as the intended symlink target
 - require `framework_checkout_root/src/task-workdir/skills` as the task-workdir symlink target
 - require installer template `bootstrap/ergo-config.yaml.template`
@@ -46,6 +47,7 @@ Effects:
 - ensure `framework_checkout_root` exists
 - ensure `framework_checkout_root/src` exists and contains the runtime payload files
 - ensure `framework_checkout_root/src/project-baseline.md`
+- ensure `framework_checkout_root/src/context/index.md`
 - ensure `agents_md_path`
 - ensure `skills_symlink_path` is a symlink to `framework_checkout_root/src/skills`
 - ensure `task_workdir_skills_symlink_path` is a symlink to `framework_checkout_root/src/task-workdir/skills`

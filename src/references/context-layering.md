@@ -1,7 +1,8 @@
 # Context layering
 
-Use dependency direction `baseline -> task-context loader`, `task-context loader -> task resolver`, `task-context loader -> task-workdir context`, `baseline -> context routing -> conventions, references, patterns, and artifact references`, `caller -> skill or operation`, and `skill -> intrinsic dependencies`.
-The baseline invokes the task-context loader once for the initial request, uses its output directly, and invokes the root context index.
+Use dependency direction `SessionStart -> baseline`, `SessionStart -> root context index`, `baseline -> task-context loader`, `task-context loader -> task resolver`, `task-context loader -> task-workdir context`, `root context index -> topical indexes -> conventions, references, patterns, and artifact references`, `caller -> skill or operation`, and `skill -> intrinsic dependencies`.
+SessionStart injects the baseline and root context index deterministically in that order.
+The baseline invokes the task-context loader once for the initial request and uses its output directly.
 The task resolver owns task selection only.
 The task-context loader owns task-context assembly and emits either complete task context or no active task.
 The root index classifies the requested and planned work and loads every matching topical index.
