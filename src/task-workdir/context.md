@@ -2,9 +2,9 @@
 
 Task-workdir skills receive that directory explicitly, except `$init-task-workdir`, which resolves its new target from an explicit task id and slug.
 
-## Role bindings
+## Operation bindings
 
-When an active task resolves, supply the selected role with concrete content or paths for applicable bindings:
+When an active task resolves, supply the applicable skill or operation with concrete content or paths for applicable bindings:
 
 - `010-task-brief.md` -> requirements input
 - `030-solution-brief.md` or `030-implementation-design.md` -> design-context input
@@ -14,8 +14,8 @@ When an active task resolves, supply the selected role with concrete content or 
 - `030-api-new.*` -> target API-description or API-contract input or output
 - `030-test-cases-new.md` -> existing cases input or designed-case output
 
-Resolve only bindings relevant to the request and selected role.
-The role passes the resolved content or concrete path to a generic skill.
+Resolve only bindings relevant to the requested operation.
+Pass each resolved content value or concrete path directly as a semantic input or caller-authorized output destination.
 Generic skills do not infer these mappings.
 
 ## Task Memory

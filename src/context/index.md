@@ -2,7 +2,7 @@
 
 Classify the requested and planned work by every applicable dimension below.
 Load every matching topical index; dimensions are independent, not alternatives.
-Do not infer production-code work from the active role or from a test's implementation language.
+Do not infer production-code work from a test's implementation language or from any request category other than the actual requested or planned work.
 Reevaluate all dimensions when the work scope or planned write set changes.
 
 Load matching indexes in this order:

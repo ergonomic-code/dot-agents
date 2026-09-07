@@ -1,7 +1,7 @@
 # Shared context-change workflow
 
 Use this workflow for `$fix-framework-context` and `$fix-project-context`.
-Each concrete skill defines its own role, editable roots, redirect rules, file scope, and layer values.
+Each concrete skill defines its own editable roots, redirect rules, file scope, and layer values.
 
 ## Required input
 
@@ -30,6 +30,14 @@ Do not infer deltas unsupported by the available evidence.
 When there is no defect, describe the delta as a missing capability instead of inventing broken current behavior.
 Before adding, scan the smallest target set for overlap and prefer reuse, merge, move, or replacement.
 If one file seems enough, double-check linked files for contradiction, stale refs, or missing enforcement, but do not expand without concrete need.
+Prefer reusable rules over task-local repetition.
+Prefer an explicit loading order when ordering affects behavior.
+Do not introduce processes unless necessary.
+
+## Generalization
+
+Generalize concrete cases into reusable rules while preserving their underlying constraints and intent.
+Do not copy problem statements or example wording into framework or project instructions unless exact wording is a contract term or identifier that materially changes meaning.
 
 ## Analysis
 
@@ -63,7 +71,7 @@ If the user has not chosen yet, stop and ask.
 Do not edit files before explicit choice.
 After the user chooses an option, implement only that option.
 Keep to the smallest file set consistent with the chosen option.
-Before editing, check whether linked layers, references, sibling metadata, wrappers, or role-routing docs need synchronized updates.
+Before editing, check whether linked layers, references, sibling metadata, wrappers, or routing docs need synchronized updates.
 Update them only to avoid contradiction, orphan references, or stale behavior.
 If new evidence makes the chosen option invalid, explain it and ask whether to reopen the choice.
 Carry any `>50`-line-file justification into the final report.
@@ -71,7 +79,7 @@ Validate the changed files or relevant checks before finishing.
 
 ## Output
 
-Before choice, return `Resolved role`, `Editable roots`, `Case summary`, `Root cause`, `Classification`, `Options`, `Recommendation`, and `Choice needed`.
+Before choice, return `Editable roots`, `Case summary`, `Root cause`, `Classification`, `Options`, `Recommendation`, and `Choice needed`.
 `Case summary` must include the available evidence, the current context gap, and the target behavior.
 In `Options`, keep the order `minimal`, `systemic`, `optimal`, then `architecturally-correct`, `out-of-system`, then any other extras.
 After implementation, return `Implemented option`, `Changed files`, `Validation`, `Impact check`, and optional `Long-file justifications` or `Notes`.

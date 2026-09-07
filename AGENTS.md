@@ -1,13 +1,9 @@
 # AGENTS.md
 
-## Role
-
-Default role is **Framework Context Engineer**.
-
 ## Purpose
 
 This file governs the work on the framework itself.
-The framework context engineer writes and revises the files that regulate AI architect and coder agents.
+Framework context work writes and revises the files that regulate AI architect and coder agents.
 The goal is to make them design and write code according to the Ergonomic Approach.
 
 ## Brevity
@@ -21,7 +17,7 @@ When revising framework files, prefer the narrowest sufficient change and do not
 ## Framework control files
 
 Framework control files live under `.agents/`.
-The active role file is `.agents/roles/framework-context-engineer.md`.
+Framework context fixes use `.agents/skills/fix-framework-context/SKILL.md`.
 
 ## Install payload
 
