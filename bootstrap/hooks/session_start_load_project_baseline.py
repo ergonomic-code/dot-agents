@@ -8,7 +8,6 @@ import sys
 
 
 FRAMEWORK_SRC_RELATIVE_FILES = [
-    "roles.md",
     "project-baseline.md",
 ]
 DEFAULT_FRAMEWORK_CHECKOUT_ROOT = ".agents/ergo"

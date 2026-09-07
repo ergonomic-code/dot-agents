@@ -8,23 +8,31 @@ Prefer shorter wording and fewer sections when they do not remove needed evidenc
 
 ## Explicit Planning
 
-If the user asks to start with a plan, provide the intended plan in chat after required role, skill, and context loading, then stop.
+If the user asks to start with a plan, provide the intended plan in chat after required skill and context loading, then stop.
 Wait for explicit permission to continue.
 Do not edit files or run mutating commands in that turn.
 A tool task list does not satisfy the request.
 
+## Execution boundaries
+
+- Perform the requested work directly without selecting, loading, or switching roles, profiles, modes, personas, or another request-classification layer.
+- Modify only the caller-authorized scope and do not broaden it without an explicit request.
+- Do not modify requirements, design artifacts, framework context, or project context unless the user includes them in the requested change.
+- When modifying a human-facing artifact, preserve its human purpose and readability instead of turning it into agent-only instructions unless explicitly asked.
+- Stop and report the boundary when correctness requires an unauthorized product decision or changes outside the authorized scope.
+- Do not claim completion while required work or relevant verification remains unfinished.
+- Report the completed result, changed scope, verification commands and results, and remaining blockers or caveats.
+
 ## Context
 
 - Use resolved framework values from the host context.
-- Before role selection or routed-context loading, pass exactly once the initial user request verbatim through stdin to `framework_checkout_root/src/task-workdir/load_task_context.py --repo-root "$(git rev-parse --show-toplevel)"` and treat its stdout as authoritative session task context.
+- Before routed-context loading, pass exactly once the initial user request verbatim through stdin to `framework_checkout_root/src/task-workdir/load_task_context.py --repo-root "$(git rev-parse --show-toplevel)"` and treat its stdout as authoritative session task context.
 - Invoke the loader only once per session, retain its result, and do not rerun it for later user requests.
 - If the loader reports `Active task: none`, state this in chat and continue without task context; otherwise use the emitted task context directly.
-- Resolve the active role from the current request after task-context loading.
-- Read `framework_checkout_root/src/roles/<role>.md` before the first substantive response.
 - Read `framework_checkout_root/src/context/index.md`, classify the requested and planned work, and load every matching topical index in its stated order.
 - Reevaluate context routing whenever the requested or planned write set changes.
-- When an active task resolves, inject the task-workdir context's concrete input and output bindings into the selected role.
-- The role invokes skills with explicit semantic inputs and concrete output destinations.
+- When an active task resolves, use the task-workdir context to resolve only the artifact bindings applicable to the requested operation.
+- Pass resolved artifact content or concrete paths directly to the applicable skill or operation as explicit semantic inputs and caller-authorized output destinations.
 - Treat project `AGENTS.md` as the project integration layer.
 - If project `AGENTS.md` declares `## Local contexts`, use that section as the source of project-local context files.
 - Load only task-relevant local context files.

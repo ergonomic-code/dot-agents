@@ -4,7 +4,7 @@ Use this contract only for a step classified by `$select-next-increment` as `non
 
 ## Execution
 
-- Execute under the developer role with the selected step, current task artifacts, verified Git state, unrelated changes, allowed write set, and required verification.
+- Execute with the selected step, current task artifacts, verified Git state, unrelated changes, allowed write set, and required verification as explicit inputs.
 - Implement or verify only the selected technical result.
 - Keep the smallest production or task-artifact change that satisfies the selected step.
 - Do not promote the selected detail into a requirement or test case to make it test-eligible.
