@@ -27,6 +27,7 @@ def test_architecture_entry_points_do_not_restore_role_indirection():
         ROOT / "src" / "skills" / "fix-framework-context" / "SKILL.md",
         ROOT / "src" / "skills" / "fix-project-context" / "SKILL.md",
         ROOT / "bootstrap" / "skills" / "installing-framework" / "assets" / "AGENTS.md.template",
+        ROOT / "README.md",
     ]
     forbidden = (
         "selected role",
@@ -34,6 +35,7 @@ def test_architecture_entry_points_do_not_restore_role_indirection():
         "roles.md",
         "src/roles",
         "roles/",
+        "разделение на роли",
     )
 
     for path in paths:

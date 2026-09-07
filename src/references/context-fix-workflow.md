@@ -30,6 +30,9 @@ Do not infer deltas unsupported by the available evidence.
 When there is no defect, describe the delta as a missing capability instead of inventing broken current behavior.
 Before adding, scan the smallest target set for overlap and prefer reuse, merge, move, or replacement.
 If one file seems enough, double-check linked files for contradiction, stale refs, or missing enforcement, but do not expand without concrete need.
+Prefer reusable rules over task-local repetition.
+Prefer an explicit loading order when ordering affects behavior.
+Do not introduce processes unless necessary.
 
 ## Generalization
 
