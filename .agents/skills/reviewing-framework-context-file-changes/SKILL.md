@@ -1,5 +1,5 @@
 ---
-name: reviewing-framework-context-file-changes
+name: review-framework-changes
 description: Review changes in framework context files for conciseness, minimality, task fit, framework integration, ambiguity, actionability, verifiability, contradictions, scope clarity, and language consistency. Use when Codex reviews diffs or changed files in `.agents/`, `src/project-baseline.md`, `src/context/`, `src/conventions/`, framework templates, or `README.md`.
 ---
 
