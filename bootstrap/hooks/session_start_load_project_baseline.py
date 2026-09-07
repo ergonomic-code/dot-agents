@@ -9,6 +9,7 @@ import sys
 
 FRAMEWORK_SRC_RELATIVE_FILES = [
     "project-baseline.md",
+    "context/index.md",
 ]
 DEFAULT_FRAMEWORK_CHECKOUT_ROOT = ".agents/ergo"
 
@@ -93,11 +94,17 @@ def load_files(
     for relative_path in FRAMEWORK_SRC_RELATIVE_FILES:
         path = root / relative_path
         if not path.is_file():
-            continue
+            raise RuntimeError(
+                f"mandatory framework context file is missing: "
+                f"{normalize_repo_relative_path(path)}"
+            )
 
         text = path.read_text(encoding="utf-8")
         if not text.strip():
-            continue
+            raise RuntimeError(
+                f"mandatory framework context file is empty: "
+                f"{normalize_repo_relative_path(path)}"
+            )
 
         chunks.append(text.rstrip("\n"))
 
@@ -114,7 +121,11 @@ def main() -> int:
     parser.add_argument("--framework-config-path")
     args, _unknown = parser.parse_known_args()
 
-    text = load_files(args.framework_config_path, args.agents_md_path)
+    try:
+        text = load_files(args.framework_config_path, args.agents_md_path)
+    except RuntimeError as error:
+        print(f"SessionStart framework context error: {error}", file=sys.stderr)
+        return 1
     if text:
         sys.stdout.write(text)
     return 0

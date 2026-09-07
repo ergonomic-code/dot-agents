@@ -4,6 +4,7 @@ Classify the requested and planned work by every applicable dimension below.
 Load every matching topical index; dimensions are independent, not alternatives.
 Do not infer production-code work from a test's implementation language or from any request category other than the actual requested or planned work.
 Reevaluate all dimensions when the work scope or planned write set changes.
+All topical paths below are relative to `framework_checkout_root/src/context/`.
 
 Load matching indexes in this order:
 
