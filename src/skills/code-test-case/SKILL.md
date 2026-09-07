@@ -52,4 +52,4 @@ For `blocked`, report the blocker and any completed evidence without claiming a 
 - Do not implement production behavior or add persistence, integrations, migrations, configuration, generated documentation, or other behavior-bearing production changes.
 - Return `blocked` for compilation failures outside the planned compile-only surface, fixture or test-support failures, unrelated assertion failures, environmental failures preventing reliable verification, or required writes outside the authorization.
 - Do not weaken, rewrite, skip, or delete the selected check to manufacture expected red.
-- Do not resolve tasks, task directories, roles, progress, commits, or workflow state.
+- Do not resolve tasks, task directories, progress, commits, or workflow state.

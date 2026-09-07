@@ -1,6 +1,6 @@
 ---
 name: reviewing-framework-context-file-changes
-description: Review changes in framework context files for conciseness, minimality, task fit, framework integration, ambiguity, actionability, verifiability, contradictions, scope clarity, and language consistency. Use when Codex reviews diffs or changed files in `.agents/`, `src/project-baseline.md`, `src/context/`, `src/conventions/`, `src/roles/`, framework templates, or `README.md`.
+description: Review changes in framework context files for conciseness, minimality, task fit, framework integration, ambiguity, actionability, verifiability, contradictions, scope clarity, and language consistency. Use when Codex reviews diffs or changed files in `.agents/`, `src/project-baseline.md`, `src/context/`, `src/conventions/`, framework templates, or `README.md`.
 ---
 
 # Review framework context file changes
@@ -13,7 +13,7 @@ Treat these as framework context files:
 - `src/**`
 - `AGENTS.md`
 - `README.md`
-- `skills/installing-framework/**`
+- `bootstrap/skills/installing-framework/**`
 
 ## Input
 
@@ -54,10 +54,11 @@ Verify:
 - no orphan files were introduced
 - `README.md` is updated when changes affect user-facing framework capabilities, installation, usage, supported scope, or documented entry points
 - internal-only changes do not introduce speculative `README.md` edits
-- dependency direction remains `baseline -> task-context loader`, `task-context loader -> task resolver`, `task-context loader -> task-workdir context`, `baseline -> role`, `baseline -> context routing -> conventions, references, patterns, and artifact references`, `role -> skill`, and `skill -> intrinsic dependencies`
+- dependency direction remains `baseline -> task-context loader`, `task-context loader -> task resolver`, `task-context loader -> task-workdir context`, `baseline -> context routing -> conventions, references, patterns, and artifact references`, `caller -> skill or operation`, and `skill -> intrinsic dependencies`
 - the baseline reaches and orchestrates the root context index without duplicating topical conditions
+- applicability based on actual requested or planned work appears only in context indexes
 - every topical index is reachable from the root, all matching indexes compose, and the index layer is neither deep nor split without an applicability boundary
-- roles do not route engineering context
+- no roles, profiles, modes, personas, or other request classifiers mediate between requested work, routed context, and operations
 - generic skills do not route general task context, and their convention or reference dependencies are intrinsic to the skill
 - conventions define rules rather than general applicability routing, with no routing conditions duplicated across layers
 - every convention declares at least one YAML front-matter keyword and preferably no more than three
@@ -65,9 +66,9 @@ Verify:
 - a keyword is added to the taxonomy only when needed to distinguish a new convention file or when it appears in at least two convention files
 - every convention file has at least two rules, with a lone rule placed in the most relevant existing convention instead of a separate file
 - selective routing preserves intersections without loading unrelated branches, including separating tests from production code
-- generic skills under `src/skills/**` do not resolve tasks, discover task artifacts, choose task paths, or select or load roles
+- generic skills under `src/skills/**` do not resolve tasks, discover task artifacts, or choose task paths
 - task layout and progress knowledge is confined to `src/task-workdir/**`, whose skills are exempt from the generic-skill restriction
-- task-workdir context is conditional and supplies concrete bindings to roles before generic skills receive semantic inputs and caller-selected outputs
+- task-workdir context is conditional and supplies concrete bindings directly to applicable skills or operations as semantic inputs and caller-authorized outputs
 - task-workdir-specific routing remains under `src/task-workdir/**`
 - project-local context continues to compose through project `AGENTS.md`
 

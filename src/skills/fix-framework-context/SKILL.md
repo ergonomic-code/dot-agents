@@ -1,6 +1,6 @@
 ---
 name: fix-framework-context
-description: Analyze a framework-context fix or feature request from `problem`, `target behavior`, and optional `codex session id` in the caller-selected `framework-context-engineer` role; propose `minimal`, `systemic`, and `optimal` changes; wait for explicit choice; then implement it.
+description: Analyze a framework-context fix or feature request from `problem`, `target behavior`, and optional `codex session id`; propose `minimal`, `systemic`, and `optimal` changes; wait for explicit choice; then implement it.
 ---
 
 # Fix or extend framework context
@@ -8,8 +8,6 @@ description: Analyze a framework-context fix or feature request from `problem`, 
 Read `framework_checkout_root/src/references/context-fix-minimality.md`.
 Read `framework_checkout_root/src/references/context-fix-workflow.md`.
 Read `framework_checkout_root/src/references/context-layering.md`.
-
-Require the caller to invoke this skill from the `framework-context-engineer` role.
 
 Treat editable roots as:
 - `framework_checkout_root/src/**`
@@ -22,13 +20,13 @@ If the case is about current-repo `AGENTS.md`, or project-local `.agents/**` or 
 ## Skill-specific scope and classification
 
 Work from the smallest relevant framework file set under `framework_checkout_root/src/**`.
-Classify each candidate by layer (`project-baseline` | `roles-index` | `role` | `context-index` | `convention` | `skill` | `artifact` | `reference` | `task-workdir`).
+Classify each candidate by layer (`project-baseline` | `context-index` | `convention` | `skill` | `artifact` | `reference` | `task-workdir`).
 
 ## Architecture boundary
 
 - Use the dependency invariant in `context-layering.md` when analyzing options and implementing the selected change.
 - Put applicability based on what requested or planned work touches in context indexes.
-- Keep topical routing out of roles, generic skills, conventions, and baseline orchestration.
+- Keep topical routing out of generic skills, conventions, and baseline orchestration.
 - Keep at least one YAML front-matter keyword on every convention file and prefer no more than three.
 - Require every rule in a convention to concern every keyword, and split and independently route rules with a different keyword intersection.
 - Add a keyword to the taxonomy only when needed to distinguish a new convention file or when it appears in at least two convention files.
@@ -37,6 +35,8 @@ Classify each candidate by layer (`project-baseline` | `roles-index` | `role` | 
 - Treat skills under `framework_checkout_root/src/skills/**` as generic and independent of task-workdir storage.
 - Allow task layout, filenames, artifact codes, and progress rules under `framework_checkout_root/src/task-workdir/**`.
 - Keep task selection in the task resolver, task-context assembly in the task-context loader, its one-time invocation in the baseline, and concrete task bindings in task-workdir context.
-- Require roles to receive those bindings and pass explicit semantic inputs and output destinations to generic skills.
-- Do not make any skill select or load a role.
+- Pass those bindings directly to the applicable skill or operation as explicit semantic inputs and caller-authorized output destinations.
+- Do not introduce roles, profiles, modes, personas, or another request classifier.
+- Treat `framework_checkout_root/src/conventions/ergonomic-approach-rules.md` as stable, technology-agnostic philosophy and change it only when that philosophy changes.
+- Put technology-, layer-, workflow-, and trigger-specific guidance into narrower context indexes, conventions, skills, or references.
 - Do not report task-workdir skills as generic-skill violations.

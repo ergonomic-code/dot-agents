@@ -1,14 +1,12 @@
 ---
 name: fix-project-context
-description: Analyze a project-context problem from `problem`, `target behavior`, and optional `codex session id` in the caller-selected `project-context-engineer` role; propose `minimal`, `systemic`, and `optimal` fixes; wait for explicit choice; then implement it.
+description: Analyze a project-context problem from `problem`, `target behavior`, and optional `codex session id`; propose `minimal`, `systemic`, and `optimal` fixes; wait for explicit choice; then implement it.
 ---
 
 # Fix project context
 
 Read `framework_checkout_root/src/references/context-fix-minimality.md`.
 Read `framework_checkout_root/src/references/context-fix-workflow.md`.
-
-Require the caller to invoke this skill from the `project-context-engineer` role.
 
 Treat editable roots as:
 - `./AGENTS.md`
