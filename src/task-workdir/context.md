@@ -18,6 +18,19 @@ Resolve only bindings relevant to the requested operation.
 Pass each resolved content value or concrete path directly as a semantic input or caller-authorized output destination.
 Generic skills do not infer these mappings.
 
+## Work State
+
+When an active task resolves, maintain `<task-dir>/work-state.md` as the current continuation checkpoint.
+
+After required context loading and before task investigation or other substantive work for a request that requires mutations, create it if absent and record a concise, concrete `Current objective`.
+After meaningful mutating work, update it before finishing the request, including after partial work.
+
+Rewrite it to describe the latest useful continuation state rather than appending an execution journal.
+Update or clear `Current objective`, record the resulting current state and last materially completed work, and include the immediate next point, unresolved blockers, relevant verification commands and results, and concrete paths or execution state only when useful for resumption.
+
+Do not update it for purely read-only work.
+Do not duplicate requirements or solution/design content, and keep the boundary `todo.md` = planned/completed task work and `work-state.md` = current execution/handoff state.
+
 ## Task Memory
 
 Task memory is stored under `./devlog` relative to the repository root.
@@ -55,11 +68,14 @@ Each file in a task directory should have a filename prefix that identifies its 
 
 ### Standard Task Files
 
-Every task should have at least these three files:
+Every new task should have these standard files:
 
 - 010-task-brief.md - task statement.
 - 030-solution-brief.md - brief for the overall solution direction.
+- work-state.md - current continuation checkpoint.
 - todo.md - list of completed and pending subtasks.
+
+Existing tasks without `work-state.md` remain valid; create it when work state first needs to be persisted.
 
 Depending on the task type and nature, a task may also have:
 
