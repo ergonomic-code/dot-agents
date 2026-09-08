@@ -4,6 +4,7 @@ import sys
 
 
 TASK_WORKDIR = Path(__file__).parents[1] / "src" / "task-workdir"
+WORK_STATE_TEMPLATE = TASK_WORKDIR / "references" / "work-state-template.md"
 sys.path.insert(0, str(TASK_WORKDIR))
 SPEC = importlib.util.spec_from_file_location(
     "load_task_context", TASK_WORKDIR / "load_task_context.py"
@@ -47,6 +48,42 @@ def test_resolved_task_emits_complete_context(tmp_path):
     assert "## Task brief" in output
     assert "Source: `devlog/123-example/010-task-brief.md`" in output
     assert "Complete task brief\n" in output
+
+
+def test_resolved_task_emits_non_empty_work_state(tmp_path):
+    task = make_task(tmp_path, "123-example")
+    (task / "work-state.md").write_text(
+        "# Work state\n\n## Current state\n\nTests are green.\n", encoding="utf-8"
+    )
+
+    output = loader.load_task_context(
+        "request", tmp_path, lambda _prompt, _root: task, write_rules(tmp_path)
+    )
+
+    assert "## Work state" in output
+    assert "Source: `devlog/123-example/work-state.md`" in output
+    assert "Tests are green." in output
+
+
+def test_missing_or_template_only_work_state_does_not_prevent_loading(tmp_path):
+    context = write_rules(tmp_path)
+    missing_task = make_task(tmp_path, "123-missing-state")
+    template_task = make_task(tmp_path, "124-template-state")
+    (template_task / "work-state.md").write_text(
+        WORK_STATE_TEMPLATE.read_text(encoding="utf-8"), encoding="utf-8"
+    )
+
+    missing_output = loader.load_task_context(
+        "request", tmp_path, lambda _prompt, _root: missing_task, context
+    )
+    template_output = loader.load_task_context(
+        "request", tmp_path, lambda _prompt, _root: template_task, context
+    )
+
+    assert "Active task: `devlog/123-missing-state`" in missing_output
+    assert "Active task: `devlog/124-template-state`" in template_output
+    assert "## Work state" not in missing_output
+    assert "## Work state" not in template_output
 
 
 def test_missing_task_brief_emits_no_partial_context(tmp_path):

@@ -12,6 +12,13 @@ NO_TASK_CONTEXT = "# Active task context\n\nActive task: none\n"
 TaskResolver = Callable[[str, Path], Path | None]
 
 
+def has_useful_work_state(content: str) -> bool:
+    return any(
+        line.strip() and not line.lstrip().startswith("#")
+        for line in content.splitlines()
+    )
+
+
 def load_task_context(
     prompt: str,
     repo_root: Path,
@@ -38,12 +45,18 @@ def load_task_context(
 
         rules = context_path.read_text(encoding="utf-8")
         brief = brief_path.read_text(encoding="utf-8")
+        work_state_path = task_dir / "work-state.md"
+        work_state = (
+            work_state_path.read_text(encoding="utf-8")
+            if work_state_path.is_file()
+            else ""
+        )
     except Exception:
         return NO_TASK_CONTEXT
 
     rules_separator = "" if rules.endswith("\n") else "\n"
     brief_separator = "" if brief.endswith("\n") else "\n"
-    return (
+    output = (
         "# Active task context\n\n"
         f"Active task: `{task_path}`\n\n"
         "## Task-workdir rules\n\n"
@@ -52,6 +65,14 @@ def load_task_context(
         f"Source: `{task_path}/010-task-brief.md`\n\n"
         f"{brief}{brief_separator}"
     )
+    if has_useful_work_state(work_state):
+        work_state_separator = "" if work_state.endswith("\n") else "\n"
+        output += (
+            "\n## Work state\n\n"
+            f"Source: `{task_path}/work-state.md`\n\n"
+            f"{work_state}{work_state_separator}"
+        )
+    return output
 
 
 def main() -> int:

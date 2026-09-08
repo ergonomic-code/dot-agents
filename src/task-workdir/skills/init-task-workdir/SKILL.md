@@ -1,6 +1,6 @@
 ---
 name: init-task-workdir
-description: Create a new task workdir under `devlog/NNN-slug` with `010-task-brief.md`, `030-solution-brief.md` and `todo.md` from framework templates. Use when the user asks to create, initialize, or bootstrap a task directory, task workdir, or devlog entry and provides, or must be asked for, a three-digit task id and slug.
+description: Create a new task workdir under `devlog/NNN-slug` with the standard task files from framework templates. Use when the user asks to create, initialize, or bootstrap a task directory, task workdir, or devlog entry and provides, or must be asked for, a three-digit task id and slug.
 ---
 
 # Init Task Workdir
@@ -8,6 +8,7 @@ description: Create a new task workdir under `devlog/NNN-slug` with `010-task-br
 Read `framework_checkout_root/src/task-workdir/references/task-brief-template.md`.
 Read `framework_checkout_root/src/task-workdir/references/solution-brief-template.md`.
 Read `framework_checkout_root/src/task-workdir/references/todo-template.md`.
+Read `framework_checkout_root/src/task-workdir/references/work-state-template.md`.
 
 ## Workflow
 
@@ -18,7 +19,7 @@ Read `framework_checkout_root/src/task-workdir/references/todo-template.md`.
 - If the slug contains a path separator or escapes `./devlog`, ask for a corrected slug and stop.
 - Use target directory `./devlog/<task-id>-<task-slug>`.
 - If the target directory already exists, stop and report that no files were changed.
-- Create only the target directory, `010-task-brief.md`, `030-solution-brief.md`. and `todo.md`.
+- Create only the target directory, `010-task-brief.md`, `030-solution-brief.md`, `work-state.md`, and `todo.md`.
 - Copy the file templates from the loaded references.
 - Create a flat task directory by default.
 - Keep placeholders unless the user explicitly provided exact values.
