@@ -1,12 +1,13 @@
-flowchart LR
-    subgraph publication["Publication"]
-        prepare["Prepare publication"]
-        select_recipients["Select recipients"]
-    end
+flowchart TD
+    process_publication["Process publication"]
+    load_publication[["Load publication"]]
+    select_recipients["Select recipients"]
+    deliver_publication["Deliver publication"]
+    delivery_note["Note: Delivery is provided by an external library"]:::comment
 
-    delivery["Deliver publication"]
-    status["Track delivery status"]
+    process_publication -->|"data-to: publication_id; data-from: publication"| load_publication
+    process_publication --> select_recipients
+    process_publication -->|"repeat: recipient; data-to: publication, recipient; control-from: delivered"| deliver_publication
+    deliver_publication -.- delivery_note
 
-    prepare --> select_recipients
-    select_recipients -->|"publication and recipients"| delivery
-    delivery -->|"delivery result"| status
+    classDef comment fill:none,stroke-dasharray:3 3
