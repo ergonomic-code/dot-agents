@@ -6,6 +6,7 @@
 - `Rule` expresses one required observable property in the artifact-language obligation form.
 - Each `Rule` has at least one `Example`.
 - Named `Example` lines name semantic input or context classes for their `Rule`.
+- An example describing an input class states its domain in `Given` and invariant in `Then`.
 - Unnamed `Example` is used only when no example name is needed.
 - All meaningful example differences are in `Given` or named `Example`.
 - `Given` states the pre-action state directly and includes its setup history only when the selected obligation makes that action sequence observable behavior.
@@ -22,7 +23,7 @@
 - Each negative path states the absence of the required side effect.
 - Layout matches `references/layout.md`.
 - Wording is short, domain-based, and implementation-light.
-- Raw request, response, code, storage, helper, flag, timestamp, and field symbols are absent unless the rule is about that named contract member or value.
+- Outside the SUT reference, raw request, response, code, storage, helper, flag, timestamp, and field symbols are absent unless the rule is about that named contract member or value.
 - Rule, Example, and step wording has no avoidable endpoint, parameter, field, DTO, payload, or response-model names.
 - Entity names, flags, statuses, and errors match the contract.
 - A single `Example` block can be implemented as a test without guessing intended behavior.

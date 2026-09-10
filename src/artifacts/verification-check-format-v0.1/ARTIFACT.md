@@ -11,6 +11,7 @@ Read `references/feature-naming.md` before rendering `Feature`.
 Use one `Feature` per one concrete endpoint, API surface, component, operation, or other object under verification.
 Use one `Rule` per one externally observable required property, invariant, rejection, side effect, or result obligation.
 Use named `Example` only to enumerate materially distinct input or context classes for the same `Rule`.
+One `Example` may instead describe an input class and the property required for every member.
 Use unnamed `Example` only as the full-mode case container when no example name is needed.
 If a `Rule` has an unnamed `Example`, that unnamed example must be the only `Example` under that `Rule`.
 Do not use `Example` for independent properties.

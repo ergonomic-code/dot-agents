@@ -8,7 +8,7 @@ Read:
 - `../conventions/test-design.md`;
 - `../conventions/test-doubles.md`;
 - `../conventions/test-fixture-architecture.md`;
-- `../conventions/test-container-selection.md`;
+- `../conventions/test-case-selection.md`;
 - `../conventions/test-naming.md`;
 - `../conventions/test-implementation.md`.
 

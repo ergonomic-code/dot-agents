@@ -25,4 +25,4 @@ keywords:
 ## Tests
 
 - For each changed or added operation and computation, is each normal and realistically reachable path covered by at least one test case, excluding paths that exist only to handle unexpected and practically impossible failures?
-- Does the proposed or implemented test set avoid component tests that duplicate behavior reasonably verifiable by boundary tests?
+- Does test selection prefer a unit test when verification needs no infrastructure or IO, otherwise a boundary test, and use a component test only for a material reduction in test size or execution time or to stay on the standard test infrastructure?

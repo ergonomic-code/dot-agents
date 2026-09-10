@@ -15,6 +15,7 @@ Read `../../artifacts/verification-check-format-v0.1/references/full-mode-checkl
 - Return `verification-check-format-v0.1` in `full` mode.
 - Keep one `Rule` per materially distinct required property unless the calling skill explicitly narrows the set.
 - Use named `Example` only for materially distinct input or context classes of the same `Rule`.
+- For a caller-selected property check, use one named `Example` for the generated input class and express its domain in `Given` and invariant in `Then`.
 - Use unnamed `Example:` when no example name is needed.
 - Do not mention test code, mocks, fixtures, helper names, or internal implementation details.
 - Do not copy request-local numbering, ticket ids, checklist markers, or similar bookkeeping tokens into `Feature`, `Rule`, or `Example` names unless they are part of the public contract.

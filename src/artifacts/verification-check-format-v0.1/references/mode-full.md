@@ -5,11 +5,13 @@ Use this mode for executable or near-executable checks, reverse-engineered check
 Output `Feature`, `Rule`, `Example`, `Given`, `When`, `Then`, and `And`.
 Each `Rule` has at least one `Example`.
 Use `Example` with no name when no materially distinct input or context class name is needed.
+An `Example` may name an input class rather than a concrete member.
 If a `Rule` has an unnamed `Example`, that unnamed example must be the only `Example` under that `Rule`.
 An optional source reference line may appear immediately under the matching `Example` per `references/source-reference.md`.
 
 Put only outcome-relevant preconditions in `Given`.
 Describe each precondition as the state present before the action under test.
+For an example describing an input class, state its domain in `Given` and the invariant in `Then` without selecting concrete members.
 Do not include an earlier action only to establish that state; include it only when the selected obligation makes the action sequence observable behavior.
 Describe setup with concrete domain objects, states, and literals only when they materially affect the example.
 Put the action under test in `When`.

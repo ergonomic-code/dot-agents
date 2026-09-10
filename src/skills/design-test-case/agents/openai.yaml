@@ -1,4 +1,4 @@
 interface:
   display_name: "Design Test Case"
   short_description: "Design one test-method-sized Feature/Rule check"
-  default_prompt: "Use $design-test-case to design one test-method-sized `verification-check-format-v0.1` full-mode Feature/Rule check from a requirement, bug report, or desired behavior description. Include a complete finite set of named Examples when applicable. This is design-only: do not code or announce coding next steps."
+  default_prompt: "Use $design-test-case to design one test-method-sized `verification-check-format-v0.1` full-mode Feature/Rule check from a requirement, bug report, or desired behavior description. Select its SUT, test kind, form, and target through the skill rules. This is design-only: do not code or announce coding next steps."

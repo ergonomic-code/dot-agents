@@ -9,9 +9,8 @@ keywords:
 ## Test kinds
 
 - Classify tests by architectural boundary.
-- Use three primary kinds: `boundary`, `component`, `pure computation`.
+- Use three primary kinds: `boundary`, `component`, `unit`.
 - `API test` may be used as an alias for `boundary test`.
-- `unit test` may be used as an alias for `pure computation test`.
 
 ## Boundary tests
 
@@ -33,10 +32,11 @@ keywords:
 - A component test may use fixture helpers for setup and observation.
 - A component test should verify the behavior of the selected component, not the surrounding transport.
 
-## Pure computation tests
+## Unit tests
 
-- A pure computation test exercises only deterministic computation.
-- A pure computation test must not depend on IO, network, database, time, scheduler, or DI container behavior.
+- A unit test exercises one I/O-free class, method, or top-level function whose production execution requires no infrastructure and performs no IO.
+- Replacing an application component's dependencies with test doubles does not make that component a unit SUT.
+- Control time, scheduling, randomness, and other nondeterministic inputs explicitly when they affect the selected behavior.
 - Prefer property-based tests for pure computation when the behavior is naturally specified by properties.
 - Use example-based tests when a small set of examples states the behavior more clearly.
 
@@ -77,4 +77,4 @@ keywords:
 - Except for a specifically requested implementation-detail assertion, test cases must verify observable outcomes and stay decoupled from internal implementation details; do not assert calls between internal components, dependency wiring, or control flow.
 - Boundary tests must not bypass the external entry point.
 - Component tests must not drift into external transport concerns.
-- Pure computation tests must not drift into component or boundary setup.
+- Unit tests must not drift into component or boundary setup.
