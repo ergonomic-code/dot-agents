@@ -1,13 +1,13 @@
 ---
 name: code-test-case
-description: Transform one caller-selected verification check into one repository change containing a compilable Kotlin JUnit test case, then prove it expected red, already green, or blocked.
+description: Transform one caller-selected test-case specification into one repository change containing a compilable Kotlin JUnit test case, then prove it expected red, already green, or blocked.
 ---
 
 # Code Test Case
 
 ## Purpose
 
-Transform one caller-selected verification check into one repository change containing one compilable Kotlin JUnit test case.
+Transform one caller-selected test-case specification into one repository change containing one compilable Kotlin JUnit test case.
 Keep the case strict and verify its current behavior state.
 
 Read `framework_checkout_root/src/conventions/test-case-selection.md`.
@@ -16,13 +16,13 @@ Read `framework_checkout_root/src/conventions/test-naming.md`.
 ## Input
 
 Accept:
-- one caller-selected verification check;
+- one caller-selected test-case specification;
 - accompanying design decisions: selected test kind, form, target disposition (`new`, `strengthen`, or `extend-parameterized`), and the exact repository file, container, and method for an existing target;
 - a repository binding, including the authorized output destination and artifact kinds;
 - an optional existing production/API contract or caller-supplied design/API contract.
 
 The invocation context may supply the repository binding and output authorization.
-Validate the check against `framework_checkout_root/src/artifacts/verification-check-format-v0.1/ARTIFACT.md` and its applicable `full`-mode references before planning.
+Validate the check against `framework_checkout_root/src/artifacts/test-case-specification-format/ARTIFACT.md` and its applicable `full`-mode references before planning.
 
 ## Output
 
@@ -38,8 +38,8 @@ For `blocked`, report the blocker and any completed evidence without claiming a 
 
 1. Validate that the selected check is one unambiguous full-mode case with a technical SUT anchor and observable obligation.
 2. Validate the accompanying design decisions: the SUT must match the selected kind, the examples must match the selected form, and an existing target must resolve exactly.
-   In a merged artifact block, use only the verification and examples explicitly selected by those decisions; return `blocked` if their scope is ambiguous.
-   Return `blocked` for missing or conflicting decisions; do not select them again or require them as fields in the verification-check format.
+   In a merged artifact block, use only the test-case specification and examples explicitly selected by those decisions; return `blocked` if their scope is ambiguous.
+   Return `blocked` for missing or conflicting decisions; do not select them again or require them as fields in the test-case-specification format.
 3. Produce the internal read-only plan through `references/coding-plan.md`.
 4. If planning reports a blocker, return `blocked` without materializing changes.
 5. Materialize only the planned test case, test support, and compile-only production surface using the context routed for the planned write set.

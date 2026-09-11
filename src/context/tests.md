@@ -12,7 +12,7 @@ Read:
 - `../conventions/test-naming.md`;
 - `../conventions/test-implementation.md`.
 
-When naming, renaming, or aligning a test class, case, method, or `@DisplayName`, also read `../artifacts/verification-check-format-v0.1/references/feature-naming.md` before selecting a class `@DisplayName`.
+When naming, renaming, or aligning a test class, case, method, or `@DisplayName`, also read `../artifacts/test-case-specification-format/references/feature-naming.md` before selecting a class `@DisplayName`.
 For test development, read `../conventions/process/tests-development.md`.
 For test refactoring, read `../conventions/process/tests-refactoring.md`.
 When tests or test support cross an HTTP boundary, also read `../conventions/http-api-test-design.md` and `../conventions/http-api-test-rules.md`.

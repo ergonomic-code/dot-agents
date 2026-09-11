@@ -1,18 +1,18 @@
 ---
 name: write-verification-check
-description: Write or normalize one or more `verification-check-format-v0.1` checks in `full` mode. Use when a user or another skill needs `Feature` / `Rule` / `Example` / `Given` / `When` / `Then` text rendered as concise, contract-based, implementation-light prose.
+description: Write or normalize one or more `test-case-specification-format` checks in `full` mode. Use when a user or another skill needs `Feature` / `Rule` / `Example` / `Given` / `When` / `Then` text rendered as concise, contract-based, implementation-light prose.
 ---
 
 # Write Verification Check
 
-Read `../../artifacts/verification-check-format-v0.1/ARTIFACT.md`.
-Read `../../artifacts/verification-check-format-v0.1/references/layout.md` before rendering.
-Read `../../artifacts/verification-check-format-v0.1/references/mode-full.md`.
-Read `../../artifacts/verification-check-format-v0.1/references/full-mode-checklist.md` only before final self-check.
+Read `../../artifacts/test-case-specification-format/ARTIFACT.md`.
+Read `../../artifacts/test-case-specification-format/references/layout.md` before rendering.
+Read `../../artifacts/test-case-specification-format/references/mode-full.md`.
+Read `../../artifacts/test-case-specification-format/references/full-mode-checklist.md` only before final self-check.
 
 ## Core Rules
 
-- Return `verification-check-format-v0.1` in `full` mode.
+- Return `test-case-specification-format` in `full` mode.
 - Keep one `Rule` per materially distinct required property unless the calling skill explicitly narrows the set.
 - Use named `Example` only for materially distinct input or context classes of the same `Rule`.
 - For a caller-selected property check, use one named `Example` for the generated input class and express its domain in `Given` and invariant in `Then`.

@@ -1,4 +1,4 @@
 interface:
   display_name: "Code Test Case"
   short_description: "Materialize and verify one Kotlin JUnit 5 test case"
-  default_prompt: "Use $code-test-case to materialize one selected verification check in the bound repository, then return expected-red, already-green, or blocked with evidence."
+  default_prompt: "Use $code-test-case to materialize one selected test-case specification in the bound repository, then return expected-red, already-green, or blocked with evidence."

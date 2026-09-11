@@ -196,7 +196,7 @@ Baseline задаёт глобальную оркестрацию и огран�
 
 | Скилл | Назначение |
 | --- | --- |
-| [`$code-test-case`](src/skills/code-test-case/SKILL.md) | Кодирует один тест-кейс в формате verification-check-format. |
+| [`$code-test-case`](src/skills/code-test-case/SKILL.md) | Кодирует один тест-кейс в формате test-case-specification-format. |
 | [`$collect-code-anchors`](src/skills/collect-code-anchors/SKILL.md) | Находит связанные с требуемым поведением участки кода, модели, запросы, таблицы, конфигурацию и другие якоря в коде. |
 | [`$describe-rest-api`](src/skills/describe-rest-api/SKILL.md) | Пишет человекочитаемое описание REST API по коду, OpenAPI, требованиям или другим входным данным. |
 | [`$design-test-case`](src/skills/design-test-case/SKILL.md) | Проектирует один тест-кейс по описанию целевого поведения. |

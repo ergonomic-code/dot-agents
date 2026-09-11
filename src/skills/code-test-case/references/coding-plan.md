@@ -1,6 +1,6 @@
 # Coding Plan
 
-Use this read-only phase for one caller-selected verification check after input validation.
+Use this read-only phase for one caller-selected test-case specification after input validation.
 Treat its result as transient internal state of `$code-test-case`.
 Do not write, edit, generate, or persist repository files or expose the plan as a separate capability or artifact.
 

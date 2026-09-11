@@ -1,11 +1,11 @@
 ---
 name: design-test-case
-description: Design one test-method-sized `verification-check-format-v0.1` full-mode check from a requirement, bug report, or desired behavior description.
+description: Design one test-method-sized `test-case-specification-format` full-mode check from a requirement, bug report, or desired behavior description.
 ---
 
 # Design Test Case
 
-Use this skill when the user gives requirements, a bug report, or desired behavior and needs one test-method-sized check, but has not already provided one selected full-mode verification check.
+Use this skill when the user gives requirements, a bug report, or desired behavior and needs one test-method-sized check, but has not already provided one selected full-mode test-case specification.
 
 Read `../write-verification-check/SKILL.md`.
 Read `framework_checkout_root/src/conventions/ergonomic-approach-rules.md`.
@@ -48,7 +48,7 @@ After returning or writing the verification case stop.
 
 ## Output
 
-Accompany the check with concise coding decisions outside the verification-check block: selected kind, form, and whether to create, strengthen, or extend a parameterized case.
+Accompany the check with concise coding decisions outside the test-case-specification block: selected kind, form, and whether to create, strengthen, or extend a parameterized case.
 For an existing case, identify its repository-relative file, exact container, and source-level method; for a new case, leave the path to coding.
 Pass these decisions to the caller along with the selected check; in an artifact, place them immediately before its block and identify the selected `Rule` and `Example` headers, or the sole unnamed example, and the selected assertion change for `strengthen`.
 
@@ -69,4 +69,4 @@ Return `status: blocked` with the exact missing selection, behavior, or artifact
 
 ## Before Finishing
 
-Read `../../artifacts/verification-check-format-v0.1/references/requirements-coverage-checklist.md` and apply it within the selected obligation.
+Read `../../artifacts/test-case-specification-format/references/requirements-coverage-checklist.md` and apply it within the selected obligation.

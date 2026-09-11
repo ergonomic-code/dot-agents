@@ -29,7 +29,7 @@ Use surrounding tests when a rule below requires a repository pattern and otherw
 - Write only display text in the configured `artifact_language`: class and case `@DisplayName`, plus parameterized test display name text.
 - Keep class, file, and method identifiers in the repository's technical naming style, except for new formal case methods mapped below or explicitly requested renames.
 - For existing Kotlin test files, keep the existing class and file name unless the user explicitly asks to rename technical identifiers.
-- Name class `@DisplayName` from the matching verification-check `Feature` when available.
+- Name class `@DisplayName` from the matching test-case-specification `Feature` when available.
 - Otherwise name it by the behavior container, feature, operation, or API method and append the SUT reference according to the loaded feature-naming rules.
 - For component tests, the human-readable part may name the behavior surface when the parenthesized SUT reference identifies the resolved component.
 - Name case `@DisplayName` as a continuation of the class `@DisplayName` that starts with a lowercase letter and specifies observable behavior or a result property.
