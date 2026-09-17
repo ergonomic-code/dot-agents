@@ -1,96 +1,103 @@
 ---
 name: review-framework-changes
-description: Review changes in framework context files for conciseness, minimality, task fit, framework integration, ambiguity, actionability, verifiability, contradictions, scope clarity, and language consistency. Use when Codex reviews diffs or changed files in `.agents/`, `src/project-baseline.md`, `src/context/`, `src/conventions/`, framework templates, or `README.md`.
+description: Проверяет изменения файлов контекста фреймворка на краткость, минимальность, соответствие задаче, интеграцию с фреймворком, однозначность, применимость, проверяемость, отсутствие противоречий, ясность области действия и соблюдение языка. Используй при ревью diff или изменённых файлов в `.agents/`, `src/project-baseline.md`, `src/context/`, `src/conventions/`, шаблонах фреймворка или `README.md`.
 ---
 
-# Review framework context file changes
+# Ревью изменений файлов контекста фреймворка
 
-## Scope
+## Область
 
-Treat these as framework context files:
+Считай файлами контекста фреймворка:
+- `.agents/**`;
+- `src/**`;
+- `AGENTS.md`;
+- `README.md`;
+- `bootstrap/skills/installing-framework/**`.
 
-- `.agents/**`
-- `src/**`
-- `AGENTS.md`
-- `README.md`
-- `bootstrap/skills/installing-framework/**`
+## Входные данные
 
-## Input
+- diff или изменённые файлы;
+- исходная задача.
 
-- diff or changed files
-- original task
+Если исходная задача не сформулирована явно:
+- используй `$finding-codex-session`, чтобы найти кандидатов среди недавних сессий;
+- прочитай только существенные сообщения из сессий-кандидатов;
+- покажи пользователю вероятную задачу или краткие варианты;
+- продолжай только после подтверждения задачи пользователем;
+- если вероятная задача не найдена, запроси её у пользователя.
 
-If the original task is not explicit:
+## Проверки
 
-- use `$finding-codex-session` to locate recent session candidates
-- read only material turns from candidate sessions
-- show the likely task or concise alternatives to the user
-- continue only after the user confirms the task
-- if no likely task is found, ask the user for it
+Проверь, что изменения:
+- написаны на русском;
+- переводят на русский весь человекочитаемый текст каждого изменённого файла, включая неизменённые фрагменты;
+- сохраняют без перевода технические идентификаторы, пути, код, команды, ключи форматов, имена API и дословные контрактные значения, если перевод изменил бы их смысл или нарушил работоспособность;
+- решают заявленную задачу;
+- интегрированы во фреймворк;
+- кратки;
+- не содержат дублирования;
+- однозначны;
+- применимы агентом;
+- проверяемы по файлам или выводу;
+- не противоречат существующим файлам фреймворка;
+- имеют ясную область применимости;
 
-## Checks
+## Интеграция
 
-Check that changes are:
+Проверь, что:
 
-- written in the file's explicitly required language or, when none is specified, its established language; default new files to English
-- effective for the stated task
-- integrated into the framework
-- concise
-- non-duplicating
-- unambiguous
-- actionable by an agent
-- verifiable from files or output
-- non-contradictory to existing framework files
-- clear in scope of applicability
-- sufficient to detect under-typed data structures when changed code represents domain states, variants, or semantic subgroups with correlated nullable fields
+1. Пути и ссылки
+    - имена, пути и ссылки корректны;
+    - новые файлы при необходимости достижимы из существующих точек входа;
+    - старые файлы обновлены, когда новые файлы заменяют или расширяют их;
+    - не появились недостижимые файлы;
 
-## Integration
+2. README.md
+    - `README.md` обновлён, когда изменения затрагивают пользовательские возможности фреймворка, установку, использование, поддерживаемую область или документированные точки входа;
 
-Verify:
+3. Архитектура контекста
 
-- names, paths, and links are correct
-- new files are reachable from existing entry points when needed
-- old files were updated when new files replace or extend them
-- no orphan files were introduced
-- `README.md` is updated when changes affect user-facing framework capabilities, installation, usage, supported scope, or documented entry points
-- internal-only changes do not introduce speculative `README.md` edits
-- dependency direction remains `SessionStart -> baseline`, `SessionStart -> root context index`, `baseline -> task-context loader`, `task-context loader -> task resolver`, `task-context loader -> task-workdir context`, `root context index -> topical indexes -> conventions, references, patterns, and artifact references`, `caller -> skill or operation`, and `skill -> intrinsic dependencies`
-- SessionStart injects the baseline and root context index deterministically, while the baseline does not duplicate or initiate topical routing
-- applicability based on actual requested or planned work appears only in context indexes
-- every topical index is reachable from the root, all matching indexes compose, and the index layer is neither deep nor split without an applicability boundary
-- no roles, profiles, modes, personas, or other request classifiers mediate between requested work, routed context, and operations
-- generic skills do not route general task context, and their convention or reference dependencies are intrinsic to the skill
-- conventions define rules rather than general applicability routing, with no routing conditions duplicated across layers
-- every convention declares at least one YAML front-matter keyword and preferably no more than three
-- every rule in a convention concerns every keyword, and rules with a different keyword intersection are split and routed independently
-- a keyword is added to the taxonomy only when needed to distinguish a new convention file or when it appears in at least two convention files
-- every convention file has at least two rules, with a lone rule placed in the most relevant existing convention instead of a separate file
-- selective routing preserves intersections without loading unrelated branches, including separating tests from production code
-- generic skills under `src/skills/**` do not resolve tasks, discover task artifacts, or choose task paths
-- task layout and progress knowledge is confined to `src/task-workdir/**`, whose skills are exempt from the generic-skill restriction
-- task-workdir context is conditional and supplies concrete bindings directly to applicable skills or operations as semantic inputs and caller-authorized outputs
-- task-workdir-specific routing remains under `src/task-workdir/**`
-- project-local context continues to compose through project `AGENTS.md`
+    1. Загрузка контекста
+        - `SessionStart` детерминированно внедряет baseline и корневой индекс контекста, а baseline не дублирует и не инициирует тематическую маршрутизацию;
+        - применимость файла на основе фактической запрошенной или запланированной работы задаётся только в индексах контекста;
+        - каждый тематический индекс достижим из корневого, все подходящие индексы компонуются, а слой индексов не углубляется и не разделяется без границы применимости;
+        - выборочная маршрутизация сохраняет пересечения, не загружая несвязанные ветви, в том числе отделяет тесты от production-кода;
+        - специфичная для task-workdir маршрутизация остаётся под `src/task-workdir/**`;
+        - локальный контекст проекта продолжает компоноваться через проектный `AGENTS.md`.
 
-## Output
+    2. Направление зависимостей элементов контекста
+         - сохраняется направление зависимостей `SessionStart -> baseline`, `SessionStart -> root context index`, `baseline -> task-context loader`, `task-context loader -> task resolver`, `task-context loader -> task-workdir context`, `root context index -> topical indexes -> conventions, references, patterns, and artifact references`, `caller -> skill or operation` и `skill -> intrinsic dependencies`;
+         - generic-скиллы не маршрутизируют общий контекст задачи, а их зависимости от соглашений и справочных материалов внутренне необходимы скиллу;
+         - generic-скиллы под `src/skills/**` не разрешают задачи, не обнаруживают артефакты задач и не выбирают пути задач;
 
-Return:
+    3. Соглашения
+        - соглашения определяют правила, а не общую маршрутизацию применимости, и условия маршрутизации не дублируются между слоями;
+        - каждое соглашение объявляет хотя бы одно ключевое слово в YAML front matter и предпочтительно не более трёх;
+        - каждое правило соглашения касается каждого ключевого слова, а правила с другим пересечением ключевых слов разделены и маршрутизируются независимо;
+        - ключевое слово добавляется в таксономию только для различения нового файла соглашения или когда оно встречается хотя бы в двух файлах соглашений;
+        - каждый файл соглашения содержит хотя бы два правила, а одиночное правило помещено в наиболее подходящее существующее соглашение вместо отдельного файла;
 
-- verdict: `ok` | `ok_with_notes` | `needs_fix`
-- findings list
+    4. Работа с задачами
+        - знания о структуре задачи и прогрессе ограничены `src/task-workdir/**`, скиллы которого освобождены от ограничения generic-скиллов;
+        - контекст task-workdir условен и передаёт конкретные привязки напрямую применимым скиллам или операциям как смысловые входы и разрешённые вызывающей стороной результаты;
 
-For each finding include:
+## Результат
 
-- severity: `major` | `minor`
-- file
-- issue
-- why it is a problem
-- minimal fix, including suggested wording in the required or established language for unintended language deviations
+Верни:
+- вердикт: `ok` | `ok_with_notes` | `needs_fix`;
+- список замечаний.
 
-## Review rule
+Для каждого замечания укажи:
+- серьёзность: `major` | `minor`;
+- файл;
+- проблему;
+- почему это проблема;
+- минимальное исправление.
 
-Prefer deletion, shortening, reuse, and direct fixes over expansion.
-Treat ambiguity, non-actionability, non-verifiability, contradiction, unclear scope, missing integration, context-layering violations, and unintended deviations from the required or established language as defects.
-For language-consistency findings, suggest a rewrite in the required or established language that preserves intent and maximizes inference impact.
-Do not praise.
-Report only real issues.
+## Правила ревью
+
+Предпочитай удаление, сокращение, повторное использование и прямые исправления расширению.
+
+Считай дефектами неоднозначность, неприменимость, непроверяемость, противоречия, неясную область, отсутствующую интеграцию, нарушения слоения контекста и непреднамеренные отклонения от русского языка.
+
+Сообщай только о реальных проблемах.
