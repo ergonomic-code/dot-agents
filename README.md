@@ -204,6 +204,7 @@ Baseline задаёт глобальную оркестрацию и огран�
 | [`$fix-project-context`](src/skills/fix-project-context/SKILL.md) | Обновляет agent-facing контекст конкретного проекта для исправления ошибок в поведении агента. |
 | [`$fix-red-case`](src/skills/fix-red-case/SKILL.md) | Реализует поведение, специфицированное одним тест-кейсом. |
 | [`$refactor-case`](src/skills/refactor-case/SKILL.md) | Выполняет ревью одного TDD-инкремента. |
+| [`$save-session-evidence`](src/skills/save-session-evidence/SKILL.md) | Сохраняет свидетельства ошибки сессии и Git-снимок для последующего исправления. |
 | [`$write-verification-check`](src/skills/write-verification-check/SKILL.md) | Описывает один тест-кейс в стандартном Gherkin-подобном формате. |
 
 ## Task-workdir-скиллы
