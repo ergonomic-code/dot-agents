@@ -8,14 +8,14 @@ description: Design one test-method-sized `test-case-specification-format` full-
 Use this skill when the user gives requirements, a bug report, or desired behavior and needs one test-method-sized check, but has not already provided one selected full-mode test-case specification.
 
 Read `../write-verification-check/SKILL.md`.
-Read `framework_checkout_root/src/conventions/ergonomic-approach-rules.md`.
-Read `framework_checkout_root/src/conventions/test-design.md`.
-Read `framework_checkout_root/src/conventions/test-case-selection.md`.
+Read `framework_checkout_root/src/conventions/core/ergonomic-approach-rules.md`.
+Read `framework_checkout_root/src/conventions/core/test-design.md`.
+Read `framework_checkout_root/src/conventions/core/test-case-selection.md`.
 Read `framework_checkout_root/src/references/test-case-implementation-order.md`.
 
 ## Eligibility
 
-Before designing, verify that the selected obligation is test-eligible under `framework_checkout_root/src/conventions/test-design.md`.
+Before designing, verify that the selected obligation is test-eligible under `framework_checkout_root/src/conventions/core/test-design.md`.
 Accept an implementation detail only when the user explicitly requests that specific test or supplied requirements unambiguously record an earlier explicit request for it.
 Do not treat progress, design context, an implementation step, or a verification instruction as a test obligation without an eligible requirement source.
 Return `status: blocked` with `reason: not-test-eligible` when this condition is not met.
@@ -28,9 +28,9 @@ If several independent obligations are implied and the target case is not select
 ## Design
 
 1. Identify the selected observable obligation without fixing its technical SUT.
-2. Discover the available test levels and select the test kind, evidence-backed SUT, and optional polymorphic variant through the design-time rules in `test-case-selection.md`.
+2. Discover the available test levels and select the test kind, evidence-backed SUT, and optional polymorphic variant through the design-time rules in `core/test-case-selection.md`.
 3. Resolve the verified object for `Feature` from the selected SUT, explicit user input, existing artifacts, code, or supplied design.
-4. Inspect existing and sibling tests and select the target disposition, examples, and test form together through `test-case-selection.md`, including the exact existing target anchor when applicable.
+4. Inspect existing and sibling tests and select the target disposition, examples, and test form together through `core/test-case-selection.md`, including the exact existing target anchor when applicable.
 5. Map the selected obligation to `Feature` and `Rule`, then render the selected concrete example, concrete parameter set, or generated example class with `Given`, `When`, and `Then`.
 
 If no candidate SUT can be resolved from the behavior and repository evidence, ask for the missing target instead of inventing one.

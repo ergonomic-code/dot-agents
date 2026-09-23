@@ -6,7 +6,7 @@ description: Select and classify the next minimal unfinished task step from a pr
 # Select Next Increment
 
 Read `framework_checkout_root/src/task-workdir/context.md`.
-Read `framework_checkout_root/src/conventions/test-design.md`.
+Read `framework_checkout_root/src/conventions/core/test-design.md`.
 Read `framework_checkout_root/src/references/test-case-implementation-order.md`.
 
 ## Input

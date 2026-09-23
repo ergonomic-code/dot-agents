@@ -56,15 +56,15 @@ keywords:
 - Verify behavior through the same architectural boundary as the test kind.
 - Boundary-test actions still use boundary helpers.
 - Boundary-test observation may use typed `*TestApi` helpers to fetch required data.
-- For observation-only reads, `*TestApi` may call controller methods directly; if not practical, call operation methods; otherwise call resource methods.
+- For observation-only reads, `*TestApi` may call an input adapter directly; if not practical, call operation methods; otherwise call resource methods.
 - Do not verify boundary-test outcomes by reading database state directly.
 - Direct database reads are allowed only to verify async work scheduling when no standard observation API exists.
 
 ## Fixture and helper structure
 
-- Extract all fixture code from test case classes into helpers such as `*ObjectMother`, `*FixturePresets`, `*TestApi`, `*HttpApi`, `*Assertions`.
+- In class-based tests, extract all fixture code from test case classes into helpers such as `*ObjectMother`, `*FixturePresets`, `*TestApi`, `*HttpApi`, `*Assertions`.
   Even if the current code contains helpers in the same file.
-- Keep test case class files focused on test cases.
+- In class-based tests, keep test case class files focused on test cases.
   Do not keep fixture setup or helper functions in the same file, including top-level helpers.
 
 ## Invariants

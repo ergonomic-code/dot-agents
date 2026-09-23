@@ -36,3 +36,18 @@ def test_every_convention_declares_keywords_and_at_least_two_rules():
         front_matter_end = lines.index("---", 1)
         rules = [line for line in lines[front_matter_end + 1 :] if line.startswith("- ")]
         assert len(rules) >= 2, f"{convention} must contain at least two rules"
+
+
+def test_modular_convention_paths_have_no_legacy_files():
+    modules = {
+        "core",
+        "ergonomic-architecture",
+        "database",
+        "http-api",
+        "kotlin",
+        "spring",
+        "junit",
+        "kotest",
+    }
+    assert modules <= {path.name for path in CONVENTIONS_ROOT.iterdir() if path.is_dir()}
+    assert not [path for path in CONVENTIONS_ROOT.glob("*.md")]

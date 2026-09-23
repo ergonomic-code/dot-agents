@@ -33,6 +33,6 @@ keywords:
 
 ## Coding-time mapping
 
-- Derive a new container and path mechanically from the selected kind and SUT through `test-naming.md`.
+- Derive a new container and path mechanically from the selected kind and SUT through the independently loaded framework-specific naming convention.
 - Implement the selected example, parameterized, or property form.
 - Strengthen or extend the selected existing case in place, preserving its other assertions and invocations.

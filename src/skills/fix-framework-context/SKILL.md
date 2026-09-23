@@ -37,6 +37,6 @@ Classify each candidate by layer (`project-baseline` | `context-index` | `conven
 - Keep task selection in the task resolver, task-context assembly in the task-context loader, its one-time invocation in the baseline, and concrete task bindings in task-workdir context.
 - Pass those bindings directly to the applicable skill or operation as explicit semantic inputs and caller-authorized output destinations.
 - Do not introduce roles, profiles, modes, personas, or another request classifier.
-- Treat `framework_checkout_root/src/conventions/ergonomic-approach-rules.md` as stable, technology-agnostic philosophy and change it only when that philosophy changes.
+- Treat `framework_checkout_root/src/conventions/core/ergonomic-approach-rules.md` as stable, technology-agnostic philosophy and change it only when that philosophy changes.
 - Put technology-, layer-, workflow-, and trigger-specific guidance into narrower context indexes, conventions, skills, or references.
 - Do not report task-workdir skills as generic-skill violations.

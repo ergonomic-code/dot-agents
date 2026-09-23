@@ -1,7 +1,7 @@
 # Implementation order
 
 Use this rule when choosing or ordering new behavior cases for implementation.
-Select the test kind and SUT through `../conventions/test-case-selection.md`; the ordering below does not prescribe a test level.
+Select the test kind and SUT through `../conventions/core/test-case-selection.md`; the ordering below does not prescribe a test level.
 
 - Express a configurable quantitative boundary by its behavioral relation.
   Configure the SUT with the smallest test value that preserves that relation instead of materializing production-scale data.

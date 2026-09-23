@@ -10,8 +10,9 @@ description: Transform one caller-selected test-case specification into one repo
 Transform one caller-selected test-case specification into one repository change containing one compilable Kotlin JUnit test case.
 Keep the case strict and verify its current behavior state.
 
-Read `framework_checkout_root/src/conventions/test-case-selection.md`.
-Read `framework_checkout_root/src/conventions/test-naming.md`.
+Read `framework_checkout_root/src/conventions/core/test-case-selection.md`.
+Read `framework_checkout_root/src/conventions/core/test-naming.md`.
+Read `framework_checkout_root/src/conventions/junit/test-naming.md`.
 
 ## Input
 
@@ -52,7 +53,7 @@ For `blocked`, report the blocker and any completed evidence without claiming a 
 ## Boundaries
 
 - Treat the recorded target disposition as immutable design input, not an internal planning decision.
-- The skill may select test-support APIs, fixtures, and assertions; for `new`, derive the container, path, and method name through `test-naming.md`, and for an existing target preserve its recorded location and identifier.
+- The skill may select test-support APIs, fixtures, and assertions; for `new`, derive the container, path, and method name through `junit/test-naming.md`, and for an existing target preserve its recorded location and identifier.
   Implement the case shape recorded by the test form.
 - Use an existing production/API contract or materialize a caller-supplied contract.
 - Derive compile-only production surface only when its shape is mechanically determined by the check, supplied design context, and repository conventions.

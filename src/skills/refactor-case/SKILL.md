@@ -5,8 +5,8 @@ description: Review and refactor code after `$code-test-case` and `$fix-red-case
 
 # Refactor Case
 
-Read `../../conventions/ergonomic-approach-rules.md`.
-Read `../../conventions/abstraction-level-boundaries.md`.
+Read `../../conventions/core/ergonomic-approach-rules.md`.
+Read `../../conventions/ergonomic-architecture/abstraction-level-boundaries.md`.
 Read `./references/api-alignment.md`.
 
 Use this skill only after the selected case is green.
@@ -17,13 +17,13 @@ Accept one commit, current uncommitted changes, or one coordinator-supplied boun
 1. Inspect the target diff and the selected case context when available.
    For a bounded TDD increment, inspect the full net diff from the red commit's parent through the green commit, including every intervening commit, and treat that range as the target boundary.
 2. Inspect production changes inside the target boundary for:
-   - duplication per `../../conventions/ergonomic-approach-rules.md`, including matches between changed and sibling code;
+   - duplication per `../../conventions/core/ergonomic-approach-rules.md`, including matches between changed and sibling code;
    - mixed abstraction levels per `abstraction-level-boundaries.md`;
    - misplaced mechanics that belong behind an adapter, helper, mapper, value type, or collaborator;
    - violations of loaded EA conventions, especially unclear operation/resource boundaries, peer horizontal dependencies, mixed orchestration and infrastructure concerns, or hidden direct dependencies that should stay explicit.
 3. Inspect test changes inside the target boundary for:
    - violations of `test-fixture-architecture.md`, especially `*TestApi` scope leaks, cross-scope orchestration inside `*TestApi`, or setup that belongs in `*FixturePresets`;
-   - violations of other loaded test conventions when they materially apply, especially `http-api-test-rules.md` for HTTP boundary tests and `*HttpApi` helpers.
+   - violations of other loaded test conventions when they materially apply, especially `http-api/http-api-test-rules.md` for HTTP boundary tests and `*HttpApi` helpers.
 4. Complete every applicable inspection above before selecting a refactoring.
    Do not stop at the first useful finding.
    Record every candidate with its location, triggering rule or concrete structural evidence, structural delta, mode, disposition, and disposition rationale.
