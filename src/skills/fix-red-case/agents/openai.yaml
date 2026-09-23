@@ -1,4 +1,4 @@
 interface:
-  display_name: "Fix Red Case"
-  short_description: "Fix one red case through production code"
-  default_prompt: "Use $fix-red-case after $code-test-case when the selected Kotlin JUnit case is red and only production code may be changed."
+  display_name: "Исправление красного кейса"
+  short_description: "Исправляет один красный кейс через production-код"
+  default_prompt: "Используй $fix-red-case после $code-test-case для выбранного кейса с outcome expected-red, когда разрешено изменять только продакшн-код."

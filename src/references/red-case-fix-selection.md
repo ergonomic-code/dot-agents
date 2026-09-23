@@ -1,25 +1,20 @@
-# Red Case Fix Selection
+# Выбор способа исправления красного кейса
 
-Use this phase only for one selected Kotlin JUnit case created or aligned by `$code-test-case` and proven red.
-Do not edit source, test, or configuration files during this phase.
+Не изменяй исходный код, тесты и конфигурационные файлы во время этой фазы.
 
-## Select the fix
+## Выбор исправления
 
-1. Reproduce or inspect the selected failing test and identify the current failure cause.
-2. Read the selected case, supplied design context when present, nearby production code, and the smallest evidence set needed to select the fix.
-3. Derive the selected behavior boundary from the failing test's entry point, endpoint, operation, scenario, and supplied design context when present.
-4. Treat supplied design context as the source for behavior intent and production value sources; use the selected case only to choose the current slice and checks.
-5. Select the smallest coherent production fix that implements the selected behavior slice and is consistent with the selected case and supplied design context when they exist.
-6. Keep investigation and the selected fix inside that boundary, except for compile-only call-site propagation forced by the selected change.
-7. If the next necessary step would inspect or change a sibling endpoint, operation, mode, or scenario to justify the fix, stop and report the boundary instead of widening the selection.
-8. If selecting the fix depends on an ambiguous requirement or implementation choice, report the unresolved question instead of guessing.
-9. If the test contradicts supplied design context, requires test edits, or cannot be fixed within production code, stop and report the blocker.
+1. Воспроизведи или изучи выбранный падающий тест и определи текущую причину падения.
+2. Прочитай выбранный кейс, предоставленный дизайн решения при наличии, ближайший продакшн-код и минимальный набор свидетельств, необходимый для выбора исправления.
+3. Выведи границу выбранного поведения исходя из точки входа и сценария падающего теста и предоставленного дизайна решения при наличии.
+4. Выбери минимальное связное продакшн-исправление, которое реализует выбранный срез поведения и согласуется с выбранным кейсом и предоставленным дизайном решения при их наличии.
+6. Если выбор исправления зависит от неоднозначного требования или решения реализации, сообщи нерешённый вопрос вместо догадки.
+7. Если тест противоречит предоставленному дизайну решения, требует изменения теста или не может быть исправлен в продакшн-коде, остановись и сообщи блокер.
 
-## Selection constraints
+## Ограничения выбора способа исправления
 
-- Preserve the red case as the contract; do not weaken, skip, rewrite, or delete it.
-- Keep scope to the selected failing case and the nearest production change points.
-- A constant implementation is valid when it is contract-correct for the whole selected behavior class and does not degrade behavior outside that class.
-- Do not select fixture-specific, test-shaped, bypass, or degraded behavior in existing production code or existing call paths.
-- If the selected test uses stale database setup after a production migration, select the normal migration path used by the test; do not select production schema-existence branches.
-- Do not include refactoring, redesign, or behavior beyond what the case and supplied design context require.
+- Сохраняй красный кейс как контракт; не ослабляй, не пропускай, не переписывай и не удаляй его.
+- Ограничивай область выбранным падающим кейсом и ближайшими точками изменения продакшн-кода.
+- Константная реализация допустима, когда она корректна по контракту и не ухудшает поведение вне этого класса.
+- Не выбирай специализацию уже существующего кода под специфику текущего кейса.
+- Не включай рефакторинг, перепроектирование или поведение сверх требуемого кейсом и предоставленным дизайна решения.

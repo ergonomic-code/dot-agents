@@ -1,65 +1,60 @@
 ---
 name: code-test-case
-description: Transform one caller-selected test-case specification into one repository change containing a compilable Kotlin JUnit test case, then prove it expected red, already green, or blocked.
+description: Преобразует одну выбранную вызывающей стороной спецификацию тест-кейса в одно изменение репозитория с компилируемым тестом, затем доказывает expected-red, already-green или blocked.
 ---
 
-# Code Test Case
+# Кодирование тест-кейса
 
-## Purpose
+## Назначение
 
-Transform one caller-selected test-case specification into one repository change containing one compilable Kotlin JUnit test case.
-Keep the case strict and verify its current behavior state.
+Преобразуй одну выбранную вызывающей стороной спецификацию тест-кейса в одно изменение репозитория с одним компилируемым тест-кейсом на применимом стеке.
+Сохраняй строгость кейса и проверяй текущее состояние поведения.
 
-Read `framework_checkout_root/src/conventions/core/test-case-selection.md`.
-Read `framework_checkout_root/src/conventions/core/test-naming.md`.
-Read `framework_checkout_root/src/conventions/junit/test-naming.md`.
+Прочитай `framework_checkout_root/src/conventions/core/test-case-selection.md`.
+Прочитай `framework_checkout_root/src/conventions/core/test-naming.md`.
 
-## Input
+## Вход
 
-Accept:
-- one caller-selected test-case specification;
-- accompanying design decisions: selected test kind, form, target disposition (`new`, `strengthen`, or `extend-parameterized`), and the exact repository file, container, and method for an existing target;
-- a repository binding, including the authorized output destination and artifact kinds;
-- an optional existing production/API contract or caller-supplied design/API contract.
+- одна выбранную вызывающей стороной спецификацию тест-кейса;
+- сопутствующие проектные решения: выбранные вид теста, действие с целью (`new`, `strengthen` или `extend-parameterized`), а для существующей цели — точные файл репозитория, контейнер и метод;
+- привязку к репозиторию, включая разрешённое место результата и виды артефактов;
+- необязательную явную привязку реализации теста, включая язык, тестовый фреймворк, модуль и source set в необходимом для однозначности объёме;
+- необязательный существующий продакшн-API или предоставленный вызывающей стороной дизайн решения.
 
-The invocation context may supply the repository binding and output authorization.
-Validate the check against `framework_checkout_root/src/artifacts/test-case-specification-format/ARTIFACT.md` and its applicable `full`-mode references before planning.
+Контекст вызова может передать привязку к репозиторию, разрешение результата и привязку реализации теста.
+До планирования проверь кейс по `framework_checkout_root/src/artifacts/test-case-specification-format/ARTIFACT.md` и применимым references режима `full`.
 
-## Output
+## Выход
 
-Return exactly one outcome:
-- `expected-red` when the exact selected test compiles, executes, and fails because its required behavior is absent;
-- `already-green` when the exact selected test compiles, executes, and passes;
-- `blocked` for invalid or ambiguous input, unresolved design, unauthorized changes, unreliable verification, or a failure that is not the selected missing behavior.
+Верни ровно один outcome:
+- `expected-red`, когда точный выбранный тест компилируется, выполняется и падает из-за отсутствия требуемого поведения;
+- `already-green`, когда точный выбранный тест компилируется, выполняется и проходит так как требуемое поведение фактически оказалось уже реализованым;
+- `blocked` при недопустимом или неоднозначном входе, нерешённом дизайне, неразрешённых изменениях, ненадёжной проверке или падении не из-за выбранного отсутствующего поведения.
 
-Report changed files, the compilation command, the execution command, the exact test selector, the observed result, and the evidence connecting the result to the outcome.
-For `blocked`, report the blocker and any completed evidence without claiming a behavior state.
+Сообщи изменённые файлы, команды компиляции и выполнения, точный селектор теста, наблюдаемый результат и свидетельства, связывающие результат с outcome.
+Для `alredy-green` объясни где и как реализуется требуемое поведение.
+Для `blocked` сообщи блокер и полученные свидетельства, не заявляя состояние поведения.
 
-## Workflow
+## Процесс
 
-1. Validate that the selected check is one unambiguous full-mode case with a technical SUT anchor and observable obligation.
-2. Validate the accompanying design decisions: the SUT must match the selected kind, the examples must match the selected form, and an existing target must resolve exactly.
-   In a merged artifact block, use only the test-case specification and examples explicitly selected by those decisions; return `blocked` if their scope is ambiguous.
-   Return `blocked` for missing or conflicting decisions; do not select them again or require them as fields in the test-case-specification format.
-3. Produce the internal read-only plan through `references/coding-plan.md`.
-4. If planning reports a blocker, return `blocked` without materializing changes.
-5. Materialize only the planned test case, test support, and compile-only production surface using the context routed for the planned write set.
-6. For `strengthen` or `extend-parameterized`, update only the recorded existing case.
-   For `new`, create or use only the mechanically derived container at the authorized path.
-   Preserve unrelated declarations and do not delete unrelated tests.
-7. Apply the routed final checks, compile the exact selected test, and then execute that exact test.
-8. Return `expected-red`, `already-green`, or `blocked` according to the observed evidence.
+1. Проверь, что выбранный кейс является одним однозначным кейсом режима `full` с техническим якорем SUT и наблюдаемым обязательством.
+2. Проверь сопутствующие проектные решения: SUT должен соответствовать выбранному виду кейса, а существующий целевой кейс должен разрешаться точно.
+3. Построй внутренний план через `references/coding-plan.md`.
+4. Если планирование сообщает блокер, верни `blocked`, не материализуя изменения.
+5. Материализуй только запланированный тест-кейс, тестовую поддержку и минимальные заглушки нового продакшн АПИ с использованием контекста, маршрутизированного для запланированного набора изменений.
+6. Для `strengthen` или `extend-parameterized` изменяй только записанный существующий кейс.
+   Для `new` создай или используй только механически выведенный контейнер по разрешённому пути.
+   Сохраняй несвязанные объявления и не удаляй несвязанные тесты.
+7. Примени маршрутизированные финальные проверки, скомпилируй точный выбранный тест, затем выполни именно его.
+8. Верни `expected-red`, `already-green` или `blocked` согласно наблюдаемым свидетельствам.
 
-## Boundaries
+## Границы
 
-- Treat the recorded target disposition as immutable design input, not an internal planning decision.
-- The skill may select test-support APIs, fixtures, and assertions; for `new`, derive the container, path, and method name through `junit/test-naming.md`, and for an existing target preserve its recorded location and identifier.
-  Implement the case shape recorded by the test form.
-- Use an existing production/API contract or materialize a caller-supplied contract.
-- Derive compile-only production surface only when its shape is mechanically determined by the check, supplied design context, and repository conventions.
-- If a new or changed public contract has several valid designs and none is supplied, return `blocked`; do not invoke an API-design skill implicitly.
-- Production changes are limited to planned symbols, signatures, types, constructors, fields, and compile-only call-site propagation.
-- Do not implement production behavior or add persistence, integrations, migrations, configuration, generated documentation, or other behavior-bearing production changes.
-- Return `blocked` for compilation failures outside the planned compile-only surface, fixture or test-support failures, unrelated assertion failures, environmental failures preventing reliable verification, or required writes outside the authorization.
-- Do not weaken, rewrite, skip, or delete the selected check to manufacture expected red.
-- Do not resolve tasks, task directories, progress, commits, or workflow state.
+- Скилл может выбирать API тестовых хелперов, фикстуры и проверки; для `new` выводи контейнер, путь и имя метода из выбранного стека, загруженных применимых соглашений и однозначных свидетельств репозитория, а для существующей цели сохраняй записанные расположение и идентификатор.
+- Используй существующее продакшн API или закодируй заглушки для предоставленого вызывающей стороной API.
+- Добавляй необходимые стабы продакшн API только если их форма механически определяется кейсом, предоставленным design-контекстом и/или соглашениями репозитория.
+- Если новый или изменённый публичный контракт допускает несколько корректных дизайнов и ни один не предоставлен, верни `blocked`; не вызывай неявно скилл проектирования API.
+- Ограничь продакшн-изменения запланированными символами, сигнатурами, типами, конструкторами, полями и распространением исправлений по местам вызова, если это необходимо для компиляции проекта.
+- Не реализуй продакшн-поведение.
+- Верни `blocked` при несвязанных падениях проверок, ошибках окружения, мешающих надёжной проверке, или необходимых изменениях вне разрешённой области.
+- Не ослабляй, не переписывай, не пропускай и не удаляй выбранный кейс для искусственного получения ожидаемого красного результат.

@@ -79,12 +79,28 @@ def test_all_convention_references_exist():
             assert path.is_file(), f"{document} references missing {path}"
 
 
-def test_code_test_case_has_intrinsic_naming_dependencies():
+def test_code_test_case_keeps_only_intrinsic_core_naming_dependencies():
     paths = referenced_convention_paths(
         (SRC_ROOT / "skills" / "code-test-case" / "SKILL.md").read_text()
     )
     assert SRC_ROOT / "conventions/core/test-naming.md" in paths
-    assert SRC_ROOT / "conventions/junit/test-naming.md" in paths
+    assert all(path.parent.name == "core" for path in paths)
+
+
+def test_generic_tdd_chain_has_no_routed_technology_contracts():
+    documents = [
+        SRC_ROOT / "skills/code-test-case/SKILL.md",
+        SRC_ROOT / "skills/code-test-case/references/coding-plan.md",
+        SRC_ROOT / "skills/code-test-case/agents/openai.yaml",
+        SRC_ROOT / "skills/fix-red-case/SKILL.md",
+        SRC_ROOT / "skills/fix-red-case/agents/openai.yaml",
+        SRC_ROOT / "references/red-case-fix-selection.md",
+    ]
+    technology_markers = ("kotlin", "junit", "kotest", "spring")
+
+    for document in documents:
+        text = document.read_text().lower()
+        assert all(marker not in text for marker in technology_markers), document
 
 
 def test_general_conventions_have_no_spring_or_controller_leaks():

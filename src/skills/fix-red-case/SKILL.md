@@ -1,35 +1,36 @@
 ---
 name: fix-red-case
-description: Fix production code for one red Kotlin JUnit case created or aligned by `$code-test-case`; use after that skill when the test is failing and test edits are forbidden.
+description: Исправляет продакшн-код для одного выбранного красного тест-кейса.
 ---
 
-# Fix Red Case
+# Исправление красного кейса
 
-Read `framework_checkout_root/src/references/red-case-fix-selection.md`.
+Прочитай `framework_checkout_root/src/references/red-case-fix-selection.md`.
 
-Use this skill only after `$code-test-case` has created or aligned one Kotlin JUnit case and that case is red.
-Fix production code only.
-Do not edit tests, test fixtures, test data, assertions, display names, test annotations, or test build configuration.
+Исправляй только продакшн-код.
+Не изменяй тесты, тестовые фикстуры, тестовые данные, проверки, отображаемые имена, тестовые аннотации и тестовую конфигурацию сборки.
 
-## Input
+## Вход
 
-Accept the selected red case, current failure evidence, and optional design context.
+- выбранный красный кейс.
+- текущие свидетельства падения.
+- необязательный дизайн решения.
 
-## Workflow
+## Процесс
 
-1. Establish the current failure and select a fix through `framework_checkout_root/src/references/red-case-fix-selection.md`.
-2. If selection reports an unresolved question or blocker, stop without changing production code.
-3. Implement the selected production fix inside its behavior boundary while preserving the selection constraints.
-   Apply the loaded ergonomic, boundary, and code implementation conventions before editing production code.
-   Keep this skill's test-edit ban and selected-case scope as stricter constraints.
-4. Rerun only the same selected test after production-code changes.
-   If it still fails, re-establish the current failure and select the next fix for that failure.
-   Stop if it reports an unresolved question or blocker, or if the selected fix requires changing a sibling endpoint, operation, mode, scenario, or a broader shared path outside the selected behavior boundary.
-   Otherwise implement the next selected fix and repeat the same test.
+1. Установи текущее падение и выбери способ исправления через `framework_checkout_root/src/references/red-case-fix-selection.md`.
+2. Если выбор сообщает нерешённый вопрос или блокер, остановись без изменения продакшн-кода.
+3. Реализуй выбранное исправление продакшн-кода.
+   Перед изменением продакшн-кода примени загруженные соглашения по архитектуре, границам и реализации кода.
+   Сохраняй запрет этого скилла на изменение теста и область выбранного кейса как более строгие ограничения.
+4. После изменений продакшн-кода повторно запусти только тот же выбранный тест.
+   Если он всё ещё падает, заново установи текущее падение и выбери следующее исправление для него.
+   Остановись, если выбор сообщает нерешённый вопрос или блокер либо выбранное исправление требует изменить соседние эндпоинты, операции, сценарии или более широкий общий путь вне границы выбранного поведения.
+   Иначе реализуй следующее выбранное исправление и повтори тот же тест.
 
-## Output
+## Выход
 
-Report failure causes addressed, design context used or absent, production files changed, verification command, and whether the selected test passed or the work was blocked.
-When invoked by another skill, return `status: complete` with `outcome: selected-test-passes` only when the same selected test passes.
-Return `status: pending` only when implementation or verification is interrupted while work remains inside the selected behavior boundary.
-Return `status: blocked` when fix selection has an unresolved question or blocker, or green requires changing the selected test or widening the behavior boundary.
+Сообщи устранённые причины падения, использованный или отсутствующий дизайн решения, изменённые продакшн-файлы, команду проверки и то, прошёл ли выбранный тест или работа заблокирована.
+При вызове другим скиллом возвращай `status: complete` с `outcome: selected-test-passes`, только когда тот же выбранный тест проходит.
+Возвращай `status: pending`, только когда реализация или проверка прервана, а внутри границы выбранного поведения осталась работа.
+Возвращай `status: blocked`, когда выбор исправления содержит нерешённый вопрос или блокер либо для green требуется изменить выбранный тест или расширить границу поведения.

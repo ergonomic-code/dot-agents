@@ -1,35 +1,30 @@
-# Coding Plan
+# План кодирования
 
-Use this read-only phase for one caller-selected test-case specification after input validation.
-Treat its result as transient internal state of `$code-test-case`.
-Do not write, edit, generate, or persist repository files or expose the plan as a separate capability or artifact.
+Считай результат этой временным внутренним состоянием `$code-test-case`.
+Не записывай, не изменяй, не генерируй и не сохраняй файлы репозитория и не предоставляй план как отдельную возможность или артефакт.
 
-Inspect only the repository evidence needed to make the selections below.
+Изучай только свидетельства репозитория, необходимые для перечисленных ниже решений.
 
-## Select the change
+## Выбор изменения
 
-1. Use the check's SUT and the validated accompanying design decisions without selecting alternatives.
-2. Apply the coding-time mapping in `framework_checkout_root/src/conventions/core/test-case-selection.md`.
-3. Select the governing production/API contract in this order:
-   - a caller-supplied contract;
-   - an existing contract that unambiguously governs the SUT;
-   - compile-only surface mechanically determined by the check, supplied context, and repository conventions.
-4. Select the required test APIs, fixtures, assertions, and other test support from existing repository patterns, or define the smallest convention-compliant additions.
-5. For `new`, derive the test container and repository path from the recorded kind and SUT, and derive the case shape from the recorded form and `framework_checkout_root/src/conventions/junit/test-naming.md`.
-6. For `strengthen` or `extend-parameterized`, resolve the recorded file, container, and case exactly; do not search for a different target.
-7. Select the minimal compile-only production surface required for the test to compile without implementing the selected behavior.
-8. Select the narrowest compile command and exact test selector that identify the selected case, plus the command that executes that selector.
-9. List every file implementation may change and classify each as test case, test support, or compile-only production surface.
-10. Verify that every selected change is inside the repository binding and authorized artifact kinds.
+1. Используй SUT кейса и проверенные сопутствующие проектные решения, не выбирая альтернативы.
+2. Примени правила сопоставления из `framework_checkout_root/src/conventions/core/test-case-selection.md`.
+3. Выбери управляющий продакш API в таком порядке:
+   - API, предоставленное вызывающей стороной;
+   - существующее API, однозначно управляющее SUT;
+   - новое API механически определяемое кейсом, предоставленным контекстом и соглашениями репозитория.
+4. Найди существующие тестовые API, фикстуры, проверки и другую тестовую поддержку, которые обеспечат реализацию кейса, либо определи минимальные необходимые дополнения.
+5. Для `new`-кейсов выведи тестовый контейнер и путь в репозитории из и SUT.
+6. Для `strengthen` или `extend-parameterized` точно разреши записанные файл, контейнер и кейс; не ищи другую цель.
 
-## Blockers
+## Блокеры
 
-Report a blocker instead of selecting an implementation when:
-- the SUT, governing contract, target container, case mapping, exact selector, or permitted write set is ambiguous;
-- the selected check and supplied contract conflict;
-- a new or changed public contract has several valid designs and the caller supplied none;
-- compilation requires production behavior or production surface that is not mechanically determined;
-- required test support cannot be designed from the check and applicable conventions;
-- reliable compilation or exact-case execution cannot be selected within the repository binding.
+Сообщи блокер вместо выбора реализации, когда:
+- SUT, управляющий контракт, целевой контейнер, сопоставление кейса, точный селектор или разрешённый набор изменений неоднозначны;
+- выбранный кейс и предоставленный контракт противоречат друг другу;
+- новый или изменённый публичный контракт допускает несколько корректных дизайнов, а вызывающая сторона не предоставила ни одного;
+- компиляция требует продакшн API, которое нельзя определить механически;
+- необходимую тестовую поддержку нельзя спроектировать из кейса и применимых соглашений;
+- надёжную компиляцию или выполнение точного кейса нельзя выбрать в рамках привязки к репозиторию.
 
-Return the selections or the blocker to `$code-test-case` without changing repository state.
+Верни выбранные решения или блокер в `$code-test-case`, не изменяя состояние репозитория.
