@@ -1,65 +1,69 @@
 ---
 name: refactor-case
-description: Review and refactor code after `$code-test-case` and `$fix-red-case` have made a selected case green; use when the user asks to refactor one commit, current uncommitted changes, or one bounded red-plus-green TDD increment before broadening scope.
+description: Проверяет и рефакторит код после перевода выбранного кейса в green через `$code-test-case` и `$fix-red-case`; применяется к одному коммиту, текущим незакоммиченным изменениям или одному ограниченному TDD-инкременту до расширения области работы.
+requires_modules:
+  - core
+  - ergonomic-architecture
 ---
 
-# Refactor Case
+# Рефакторинг кейса
 
-Read `../../conventions/core/ergonomic-approach-rules.md`.
-Read `../../conventions/ergonomic-architecture/abstraction-level-boundaries.md`.
-Read `./references/api-alignment.md`.
+До чтения зависимостей проверь наличие всех `requires_modules` в конфигурации проекта.
+Прочитай `../../conventions/core/ergonomic-approach-rules.md`.
+Прочитай `../../conventions/ergonomic-architecture/abstraction-level-boundaries.md`.
+Прочитай `./references/api-alignment.md`.
 
-Use this skill only after the selected case is green.
-Accept one commit, current uncommitted changes, or one coordinator-supplied bounded TDD increment identified by its red and green boundary commits.
+Используй этот скилл только после успешного прохождения выбранного кейса.
+Принимай один коммит, текущие незакоммиченные изменения или один переданный координатором ограниченный TDD-инкремент, заданный его red- и green-коммитами.
 
-## Workflow
+## Процесс
 
-1. Inspect the target diff and the selected case context when available.
-   For a bounded TDD increment, inspect the full net diff from the red commit's parent through the green commit, including every intervening commit, and treat that range as the target boundary.
-2. Inspect production changes inside the target boundary for:
-   - duplication per `../../conventions/core/ergonomic-approach-rules.md`, including matches between changed and sibling code;
-   - mixed abstraction levels per `abstraction-level-boundaries.md`;
-   - misplaced mechanics that belong behind an adapter, helper, mapper, value type, or collaborator;
-   - violations of loaded EA conventions, especially unclear operation/resource boundaries, peer horizontal dependencies, mixed orchestration and infrastructure concerns, or hidden direct dependencies that should stay explicit.
-3. Inspect test changes inside the target boundary for:
-   - violations of `test-fixture-architecture.md`, especially `*TestApi` scope leaks, cross-scope orchestration inside `*TestApi`, or setup that belongs in `*FixturePresets`;
-   - violations of other loaded test conventions when they materially apply, especially `http-api/http-api-test-rules.md` for HTTP boundary tests and `*HttpApi` helpers.
-4. Complete every applicable inspection above before selecting a refactoring.
-   Do not stop at the first useful finding.
-   Record every candidate with its location, triggering rule or concrete structural evidence, structural delta, mode, disposition, and disposition rationale.
-   Use exactly one disposition: `eligible`, `behavior-or-design-blocked`, or `out-of-boundary`.
-5. Select the largest coherent group of mutually compatible `eligible` candidates in one mode that can all be changed and verified inside the target boundary.
-   Do not exclude a compatible candidate merely to keep the plan smaller.
-   Preserve unselected candidates in the report.
-6. If the completed inspection has no `eligible` candidate, make no edits, rerun the selected test, and return a verified `no-op` without selecting a mode or requesting edit approval.
-7. Otherwise classify the selected refactoring as exactly one mode:
-   - `production` when the intended structural change is in production code;
-   - `test` when the intended structural change is in test code;
-   - stop if the iteration needs both, except for the minimal test updates required by `references/api-alignment.md`.
-8. For duplication, propose the narrowest shared implementation that owns the complete repeated responsibility while preserving behavior.
-9. Propose a short refactor plan and wait for explicit approval before editing.
-10. After approval, change structure only.
-   Preserve observable behavior, public contracts, persistence shape, API responses, test intent.
-11. Rerun the selected test.
-   If shared APIs or broad call sites changed, also run the smallest relevant compile or module test.
-12. Repeat steps 2-4 against the entire refactored target boundary without making unapproved edits.
-   Replace the previous inventory with every current remaining candidate so the next invocation can continue from current code and reach a verified `no-op`.
+1. Изучи целевой diff и доступный контекст выбранного кейса.
+   Для ограниченного TDD-инкремента изучи полный итоговый diff от родителя red-коммита до green-коммита, включая все промежуточные коммиты, и считай этот диапазон целевой границей.
+2. Проверь изменения в продакшн коде внутри целевой границы на:
+   - дублирование по `../../conventions/core/ergonomic-approach-rules.md`, включая совпадения между изменённым и соседним кодом;
+   - смешение уровней абстракции по `abstraction-level-boundaries.md`;
+   - механику, которую следует скрыть за адаптером, хелпером, маппером, типом-значением (value type) или другой абстракцией;
+   - нарушения загруженных EA-соглашений, особенно неясные границы operations/resources, горизонтальные зависимости между равноправными компонентами, смешение оркестрации и инфраструктуры или скрытые прямые зависимости, которые должны оставаться явными.
+3. Проверь тестовые изменения внутри целевой границы на:
+   - нарушения `test-fixture-architecture.md`, особенно утечки области `*TestApi`, межобластную оркестрацию внутри `*TestApi` и сетап фикстуры, который следует вынести в `*FixturePresets`;
+   - нарушения других загруженных соглашений тестирования, когда они применимы, особенно `http-api/http-api-test-rules.md` для граничных HTTP-тестов и `*HttpApi`-хеперов.
+4. Выполни все применимые проверки до выбора рефакторинга.
+   Не останавливайся на первой полезной находке.
+   Запиши каждого кандидата с расположением, правилом или конкретным структурным свидетельством, структурной дельтой, режим, решение и его обоснованием.
+   Используй ровно одно из возможных решений: `eligible`, `behavior-or-design-blocked` или `out-of-boundary`.
+5. Выбери крупнейшую связную группу взаимно совместимых кандидатов `eligible` в одном режиме, которую можно полностью изменить и проверить внутри целевой границы.
+   Не исключай совместимого кандидата только ради уменьшения плана.
+   Сохрани невыбранных кандидатов в отчёте.
+6. Если завершённая проверка не нашла кандидатов `eligible`, ничего не изменяй, повторно запусти выбранный тест и верни проверенный `no-op`, не выбирая режим и не запрашивая разрешение на правки.
+7. Иначе классифицируй выбранный рефакторинг ровно одним режимом:
+   - `production`, когда предполагаемое структурное изменение относится к продакшн-коду;
+   - `test`, когда предполагаемое структурное изменение относится к коду тестов;
+   - остановись, если итерации нужны оба режима, кроме минимальных обновлений тестов для согласования API, требуемых `references/api-alignment.md`.
+8. Для дублирования предложи наиболее узкую общую реализацию, владеющую всей повторяющейся ответственностью и сохраняющую поведение.
+9. Предложи краткий план рефакторинга и дождись явного подтверждения перед изменениями.
+10. После подтверждения изменяй только структуру.
+    Сохраняй наблюдаемое поведение, публичные контракты и назначение тестов.
+11. Повторно запусти выбранный тест.
+    Если изменились общие API или многие места вызова, также запусти наиболее узкую применимую компиляцию или тест модуля.
+12. Повтори шаги 2-4 для целевого кода.
+    Если кандидаты `eligible` остались, вернись к шагу 5, предложи следующий план и снова дождись явного подтверждения.
+13. Заверши работу, когда полная повторная проверка не оставит кандидатов `eligible`.
 
-## Constraints
+## Ограничения
 
-- Do not add behavior, cases, assertions, migrations, endpoint contracts, config, retries, defaults, or compatibility branches.
-- Do not weaken, rewrite, skip, or delete tests.
-- In one iteration, refactor either production code or test code, not both.
-- In `production` mode, do not change test structure except for the minimal updates required by `references/api-alignment.md`.
-- In `test` mode, do not change production code.
-- Do not broaden beyond the commit, uncommitted diff, or bounded TDD increment except for compile-required call-site propagation.
-- Prefer moving, extracting, renaming, or introducing a narrow helper over new framework abstractions.
-- Stop if a desired cleanup requires behavior clarification or wider redesign.
+- Не изменяй наблюдаемое поведение и смысл тестов.
+- Не добавляй новое поведение, новые кейсы и спекулятивные абстракции.
+- Не расширяй изменения за рамки целевого кода, кроме необходимых и явно одобренных общих точек абстракции и их мест вызова.
+- В mode `production` не изменяй структуру тестов, кроме минимальных обновлений, требуемых `references/api-alignment.md`.
+- В mode `test` не изменяй production-код.
 
-## Output
+## Результат
 
-Before edits, return `status: pending` with `pending_reason: refactor-plan-approval`, the target, complete candidate inventory, chosen refactor mode and group, proposed refactor steps, and validation plan.
-For a no-op, return `status: complete` with `outcome: no-op`, the target, completed inspection, absence of an `eligible` candidate, and the passing selected-test command.
-After approved edits, return `status: complete` with `outcome: refactored`, files changed, the passing selected-test command, and the remaining candidate inventory from the repeated inspection.
-Return `status: pending` when required verification is incomplete.
-Return `status: blocked` when refactoring would violate the target boundary or requires behavior clarification.
+Сообщи:
+- проверенную целевой код и режим каждой выполненной итерации;
+- полный реестр кандидатов последней проверки с решениями и обоснованиями;
+- каждую одобренную группу рефакторинга и сделанные структурные изменения;
+- изменённые файлы;
+- выполненные проверки и их результаты;
+- итоговый `no-op`, когда кандидатов `eligible` не осталось.

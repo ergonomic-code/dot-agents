@@ -1,24 +1,12 @@
-# Context routing
+# Протокол маршрутизации контекста
 
-Classify the requested and planned work by every applicable dimension below.
-Load every matching topical index; dimensions are independent, not alternatives.
-Do not infer production-code work from a test's implementation language or from any request category other than the actual requested or planned work.
-Reevaluate all dimensions when the work scope or planned write set changes.
-All topical paths below are relative to `framework_checkout_root/src/context/`.
+Классифицируй фактически запрошенную и запланированную работу по всем применимым маршрутам из списка, заданным в стартовом контексте.
+Загружай каждый подходящий индекс; маршруты независимы, а не альтернативны.
+Список уже отфильтрован по подтверждённым модулям проекта: не загружай отсутствующие в нём тематические индексы и их зависимости через маршрутизацию.
 
-Load matching indexes in this order:
+Учитывай фактическую область работы, включая необходимые для компиляции сопутствующие изменения, подтверждённые зависимости и явно названный целевой стек.
+Не делай вывод о продакшн-коде из языка реализации теста и не загружай технологию только потому, что она присутствует в другой части репозитория.
+Для смешанного проекта классифицируй изменяемый модуль и планируемый набор файлов.
+Повторно классифицируй маршруты при изменении области работы или планируемого набора файлов, не расширяя подтверждённый набор модулей.
 
-1. `markup.md` for writing or revising Markdown or AsciiDoc.
-2. `production-code.md` for planning, adding, changing, refactoring, or reviewing production code.
-3. `tests.md` for planning, adding, changing, refactoring, aligning, or reviewing tests, test helpers, or test-facing adapters.
-4. `database.md` when the work touches database schema, queries, transactions, persistence mappings, or database-backed reads or writes.
-5. `http-api.md` when the work touches an HTTP operation, HTTP contract, boundary test, or typed HTTP test helper.
-6. `architecture.md` when the work concerns architecture, operations, data or component shape, or abstraction boundaries.
-7. `kotlin.md` when the applicable work touches Kotlin production code or Kotlin tests.
-8. `spring.md` when the applicable work touches Spring APIs or Spring infrastructure.
-9. `junit.md` when the applicable tests use JUnit.
-10. `kotest.md` when the applicable tests use Kotest.
-
-Classify the actual requested or planned work, including compile-required supporting changes, confirmed dependencies, and explicitly named target stack.
-Do not load an index merely because another repository part contains that technology.
-For a mixed project, classify the changed module and write set.
+При отсутствии обязательного модуля остановись до чтения тела скилла и его внутренних зависимостей.

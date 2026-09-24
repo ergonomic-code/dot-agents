@@ -1,11 +1,11 @@
-# Agents
+# Агенты
 
-## Framework
+## ErgocodeAi
 
-This repository uses the Ergocode AI Agent Framework.
+Этот репозиторий использует ErgocodeAi Agent Framework.
 Framework checkout root: `<framework-checkout-root>`.
 Framework config path: `<framework-config-path>`.
-Keep the framework Codex `SessionStart` hook enabled.
-The hook loads `<framework-checkout-root>/src/project-baseline.md`, then `<framework-checkout-root>/src/context/index.md`, then optional framework config before the local instructions in this file.
+Сохраняй включённым Codex `SessionStart` hook фреймворка.
+Hook загружает `<framework-checkout-root>/src/project-baseline.md`, затем общий протокол `<framework-checkout-root>/src/context/index.md` с отфильтрованными маршрутами и обязательную конфигурацию перед локальными инструкциями этого файла.
 
-TODO: add repository-specific sections below
+TODO: добавь ниже секции конкретного репозитория

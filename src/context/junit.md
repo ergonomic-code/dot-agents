@@ -1,5 +1,15 @@
-# JUnit context
+---
+requires_modules:
+  - junit
+applies_when: Работа затрагивает тесты, использующие JUnit.
+routing_order: 130
+---
 
-For applicable JUnit tests, read `../conventions/junit/test-naming.md`.
-Before finalizing them, apply `../conventions/junit/checklist.md`.
-JUnit applicability does not imply Spring or Kotest.
+# Контекст JUnit
+
+Загружай только пункты, соответствующие запрошенной или запланированной работе с тестами:
+
+- добавление или внесение изменнений в тестовые классы или методы: `../conventions/junit/test-naming.md`.
+ 
+После внесения изменений выполни `../conventions/junit/checklist.md`.
+Если найдёшь нарушения - внеси правки для их устранения.

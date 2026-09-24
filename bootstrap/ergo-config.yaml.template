@@ -1,4 +1,7 @@
-# Ergocode config.
-# `artifact_language` is the ISO 639-1 language for human-facing artifacts (e.g. `ru`, `en`).
+# Конфигурация Ergocode.
+# `artifact_language` — ISO 639-1 язык человекочитаемых артефактов, например `ru` или `en`.
+# `modules` — подтверждённый набор доступных проекту модулей фреймворка.
 
 artifact_language: ru
+modules:
+  - core

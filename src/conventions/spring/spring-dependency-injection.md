@@ -4,7 +4,8 @@ keywords:
   - dependency-injection
 ---
 
-# Spring dependency injection
+# Внедрение зависимостей Spring
 
-- Use constructor injection for Spring-managed dependencies.
-- Use field injection only when constructor injection is unavailable or incompatible with framework or test lifecycle.
+- Используй constructor injection для управляемых Spring зависимостей.
+- Используй field injection только когда constructor injection недоступен или несовместим с lifecycle фреймворка либо теста.
+- Не вводи managed bean, если компоненту не нужны другие managed beans как зависимости; используй обычный `object` в Kotlin или класс со static-методами в Java.

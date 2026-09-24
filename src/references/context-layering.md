@@ -1,23 +1,45 @@
-# Context layering
+# Слои контекста
 
-Use dependency direction `SessionStart -> baseline`, `SessionStart -> root context index`, `baseline -> task-context loader`, `task-context loader -> task resolver`, `task-context loader -> task-workdir context`, `root context index -> topical indexes -> conventions, references, patterns, and artifact references`, `caller -> skill or operation`, and `skill -> intrinsic dependencies`.
-SessionStart injects the baseline and root context index deterministically in that order.
-The baseline invokes the task-context loader once for the initial request and uses its output directly.
-The task resolver owns task selection only.
-The task-context loader owns task-context assembly and emits either complete task context or no active task.
-The root index classifies the requested and planned work and loads every matching topical index.
-The baseline owns global orchestration and behavioral constraints.
-Do not introduce roles, profiles, modes, personas, or another request classifier between requested work, routed context, and operations.
-Generic skills load only dependencies intrinsic to their operation, artifact format, algorithm, or skill-specific guard.
-Conventions define rules; applicability based on what work touches belongs to context routing.
-Every convention declares at least one keyword in YAML front matter; prefer no more than three.
-Treat the keywords as an intersection: every rule in the file must concern every declared keyword.
-Add a keyword to the taxonomy only when it is needed to distinguish a new convention file or appears in at least two convention files.
-Create a convention file only when its topic has at least two rules; otherwise put the rule in the most relevant existing convention.
-Split rules with a different keyword intersection into a separate convention and route each convention independently.
-Treat `task-workdir` as an optional integration module beside generic skills.
-The baseline orchestrates task-context loading only.
-The conditional module supplies concrete artifact bindings directly to the applicable skill or operation.
-Generic skills receive explicit semantic inputs and caller-authorized output destinations.
-Generic skills do not resolve tasks, discover task artifacts, or choose task paths.
-Skills under `src/task-workdir/**` may know and manage the task layout and standard artifacts required by their purpose.
+## Компоненты контекста и направление зависимостей
+Обеспечивай направление зависимостей:
+- `SessionStart -> baseline`
+  - `baseline -> task-context loader`
+  - `task-context loader -> task resolver`
+  - `task-context loader -> task-workdir context`
+- `SessionStart -> root context protocol`
+- `SessionStart -> filtered routes`
+  - `filtered routes -> topical indexes -> conventions, references, patterns и artifact references`
+- `SessionStart -> config`
+- `caller -> skill or operation`
+-  `skill -> intrinsic dependencies`.
+
+Хук `SessionStart` должен детерминированно выводить бейзлайн, общий протокол с маршрутами, отфильтрованными по подтверждённым модулям, и конфигурацию именно в этом порядке.
+Метаданные `requires_modules`, `applies_when` и `routing_order` должны храниться в YAML front matter тематического индекса; не дублируй каталог маршрутов в Python.
+
+Бейзлайн отвечает за глобальную оркестрацию и ограничения поведения.
+Бейзлайн один раз вызывает загрузчик контекста задачи для первоначального запроса и напрямую использует его вывод.
+Task resolver отвечает только за выбор задачи.
+Task-context loader отвечает за сборку контекста задачи и выдаёт либо полный контекст задачи, либо отсутствие активной задачи.
+Общий протокол классифицирует запрошенную и запланированную работу только по отфильтрованным маршрутам и загружает каждый подходящий тематический индекс.
+Изменение задачи повторяет классификацию, но не расширяет подтверждённый набор модулей.
+
+## Скиллы
+
+Общие скиллы загружают только зависимости, внутренне необходимые его операции, формату артефакта, алгоритму или собственному ограничителю.
+Если внутренние зависимости скилла требуют отключаемого модуля, объяви `requires_modules` в YAML front matter скилла.
+
+## Ключевые слова соглашений
+
+Каждое соглашение объявляет хотя бы одно ключевое слово в YAML front matter; предпочитай не более трёх.
+Считай ключевые слова пересечением: каждое правило файла относится к каждому объявленному ключевому слову.
+Добавляй новое ключевое слово в таксомонию, только если оно различает новый файл соглашения или встречается хотя бы в двух файлах соглашений.
+Создавай файл соглашения только для темы минимум с двумя правилами; иначе помещай правило в наиболее подходящее существующее соглашение.
+
+## Работа с задачами
+
+`task-workdir` опционально загружаемым модулем.
+Бейзлайн только оркестрирует загрузку контекста задачи.
+
+При наличии задачи в сессии, модуль работы с ней загружает в контекст привязку артифактов задачи к конкретным файлам.
+Общие скиллы не разрешают задачи, не обнаруживают артифакты задачи и не выбирают пути к файлам задачи.
+Скиллы под `src/task-workdir/**` могут знать структуру директории задачи и управлять стандартными артефактами своей операции.

@@ -1,137 +1,155 @@
 ---
 name: installing-framework
-description: Install the Ergocode AI Agent Framework into a repository. Use when Codex must install the runtime payload, expose separate generic and task-workdir skill collections, patch the Ergocode `AGENTS.md` section, and install Codex session hooks. Keep installation idempotent.
+description: Идемпотентно устанавливает ErgocodeAi Agent Framework в репозиторий - подтверждает доступные проекту модули, подключает коллекции скиллов, обновляет секцию Ergocode в `AGENTS.md` и настраивает Codex SessionStart hook.
 ---
 
-# Core specification
+Это скилл установки ErgocodeAi в целевой репозиторий.
 
-Purpose: install the Ergocode framework runtime payload into the target repository.
+# Установка фреймворка
 
-Inputs:
-- `repo_root`
-- `framework_checkout_root`
-- `agents_md_path`
-- `skills_symlink_path`
-- `task_workdir_skills_symlink_path`
-- `framework_config_path` (optional)
-- `codex_hooks_path` (optional)
-- `codex_session_start_hook_script_path` (optional)
+## Входы
 
-Defaults:
-- `repo_root=.`
-- `framework_checkout_root=./.agents/ergo`
-- `agents_md_path=./AGENTS.md`
-- `skills_symlink_path=./.agents/skills/ergo`
-- `task_workdir_skills_symlink_path=./.agents/skills/ergo-task-workdir`
-- `codex_hooks_path=./.codex/hooks.json`
-- `codex_session_start_hook_script_path=./.codex/session_start_load_project_baseline.py`
+Входы:
+- `repo_root`;
+- `framework_checkout_root`;
+- `agents_md_path`;
+- `skills_symlink_path`;
+- `task_workdir_skills_symlink_path`;
+- `framework_config_path`;
+- необязательные `codex_hooks_path` и `codex_session_start_hook_script_path`.
 
-Checks:
-- resolve all paths from `repo_root`
-- require `framework_checkout_root/src/project-baseline.md`
-- require `framework_checkout_root/src/context/index.md`
-- require `framework_checkout_root/src/skills` as the intended symlink target
-- require `framework_checkout_root/src/task-workdir/skills` as the task-workdir symlink target
-- require installer template `bootstrap/ergo-config.yaml.template`
-- require installer template `bootstrap/hooks/hooks.json`
-- require installer template `bootstrap/hooks/session_start_load_project_baseline.py`
-- installation must be idempotent
-- if `framework_config_path` is not provided, ask the user to either:
-  - provide it explicitly (suggest `<framework_checkout_root>/../ergo-config.yaml`, i.e. `<framework-root>../ergo-config.yaml`, relative to `repo_root`), or
-  - explicitly refuse installing the framework config
-- if `framework_config_path` resolves outside `repo_root`, ask for explicit confirmation before writing files
-- if `codex_hooks_path` resolves outside `repo_root`, ask for explicit confirmation before writing files
-- if `codex_session_start_hook_script_path` resolves outside `repo_root`, ask for explicit confirmation before writing files
+Значения по умолчанию:
+- `repo_root=.`;
+- `framework_checkout_root=./.agents/ergo`;
+- `agents_md_path=./AGENTS.md`;
+- `skills_symlink_path=./.agents/skills/ergo`;
+- `task_workdir_skills_symlink_path=./.agents/skills/ergo-task-workdir`;
+- `codex_hooks_path=./.codex/hooks.json`;
+- `codex_session_start_hook_script_path=./.codex/session_start_load_project_baseline.py`.
 
-Effects:
-- ensure `framework_checkout_root` exists
-- ensure `framework_checkout_root/src` exists and contains the runtime payload files
-- ensure `framework_checkout_root/src/project-baseline.md`
-- ensure `framework_checkout_root/src/context/index.md`
-- ensure `agents_md_path`
-- ensure `skills_symlink_path` is a symlink to `framework_checkout_root/src/skills`
-- ensure `task_workdir_skills_symlink_path` is a symlink to `framework_checkout_root/src/task-workdir/skills`
-- verify that skills in both collections are discoverable through their direct collection symlinks
-- ensure `.codex/` directory exists at `repo_root/.codex`
-- ensure `codex_session_start_hook_script_path`
-- ensure `codex_hooks_path` contains the mandatory framework SessionStart hook
-- if `framework_config_path` is provided (the `<framework-root>../` location is preferred) and the file does not exist, create it by copying the installer template `bootstrap/ergo-config.yaml.template` to the resolved `framework_config_path` relative to `repo_root`
-  This file defines the default `artifact_language: ru`.
-- if the user refuses installing the framework config, do not create any config file
+Для новой установки `framework_config_path` обязателен.
+Если он не передан, предложи `<framework_checkout_root>/../ergo-config.yaml` относительно `repo_root` и дождись подтверждения пути.
+Не предлагай установку без конфигурации.
+Для обнаруженной прежней установки без конфигурации предложи варианты восстановления и остановись.
 
-Contract:
-- the whole framework repository may be checked out, copied, or symlinked into `framework_checkout_root`
-- only `framework_checkout_root/src` is runtime-visible after installation
-- the installer itself must live outside `framework_checkout_root/src`
-- the installer must install and maintain the framework Codex `SessionStart` hook as the runtime entrypoint
-- preferred default: add the framework repository as a git submodule at `framework_checkout_root`
+## Каталог и выбор модулей
 
-Recommended layout:
-- checkout root: `./.agents/ergo`
-- runtime payload: `./.agents/ergo/src`
+Перед исследованием проекта прочитай [`docs/modules.md`](../../../docs/modules.md).
+Используй этот документ как канонический каталог базовых модулей 
 
-AGENTS.md patch algorithm:
-- if `AGENTS.md` is missing
-  - create it from `assets/AGENTS.md.template`
-  - materialize `<framework-checkout-root>` in the template with `framework_checkout_root`
-  - if `framework_config_path` is provided, materialize `<framework-config-path>` in the template with `framework_config_path`
-  - if the user refuses installing the framework config, remove the "Framework config path:" line from the template output
-  - the generated framework section must reference only `framework_checkout_root/src` paths
-- else
-  - detect a `## Framework` section that clearly refers to Ergocode or the resolved `framework_checkout_root`
-  - if more than one matching section exists, fail
-  - the replacement framework section must include the "Framework config path:" line only if `framework_config_path` is provided
-  - if one matching section exists, replace only that section with the current framework section
-  - else append the framework section to the end of `AGENTS.md`
-  - never duplicate the framework section
+Перед установкой необходимо определить и согласовать с пользователем список подключаемых модулей.
 
-Symlink algorithm:
-- for each mapping, `skills_symlink_path` to `framework_checkout_root/src/skills` and `task_workdir_skills_symlink_path` to `framework_checkout_root/src/task-workdir/skills`:
-  - ensure the symlink's parent directory
-  - if it already points to the intended target, leave it unchanged
-  - if it points elsewhere, replace it
-  - if it is a regular file or directory, fail
-- inspect each direct target through its symlink and verify that its skill directories are visible without recursive discovery
+### Технологические модули
 
-Codex hooks algorithm:
-- resolve `codex_hooks_path` and `codex_session_start_hook_script_path` from `repo_root`
-- copy installer template `bootstrap/hooks/session_start_load_project_baseline.py` to `codex_session_start_hook_script_path` if missing
-- if the script exists and differs from the template, overwrite it only if the user confirms
-- if the script exists and differs from the template and the user refuses overwrite, fail installation
-- compute `codex_session_start_hook_script_path` relative to `repo_root` as `<script_rel>`
-- ensure `codex_hooks_path` is valid JSON if it exists
-- ensure `codex_hooks_path` contains the mandatory SessionStart hook with:
-  - `matcher: "startup"`
-  - command:
-    - always include `--agents-md-path "<agents_md_path>"`
-    - without `framework_config_path`: `python3 "$(git rev-parse --show-toplevel)/<script_rel>" --agents-md-path "<agents_md_path>"`
-    - with `framework_config_path`: `python3 "$(git rev-parse --show-toplevel)/<script_rel>" --agents-md-path "<agents_md_path>" --framework-config-path "<framework_config_path>"`
-- if `codex_hooks_path` is missing, write installer template `bootstrap/hooks/hooks.json` with the command patched to the computed `<script_rel>`, `--agents-md-path "<agents_md_path>"`, and the optional `--framework-config-path "<framework_config_path>"`
-- if `codex_hooks_path` exists, merge the hook in-place and keep unrelated hooks unchanged
+Для определения списка потенциальных технологических модулей:
+1. изучи файлы в корне проекта и определи по ним тип, стек и, если есть, структуру проекта.
+2. затем по специфичным для стека файлам конфигурации зависимостей, типу и стеку проекта определи возможные технологические модули.
+3. для каждого потенциального модуля найти фактическое использование этой технологии в исходном коде.
 
-Failure conditions:
-- multiple matching framework sections exist in `AGENTS.md`
-- `skills_symlink_path` exists as a regular file
-- `skills_symlink_path` exists as a directory
-- `task_workdir_skills_symlink_path` exists as a regular file
-- `task_workdir_skills_symlink_path` exists as a directory
-- either installed skill collection is not discoverable through its direct symlink
-- `AGENTS.md` cannot be patched without changing content outside the detected framework section
-- `codex_hooks_path` exists but is not valid JSON
-- `codex_session_start_hook_script_path` exists as a directory
-- existing `codex_session_start_hook_script_path` differs from the template and overwrite is refused
+### Модуль "Эргономичная архитектура"
 
-Final report:
-- `framework_checkout_root`
-- `agents_md`
-- `skills_symlink`
-- `task_workdir_skills_symlink`
-- `generic_skills_discoverable`
-- `task_workdir_skills_discoverable`
-- `codex_hooks`
-- `warnings`
-- `errors`
+Не определяй `ergonomic-architecture` автоматически по стеку: это отдельный выбор архитектурной методологии.
+Если новая установка выполняется для бэкенд-проекта, отдельно спроси, подключать ли `ergonomic-architecture`, кратко опиши его назначение и не включай без утвердительного ответа.
+Для проекта без бэкенд-части не предлагай `ergonomic-architecture`, если пользователь прямо не запросил этот модуль.
 
-Framework section match: a `## Framework` section that mentions `Ergocode` or the resolved `framework_checkout_root`.
+---
 
-Minimal patch rule: keep surrounding spacing and content unless replacement requires a local normalization.
+После определения списка потенциальных модулей и получения решения пользователя по подключению модуля Эргономичной архитектуры предложи минимальный итоговый набор с кратким описанием и обоснованием для каждого модуля, всегда включая `core`, и дождись явного подтверждения списка.
+
+Если конфигурация уже существует, безопасно разбери её через `yaml.safe_load` и проверь схему до любых изменений.
+Повторная установка сохраняет существующий подтверждённый список без повторного вопроса.
+Если исследование или пользователь предполагают другой список, покажи текущий и предлагаемый списки с причинами и изменяй `modules` только после отдельного явного подтверждения.
+Неизвестный модуль, дубликат, отсутствие `core`, не-список в `modules`, неизвестный ключ или некорректный YAML являются ошибкой; не заменяй их набором всех модулей.
+
+Сохраняй конфигурацию в виде:
+
+```yaml
+artifact_language: ru
+modules:
+  - core
+```
+
+Сохраняй подтверждённый порядок модулей пользователя.
+
+## Предварительные проверки
+
+- Разреши все пути от `repo_root`.
+- Удостоверься в наличии не пустых файлов и директорий:
+  - `framework_checkout_root/src/project-baseline.md`
+  - `framework_checkout_root/src/context/index.md`
+  - `framework_checkout_root/src/skills`
+  - `framework_checkout_root/src/task-workdir/skills`
+  - `bootstrap/ergo-config.yaml.template`
+  - `bootstrap/hooks/hooks.json`
+  - `bootstrap/hooks/session_start_load_project_baseline.py`.
+- Тем же `python3`, который указан в hook-команде, выполни `import yaml`; при недоступном PyYAML останови установку с ошибкой до записи hook.
+- Если `framework_config_path`, `codex_hooks_path` или `codex_session_start_hook_script_path` разрешается вне `repo_root`, дождись явного подтверждения перед записью.
+- Сохраняй идемпотентность установки.
+
+## Эффекты
+
+- Гарантируй существование файлов фреймворка по пути `framework_checkout_root/src`.
+- Гаранитруй существование AGENTS.md по пути `agents_md_path`.
+- Настрой симлинку из `skills_symlink_path` на `framework_checkout_root/src/skills`.
+- Настрой симлинку из `task_workdir_skills_symlink_path` на `framework_checkout_root/src/task-workdir/skills`.
+- Проверь обнаружение скиллов в обеих коллекциях через прямые symlink без рекурсивного поиска.
+- Гарантируй существование каталога `.codex`, скрипта SessionStart hook и обязательной hook-запись.
+- Для новой установки создай из шаблона конфигурацию фреймворка по пути`framework_config_path` и замени в ней `modules` подтверждённым списком.
+- Для повторной установки не перезаписывай существующую корректную конфигурацию, если изменение списка отдельно не подтверждено.
+
+Корень фреймворка может содержать все файлы, включая тесты и файлы инсталляции.
+Но в рабочих сессиях агента использутся только файлы из локального контекста проекта (`AGENTS.md`, `./.agents` и `./.codex`) и`framework_checkout_root/src`.
+
+## Обновление `AGENTS.md`
+
+- Если `AGENTS.md` отсутствует, создай его из `assets/AGENTS.md.template`, подставив `framework_checkout_root` и обязательный `framework_config_path`.
+- Иначе найди секцию `## ErgocodeAi`, явно относящуюся к ErgocodeAi или разрешённому `framework_checkout_root`.
+- При нескольких совпадающих секциях заверши установку ошибкой.
+- При одном совпадении замени только эту секцию актуальной секцией с `Framework config path:`; при отсутствии добавь секцию в конец.
+- Не дублируй секцию и не изменяй окружающий текст или пробелы без локальной необходимости.
+- Сгенерированная секция ссылается только на пути внутри `framework_checkout_root/src` и на конфигурацию.
+
+## Подключение скиллов
+
+Для каждой пары `skills_symlink_path -> framework_checkout_root/src/skills` и `task_workdir_skills_symlink_path -> framework_checkout_root/src/task-workdir/skills`:
+- создай родительский каталог;
+- сохрани symlink, уже указывающий на целевой путь;
+- замени symlink, указывающий в другое место;
+- заверши установку ошибкой, если путь занят обычным файлом или каталогом;
+- проверь видимость директорий скиллов через прямой symlink.
+
+## Настройка Codex hooks
+
+- Разреши `codex_hooks_path` и `codex_session_start_hook_script_path` от `repo_root`.
+- Скопируй `bootstrap/hooks/session_start_load_project_baseline.py` в путь скрипта, если файла нет.
+- Если существующий скрипт отличается от шаблона, перезаписывай его только после подтверждения; при отказе заверши установку ошибкой.
+- Вычисли путь скрипта относительно `repo_root` как `<script_rel>`.
+- Проверь существующий `codex_hooks_path` как корректный JSON.
+- Обеспечь обязательный SessionStart hook с `matcher: "startup"` и командой `python3 "$(git rev-parse --show-toplevel)/<script_rel>" --agents-md-path "<agents_md_path>" --framework-config-path "<framework_config_path>"`.
+- При отсутствии hooks-файла создай его из `bootstrap/hooks/hooks.json`, подставив пути и обязательный аргумент конфигурации.
+- При наличии hooks-файла объедини запись на месте, сохранив несвязанные hooks.
+
+## Ошибки
+
+Заверши установку ошибкой при:
+- некорректной конфигурации или неподтверждённом изменении существующего списка модулей;
+- нескольких совпадающих framework-секциях;
+- обычном файле или каталоге на месте любого symlink;
+- необнаруживаемой коллекции скиллов;
+- невозможности локально обновить `AGENTS.md`;
+- некорректном JSON hooks-файла;
+- каталоге на месте hook-скрипта;
+- отличающемся hook-скрипте без подтверждения перезаписи;
+- недоступном PyYAML для Python hook.
+
+## Итоговый отчёт
+
+Сообщи:
+- `framework_checkout_root`;
+- `agents_md`;
+- `framework_config` и подтверждённые `modules`;
+- `skills_symlink` и `task_workdir_skills_symlink`;
+- `generic_skills_discoverable` и `task_workdir_skills_discoverable`;
+- `codex_hooks`;
+- `warnings`;
+- `errors`.

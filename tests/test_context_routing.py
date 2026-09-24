@@ -1,51 +1,72 @@
 import re
 from pathlib import Path
 
+import yaml
+
 
 CONTEXT_ROOT = Path(__file__).parents[1] / "src" / "context"
 SRC_ROOT = CONTEXT_ROOT.parent
 
 
-def test_root_context_orders_independent_module_indexes():
-    index = (CONTEXT_ROOT / "index.md").read_text()
-    expected = [
-        "markup.md",
-        "production-code.md",
-        "tests.md",
-        "database.md",
-        "http-api.md",
-        "architecture.md",
-        "kotlin.md",
-        "spring.md",
-        "junit.md",
-        "kotest.md",
-    ]
-    positions = [index.index(f"`{item}`") for item in expected]
-    assert positions == sorted(positions)
+def front_matter(path: Path) -> dict:
+    text = path.read_text()
+    _start, yaml_text, _body = text.split("---", 2)
+    return yaml.safe_load(yaml_text)
 
 
-def test_technology_indexes_keep_routing_independent():
-    kotlin = (CONTEXT_ROOT / "kotlin.md").read_text()
-    junit = (CONTEXT_ROOT / "junit.md").read_text()
-    kotest = (CONTEXT_ROOT / "kotest.md").read_text()
+def test_topical_indexes_have_valid_module_metadata_and_unique_order():
+    known_modules = {
+        "core",
+        "ergonomic-architecture",
+        "database",
+        "http-api",
+        "kotlin",
+        "spring",
+        "junit",
+        "kotest",
+    }
+    orders = []
 
-    assert "independently" in kotlin
-    assert "Do not load Kotlin production process for a test-only Kotlin change." in kotlin
-    assert "does not imply Spring or Kotest" in junit
-    assert "does not imply Spring or JUnit" in kotest
+    for path in CONTEXT_ROOT.glob("*.md"):
+        if path.name == "index.md":
+            continue
+        metadata = front_matter(path)
+        assert set(metadata) == {"requires_modules", "applies_when", "routing_order"}
+        assert metadata["requires_modules"]
+        assert set(metadata["requires_modules"]) <= known_modules
+        assert metadata["applies_when"].strip()
+        orders.append(metadata["routing_order"])
 
+    assert len(orders) == len(set(orders))
 
 def test_stack_matrix_is_expressed_by_index_text():
-    database = (CONTEXT_ROOT / "database.md").read_text()
+    database = (CONTEXT_ROOT / "relational-databses.md").read_text()
     http_api = (CONTEXT_ROOT / "http-api.md").read_text()
     kotlin = (CONTEXT_ROOT / "kotlin.md").read_text()
     spring = (CONTEXT_ROOT / "spring.md").read_text()
 
-    assert "kotlin/persistence-models.md" in kotlin
-    assert "also touches persistence" in kotlin
+    kotlin_database = (CONTEXT_ROOT / "kotlin-database.md").read_text()
+    spring_http = (CONTEXT_ROOT / "spring-http-api.md").read_text()
+    spring_http_tests = (CONTEXT_ROOT / "spring-http-api-tests.md").read_text()
+    spring_database = (CONTEXT_ROOT / "spring-database.md").read_text()
+    spring_kotlin = (CONTEXT_ROOT / "spring-kotlin.md").read_text()
+    kotlin_http = (CONTEXT_ROOT / "kotlin-http-api.md").read_text()
+
+    assert "kotlin/persistence-models.md" not in kotlin
+    assert "kotlin/persistence-models.md" in kotlin_database
+    assert "http-api-versioning.md" not in kotlin
+    assert "http-api-versioning.md" in kotlin_http
     assert "spring/" not in database
     assert "spring/" not in http_api
-    assert "Spring HTTP test clients" in spring
+    assert "spring-jdbc.md" not in spring
+    assert "kotlin-beans.md" not in spring
+    assert "spring-http-json-api.md" not in spring
+    assert "http-api-tests.md" not in spring
+    assert "spring-http-json-api.md" in spring_http
+    assert "http-api-tests.md" not in spring_http
+    assert "http-api-tests.md" in spring_http_tests
+    assert "spring-jdbc.md" in spring_database
+    assert "kotlin-beans.md" in spring_kotlin
 
 
 def referenced_convention_paths(text: str) -> list[Path]:
@@ -68,6 +89,15 @@ def test_index_convention_references_exist_and_are_reachable():
         )
 
 
+def test_all_relative_markdown_references_from_indexes_exist():
+    for index in CONTEXT_ROOT.glob("*.md"):
+        references = re.findall(r"`(\.\./[^`]+\.md)`", index.read_text())
+        for reference in references:
+            assert (index.parent / reference).resolve().is_file(), (
+                f"{index} references missing {reference}"
+            )
+
+
 def test_all_convention_references_exist():
     documents = [*CONTEXT_ROOT.glob("*.md")]
     documents.extend((SRC_ROOT / "skills").rglob("*.md"))
@@ -85,6 +115,17 @@ def test_code_test_case_keeps_only_intrinsic_core_naming_dependencies():
     )
     assert SRC_ROOT / "conventions/core/test-naming.md" in paths
     assert all(path.parent.name == "core" for path in paths)
+
+
+def test_skill_checks_modules_before_optional_module_dependencies():
+    skill = SRC_ROOT / "skills" / "refactor-case" / "SKILL.md"
+    metadata = front_matter(skill)
+    text = skill.read_text()
+
+    assert metadata["requires_modules"] == ["core", "ergonomic-architecture"]
+    assert text.index("проверь наличие всех `requires_modules`") < text.index(
+        "../../conventions/ergonomic-architecture/abstraction-level-boundaries.md"
+    )
 
 
 def test_generic_tdd_chain_has_no_routed_technology_contracts():
