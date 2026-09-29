@@ -1,46 +1,25 @@
-# Project baseline
+# Базовый контекст проекта
 
-## Brevity
+## Краткость
 
-Prioritize correctness, necessary context, and verifiability over brevity.
-Be concise after those needs are met.
-Prefer shorter wording and fewer sections when they do not remove needed evidence, caveats, or instructions.
+В чатах и прозе будь лаконичен без потери корректности и важных предположений.
+Предпочитай более короткие формулировки, если это не исключает необходимые доказательства, оговорки или инструкции.
+Не добавляй разделы ради полноты структуры, но активно структурируй разделами и заголовками тот материал, который действительно необходим.
 
-## Explicit Planning
+## Явное планирование
 
-If the user asks to start with a plan, provide the intended plan in chat after required skill and context loading, then stop.
-Wait for explicit permission to continue.
-Do not edit files or run mutating commands in that turn.
-A tool task list does not satisfy the request.
+Если пользователь просит начать с плана, после загрузки необходимых скиллов и контекста изложи предполагаемый план в чате и остановись.
+Жди явного разрешения продолжить.
+В этом сообщении не изменяй файлы и не выполняй команды, изменяющие состояние.
 
-## Execution boundaries
+## Границы выполнения
 
-* Perform the requested work directly without selecting, loading, or switching roles, profiles, modes, personas, or another request-classification layer.
-* Modify only the caller-authorized scope and do not broaden it without an explicit request.
-* Do not modify requirements, design artifacts, framework context, or project context unless the user includes them in the requested change.
-* When modifying a human-facing artifact, preserve its human purpose and readability instead of turning it into agent-only instructions unless explicitly asked.
-* Stop and report the boundary when correctness requires an unauthorized product decision or changes outside the authorized scope.
-* Do not claim completion while required work or relevant verification remains unfinished.
-* Report the completed result, changed scope, verification commands and results, and remaining blockers or caveats.
-* Use `artifact_language` for comments and human-facing artifacts.
-* Default to `ru` when the config or field is absent.
+* Изменяй только явно разрешённую вызывающей стороной область и не расширяй её без явного запроса.
+* Остановись и сообщи о блокере, если корректное выполнение требует продуктового решения или изменений за пределами разрешённой области.
 
-## Context
+## Контекст
 
-* ErgocodeAi config
-  * Use resolved framework values from the host context.
-* Tasks
-  * Pass exactly once the initial user request verbatim through stdin to `framework_checkout_root/src/task-workdir/load_task_context.py --repo-root "$(git rev-parse --show-toplevel)"` and treat its stdout as authoritative session task context.
-  * Invoke the loader only once per session, retain its result, and do not rerun it for later user requests.
-  * If the loader reports `Active task: none`, state this in chat and continue without task context; otherwise use the emitted task context directly.
-  * When an active task resolves, use the task-workdir context to resolve only the artifact bindings applicable to the requested operation.
-* Loaded context
-  * Apply every loaded framework and project instruction that is relevant to the requested or planned work.
-* Local context
-  * Treat project `AGENTS.md` as the project integration layer.
-  * If project `AGENTS.md` declares `## Local contexts`, use that section as the source of project-local context files.
-  * Load only task-relevant local context files.
-  * Prefer per-entry conditions in `## Local contexts` over separate project-specific loading-order rules.
-* Operations
-  * Pass resolved artifact content or concrete paths directly to the applicable skill or operation as explicit semantic inputs and caller-authorized output destinations.
-  * Invoke skills only after these steps, with resolved semantic inputs and outputs, and follow their intrinsic loading instructions.
+* Задачи
+  * При первом пользовательском запросе сессии ровно один раз передай его дословно через stdin в `framework_checkout_root/src/task-workdir/load_task_context.py --repo-root "$(git rev-parse --show-toplevel)"`; используй stdout как контекст задачи до конца сессии.
+  * Если загрузчик сообщает `Active task: none`, укажи это в чате и продолжай без контекста задачи.
+* При наличии в проектном `AGENTS.md` раздела `## Локальный контекст`/`## Local contexts` загружай перечисленные там файлы только при их применимости к запрошенной или планируемой работе.
