@@ -11,7 +11,6 @@ routing_order: 20
 
 - `../conventions/core/ergonomic-approach-rules.md`;
 - `../conventions/core/process/dev-task-boundaries.md`;
-- `../conventions/core/artifact-reuse.md`.
 - `../conventions/core/semantic-value-types.md`.
 
 Если работа является разработкой новой функциональности - прочитай `../conventions/core/process/production-code-development.md`.
@@ -20,7 +19,6 @@ routing_order: 20
 
 После внесения изменений всегда выполняй:
 
- - `../conventions/core/artifact-reuse-checklist.md`.
  - `../conventions/core/ergonomic-approach-checklist.md`.
 
 Если найдёшь нарушения - внеси правки для их устранения.

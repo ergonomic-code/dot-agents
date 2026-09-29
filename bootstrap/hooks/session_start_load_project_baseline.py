@@ -12,6 +12,7 @@ import yaml
 KNOWN_MODULES = {
     "core",
     "ergonomic-architecture",
+    "ergonomic-testing",
     "database",
     "http-api",
     "kotlin",

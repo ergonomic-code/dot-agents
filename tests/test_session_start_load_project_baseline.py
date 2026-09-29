@@ -19,6 +19,7 @@ def create_repo(tmp_path: Path, baseline: str | None = "BASELINE", index: str | 
         ("markup.md", ["core"], 10, "markup"),
         ("production-code.md", ["core"], 20, "production"),
         ("tests.md", ["core"], 30, "tests"),
+        ("ergonomic-testing.md", ["ergonomic-testing"], 35, "ergonomic tests"),
         ("relational-databses.md", ["database"], 40, "database"),
         ("http-api.md", ["http-api"], 50, "http"),
         ("kotlin.md", ["kotlin"], 70, "kotlin"),
@@ -84,6 +85,27 @@ def test_emits_optional_config_after_mandatory_context(tmp_path):
     assert "`.agents/ergo/src/context/http-api.md`" not in result.stdout
     assert result.stdout.index("# Разрешённые тематические маршруты") < result.stdout.index("# Framework config")
     assert "```yaml\nartifact_language: en\nmodules:" in result.stdout
+
+
+def test_ergonomic_testing_route_requires_explicit_module(tmp_path):
+    repo = create_repo(tmp_path)
+    config = repo / "ergo-config.yaml"
+    config.write_text("modules:\n  - core\n", encoding="utf-8")
+
+    without_module = run_hook(repo, "--framework-config-path", "ergo-config.yaml")
+
+    assert without_module.returncode == 0
+    assert "`.agents/ergo/src/context/tests.md`" in without_module.stdout
+    assert "`.agents/ergo/src/context/ergonomic-testing.md`" not in without_module.stdout
+
+    config.write_text(
+        "modules:\n  - core\n  - ergonomic-testing\n", encoding="utf-8"
+    )
+
+    with_module = run_hook(repo, "--framework-config-path", "ergo-config.yaml")
+
+    assert with_module.returncode == 0
+    assert "`.agents/ergo/src/context/ergonomic-testing.md`" in with_module.stdout
 
 
 def test_spring_http_intersection_requires_both_modules(tmp_path):

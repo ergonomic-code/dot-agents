@@ -18,6 +18,7 @@ def test_topical_indexes_have_valid_module_metadata_and_unique_order():
     known_modules = {
         "core",
         "ergonomic-architecture",
+        "ergonomic-testing",
         "database",
         "http-api",
         "kotlin",
