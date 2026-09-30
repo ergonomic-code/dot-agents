@@ -1,27 +1,19 @@
 ---
 name: fix-project-context
-description: Analyze a project-context problem from `problem`, `target behavior`, and optional `codex session id`; propose `minimal`, `systemic`, and `optimal` fixes; wait for explicit choice; then implement it.
+description: Исправляет локальные инструкции агента в целевом проекте, который использует фреймворк.
 ---
 
-# Fix project context
+# Исправление контекста целевого проекта
 
-Read `framework_checkout_root/src/references/context-fix-minimality.md`.
-Read `framework_checkout_root/src/references/context-fix-workflow.md`.
+Определи `framework_checkout_root` по каноническому пути этого `SKILL.md` после разрешения симлинков: это корень репозитория над `src/skills/fix-project-context/`.
+Считай `project_root` корнем текущего репозитория.
+Прочитай `framework_checkout_root/src/references/context-fix-minimality.md`.
+Прочитай `framework_checkout_root/src/references/context-fix-workflow.md`.
 
-Treat editable roots as:
-- `./AGENTS.md`
-- project-local `./.agents/**` outside `framework_checkout_root/**`
-- project-local `./.codex/**` outside `framework_checkout_root/**`
-- `./README.md` only when it is an active agent-facing entry point or the narrowest consistent location.
+Изменяемые корни:
+- `project_root/AGENTS.md`
+- локальные `project_root/.agents/**` вне `framework_checkout_root/**`
+- локальные `project_root/.codex/**` вне `framework_checkout_root/**`
+- `project_root/README.md` только когда он является действующей точкой входа для агента или самым узким согласованным местом.
 
-If the case is about framework-provided context under `framework_checkout_root/src/**`, stop and tell the user to use `$fix-framework-context`.
-
-## Skill-specific scope and classification
-
-Work from the smallest relevant project context file set under:
-- `./AGENTS.md`
-- project-local `./.agents/**` outside `framework_checkout_root/**`
-- project-local `./.codex/**` outside `framework_checkout_root/**`
-- `./README.md` only when it is agent-facing or already part of the current context flow.
-
-Classify each candidate by layer (`agents-root` | `agents-dir` | `codex-dir` | `readme` | `reference`).
+Если запрос относится к `framework_checkout_root/src/**`, `bootstrap/**` или `docs/**`, предложи `$fix-framework-context`.

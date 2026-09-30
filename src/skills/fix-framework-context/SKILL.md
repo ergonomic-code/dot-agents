@@ -1,42 +1,45 @@
 ---
 name: fix-framework-context
-description: Analyze a framework-context fix or feature request from `problem`, `target behavior`, and optional `codex session id`; propose `minimal`, `systemic`, and `optimal` changes; wait for explicit choice; then implement it.
+description: Исправляет контекст, поставляемый фреймворком целевым проектам, из репозитория фреймворка или подключённого проекта.
 ---
 
-# Fix or extend framework context
+# Исправление или расширение контекста фреймворка
 
-Read `framework_checkout_root/src/references/context-fix-minimality.md`.
-Read `framework_checkout_root/src/references/context-fix-workflow.md`.
-Read `framework_checkout_root/src/references/context-layering.md`.
+Определи `framework_checkout_root` по каноническому пути этого `SKILL.md` после разрешения симлинков: это корень репозитория над `src/skills/fix-framework-context/`.
+Не определяй изменяемый репозиторий по текущей рабочей директории.
+Прочитай `framework_checkout_root/src/references/context-fix-minimality.md`.
+Прочитай `framework_checkout_root/src/references/context-fix-workflow.md`.
+Прочитай `framework_checkout_root/src/references/context-layering.md`.
+Прочитай `framework_checkout_root/src/references/framework-fix-case.md`.
 
-Treat editable roots as:
+Изменяемые корни:
+- `framework_checkout_root/bootstrap/**`
+- `framework_checkout_root/docs/**`
 - `framework_checkout_root/src/**`
+- `framework_checkout_root/cases/**` для разбора ошибки агента.
+- `framework_checkout_root/README.md` только для синхронизации с изменением.
 
-Treat framework-context fixes and new framework-context capabilities under `framework_checkout_root/src/**` as in scope.
-For new capability work without a defect, treat the missing capability or limitation as the `problem`.
+Если запрос относится к локальным `AGENTS.md`, `.agents/**` или `.codex/**` целевого проекта вне `framework_checkout_root`, предложи `$fix-project-context`.
+Сравнивай канонические пути, чтобы ссылка на фреймворк внутри целевого проекта не считалась локальным контекстом проекта.
 
-If the case is about current-repo `AGENTS.md`, or project-local `.agents/**` or `.codex/**` outside `framework_checkout_root/**`, stop and tell the user to use `$fix-project-context`.
+## Архитектурные границы
 
-## Skill-specific scope and classification
-
-Work from the smallest relevant framework file set under `framework_checkout_root/src/**`.
-Classify each candidate by layer (`project-baseline` | `context-index` | `convention` | `skill` | `artifact` | `reference` | `task-workdir`).
-
-## Architecture boundary
-
-- Use the dependency invariant in `context-layering.md` when analyzing options and implementing the selected change.
-- Put applicability based on what requested or planned work touches in context indexes.
-- Keep topical routing out of generic skills, conventions, and baseline orchestration.
-- Keep at least one YAML front-matter keyword on every convention file and prefer no more than three.
-- Require every rule in a convention to concern every keyword, and split and independently route rules with a different keyword intersection.
-- Add a keyword to the taxonomy only when needed to distinguish a new convention file or when it appears in at least two convention files.
-- Create a convention file only for a topic with at least two rules; otherwise put the rule in the most relevant existing convention.
-- Keep intrinsic skill dependencies in the skill.
-- Treat skills under `framework_checkout_root/src/skills/**` as generic and independent of task-workdir storage.
-- Allow task layout, filenames, artifact codes, and progress rules under `framework_checkout_root/src/task-workdir/**`.
-- Keep task selection in the task resolver, task-context assembly in the task-context loader, its one-time invocation in the baseline, and concrete task bindings in task-workdir context.
-- Pass those bindings directly to the applicable skill or operation as explicit semantic inputs and caller-authorized output destinations.
-- Do not introduce roles, profiles, modes, personas, or another request classifier.
-- Treat `framework_checkout_root/src/conventions/core/ergonomic-approach-rules.md` as stable, technology-agnostic philosophy and change it only when that philosophy changes.
-- Put technology-, layer-, workflow-, and trigger-specific guidance into narrower context indexes, conventions, skills, or references.
-- Do not report task-workdir skills as generic-skill violations.
+- Общая архитектура
+  - При анализе вариантов и реализации выбранного изменения соблюдай направление зависимостей из `context-layering.md`.
+  - Условия применимости, зависящие от того, чего касается запрошенная или запланированная работа, размещай в индексах контекста.
+  - Не помещай тематическую маршрутизацию в общие скиллы, соглашения и оркестрацию бейзлайна.
+  - Считай `framework_checkout_root/src/conventions/core/ergonomic-approach-rules.md` стабильной, не зависящей от технологий философией и меняй его только при изменении этой философии.
+  - Рекомендации, зависящие от технологии, слоя, рабочего процесса или условия применения, размещай в более узких индексах контекста, соглашениях, скиллах или справочниках.
+- Ключевые слова соглашений
+  - У каждого файла соглашения оставляй хотя бы одно ключевое слово в YAML front matter; предпочитай не более трёх.
+  - Каждое правило соглашения должно относиться ко всем его ключевым словам; разделяй и независимо маршрутизируй правила с другим пересечением ключевых слов.
+  - Добавляй ключевое слово в таксономию, только если оно различает новый файл соглашения или встречается минимум в двух файлах соглашений.
+  - Создавай файл соглашения только для темы минимум с двумя правилами; иначе помещай правило в наиболее подходящее существующее соглашение.
+- Скиллы
+  - Внутренние зависимости скилла оставляй в самом скилле.
+  - Общие скиллы в `framework_checkout_root/src/skills/**` не должны зависеть от устройства `task-workdir`.
+- Модуль задач
+  - Структуру задачи, имена файлов, коды артефактов и правила ведения прогресса размещай в `framework_checkout_root/src/task-workdir/**`.
+  - Выбор задачи оставляй определителю задачи, сборку её контекста — загрузчику контекста задачи, однократный вызов загрузчика — бейзлайну, а конкретные привязки задачи — контексту `task-workdir`.
+  - Передавай эти привязки применимому скиллу или операции напрямую как явные смысловые входные данные и разрешённые вызывающей стороной пути результата.
+  - Не считай скиллы `task-workdir` нарушением правил для общих скиллов.

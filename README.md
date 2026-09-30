@@ -97,19 +97,21 @@ devlog/123-example-task/
 
 ## Доработка контекста
 
-В случае если агент допустил ошибку, используйте `$fix-project-context` или `$fix-framework-context` для коррекции контекста, чтобы предотвратить повторение ошибки в будущем.
+Для исправления ошибки агента или добавления нового поведения выбирайте скилл по каноническому пути изменяемого файла после разрешения симлинков:
 
-- [`$fix-project-context`](src/skills/fix-project-context/SKILL.md) изменяет `AGENTS.md`, `.agents/**`, `.codex/**` и другие инструкции для агентов конкретного проекта, не затрагивая контекст выполнения Ergocode.
-- [`$fix-framework-context`](src/skills/fix-framework-context/SKILL.md) изменяет общий контекст выполнения ErgocodeAi под `src/**`;
+- [`$fix-project-context`](src/skills/fix-project-context/SKILL.md) изменяет локальные инструкции агента целевого проекта.
+- [`$fix-framework-context`](src/skills/fix-framework-context/SKILL.md) изменяет поставляемые фреймворком файлы под `src/**`, `bootstrap/**` и `docs/**` как из репозитория фреймворка, так и из целевого проекта.
+- [`$fix-self-context`](.agents/skills/fix-self-context/SKILL.md) изменяет `AGENTS.md`, `.agents/**` и `.codex/**` самого репозитория фреймворка.
 
-Передайте выбранному скиллу описание проблемы, требуемое поведение и, при наличии, идентификатор Codex-сессии с примером неправильной работы:
+Передайте выбранному скиллу требуемое поведение и, при наличии, описание проблемы и идентификатор Codex-сессии с примером неправильной работы:
 
 ```text
 Используй $fix-project-context.
 
-codex session id: <необязательно>
-problem: <что в текущем контексте приводит к неправильной работе агента или что агент сделал не так в сессии Codex>
-target behavior: <как агент должен действовать после изменения>
+сессия: <необязательно>
+
+целевое поведение: <как агент должен действовать после изменения>
+что агент седал не так: <необязательно; что агент сделал неправильно>
 ```
 
 ## Устройство фреймворка
@@ -217,7 +219,7 @@ modules:
 | [`$collect-code-anchors`](src/skills/collect-code-anchors/SKILL.md) | Находит связанные с требуемым поведением участки кода, модели, запросы, таблицы, конфигурацию и другие якоря в коде. |
 | [`$describe-rest-api`](src/skills/describe-rest-api/SKILL.md) | Пишет человекочитаемое описание REST API по коду, OpenAPI, требованиям или другим входным данным. |
 | [`$design-test-case`](src/skills/design-test-case/SKILL.md) | Проектирует один тест-кейс по описанию целевого поведения. |
-| [`$fix-framework-context`](src/skills/fix-framework-context/SKILL.md) | Обновляет общий контекст выполнения Ergocode для исправления ошибок в поведении агента. |
+| [`$fix-framework-context`](src/skills/fix-framework-context/SKILL.md) | Обновляет контекст, поставляемый фреймворком целевым проектам. |
 | [`$fix-project-context`](src/skills/fix-project-context/SKILL.md) | Обновляет контекст для агентов конкретного проекта для исправления ошибок в поведении агента. |
 | [`$fix-red-case`](src/skills/fix-red-case/SKILL.md) | Реализует поведение, специфицированное одним тест-кейсом. |
 | [`$refactor-case`](src/skills/refactor-case/SKILL.md) | Выполняет ревью одного TDD-инкремента. |

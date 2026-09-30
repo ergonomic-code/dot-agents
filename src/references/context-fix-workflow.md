@@ -1,86 +1,81 @@
-# Shared context-change workflow
+# Общий порядок изменения контекста агента
 
-Use this workflow for `$fix-framework-context` and `$fix-project-context`.
-Each concrete skill defines its own editable roots, redirect rules, file scope, and layer values.
+Используй этот порядок для `$fix-framework-context`, `$fix-self-context` и `$fix-project-context`.
+Каждый конкретный скилл определяет свои изменяемые корни, правила перенаправления, область файлов и архитектуру контекста.
 
-## Required input
+## Входные данные
 
-- `problem`
-- `target behavior`
-- optional `codex session id`
+- необязательное описание проблемы в поведении агента.
+  В случае если проблема не описана, то считай проблемой отсутствие описанного целевого поведения агента.
+- обязательное описание целевого поведения агента.
+- необязательный идентификатор сессии.
 
-If any required input is missing, ask only for the missing items and stop.
-For new capability work without a defect, treat the missing capability, absent rule, or current limitation as the `problem`.
-Treat `codex session id` as optional.
-If a session id is provided but the session cannot be found from it, say so and ask for a valid session file path or the missing evidence.
+Если обязательных входных данных не хватает, запроси только недостающие данные и остановись.
+Если идентификатор сессии указан, но сессию по нему найти не удалось, сообщи об этом и запроси путь к файлу сессии или недостающие свидетельства.
 
-## Evidence
+## Свидетельства
 
-If a session id is provided, use the session as primary evidence.
-Look under `~/.codex/sessions/` and `~/.cache/JetBrains/IntelliJIdea*/aia/codex/sessions/`.
-Without a session id, use the current files and the user's stated problem and target behavior as evidence.
-Read only material turns and files.
+Если указан идентификатор сессии, используй сессию как основное свидетельство.
+Без идентификатора сессии используй текущие файлы, описанные пользователем проблему и целевое поведение и память.
+Читай только относящиеся к делу сообщения и файлы.
 
-## Common classification rules
+## Обобщение
 
-Treat current files as the source of truth.
-Classify each candidate by operation (`delete` | `shorten` | `merge` | `move` | `split` | `add`) and breadth (`single-file` | `cross-file`).
-Prefer `delete`, `shorten`, `merge`, `move`, or `split` before `add`.
-Do not infer deltas unsupported by the available evidence.
-When there is no defect, describe the delta as a missing capability instead of inventing broken current behavior.
-Before adding, scan the smallest target set for overlap and prefer reuse, merge, move, or replacement.
-If one file seems enough, double-check linked files for contradiction, stale refs, or missing enforcement, but do not expand without concrete need.
-Prefer reusable rules over task-local repetition.
-Prefer an explicit loading order when ordering affects behavior.
-Do not introduce processes unless necessary.
+Обобщай конкретные случаи в переиспользуемые правила, сохраняя исходные ограничения и смысл.
+Не копируй описание проблемы или формулировки примеров в инструкции фреймворка или проекта, если точная формулировка не является контрактным термином или идентификатором, изменение которого существенно меняет смысл.
 
-## Generalization
+## Анализ
 
-Generalize concrete cases into reusable rules while preserving their underlying constraints and intent.
-Do not copy problem statements or example wording into framework or project instructions unless exact wording is a contract term or identifier that materially changes meaning.
+При наличии сессии, проанализируй её на предмет загруженного контекста и выведи его в чат.
 
-## Analysis
+Затем проанализируй доступный контекст, сессию и относящиеся к запросу файлы.
+При наличии наблюдаемой ошибки определи её причину:
 
-Identify symptom or requested capability, likely root cause or missing capability, current context gap, and target behavior.
-Base root cause on the available evidence and current files.
+. Пробел в контексте — желаемое поведение вообще не описано.
+. Пробел в роутинге — желаемое поведение описано, но не было загружено агентом в процессе работы.
+. Конфликт в указаниях — желаемое поведение конфликтует с другим указанием в загруженном контексте.
+. Проблема в формулировке — желаемое поведение описано, загружено и ни с чем не конфликтует, но агент это проигнорировал.
 
-## Options
+Определив проблему, укажи её в чате и обоснуй свой выбор.
+Если наблюдаемой ошибки нет, укажи недостающее поведение без выдумывания причины.
 
-Always propose at least these options:
-- `minimal` — the smallest viable change in the narrowest relevant file set.
-- `systemic` — a coherent fix for the underlying pattern within the current framework model, shared flow, and existing artifact/routing shape.
-- `optimal` — the best practical balance of correctness, maintainability, and size within the current framework constraints.
+## Варианты исправления
 
-Add extras only when materially different.
-When needed, prefer these canonical extras instead of inventing near-synonyms:
-- `architecturally-correct` — the best option from an architecture standpoint, even if it requires substantial framework reshaping, new artifact types, routing changes, or similar deep structural changes.
-- `out-of-system` — a fundamentally different solution outside the current framework boundary, such as solving the problem at another layer, reframing it, or removing the need for the current change.
+Всегда предлагай как минимум следующие варианты исправления:
+- `минимальный` — минимальное работоспособное изменение в самом узком подходящем наборе файлов.
+- `системный` — согласованное исправление исходной закономерности в рамках текущей модели контекста, общего процесса и существующей структуры артефактов и маршрутизации.
+- `оптимальный` — наилучший практически применимый баланс корректности, сопровождаемости и размера в рамках текущих ограничений контекста.
 
-Do not restate the same solution with cosmetic wording changes.
-Each option must include candidate files or areas, classification summary, delta, why it fits its class, benefits, and risks.
+Добавляй другие варианты, только если они существенно отличаются.
+При необходимости используй следующие стандартные варианты вместо близких по смыслу новых названий:
+- `архитектурно-корректный` — лучший с точки зрения архитектуры вариант, даже если он требует значительной перестройки системы контекста, новых типов артефактов, изменений маршрутизации или сопоставимых глубоких изменений структуры.
+- `надсистемный` — принципиально иное решение за пределами выбранного контекста: исправление на другом уровне, переосмысление проблемы или устранение необходимости в текущем изменении.
 
-## Long-file rule
+Не повторяй одно решение с косметически изменённой формулировкой.
+Для каждого варианта укажи возможные файлы или области, краткую классификацию, изменение, причину отнесения к выбранному классу, преимущества и риски.
 
-When an option adds rules to an existing file longer than `50` lines, justify why it belongs there instead of deleting, shortening, merging, extracting a small file, or moving detail to `references/`.
-Treat unexplained growth as a defect.
+## Правило для длинных файлов
 
-## Implementation
+Если вариант добавляет правила в существующий файл длиннее `50` строк, обоснуй, почему их нужно разместить именно там, а не удалить, сократить, объединить, выделить в небольшой файл или перенести детали в `references/`.
+Считай необоснованное увеличение файла дефектом.
 
-Recommend one option and why it wins on correctness, maintainability, and size.
-If the user has not chosen yet, stop and ask.
-Do not edit files before explicit choice.
-After the user chooses an option, implement only that option.
-Keep to the smallest file set consistent with the chosen option.
-Before editing, check whether linked layers, references, sibling metadata, wrappers, or routing docs need synchronized updates.
-Update them only to avoid contradiction, orphan references, or stale behavior.
-If new evidence makes the chosen option invalid, explain it and ask whether to reopen the choice.
-Carry any `>50`-line-file justification into the final report.
-Validate the changed files or relevant checks before finishing.
+## Реализация
 
-## Output
+Рекомендуй один вариант и объясни, почему он лучше по корректности, сопровождаемости и размеру.
+Если пользователь ещё не выбрал вариант, остановись и спроси.
+Не изменяй файлы до явного выбора.
+После выбора реализуй только выбранный вариант.
+Ограничься минимальным набором файлов, соответствующим выбранному варианту.
+Перед правкой проверь, нужно ли синхронизировать связанные слои, ссылки, сопутствующие метаданные, обёртки или документы маршрутизации.
+Обновляй их только для устранения противоречий, осиротевших ссылок или устаревшего поведения.
+Если новые свидетельства делают выбранный вариант неприменимым, объясни это и спроси, нужно ли вернуться к выбору.
+Включи обоснование для файла длиннее `50` строк в итоговый отчёт.
+Перед завершением проверь изменённые файлы или выполни относящиеся к ним проверки.
 
-Before choice, return `Editable roots`, `Case summary`, `Root cause`, `Classification`, `Options`, `Recommendation`, and `Choice needed`.
-`Case summary` must include the available evidence, the current context gap, and the target behavior.
-In `Options`, keep the order `minimal`, `systemic`, `optimal`, then `architecturally-correct`, `out-of-system`, then any other extras.
-After implementation, return `Implemented option`, `Changed files`, `Validation`, `Impact check`, and optional `Long-file justifications` or `Notes`.
-Do not invent missing evidence.
+## Результат
+
+До выбора представь `Корни внесения изменений`, `Саммари кейса`, `Варианты исправления` и `Рекомендованный вариант`.
+В `Саммари кейса` включи доступные свидетельства, загруженный контекст, корневую проблему и целевое поведение.
+В `Варианты исправления` соблюдай порядок: `минимальный`, `системный`, `оптимальный`, затем `архитектурно-корректный`, `надсистемный` и остальные варианты.
+После реализации представь `Реализованный вариант`, `Изменённые файлы`, `Валидация`, `Проверка влияния` и при необходимости `Обоснование длинных файлов` или `Примечания`.
+Не выдумывай недостающие свидетельства.
