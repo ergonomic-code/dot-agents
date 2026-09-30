@@ -18,6 +18,7 @@ def create_repo(tmp_path: Path, baseline: str | None = "BASELINE", index: str | 
     routes = [
         ("markup.md", ["core"], 10, "markup"),
         ("production-code.md", ["core"], 20, "production"),
+        ("tdd.md", ["tdd"], 25, "tdd"),
         ("tests.md", ["core"], 30, "tests"),
         ("ergonomic-testing.md", ["ergonomic-testing"], 35, "ergonomic tests"),
         ("relational-databses.md", ["database"], 40, "database"),
@@ -106,6 +107,27 @@ def test_ergonomic_testing_route_requires_explicit_module(tmp_path):
 
     assert with_module.returncode == 0
     assert "`.agents/ergo/src/context/ergonomic-testing.md`" in with_module.stdout
+
+
+def test_tdd_route_requires_explicit_module(tmp_path):
+    repo = create_repo(tmp_path)
+    config = repo / "ergo-config.yaml"
+    config.write_text(
+        "modules:\n  - core\n  - ergonomic-testing\n", encoding="utf-8"
+    )
+
+    without_module = run_hook(repo, "--framework-config-path", "ergo-config.yaml")
+
+    assert without_module.returncode == 0
+    assert "`.agents/ergo/src/context/tdd.md`" not in without_module.stdout
+
+    config.write_text("modules:\n  - core\n  - tdd\n", encoding="utf-8")
+
+    with_module = run_hook(repo, "--framework-config-path", "ergo-config.yaml")
+
+    assert with_module.returncode == 0
+    assert "`.agents/ergo/src/context/tdd.md`" in with_module.stdout
+    assert "`.agents/ergo/src/context/ergonomic-testing.md`" not in with_module.stdout
 
 
 def test_spring_http_intersection_requires_both_modules(tmp_path):

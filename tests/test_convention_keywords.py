@@ -24,6 +24,7 @@ def test_modular_convention_paths_have_no_legacy_files():
         "core",
         "ergonomic-architecture",
         "ergonomic-testing",
+        "tdd",
         "database",
         "http-api",
         "kotlin",

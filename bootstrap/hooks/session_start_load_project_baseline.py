@@ -13,6 +13,7 @@ KNOWN_MODULES = {
     "core",
     "ergonomic-architecture",
     "ergonomic-testing",
+    "tdd",
     "database",
     "http-api",
     "kotlin",
