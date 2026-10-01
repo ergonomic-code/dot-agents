@@ -1,13 +1,15 @@
-# Work state
+# Состояние работы
 
-## Current objective
+## Текущая цель
 
-## Last completed
+## Последняя завершённая работа
 
-## Current state
+## Текущее состояние
 
-## Next
+## Значимые факты
 
-## Blockers
+## Следующий шаг
 
-## Verification
+## Блокеры
+
+## Проверка

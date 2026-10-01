@@ -1,32 +1,29 @@
 ---
 name: init-task-workdir
-description: Create a new task workdir under `devlog/NNN-slug` with the standard task files from framework templates. Use when the user asks to create, initialize, or bootstrap a task directory, task workdir, or devlog entry and provides, or must be asked for, a three-digit task id and slug.
+description: Создаёт новую рабочую директорию задачи `devlog/<task-id>-<slug>` со стандартными файлами из шаблонов фреймворка. Используй, когда пользователь просит создать или инициализировать директорию задачи либо запись devlog и указывает код задачи и slug или их нужно запросить.
 ---
 
-# Init Task Workdir
+# Инициализация рабочей директории задачи
 
-Read `framework_checkout_root/src/task-workdir/references/task-brief-template.md`.
-Read `framework_checkout_root/src/task-workdir/references/solution-brief-template.md`.
-Read `framework_checkout_root/src/task-workdir/references/todo-template.md`.
-Read `framework_checkout_root/src/task-workdir/references/work-state-template.md`.
+Прочитай `framework_checkout_root/src/task-workdir/references/task-brief-template.md`.
+Прочитай `framework_checkout_root/src/task-workdir/references/solution-brief-template.md`.
+Прочитай `framework_checkout_root/src/task-workdir/references/todo-template.md`.
+Прочитай `framework_checkout_root/src/task-workdir/references/work-state-template.md`.
 
-## Workflow
+## Порядок работы
 
-- Resolve only an explicit user argument in form `NNN-slug`, `NNN slug`, or `devlog/NNN-slug`.
-- Require `<task-id>` as exactly three digits and `<task-slug>` as one user-provided path segment.
-- Do not derive the slug from a title or requirements text.
-- If id or slug is missing, ask only for the missing part and stop.
-- If the slug contains a path separator or escapes `./devlog`, ask for a corrected slug and stop.
-- Use target directory `./devlog/<task-id>-<task-slug>`.
-- If the target directory already exists, stop and report that no files were changed.
-- Create only the target directory, `010-task-brief.md`, `030-solution-brief.md`, `work-state.md`, and `todo.md`.
-- Copy the file templates from the loaded references.
-- Create a flat task directory by default.
-- Keep placeholders unless the user explicitly provided exact values.
-- Do not inspect product code, infer requirements, or create extra files.
-- Verify that the directory and all files exist.
+- Требуй явно указанные `<task-id>` и `<task-slug>`; код может состоять из цифр, букв и "-" и иметь любую длину.
+- При отдельном указании кода и slug используй их целиком; в слитной форме `<task-id>-<task-slug>` или `devlog/<task-id>-<task-slug>` считай кодом часть до первого дефиса.
+- Не выводи slug из названия или текста требований.
+- Если идентификатор или slug отсутствует, запроси только недостающую часть и остановись.
+- Если slug содержит разделитель пути или выводит за пределы `./devlog`, запроси исправленный slug и остановись.
+- Используй целевую директорию `./devlog/<task-id>-<task-slug>`.
+- Если целевая директория уже существует, остановись и сообщи, что файлы не изменены.
+- Создай только целевую директорию, `010-task-brief.md`, `030-solution-brief.md`, `work-state.md` и `todo.md`.
+- Скопируй шаблоны файлов из загруженных справочников.
+- Проверь, что директория и все файлы существуют.
 
-## Output
+## Результат
 
-Report the created directory and files.
-If stopped, report the blocking reason and exact missing or conflicting input.
+Сообщи о созданной директории и файлах.
+При остановке сообщи причину блокировки и конкретные недостающие или противоречивые входные данные.

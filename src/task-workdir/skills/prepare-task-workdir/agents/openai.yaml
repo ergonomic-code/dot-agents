@@ -1,4 +1,4 @@
 interface:
-  display_name: "Prepare Task Workdir"
-  short_description: "Prepare task briefs through guided design"
-  default_prompt: "Use $prepare-task-workdir to prepare a task workdir through requirement clarification, optional code-anchor collection, and solution selection."
+  display_name: "Подготовка директории задачи"
+  short_description: "Готовит брифы задачи в диалоге с пользователем"
+  default_prompt: "Используй $prepare-task-workdir, чтобы подготовить рабочую директорию задачи через уточнение требований, сбор якорей в коде при необходимости и выбор решения."

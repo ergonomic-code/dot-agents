@@ -1,4 +1,4 @@
 interface:
-  display_name: "Select Next Increment"
-  short_description: "Classify and select the next minimal task step"
-  default_prompt: "Use $select-next-increment with a task directory to select its next minimal unfinished step and classify whether it requires TDD."
+  display_name: "Выбор следующего инкремента"
+  short_description: "Классифицирует и выбирает следующий шаг задачи"
+  default_prompt: "Используй $select-next-increment с активной задачей, чтобы выбрать следующий минимальный незавершённый шаг и определить, требует ли он TDD."

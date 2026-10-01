@@ -1,61 +1,62 @@
 ---
 name: select-next-increment
-description: Select and classify the next minimal unfinished task step from a prepared task directory without changing files. Use when a user or coordinating skill needs a read-only selection before test-driven or non-test implementation.
+description: Выбирает и классифицирует следующий минимальный незавершённый шаг в реализации задачи на основе памяти, памяти задачи, истории git и текущего состояния рабочего дерева. Используй, когда пользователю или координирующему скиллу нужен выбор только на чтение перед реализацией через тесты или без новых тестов.
 ---
 
-# Select Next Increment
+# Выбор следующего инкремента
 
-Read `framework_checkout_root/src/task-workdir/context.md`.
-Read `framework_checkout_root/src/conventions/core/test-design.md`.
-Read `framework_checkout_root/src/references/test-case-implementation-order.md`.
+Прочитай `framework_checkout_root/src/task-workdir/context.md`.
+Прочитай `framework_checkout_root/src/conventions/core/test-design.md`.
+Прочитай `framework_checkout_root/src/references/test-case-implementation-order.md`.
 
-## Input
+## Входные данные
 
-Require one task directory.
-Use the directory explicitly supplied by the caller or resolved by the baseline.
-Require `<task-dir>/010-task-brief.md`, `<task-dir>/030-solution-brief.md`, and `<task-dir>/todo.md`.
-If any required file is missing, return `status: blocked` and name it.
+Принимай решения на основе:
 
-## Selection
+- памяти активной задачи.
+- истории git.
+- состоянию рабочей директории.
+- собственной памяти.
 
-Make no file changes.
-Read the briefs, `todo.md`, current task artifacts, relevant implementation, tests, verified behavior, working tree, and relevant Git history.
-Exclude behavior only when the current implementation or verified behavior proves it implemented.
-Exclude a non-test step when its implementation and required verification are both proven complete.
-Treat commits, completed todo items, and task artifacts as supporting evidence.
-Return `status: blocked` when these sources disagree or the next increment remains ambiguous.
-Apply `framework_checkout_root/src/references/test-case-implementation-order.md`.
+Если в сессии нет активной задачи, сообщи о блокере и остановись.
 
-Classify each unfinished candidate before selecting it:
+## Выбор
 
-- `test-eligible behavior` requires an observable behavior or contract from the current explicit user request or `010-task-brief.md`;
-- `non-test step` covers an implementation detail, solution choice, implementation or verification instruction that has no independent observable obligation at the delivered capability boundary;
-- a current explicit user request for a specific implementation-detail test, or an earlier such request unambiguously recorded in `010-task-brief.md`, makes that detail test-eligible;
-- `todo.md`, solution briefs, implementation designs, commits, and existing tests may support or order work but do not independently create a test obligation.
+Не изменяй файлы.
+Прочитай брифы, `todo.md`, текущие артефакты задачи, относящиеся к ней реализацию, тесты, проверенное поведение, рабочее дерево и значимую историю Git и собственную память по работе над задачей.
+Исключай поведение только тогда, когда текущая реализация или проверенное поведение доказывает, что оно реализовано.
+Считай коммиты, завершённые пункты списка подзадач и артефакты задачи вспомогательными свидетельствами.
+Применяй `framework_checkout_root/src/references/test-case-implementation-order.md`.
 
-Do not reinterpret an implementation detail as observable behavior merely because it can be exposed or inspected.
+Перед выбором классифицируй каждого незавершённого кандидата:
 
-## Output
+- `test-eligible behavior` требует наблюдаемого поведения или контракта из текущего явного запроса пользователя либо `010-task-brief.md`;
+- `non-test step` охватывает деталь реализации, выбор решения, инструкцию по реализации или проверке, не имеющие самостоятельного наблюдаемого обязательства на границе предоставляемой возможности;
+- текущий явный запрос пользователя на конкретный тест детали реализации или предыдущий такой запрос, однозначно записанный в `010-task-brief.md`, делает эту деталь допустимой для тестирования;
+- `todo.md`, брифы решения, проекты реализации, коммиты и существующие тесты могут подкреплять работу или определять её порядок, но сами по себе не создают обязательства тестирования.
 
-Always report the evidence used, files changed as `none`, and commands run with their results.
-Return `status: complete` with `outcome: increment-selected` and:
 
-- the requirement or explicit-test basis that makes the increment test-eligible;
-- obligation and observable outcome;
-- external entry point and final effect;
-- minimal data and variant set, and smallest sufficient production behavior;
-- excluded later behavior;
-- expected test level and likely red cause;
-- evidence that its behavior remains unimplemented, the slice spans its external boundary and observable effect, and no contract-valid degenerate happy path requiring less production behavior remains.
+## Результат
 
-Return `status: complete` with `outcome: non-test-step-selected` and:
+Всегда сообщай использованные свидетельства, изменённые файлы как `none` и выполненные команды с результатами.
+Верни `status: complete` с `outcome: increment-selected` и укажи:
 
-- the matching unfinished task item;
-- the intended implementation or verification result;
-- evidence that it is not a test-eligible behavior;
-- the smallest production or task-artifact write set and any mechanical existing-test adaptation required to preserve current behavior checks;
-- verification using existing checks or transient diagnostics;
-- the prohibition on new tests, new or changed coverage of the selected detail, test-case artifacts, and production surfaces created only for verification.
+- требование или явный запрос на тест, делающие инкремент допустимым для тестирования;
+- обязательство и наблюдаемый результат;
+- внешнюю точку входа и итоговый эффект;
+- минимальные наборы данных и вариантов и минимально достаточное поведение кода приложения;
+- исключённое последующее поведение;
+- ожидаемый уровень теста и вероятную причину красного результата;
+- свидетельства того, что поведение ещё не реализовано, шаг охватывает внешнюю границу и наблюдаемый эффект и не осталось вырожденного успешного сценария, допустимого по контракту и требующего меньшего объёма поведения кода приложения.
 
-Return `status: complete` with `outcome: no-unimplemented-work` when neither test-eligible behavior nor non-test work remains.
-Return `status: blocked` with the remaining ambiguity, conflict, or missing evidence.
+Верни `status: complete` с `outcome: non-test-step-selected` и укажи:
+
+- соответствующий незавершённый пункт задачи;
+- ожидаемый результат реализации или проверки;
+- свидетельства того, что это не поведение, допустимое для тестирования;
+- минимальную область записи в код приложения или артефакты задачи и любые механические адаптации существующих тестов, необходимые для сохранения текущих проверок поведения;
+- проверку существующими средствами или временной диагностикой;
+- запрет на новые тесты, новое или изменённое покрытие выбранной детали, артефакты тестовых кейсов и точки доступа в коде приложения, созданные только для проверки.
+
+Верни `status: complete` с `outcome: no-unimplemented-work`, если не осталось ни поведения, допустимого для тестирования, ни работы без новых тестов.
+Верни `status: blocked` с оставшейся неоднозначностью, конфликтом или недостающими свидетельствами.

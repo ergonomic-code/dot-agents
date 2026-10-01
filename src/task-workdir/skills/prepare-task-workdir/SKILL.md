@@ -1,86 +1,85 @@
 ---
 name: prepare-task-workdir
-description: Prepare a new or existing Lightweight SDD task workdir through a guided dialogue that completes the task brief, optionally collects verified code anchors, develops and compares solution options with the user, records the explicitly selected approach in the solution brief, and synchronizes preparation progress in todo.md. Use when the user asks to prepare, elaborate, specify, or design a task before implementation rather than only scaffold its files.
+description: Подготавливает новую или существующую рабочую директорию задачи по легковесному SDD в диалоге с пользователем — дополняет бриф задачи, при необходимости собирает проверенные якори в коде, разрабатывает и сравнивает варианты решения, записывает явно выбранный подход в бриф решения и синхронизирует прогресс подготовки в todo.md. Используй, когда пользователь просит подготовить, проработать, уточнить или спроектировать задачу до реализации, а не только создать её файлы.
 ---
 
-# Prepare Task Workdir
+# Подготовка рабочей директории задачи
 
-Read `framework_checkout_root/src/task-workdir/context.md`.
-Read `framework_checkout_root/src/task-workdir/skills/init-task-workdir/SKILL.md`.
-Read `framework_checkout_root/src/skills/collect-code-anchors/SKILL.md`.
-Read `framework_checkout_root/src/task-workdir/references/task-brief-template.md`.
-Read `framework_checkout_root/src/task-workdir/references/solution-brief-template.md`.
+Прочитай `framework_checkout_root/src/task-workdir/context.md`.
+Прочитай `framework_checkout_root/src/task-workdir/skills/init-task-workdir/SKILL.md`.
+Прочитай `framework_checkout_root/src/skills/collect-code-anchors/SKILL.md`.
+Прочитай `framework_checkout_root/src/task-workdir/references/task-brief-template.md`.
+Прочитай `framework_checkout_root/src/task-workdir/references/solution-brief-template.md`.
 
-## Scope
+## Область работы
 
-- Prepare one new or existing task workdir through requirements clarification, optional current-code research, and solution selection.
-- Limit writes to the resolved task workdir and its preparation artifacts.
-- Do not change product code, tests, project configuration, or unrelated task artifacts.
-- Preserve confirmed content and unrelated user changes.
+- Подготовь одну новую или существующую рабочую директорию задачи, уточняя требования, при необходимости исследуя текущий код и выбирая решение.
+- Ограничь запись определённой рабочей директорией задачи и её артефактами подготовки.
+- Не изменяй код продукта, тесты, конфигурацию проекта или несвязанные артефакты задачи.
+- Сохраняй подтверждённое содержимое и несвязанные изменения пользователя.
 
-## Resolve the task workdir
+## Определение рабочей директории задачи
 
-1. Use an existing task directory explicitly requested by the user or resolved by the baseline.
-2. When an existing task directory resolves, require `010-task-brief.md`, `030-solution-brief.md`, and `todo.md` and read their current content.
-3. When no existing task directory resolves, require an explicit task id and slug and follow `$init-task-workdir` only to validate the target and create the standard files.
-4. If required input is missing or conflicting, ask only for that input and stop.
-5. If a standard file is missing, stop and report its exact path.
+1. Используй существующую директорию задачи, явно указанную пользователем или определённую бейзлайном.
+2. Если определена существующая директория задачи, требуй `010-task-brief.md`, `030-solution-brief.md` и `todo.md` и прочитай их текущее содержимое.
+3. Если существующая директория задачи не определена, требуй явно указанные идентификатор задачи и slug и следуй `$init-task-workdir` только для проверки целевой директории и создания стандартных файлов.
+4. Если обязательные входные данные отсутствуют или противоречивы, запроси только их и остановись.
+5. Если стандартный файл отсутствует, остановись и сообщи его точный путь.
 
-## Interaction contract
+## Контракт взаимодействия
 
-- Work through the stages in order and keep the user informed of the active stage.
-- Reuse information already present in the prompt or task artifacts.
-- Ask the smallest compact set of questions needed to resolve the current decision boundary.
-- Do not infer requirements or decisions whose alternatives would materially change scope, observable behavior, or solution direction.
-- Update an artifact only from explicit user input or verified code evidence within that artifact's responsibility.
-- Stop after asking a blocking question and resume the same stage from the user's answer.
+- Проходи этапы по порядку и сообщай пользователю о текущем этапе.
+- Повторно используй информацию из запроса или артефактов задачи.
+- Задавай минимальный компактный набор вопросов, необходимый для принятия текущего решения.
+- Не выводи самостоятельно требования или решения, альтернативы которых существенно изменили бы область работы, наблюдаемое поведение или направление решения.
+- Обновляй артефакт только на основе явных данных пользователя или проверенных свидетельств из кода в пределах ответственности артефакта.
+- После блокирующего вопроса остановись и возобнови тот же этап по ответу пользователя.
 
-## 1. Complete the task brief
+## 1. Завершение брифа задачи
 
-1. Compare the prompt and current `010-task-brief.md` with the task-brief template.
-2. Identify only missing or ambiguous information that affects the task initiator, current state, task driver, intended outcome, relevant consequences, terms, scope, observable changes, scenarios, boundaries, or errors.
-3. Interview the user until those gaps are resolved.
-4. When requirements interact, restate their conditions, guarantees, and resulting behavior together and require explicit confirmation before drafting.
-5. Treat domain concepts and their configured or example values separately; do not replace one with the other.
-6. Before updating the artifact, check the draft against confirmed evidence and across sections for consistent causality, actors, terms, qualifiers, units, values, and formulas; ask about mismatches instead of guessing.
-7. Update `010-task-brief.md` with confirmed requirements in the user's domain language.
-8. Keep solution and implementation choices out of the task brief.
-9. When a capability may use an API, capture only its actor, observable behavior, and contract-independent constraints.
-10. Present a compact summary and require the user to confirm that the task brief is sufficient before solution design.
+1. Сравни запрос и текущий `010-task-brief.md` с шаблоном брифа задачи.
+2. Выяви только недостающую или неоднозначную информацию, влияющую на инициатора задачи, текущее состояние, причину задачи, ожидаемый результат, значимые последствия, термины, область работы, наблюдаемые изменения, сценарии, границы или ошибки.
+3. Опрашивай пользователя, пока эти пробелы не устранены.
+4. Если требования взаимодействуют, изложи вместе их условия, гарантии и результирующее поведение и требуй явного подтверждения перед составлением черновика.
+5. Перед обновлением артефакта проверь черновик по подтверждённым свидетельствам и согласованность причинно-следственных связей, участников, терминов, уточнений, единиц, значений и формул между разделами; спрашивай о несоответствиях вместо догадок.
+6. Обнови `010-task-brief.md` подтверждёнными требованиями на языке пользователя/предметной области.
+7. Не включай выбор решения и реализации в бриф задачи.
+8. Представь краткое резюме и перед проектированием решения требуй подтверждения пользователя, что бриф задачи достаточен.
 
-If later research or solution discussion exposes a requirement ambiguity or changes scope, return to this stage and update the task brief only after user confirmation.
+Если последующее исследование или обсуждение решения выявляет неоднозначность требований или меняет область работы, вернись к этому этапу и обнови бриф задачи только после подтверждения пользователя.
 
-## 2. Decide whether to collect code anchors
+## 2. Якори в коде
 
-1. State whether code anchors are needed before comparing solutions.
-2. Collect them when the user requests them or when the solution depends on current implementation boundaries, reuse points, integrations, persistence, migration, or existing tests.
-3. Skip them when the task is independent of existing code or the confirmed brief already provides enough evidence for the solution decision.
-4. When anchors are needed, follow `$collect-code-anchors`, using `010-task-brief.md` as the source and `020-code-anchors.md` as the output.
-5. If no concrete code starting point is available, ask the user for one or more and stop as required by `$collect-code-anchors`.
-6. Resume this workflow after the anchor artifact passes its own checks.
-7. Report findings that materially constrain the solution before proposing options.
+1. Собирай якори в коде, если пользователь их запрашивает или решение зависит от границ текущей реализации, точек повторного использования, интеграций, хранения, миграции или существующих тестов.
+2. Пропускай их, если задача независима от существующего кода или подтверждённый бриф уже содержит достаточно свидетельств для выбора решения.
+3. Если якори нужны, следуй `$collect-code-anchors`, используя `010-task-brief.md` как источник и `020-code-anchors.md` как результат.
+4. Если нет конкретной исходной точки в коде, запроси у пользователя одну или несколько и остановись согласно `$collect-code-anchors`.
+5. Возобнови этот процесс после прохождения собственных проверок артефакта якорей.
+6. До предложения вариантов сообщи о находках, существенно ограничивающих решение.
 
-Do not turn observed current behavior into a requirement without user confirmation.
+Не превращай наблюдаемое текущее поведение в требование без подтверждения пользователя.
 
-## 3. Select and record the solution
+## 3. Выбор и запись брифа решения
 
-1. Derive solution options from the confirmed task brief and verified anchors, when present.
-2. Present at least two materially different viable options when the evidence permits them.
-3. If the constraints leave only one viable option, explain why instead of inventing alternatives.
-4. For each option, state the affected surface, core mechanism, benefits, risks, and meaningful tradeoffs.
-5. Recommend one option and explain why it best balances task fit, maintainability, and change size.
-6. Discuss and revise the options with the user until the material decision boundaries are resolved.
-7. Require the user to select the final option explicitly.
-8. Do not design an API contract before the final option is selected.
-9. After selection, design only API details required to make the selected approach coherent; defer the rest until the first implementation case for which that API is the SUT.
-10. Do not record a selected approach while the choice is unresolved.
-11. Write the resulting context, selected approach, non-blocking open questions, and rejected alternatives to `030-solution-brief.md`.
-12. Do not finalize the solution brief while an open question can materially change the selected approach.
+1. До сравнения вариантов спроси пользователя, есть ли дополнительные ограничения решения и желаемые этапы выполнения, и дождись ответа, в том числе об их отсутствии.
+   Повторно используй уже подтверждённые сведения и спрашивай только о том, что ещё не выяснено.
+2. Выводи варианты решения из подтверждённого брифа задачи, ограничений и этапов выполнения и проверенных якорей, если они есть.
+3. Представь как минимум два существенно разных жизнеспособных варианта, если свидетельства это допускают.
+4. Если ограничения оставляют только один жизнеспособный вариант, объясни почему, не выдумывая альтернатив.
+5. Для каждого варианта укажи затрагиваемую область, основной механизм, преимущества, риски и значимые компромиссы.
+6. Рекомендуй один вариант и объясни, почему он лучше всего сочетает соответствие задаче, сопровождаемость и размер изменения.
+7. Обсуждай и пересматривай варианты с пользователем, пока существенные вопросы выбора не решены.
+8. Требуй явного выбора окончательного варианта пользователем.
+9. Не проектируй контракт API до выбора окончательного варианта.
+10. После выбора проектируй только детали API, необходимые для согласованности выбранного подхода; остальные отложи до первого кейса реализации, для которого этот API является SUT.
+11. Не записывай выбранный подход, пока выбор не сделан.
+12. Запиши итоговый контекст решения, выбранный подход, подтверждённые ограничения и этапы выполнения при их наличии, неблокирующие открытые вопросы и отброшенные альтернативы в `030-solution-brief.md`.
+13. Не завершай бриф решения, пока открытый вопрос может существенно изменить выбранный подход.
 
-## Finish
+## Завершение
 
-- Update only preparation items in `todo.md` whose completion is supported by the resulting artifacts and decisions.
-- Mark skipped optional research explicitly as not required instead of implying that it was performed.
-- Preserve implementation tasks and unrelated progress.
-- Verify that the task brief contains the confirmed task, the solution brief names the explicit choice, and referenced anchor artifacts exist.
-- Report the task directory, completed stages, changed artifacts, selected solution, skipped optional artifacts, and remaining open questions.
+- Обнови только пункты подготовки в `todo.md`, завершение которых подтверждено итоговыми артефактами и решениями.
+- Явно отмечай пропущенное необязательное исследование как ненужное, не создавая впечатления, что оно выполнено.
+- Сохраняй задачи реализации и несвязанный прогресс.
+- Проверь, что бриф задачи содержит подтверждённую задачу, бриф решения называет явный выбор, а артефакты якорей, на которые есть ссылки, существуют.
+- Сообщи директорию задачи, завершённые этапы, изменённые артефакты, выбранное решение, пропущенные необязательные артефакты и оставшиеся открытые вопросы.

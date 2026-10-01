@@ -9,21 +9,50 @@ import subprocess
 import sys
 import tempfile
 
+import yaml
+
 
 NO_TASK = "n/a"
-TASK_DIRECTORY = re.compile(r"^(?P<id>[0-9]+)(?:-.+)?$")
+TASK_ID = r"[^\W_]+(?:-[^\W_]+)*"
+TASK_DIRECTORY = re.compile(r"^(?P<id>[^\W_]+)(?:-.+)?$")
 STANDALONE_ID = re.compile(
-    r"(?m)(?:^|\\n)[ \t]*(?P<id>[0-9]+)[ \t]*(?=$|\\n)"
+    rf"(?m)(?:^|\\n)[ \t]*(?P<id>{TASK_ID})[ \t]*(?=$|\\n)"
 )
 SKILL_ID = re.compile(
     r"(?:"
     r"`?\$[A-Za-z0-9][A-Za-z0-9_-]*`?"
     r"|"
     r"`?(?:[^\s`]+/)?skills/[^\s`]+/SKILL\.md`?"
-    r")\s+(?P<id>[0-9]+)\b"
+    rf")\s+(?P<id>{TASK_ID})(?![\w-])"
 )
 
 SemanticResolver = Callable[[str, Mapping[str, Path]], str]
+
+
+def directory_task_id(path: Path) -> str | None:
+    brief = path / "010-task-brief.md"
+    try:
+        lines = brief.read_text(encoding="utf-8").splitlines() if brief.is_file() else []
+        if lines and lines[0] == "---":
+            end = lines.index("---", 1)
+            metadata = yaml.safe_load("\n".join(lines[1:end]))
+            if not isinstance(metadata, dict):
+                return None
+            if "task_id" in metadata:
+                task_id = metadata["task_id"]
+                if not isinstance(task_id, str) or not re.fullmatch(TASK_ID, task_id):
+                    return None
+                if path.name == task_id or (
+                    path.name.startswith(task_id + "-")
+                    and len(path.name) > len(task_id) + 1
+                ):
+                    return task_id
+                return None
+    except (OSError, UnicodeError, ValueError, yaml.YAMLError):
+        return None
+
+    match = TASK_DIRECTORY.fullmatch(path.name)
+    return match.group("id") if match else None
 
 
 def active_tasks(repo_root: Path) -> dict[str, Path]:
@@ -36,10 +65,9 @@ def active_tasks(repo_root: Path) -> dict[str, Path]:
     for path in devlog.iterdir():
         if not path.is_dir() or path.name in {"done", "on-hold"}:
             continue
-        match = TASK_DIRECTORY.fullmatch(path.name)
-        if not match:
+        task_id = directory_task_id(path)
+        if task_id is None:
             continue
-        task_id = match.group("id")
         if task_id in tasks:
             duplicate_ids.add(task_id)
         else:
@@ -57,22 +85,22 @@ def referenced_task_ids(prompt: str, active_ids: set[str]) -> list[str]:
         for match in pattern.finditer(prompt)
         if match.group("id") in active_ids
     }
-    return sorted(references, key=int)
+    return sorted(references)
 
 
 def build_resolver_prompt(prompt: str, candidates: Mapping[str, Path]) -> str:
     sections = [
-        "Select the one candidate task that clearly corresponds to the request.",
-        f"Return exactly one candidate ID or {NO_TASK}.",
-        "Do not use tools.",
+        "Выбери одну задачу из кандидатов, которая однозначно соответствует запросу.",
+        f"Верни ровно один идентификатор кандидата или {NO_TASK}.",
+        "Не используй инструменты.",
         "",
-        "Original prompt:",
+        "Исходный запрос:",
         prompt,
     ]
     for task_id, task_dir in candidates.items():
         brief = task_dir / "010-task-brief.md"
         content = brief.read_text(encoding="utf-8") if brief.is_file() else ""
-        sections.extend(["", f"Candidate {task_id}:", content])
+        sections.extend(["", f"Кандидат {task_id}:", content])
     return "\n".join(sections)
 
 

@@ -8,7 +8,7 @@ import sys
 from resolve_task import resolve_task
 
 
-NO_TASK_CONTEXT = "# Active task context\n\nActive task: none\n"
+NO_TASK_CONTEXT = "# Контекст активной задачи\n\nActive task: none\n"
 TaskResolver = Callable[[str, Path], Path | None]
 
 
@@ -57,19 +57,19 @@ def load_task_context(
     rules_separator = "" if rules.endswith("\n") else "\n"
     brief_separator = "" if brief.endswith("\n") else "\n"
     output = (
-        "# Active task context\n\n"
+        "# Контекст активной задачи\n\n"
         f"Active task: `{task_path}`\n\n"
-        "## Task-workdir rules\n\n"
+        "## Правила task-workdir\n\n"
         f"{rules}{rules_separator}\n"
-        "## Task brief\n\n"
-        f"Source: `{task_path}/010-task-brief.md`\n\n"
+        "## Бриф задачи\n\n"
+        f"Источник: `{task_path}/010-task-brief.md`\n\n"
         f"{brief}{brief_separator}"
     )
     if has_useful_work_state(work_state):
         work_state_separator = "" if work_state.endswith("\n") else "\n"
         output += (
-            "\n## Work state\n\n"
-            f"Source: `{task_path}/work-state.md`\n\n"
+            "\n## Состояние работы\n\n"
+            f"Источник: `{task_path}/work-state.md`\n\n"
             f"{work_state}{work_state_separator}"
         )
     return output

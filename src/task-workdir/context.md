@@ -1,88 +1,79 @@
-# Tasks
+# Задачи
 
-Task-workdir skills receive that directory explicitly, except `$init-task-workdir`, which resolves its new target from an explicit task id and slug.
+Скиллы task-workdir получают директорию задачи явно, кроме `$init-task-workdir`, который определяет новую директорию по явно указанным идентификатору задачи и slug.
 
-## Operation bindings
+## Память задачи
 
-When an active task resolves, supply the applicable skill or operation with concrete content or paths for applicable bindings:
+Память задач хранится в `./devlog` относительно корня репозитория.
 
-- `010-task-brief.md` -> requirements input
-- `030-solution-brief.md` or `030-implementation-design.md` -> design-context input
-- `todo.md` -> progress input or progress output
-- `020-code-anchors.md` -> existing code-anchors input or code-anchors output
-- `020-api-current.*` -> current API-description input or output
-- `030-api-new.*` -> target API-description or API-contract input or output
-- `030-test-cases-new.md` -> existing cases input or designed-case output
+Директории памяти активных задач именуются по шаблону `<task-id>-<slug>`.
+Код задачи может состоять из букв, цифр и "-" и иметь любую длину; ведущие нули в номере значимы.
 
-Resolve only bindings relevant to the requested operation.
-Pass each resolved content value or concrete path directly as a semantic input or caller-authorized output destination.
-Generic skills do not infer these mappings.
+Завершённые и приостановленные задачи находятся в `done` и `on-hold` соответственно.
 
-## Work State
+Если запрос явно не указывает иное, добавляй новую документацию и файлы контекста задачи в её директорию.
 
-When an active task resolves, maintain `<task-dir>/work-state.md` as the current continuation checkpoint.
+### Коды файлов
 
-After required context loading and before task investigation or other substantive work for a request that requires mutations, create it if absent and record a concise, concrete `Current objective`.
-After meaningful mutating work, update it before finishing the request, including after partial work.
+Имя каждого файла в директории задачи должно иметь префикс, определяющий тип артефакта:
 
-Rewrite it to describe the latest useful continuation state rather than appending an execution journal.
-Update or clear `Current objective`, record the resulting current state and last materially completed work, and include the immediate next point, unresolved blockers, relevant verification commands and results, and concrete paths or execution state only when useful for resumption.
+- 010 — постановка задачи.
+  Требования в краткой форме, дополнительные ресурсы с примерами, наборы данных и подобные входные материалы.
+- 020 — описание текущего состояния.
+  Артефакты, описывающие текущее состояние: текущий API, текущие тестовые кейсы, текущую архитектуру и подобный контекст.
+- 030 — описание целевого состояния.
+  Артефакты, описывающие целевое решение: бриф, API, тест кейсы, архитектура, дизайн и т.п.
+- 040 — рабочие файлы реализации.
 
-Do not update it for purely read-only work.
-Do not duplicate requirements or solution/design content, and keep the boundary `todo.md` = planned/completed task work and `work-state.md` = current execution/handoff state.
+### Стандартные файлы задачи
 
-## Task Memory
+Каждая новая задача должна содержать следующие стандартные файлы:
 
-Task memory is stored under `./devlog` relative to the repository root.
+- 010-task-brief.md — постановка задачи.
+- 030-solution-brief.md — бриф общего направления решения — общее направление решения, компромиссы на уровне системы, общие требования к решению и необязательные этапы выполнения.
+- work-state.md — текущая точка возобновления работы.
+- todo.md — список завершённых и оставшихся подзадач.
 
-Active task memory directories use the `<task-num>` or `<task-num>-<slug>` naming pattern.
+В зависимости от типа и характера задачи, её директория также может содержать:
 
-Completed and paused tasks live under `done` and `on-hold` respectively.
+- 020-code-anchors.md — ссылки на относящиеся к задаче файлы исходного кода.
+  Целевые файлы проекта для изменения, файлы с примерами, тесты изменяемого кода, файлы для добавления новых тестов и якори в коде и т.п..
+- 020-api-current.md — текущий REST API в формате `humanistic-api/v1`.
+- 020-test-cases-current.md — текущие относящиеся к задаче тест кейсы.
+- 030-api-new.adoc — целевой REST API.
+- 030-test-cases-new.md — новые тест кейсы.
+- 030-implementation-design.md — подробный дизайн решения, формирующийся инкрементально по мере реализации задачи.
+  Перед созданием или обновлением прочитай `framework_checkout_root/src/task-workdir/references/implementation-design-template.md` и следуй его структуре и правилам.
 
-Unless the prompt explicitly says otherwise, add new task documentation and context files to the task directory.
+### Состояние работы
 
-### File Codes
+При наличии активной задачи в сессии веди `<task-dir>/work-state.md` как текущую точку возобновления работы.
 
-Each file in a task directory should have a filename prefix that identifies its artifact type:
+Для запроса, требующего изменений, после загрузки обязательного контекста и до исследования задачи или другой содержательной работы создай этот файл, если он отсутствует, и кратко запиши конкретную текущую цель.
+После существенных изменений обнови его перед завершением запроса, в том числе при частичном выполнении работы.
 
-- 010 - task statement.
-  Requirements in brief form, additional resources with examples, datasets, and similar inputs.
-- 020 - current-state description.
-  Artifacts that describe the current state, such as current API, current test cases, current architecture, and similar context.
-- 030 - target-state description.
-  Artifacts that describe the target solution, such as the solution brief, target API, new test cases, target architecture, and similar design context.
-  Keep `030-solution-brief.md` at the overall solution direction and system-level tradeoffs.
-  Keep `030-implementation-design.md` as the current accumulated design across later increments.
-  Structure it by implementation level, not by increment, test case, or kind of code.
-  Use only applicable non-empty sections, in this order:
-    - Data model.
-      Include a nested persistence model only when the used framework cannot map the correct domain model cleanly.
-    - REST API.
-      Include nested input and output DTOs when applicable.
-    - Component diagram as a UML object diagram of runtime objects.
-    - Operation call-structure diagram.
-    - TestApi.
-  When a selected case requires new design, update only the applicable sections and do not name or narrate the case or increment.
-  Add only newly required design instead of moving existing task content into the artifact.
-- 040 - implementation working files.
+Переписывай файл, описывая последнее полезное состояние для продолжения, вместо накопления журнала выполнения.
+Обновляй или очищай текущую цель, записывай итоговое текущее состояние и последнюю существенно завершённую работу; добавляй ближайший следующий шаг, нерешённые блокеры, значимые команды проверки и результаты, конкретные пути или состояние выполнения только тогда, когда они полезны для возобновления.
 
-### Standard Task Files
+В разделе «Значимые факты» сохраняй подтверждённые факты, значимые для продолжения задачи или дорогие для повторного получения, с источником и существенными условиями и оговорками; для изменчивых фактов указывай время проверки.
+При переписывании файла сохраняй полезные факты, исправляй опровергнутые и удаляй утратившие актуальность; вместо дублирования факта из другого артефакта задачи оставляй ссылку.
+Если при работе только на чтение получены такие факты, создай или обнови файл перед завершением запроса; иначе не обновляй его.
+Не дублируй требования или содержание решения и проекта; сохраняй границу: `todo.md` — запланированная и завершённая работа по задаче, `work-state.md` — текущее состояние выполнения и передачи работы.
 
-Every new task should have these standard files:
+## Привязки операций
 
-- 010-task-brief.md - task statement.
-- 030-solution-brief.md - brief for the overall solution direction.
-- work-state.md - current continuation checkpoint.
-- todo.md - list of completed and pending subtasks.
+При наличии активной задачи передавай применимому скиллу или операции конкретное содержимое или пути для нужных привязок:
 
-Existing tasks without `work-state.md` remain valid; create it when work state first needs to be persisted.
+- `010-task-brief.md` -> требования задачи
+- `030-solution-brief.md` -> требования к решению
+- `030-implementation-design.md` -> дизайн решения
+- `todo.md` -> статус прогрессе
+- `020-code-anchors.md` -> якори в коде
+- `020-api-current.*` -> описание текущего API
+- `030-api-new.*` -> описание либо контракт целевого API
+- `020-test-cases-current.md` -> существующие релевантные кейсы
+- `030-test-cases-new.md` -> новые спроектированный кейс
 
-Depending on the task type and nature, a task may also have:
-
-- 020-code-anchors.md - links to relevant source-code files.
-  Target source files to change, example files, tests for the changed code, files for adding new tests, and similar code anchors.
-- 020-api-current.md - current REST API in `humanistic-api/v1` format.
-- 020-test-cases-current.md - current relevant test cases.
-- 030-api-new.adoc - target REST API.
-- 030-test-cases-new.md - new test cases.
-- 030-implementation-design.md - current accumulated implementation design structured by the implementation levels above.
+Определяй только привязки, относящиеся к запрошенной операции.
+Передавай каждое найденное содержимое или конкретный путь напрямую как смысловые входные данные или разрешённый вызывающей стороной путь результата.
+Общие скиллы не выводят эти соответствия самостоятельно.

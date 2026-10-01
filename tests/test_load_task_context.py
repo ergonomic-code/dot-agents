@@ -43,10 +43,11 @@ def test_resolved_task_emits_complete_context(tmp_path):
         "request", tmp_path, lambda _prompt, _root: task, context
     )
 
-    assert "Active task: `devlog/123-example`" in output
-    assert "## Task-workdir rules\n\nComplete task-workdir rules\n" in output
-    assert "## Task brief" in output
-    assert "Source: `devlog/123-example/010-task-brief.md`" in output
+    assert "`devlog/123-example`" in output
+    assert "Complete task-workdir rules\n" in output
+    assert "`devlog/123-example/010-task-brief.md`" in output
+    assert sum(line.startswith("## ") for line in output.splitlines()) == 2
+    assert output.index("Complete task-workdir rules") < output.index("Complete task brief")
     assert "Complete task brief\n" in output
 
 
@@ -60,8 +61,8 @@ def test_resolved_task_emits_non_empty_work_state(tmp_path):
         "request", tmp_path, lambda _prompt, _root: task, write_rules(tmp_path)
     )
 
-    assert "## Work state" in output
-    assert "Source: `devlog/123-example/work-state.md`" in output
+    assert sum(line.startswith("## ") for line in output.splitlines()) == 4
+    assert "`devlog/123-example/work-state.md`" in output
     assert "Tests are green." in output
 
 
@@ -80,10 +81,11 @@ def test_missing_or_template_only_work_state_does_not_prevent_loading(tmp_path):
         "request", tmp_path, lambda _prompt, _root: template_task, context
     )
 
-    assert "Active task: `devlog/123-missing-state`" in missing_output
-    assert "Active task: `devlog/124-template-state`" in template_output
-    assert "## Work state" not in missing_output
-    assert "## Work state" not in template_output
+    assert "`devlog/123-missing-state`" in missing_output
+    assert "`devlog/124-template-state`" in template_output
+    for output in (missing_output, template_output):
+        assert sum(line.startswith("## ") for line in output.splitlines()) == 2
+        assert "/work-state.md`" not in output
 
 
 def test_missing_task_brief_emits_no_partial_context(tmp_path):
@@ -148,3 +150,10 @@ def test_missing_task_workdir_rules_emits_no_partial_context(tmp_path):
 
     assert output == loader.NO_TASK_CONTEXT
     assert "brief that must not leak" not in output
+
+
+def test_hyphenated_task_code_loads_context_through_real_resolver(tmp_path):
+    make_task(tmp_path, "EL-363-export", '---\ntask_id: "EL-363"\n---\nExport requirements\n')
+    output = loader.load_task_context("$work EL-363", tmp_path)
+    assert "Active task: `devlog/EL-363-export`" in output
+    assert "Export requirements" in output

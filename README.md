@@ -230,6 +230,6 @@ modules:
 
 | Скилл | Назначение |
 | --- | --- |
-| [`$init-task-workdir`](src/task-workdir/skills/init-task-workdir/SKILL.md) | Создаёт директорию задачи `devlog/NNN-slug` с обязательными рабочими файлами из шаблонов. |
+| [`$init-task-workdir`](src/task-workdir/skills/init-task-workdir/SKILL.md) | Создаёт директорию задачи `devlog/<task-id>-<slug>` с обязательными рабочими файлами из шаблонов. |
 | [`$prepare-task-workdir`](src/task-workdir/skills/prepare-task-workdir/SKILL.md) | В диалоге подготавливает бриф задачи, якори в коде и выбранное направление решения. |
 | [`$select-next-increment`](src/task-workdir/skills/select-next-increment/SKILL.md) | Выбирает следующий минимальный нереализованный инкремент. |

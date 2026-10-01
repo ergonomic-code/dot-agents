@@ -4,77 +4,80 @@ keywords:
   - design
 ---
 
-# Test design
+# Дизайн тестов
 
-## Test kinds
+## Виды тестов
 
-- Classify tests by architectural boundary.
-- Use three primary kinds: `boundary`, `component`, `unit`.
-- `API test` may be used as an alias for `boundary test`.
+- Классифицируй тесты по архитектурной границе.
+- Используй три основных вида: `boundary`, `component`, `unit`.
+- `API test` допустимо использовать как синоним `boundary test`.
 
-## Boundary tests
+## Тесты внешней границы
 
-- A boundary test exercises the system through an external entry point.
-- The entry point may use any transport or trigger mechanism.
-- A boundary test case must stay a thin scenario script.
-- A boundary test case must describe actions and outcomes in business or end-user terms.
-- A boundary test case must not contain low-level request construction, response parsing, or transport boilerplate.
-- A boundary test case must call the entry point through a typed boundary helper such as `*HttpApi`.
-- A boundary test case may verify transport-level details only when they are part of the scenario contract under test.
+- Тест внешней границы проверяет систему через внешнюю точку входа.
+- Точка входа может использовать любой транспорт или механизм запуска.
+- Кейс внешней границы должен оставаться кратким сценарием.
+- Описывай действия и результаты в терминах предметной области или конечного пользователя.
+- Не включай в кейс низкоуровневое построение запросов, разбор ответов и транспортный шаблонный код.
+- Вызывай точку входа через типизированный хелпер внешней границы, например `*HttpApi`.
+- Проверяй транспортные детали только тогда, когда они входят в проверяемый контракт сценария.
 
-## Component tests
+## Компонентные тесты
 
-- A component test calls one application component directly.
-- The `When` action receiver must be the selected component instance or a thin local wrapper that invokes only it.
-- Logged-in clients, `*Api`, `*HttpApi`, controllers, and `*TestApi` are not component-test actions.
-- A component is defined by the project architecture, not by a language framework or DI container.
-- In the Ergonomic Approach, a component is typically a resource, an operation, or a port.
-- A component test may use fixture helpers for setup and observation.
-- A component test should verify the behavior of the selected component, not the surrounding transport.
+- Компонентный тест напрямую вызывает один компонент приложения.
+- Получателем действия `When` должен быть выбранный экземпляр компонента или небольшая локальная обёртка, вызывающая только его.
+- Компонент определяется архитектурой проекта, а не языковым фреймворком или DI-контейнером.
+- В Эргономичном подходе компонентом обычно является ресурс, операция или порт.
+- Компонентный тест может использовать хелперы фикстур для подготовки и наблюдения.
+- Компонентный тест проверяет поведение выбранного компонента, а не окружающий транспорт.
 
-## Unit tests
+## Модульные тесты
 
-- A unit test exercises one I/O-free class, method, or top-level function whose production execution requires no infrastructure and performs no IO.
-- Replacing an application component's dependencies with test doubles does not make that component a unit SUT.
-- Control time, scheduling, randomness, and other nondeterministic inputs explicitly when they affect the selected behavior.
-- Prefer property-based tests for pure computation when the behavior is naturally specified by properties.
-- Use example-based tests when a small set of examples states the behavior more clearly.
+- Модульный тест проверяет один класс, метод или функцию верхнего уровня, чьё выполнение не требует инфраструктуры и не выполняет I/O.
+- Замена в тесте зависимостей компонента приложения тестовыми дублями не делает такой тест модульным.
+- Явно управляй временем, планированием, случайностью и другими недетерминированными входами, если они влияют на целевое поведение.
+- Предпочитай тесты на основе свойств для чистых вычислений, если поведение естественно задаётся свойствами.
+- Используй тесты на основе примеров, если небольшой набор примеров яснее описывает поведение.
+- Для тестов с примерами предпочитай параметризованные тесты с как минимум одним набором параметров.
 
-## Test-layer helpers
+## Тестовые данные
 
-- `*HttpApi` is a typed helper for boundary tests that hides transport details from test cases.
-- `*TestApi` is a typed helper for fixture setup and observation.
-- `*FixturePresets` materialize reused or complex test state.
-- `*Assertions` are stateless reusable assertions over domain values supplied by the caller.
-- `*Assertions` must not fetch state or depend on `*TestApi`, repositories, services, clients, or other stateful helpers.
-- Put reusable single-scope verification that must obtain state in a `verify...` method of that scope's `*TestApi`.
-- If three or more consecutive assertions verify one correspondence between two object groups already available to the test, extract them into a named domain assertion.
-- Helper methods such as `*ForResponse` and `*ForError` may be used inside typed boundary helpers to separate reusable operation-level verification paths from test cases.
+- Если целевое поведение активируется при заданном объёме данных, этот порог настраивается и по умолчанию велик, в тесте уменьши его до минимального возможного значения, сохраняющего целевое поведение.
 
-## Observation
+## Хелперы тестового слоя
 
-- Verify behavior through the same architectural boundary as the test kind.
-- Boundary-test actions still use boundary helpers.
-- Boundary-test observation may use typed `*TestApi` helpers to fetch required data.
-- For observation-only reads, `*TestApi` may call an input adapter directly; if not practical, call operation methods; otherwise call resource methods.
-- Do not verify boundary-test outcomes by reading database state directly.
-- Direct database reads are allowed only to verify async work scheduling when no standard observation API exists.
+- `*HttpApi` — типизированный хелпер тестов внешней границы, скрывающий транспортные детали от кейсов.
+  - Внутри типизированных хелперов внешней границы допустимы методы вида:
+    - `*ForResponse` — для возврата нетипизированного результата вызова.
+      Используется для реализации других методов хелпера, а так же в кейсах на специфику HTTP-контракта.
+    - `*ForError` — для возврата типизированной ошибки.
+    - `*ForOutcome` — для возврата типизированного результата, который может быть как успехом, так и ошибкой.
+      Как правило, используется в недетерминированных тест кейсах.
+- `*TestApi` — типизированный хелпер подготовки фикстур и наблюдения.
+- `*FixturePresets` создают переиспользуемое или сложное тестовое состояние.
+- `*Assertions` — переиспользуемые проверки без состояния над переданными вызывающей стороной значениями предметной области.
+  - `*Assertions` не должны получать состояние или зависеть от `*TestApi`, репозиториев, сервисов, клиентов и других хелперов с состоянием.
+  - Переиспользуемую проверку, которой нужно получить состояние в пределах одной области, размещай в методе `verify...` соответствующего `*TestApi`.
+  - Если три или более последовательных утверждения проверяют одно соответствие между двумя уже доступными тесту группами объектов, выдели их в именованную проверку предметной области.
 
-## Fixture and helper structure
+## Наблюдение
 
-- In class-based tests, extract all fixture code from test case classes into helpers such as `*ObjectMother`, `*FixturePresets`, `*TestApi`, `*HttpApi`, `*Assertions`.
-  Even if the current code contains helpers in the same file.
-- In class-based tests, keep test case class files focused on test cases.
-  Do not keep fixture setup or helper functions in the same file, including top-level helpers.
+- Проверяй поведение через архитектурную границу, соответствующую виду теста.
+- Действия тестов внешней границы выполняй через хелперы этой границы.
+- Для получения данных при наблюдении в тестах внешней границы допустимы типизированные хелперы `*TestApi`.
+- Для чтения исключительно ради наблюдения `*TestApi` может напрямую вызывать входной адаптер; если это непрактично, вызывай методы операций, а иначе — методы ресурсов.
+- Не проверяй результаты тестов внешней границы прямым чтением состояния базы данных.
+  - Прямое чтение базы допустимо только для проверки планирования (scheduling) асинхронной работы, когда стандартного API наблюдения нет.
 
-## Invariants
+## Структура фикстур и хелперов
 
-- Create or change persistent coverage only for behavior or a contract required by the current explicit user request or supplied requirements, or for a specifically requested implementation detail as defined below.
-- During a non-test step, change an existing test or test helper only as mechanically required to keep existing behavior checks compiling and passing; add no new observation or assertion.
-- A progress item, solution or implementation design, implementation step, or verification instruction does not by itself create a test obligation.
-- Do not test an implementation detail unless the user explicitly requests that specific test in the current conversation or an earlier explicit user request for it is unambiguously recorded in supplied requirements.
-- Agent-authored progress, solution, implementation-design, or test-case text is not evidence of that exception.
-- Except for a specifically requested implementation-detail assertion, test cases must verify observable outcomes and stay decoupled from internal implementation details; do not assert calls between internal components, dependency wiring, or control flow.
-- Boundary tests must not bypass the external entry point.
-- Component tests must not drift into external transport concerns.
-- Unit tests must not drift into component or boundary setup.
+- В тестах на основе классов выноси весь код фикстур из классов кейсов в хелперы вроде `*ObjectMother`, `*FixturePresets`, `*TestApi`, `*HttpApi`, `*Assertions`.
+- В тестах на основе классов оставляй в файлах классов кейсов только кейсы.
+  Не размещай в них подготовку фикстур и вспомогательные функции, включая функции верхнего уровня.
+
+## Инварианты
+
+- За исключением явно запрошенной проверки детали реализации, кейсы должны проверять наблюдаемые результаты и не зависеть от внутренних деталей реализации; не проверяй вызовы между внутренними компонентами, связывание зависимостей и поток управления.
+- Тесты внешней границы не должны обходить внешнюю точку входа.
+- Компонентные тесты не должны переходить к проверке внешнего транспорта.
+- Модульные тесты не должны переходить к подготовке компонентов или внешней границы.

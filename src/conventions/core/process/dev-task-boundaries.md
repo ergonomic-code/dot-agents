@@ -3,11 +3,11 @@ keywords:
   - task-boundaries
 ---
 
-# Development task boundaries
+# Границы задач разработки
 
-Each coding slice has two independent axes:
+Каждый шаг работы с кодом имеет две независимые характеристики:
 
-- change mode: development or refactoring;
-- write set: production code or tests.
+- режим изменения: разработка или рефакторинг;
+- область записи: код приложения или тесты.
 
-Before editing, classify the request on both axes and stay within the selected write set.
+Перед редактированием классифицируй запрос по обеим характеристикам и оставайся в выбранной области записи.
