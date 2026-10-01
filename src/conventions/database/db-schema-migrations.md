@@ -4,18 +4,23 @@ keywords:
   - schema-migrations
 ---
 
-# DB schema migrations
+# Миграции схемы БД
 
-## Migration file choice
+## Выбор файла миграции
 
-- Before adding a new migration, inspect the latest adjacent migrations for the same schema object or requested change.
-- If an existing migration belongs to the current unfinished task and is not yet part of any deployed or externally applied schema history, amend that migration instead of adding a later migration.
-- If deployment or external application status is unclear, ask before creating or amending the migration.
+- Перед добавлением миграции изучи последние соседние миграции для того же объекта схемы или запрошенного изменения.
+- Если существующая миграция относится к текущей незавершённой задаче и ещё не задеплоена на стейдже или в проде, измени её вместо добавления следующей миграции.
+- Если статус развёртывания или применения вне разработки неизвестен, уточни его перед созданием или изменением миграции.
 
-## Required columns
+## Идемпотентность
 
-- When adding a required column to an existing table, add it nullable, backfill all existing rows from current persisted data or explicit domain meaning, then add the `NOT NULL` constraint.
-- Do not use a database `DEFAULT` to populate historical rows unless the default is also the intended permanent insert behavior.
-- If future inserts need a database-level default, add or keep the `DEFAULT` only when it is part of the storage contract.
-- After adding a production migration, target the migrated schema in production persistence code; add runtime old-schema branches only for explicit mixed-version rollout compatibility.
-- If a required value cannot be derived safely for old rows, stop and ask for the migration rule instead of guessing.
+- Делай миграции идемпотентными, когда это возможно без нарушения требуемого результата.
+- Используй поддерживаемый БД способ: повторное применение не должно повторять изменения данных или скрывать несовместимое состояние схемы.
+
+## Обязательные колонки
+
+- При добавлении обязательной колонки в существующую таблицу сначала разреши `NULL`, заполни все существующие строки на основе сохранённых данных или явного доменного смысла, затем добавь ограничение `NOT NULL`.
+- Не используй `DEFAULT` в БД для заполнения исторических строк, если это значение не должно постоянно применяться при вставке новых строк.
+- Если будущим вставкам нужен `DEFAULT` на уровне БД, добавляй или сохраняй его только как часть контракта хранения.
+- Добавляй ветки для старой схемы во время выполнения только для явно требуемой совместимости при развёртывании смешанных версий.
+- Если обязательное значение нельзя безопасно вывести для старых строк, остановись и запроси правило миграции вместо догадок.
