@@ -5,16 +5,17 @@ keywords:
   - checklist
 ---
 
-# HTTP API test checklist
+# Чеклист тестов HTTP API
 
-- Do all changed HTTP boundary tests avoid direct calls to a transport client?
-- Does each changed `*HttpApi` operation keep one canonical `*ForResponse` request builder that typed overloads delegate to?
-- Do expected negative cases use `*ForError` instead of ad-hoc status-return helpers?
-- Do public typed `*HttpApi` methods mirror the HTTP operation contract by parameters and result type?
-- Do current-client parameters stay required in public typed `*HttpApi` methods without default argument values?
-- Are compatibility omissions isolated in explicit legacy, raw, or relaxed paths with separate compatibility tests?
-- Did each helper signature change touch only paths required by the selected case?
-- For each changed successful HTTP boundary test, when a response schema exists, does its typed `*HttpApi` success method validate that schema before decoding the body?
-- If the case changes response shape, would the test fail on the old response shape?
-- Do status checks on the project error response body type use semantic project assertions instead of raw status field comparisons?
-- Were extra test-layer `*Request` or `*Response` DTOs avoided when the HTTP transport contract already defines the shape?
+- Изменённые тесты HTTP-границы не вызывают транспортный клиент напрямую.
+- Русскоязычные отображаемые имена изменённых групп тестов HTTP-границы начинаются с `Метод API` и содержат SUT-ссылку `<HTTP method> <path>` в скобках по правилам именования `Feature`.
+- Каждая изменённая операция `*HttpApi` сохраняет один канонический построитель запроса `*ForResponse`, которому делегируют типизированные перегрузки.
+- Ожидаемые негативные кейсы используют `*ForError`, а не специальные хелперы возврата статуса.
+- Публичные типизированные методы `*HttpApi` отражают контракт HTTP-операции по параметрам и типу результата.
+- Параметры, обязательные для текущих клиентов, остаются обязательными в публичных типизированных методах `*HttpApi` без значений аргументов по умолчанию.
+- Пропуски параметров для совместимости изолированы в явных путях legacy, raw или relaxed и покрыты отдельными тестами совместимости.
+- Каждое изменение сигнатуры хелпера затрагивает только пути, необходимые выбранному кейсу.
+- Для каждого изменённого успешного теста HTTP-границы типизированный метод успеха `*HttpApi` проверяет существующую схему ответа до декодирования тела.
+- При изменении структуры ответа кейс падает на прежней структуре.
+- Проверки статуса в проектном типе тела ошибочного ответа используют семантические проверки проекта, а не прямое сравнение поля статуса.
+- Дополнительные DTO тестового слоя `*Request` или `*Response` отсутствуют, если форму уже определяет транспортный HTTP-контракт.
