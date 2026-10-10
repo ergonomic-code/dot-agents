@@ -101,12 +101,12 @@ def extract_blocks(text: str) -> tuple[list[SourceBlock], list[str]]:
                 content.append(lines[index])
                 index += 1
             if index == len(lines):
-                errors.append(f"line {start}: unclosed Markdown text fence")
+                errors.append(f"строка {start}: незакрытое ограждение блока text в Markdown")
                 break
             blocks.append(SourceBlock(start + 1, content))
         elif line == ASCIIDOC_MARKER:
             if index + 1 >= len(lines) or lines[index + 1].strip() != ASCIIDOC_FENCE:
-                errors.append(f"line {index + 1}: [source,text] must be followed by ----")
+                errors.append(f"строка {index + 1}: после [source,text] должен следовать ----")
             else:
                 start = index + 2
                 index += 2
@@ -115,7 +115,7 @@ def extract_blocks(text: str) -> tuple[list[SourceBlock], list[str]]:
                     content.append(lines[index])
                     index += 1
                 if index == len(lines):
-                    errors.append(f"line {start}: unclosed AsciiDoc text block")
+                    errors.append(f"строка {start}: незакрытый блок text в AsciiDoc")
                     break
                 blocks.append(SourceBlock(start + 1, content))
         index += 1
@@ -136,16 +136,16 @@ def _validate_rules(lines: list[tuple[int, str]], errors: list[str]) -> None:
         if line != "Rules:":
             continue
         if index + 1 == len(lines) or not lines[index + 1][1].startswith("- "):
-            errors.append(f"line {line_number}: Rules must contain at least one '- ' item")
+            errors.append(f"строка {line_number}: Rules должен содержать хотя бы один пункт '- '")
         for child_line, child in lines[index + 1 :]:
             if not child.startswith("- "):
-                errors.append(f"line {child_line}: only '- ' items are allowed after Rules:")
+                errors.append(f"строка {child_line}: после Rules: разрешены только пункты '- '")
 
 
 def validate_block(block: SourceBlock) -> list[str]:
     lines = _content_lines(block)
     if not lines:
-        return [f"line {block.line}: empty API source block"]
+        return [f"строка {block.line}: пустой блок исходного текста API"]
     first_number, first = lines[0]
     errors: list[str] = []
     if METHOD_RE.fullmatch(first):
@@ -157,7 +157,7 @@ def validate_block(block: SourceBlock) -> list[str]:
             _validate_enum(lines, errors)
     else:
         errors.append(
-            f"line {first_number}: source block must start with Method, Model, or Enum"
+            f"строка {first_number}: блок исходного текста должен начинаться с Method, Model или Enum"
         )
     _validate_rules(lines, errors)
     return errors
@@ -167,9 +167,9 @@ def _validate_endpoint(lines: list[tuple[int, str]], errors: list[str]) -> None:
     request_count = sum(line == ">" for _, line in lines)
     response_count = sum(line == "<" for _, line in lines)
     if request_count > 1:
-        errors.append(f"line {lines[0][0]}: endpoint has more than one request marker")
+        errors.append(f"строка {lines[0][0]}: эндпоинт содержит более одного маркера запроса")
     if response_count != 1:
-        errors.append(f"line {lines[0][0]}: endpoint must have exactly one response marker")
+        errors.append(f"строка {lines[0][0]}: эндпоинт должен содержать ровно один маркер ответа")
     response_seen = False
     section: str | None = None
     status_seen = False
@@ -196,7 +196,7 @@ def _validate_endpoint(lines: list[tuple[int, str]], errors: list[str]) -> None:
         if not response_seen and section is None:
             match = QUERY_RE.fullmatch(line)
             if match is None or not _is_type(match.group(1)):
-                errors.append(f"line {line_number}: invalid query parameter")
+                errors.append(f"строка {line_number}: некорректный параметр запроса")
         elif response_seen and STATUS_RE.fullmatch(line):
             status_seen = True
             section = "response-body"
@@ -205,57 +205,57 @@ def _validate_endpoint(lines: list[tuple[int, str]], errors: list[str]) -> None:
             value = match.group(1) if match else ""
             quoted_header = section == "headers" and len(value) >= 2 and value[0] == value[-1] == '"'
             if match is None or not (quoted_header or _is_type(value)):
-                errors.append(f"line {line_number}: invalid header or multipart part")
+                errors.append(f"строка {line_number}: некорректный заголовок или часть составного тела")
         elif section in {"body", "response-body"}:
             if not _is_body(line):
-                errors.append(f"line {line_number}: invalid body type")
+                errors.append(f"строка {line_number}: некорректный тип тела")
         else:
-            errors.append(f"line {line_number}: unexpected endpoint line: {line}")
+            errors.append(f"строка {line_number}: неожиданная строка эндпоинта: {line}")
     if response_seen and not status_seen:
-        errors.append(f"line {lines[0][0]}: response must contain at least one status")
+        errors.append(f"строка {lines[0][0]}: ответ должен содержать хотя бы один статус")
 
 
 def _validate_model(lines: list[tuple[int, str]], errors: list[str]) -> None:
     body = [(number, line) for number, line in lines[1:] if line != "Rules:" and not line.startswith("- ")]
     if not body:
-        errors.append(f"line {lines[0][0]}: model has no body")
+        errors.append(f"строка {lines[0][0]}: у модели отсутствует тело")
         return
     if body[0][1] == "{":
         if body[-1][1] != "}":
-            errors.append(f"line {body[-1][0]}: model object must end with }}")
+            errors.append(f"строка {body[-1][0]}: объект модели должен заканчиваться на }}")
         for line_number, line in body[1:-1]:
             if line == "<...>":
                 continue
             match = FIELD_RE.fullmatch(line)
             if match is None or not _is_type(match.group(1)):
-                errors.append(f"line {line_number}: invalid model field")
+                errors.append(f"строка {line_number}: некорректное поле модели")
     else:
         for line_number, line in body:
             if not VARIANT_RE.fullmatch(line):
-                errors.append(f"line {line_number}: invalid sum-type variant")
+                errors.append(f"строка {line_number}: некорректный вариант типа-суммы")
 
 
 def _validate_enum(lines: list[tuple[int, str]], errors: list[str]) -> None:
     items = [(number, line) for number, line in lines[1:] if line != "Rules:" and not line.startswith("- ")]
     if not items:
-        errors.append(f"line {lines[0][0]}: enum has no items")
+        errors.append(f"строка {lines[0][0]}: перечисление не содержит элементов")
     for line_number, line in items:
         if not ENUM_ITEM_RE.fullmatch(line):
-            errors.append(f"line {line_number}: invalid enum item")
+            errors.append(f"строка {line_number}: некорректный элемент перечисления")
 
 
 def validate_document(text: str) -> list[str]:
     blocks, errors = extract_blocks(text)
     if not blocks and not errors:
-        errors.append("document contains no text source blocks")
+        errors.append("документ не содержит блоков исходного текста text")
     for block in blocks:
         errors.extend(validate_block(block))
     return errors
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Validate humanistic-api/v1 source blocks.")
-    parser.add_argument("artifact", type=Path, help="Markdown or AsciiDoc artifact path")
+    parser = argparse.ArgumentParser(description="Проверка блоков исходного текста humanistic-api/v1.")
+    parser.add_argument("artifact", type=Path, help="Путь к артефакту Markdown или AsciiDoc")
     return parser.parse_args()
 
 
@@ -263,11 +263,11 @@ def main() -> int:
     args = parse_args()
     errors = validate_document(args.artifact.read_text(encoding="utf-8"))
     if errors:
-        print("Validation failed.", file=sys.stderr)
+        print("Валидация не пройдена.", file=sys.stderr)
         for error in errors:
-            print(f"ERROR: {error}", file=sys.stderr)
+            print(f"ОШИБКА: {error}", file=sys.stderr)
         return 1
-    print("Validation passed.")
+    print("Валидация пройдена.")
     return 0
 
 

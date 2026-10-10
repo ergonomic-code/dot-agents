@@ -53,5 +53,5 @@ newline        = "\n" ;
 digit          = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
 name-start     = letter | "_" ;
 name-char      = name-start | digit | "-" | "." ;
-outside        = ? any text outside recognized source blocks ? ;
-text           = ? non-empty text not including a newline ? ;
+outside        = ? любой текст вне распознанных блоков исходного текста ? ;
+text           = ? непустой текст без перевода строки ? ;

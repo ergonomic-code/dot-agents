@@ -1,4 +1,4 @@
 interface:
-  display_name: "Describe REST API"
-  short_description: "Write compact human-readable REST API specs"
-  default_prompt: "Use $describe-rest-api to turn code or OpenAPI into compact REST API docs."
+  display_name: "Описание REST API"
+  short_description: "Создаёт компактные человекочитаемые спецификации REST API"
+  default_prompt: "Используй $describe-rest-api для создания компактной документации REST API по коду или OpenAPI."

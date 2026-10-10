@@ -1,114 +1,114 @@
 ---
 name: describe-rest-api
-description: Write and validate a humanistic-api/v1 description of a JSON-over-HTTP contract from code, OpenAPI, curl, natural-language requirements, JSON Schema, or mixed inputs.
+description: Создаёт и валидирует описание контракта JSON поверх HTTP в формате humanistic-api/v1 по коду, OpenAPI, curl, требованиям на естественном языке, JSON Schema или смешанным входным данным.
 ---
 
-# Describing REST API
+# Описание REST API
 
-Read `../../artifacts/humanistic-api-v1/ARTIFACT.md` before writing the artifact.
+Перед созданием артефакта прочитай `../../artifacts/humanistic-api-v1/ARTIFACT.md`.
 
-## Inputs and destination
+## Входные данные и место сохранения
 
-- Accept code, OpenAPI, curl, requirements, JSON Schema, or mixed contract evidence.
-- Accept an explicit output path and optional existing API artifact.
-- If no output path is supplied, ask for one before repository-backed generation or return the artifact inline for standalone generation.
-- Use Markdown for a current-state description and AsciiDoc for a target change or before/after description unless the caller selects a format.
+- Принимай код, OpenAPI, curl, требования, JSON Schema или смешанные свидетельства контракта.
+- Принимай явный путь результата и необязательный существующий артефакт API.
+- Если путь результата не указан, запроси его перед созданием артефакта на основе репозитория или верни артефакт прямо в ответе при создании вне репозитория.
+- Используй Markdown для описания текущего состояния и AsciiDoc для описания целевого изменения или «было/стало», если вызывающая сторона не выбрала формат.
 
-When writing to a supplied output path, create its parent directory if missing.
-Write the final `humanistic-api/v1` artifact directly.
-Do not create an intermediate representation or a parallel machine-readable artifact.
+При записи по указанному пути создай родительский каталог, если он отсутствует.
+Создавай итоговый артефакт `humanistic-api/v1` напрямую.
+Не создавай промежуточное представление или параллельный машиночитаемый артефакт.
 
-## Hard Gate
+## Обязательная проверка
 
-Validate the final artifact by running:
+Проверь итоговый артефакт командой:
 
 ```text
 python framework_checkout_root/src/artifacts/humanistic-api-v1/scripts/validate_humanistic_api.py <artifact-path>
 ```
 
-If validation fails, fix the artifact and rerun validation until it passes.
+Если валидация не пройдена, исправляй артефакт и повторяй проверку до успешного результата.
 
-## Workflow
+## Порядок работы
 
-1. Resolve the output format and use the caller-supplied target path when writing.
-2. Derive the externally observable contract from the available evidence.
-3. For a change, derive before and after independently and compute only the observable difference.
-4. Write the final artifact directly in `humanistic-api/v1`.
-5. Validate the final artifact.
+1. Определи формат результата и при записи используй целевой путь, указанный вызывающей стороной.
+2. Выведи внешне наблюдаемый контракт из доступных свидетельств.
+3. Для изменения независимо выведи состояния «было» и «стало» и вычисли только наблюдаемую разницу.
+4. Создай итоговый артефакт напрямую в формате `humanistic-api/v1`.
+5. Проверь итоговый артефакт.
 
-## Contract Scope
+## Область контракта
 
-Describe the final externally observable HTTP contract.
-For commit ranges or commit lists, describe the net change from before the earliest relevant change to after the latest relevant change.
-Treat commits as evidence only.
-Do not narrate commit history or emit per-commit summaries unless requested.
+Описывай итоговый внешне наблюдаемый HTTP-контракт.
+Для диапазонов или списков коммитов описывай совокупное изменение от состояния до самого раннего значимого изменения до состояния после самого позднего значимого изменения.
+Рассматривай коммиты только как свидетельства.
+Не пересказывай историю коммитов и не создавай сводки по отдельным коммитам без запроса.
 
-Accept code, OpenAPI, curl, natural-language requirements, JSON Schema, or mixed inputs.
-Resolve conflicts by priority: user instruction, code, JSON Schema, OpenAPI, curl, natural language.
-Use code names for models, enums, and named sum types when available.
-Do not invent behavior, constraints, statuses, or schemas.
+Принимай код, OpenAPI, curl, требования на естественном языке, JSON Schema или смешанные входные данные.
+Разрешай конфликты по приоритету: инструкция пользователя, код, JSON Schema, OpenAPI, curl, естественный язык.
+Используй имена из кода для моделей, перечислений и именованных типов-сумм, если они доступны.
+Не выдумывай поведение, ограничения, статусы или схемы.
 
-Extract only externally visible facts.
-Omit internal refactors, code moves, DTO renames without wire change, annotation churn without wire effect, persistence or service changes without wire effect, unchanged items, and duplicates.
-Collapse multiple commits into one final observable change.
-Collapse rename plus reshape into one API evolution when it is the same endpoint or model role.
-If a commit does not affect the wire contract, omit it.
+Извлекай только внешне видимые факты.
+Опускай внутренние рефакторинги, перемещения кода, переименования DTO без изменения передаваемых данных, изменения аннотаций без влияния на передаваемые данные, изменения хранения или сервисов без такого влияния, неизменённые элементы и дубликаты.
+Объединяй несколько коммитов в одно итоговое наблюдаемое изменение.
+Объединяй переименование и изменение структуры в одно изменение API, если роль эндпоинта или модели остаётся той же.
+Если коммит не влияет на контракт передаваемых данных, опускай его.
 
-Use the narrowest externally valid type.
-Use enums for closed value sets.
-Use `Enum<A|B|C>` for one-off local enums.
-Use named enums only when reused or source-named.
-Default values and examples do not weaken enum constraints.
-For multipart bodies, use the artifact's multipart form.
-Do not move expressible constraints into comments.
+Используй наиболее узкий тип, корректный с точки зрения внешнего контракта.
+Используй перечисления для замкнутых наборов значений.
+Используй `Enum<A|B|C>` для локальных перечислений, используемых один раз.
+Используй именованные перечисления только при переиспользовании или наличии имени в источнике.
+Значения по умолчанию и примеры не ослабляют ограничения перечисления.
+Для составных тел запроса используй форму multipart, заданную форматом артефакта.
+Не переноси в комментарии ограничения, выразимые средствами формата.
 
-Ignore wiring, framework boilerplate, internals, and non-serialized models.
-Mark the smallest changed fragment.
-Do not mark unchanged context.
+Игнорируй связывание компонентов, шаблонный код фреймворка, внутреннее устройство и несериализуемые модели.
+Помечай наименьший изменённый фрагмент.
+Не помечай неизменённый контекст.
 
-## Rules And Comments
+## Правила и комментарии
 
-Encode client-observable validation and runtime behavior as explicit rules on the smallest reusable owner.
-Use endpoint rules for request acceptance or rejection, response status behavior, endpoint-scoped business checks, and request-body semantics tied to one endpoint slot.
-Use model rules for reusable or cross-field constraints of a named request or response shape.
-Use sum-type or enum rules only when the behavior belongs to that sum type or enum.
-Do not put rules on parameters, fields, or type expressions.
-Make each rule atomic, declarative, and client-observable.
+Описывай наблюдаемые клиентом валидацию и поведение во время выполнения явными правилами у наименьшего переиспользуемого владельца.
+Используй правила эндпоинта для принятия или отклонения запроса, поведения статусов ответа, бизнес-проверок в рамках эндпоинта и семантики тела запроса, привязанной к одной позиции эндпоинта.
+Используй правила модели для переиспользуемых ограничений или ограничений между полями именованной структуры запроса или ответа.
+Используй правила типа-суммы или перечисления только тогда, когда поведение принадлежит этому типу-сумме или перечислению.
+Не размещай правила на параметрах, полях или выражениях типов.
+Каждое правило делай атомарным, декларативным и наблюдаемым клиентом.
 
-Use comments only for local, checkable semantics or for a short pointer to an explicit rule on the same owner.
-Do not use comments as the only carrier of validation, business, cross-field, reusable, or endpoint-wide behavior.
+Используй комментарии только для локальной проверяемой семантики или короткой ссылки на явное правило того же владельца.
+Не используй комментарии как единственный носитель валидации, бизнес-поведения, поведения между полями, переиспользуемого поведения или поведения всего эндпоинта.
 
-## Changes
+## Изменения
 
-Build changes in this order:
-1. derive the before-state wire contract;
-2. derive the after-state wire contract;
-3. compute the observable difference;
-4. write only the difference and the context needed to understand it.
+Формируй изменения в следующем порядке:
+1. выведи контракт передаваемых данных для состояния «было»;
+2. выведи контракт передаваемых данных для состояния «стало»;
+3. вычисли наблюдаемую разницу;
+4. опиши только разницу и контекст, необходимый для её понимания.
 
-When one endpoint slot before and after points to DTOs serving the same API role, treat them as one changed model even if the class name or fields changed.
-Endpoint slot means the request or one response status of the same method and normalized path.
-Derive both sides from side-local evidence.
-Do not copy after-only fields into the before side or keep before-only fields in the after side.
-If evidence is ambiguous, omit the field.
-Rename plus reshape preserves endpoint-role identity, not field membership.
+Когда одна и та же позиция эндпоинта до и после изменения ссылается на DTO, выполняющие одинаковую роль в API, считай их одной изменённой моделью, даже если имя класса или поля изменились.
+Позиция эндпоинта — это запрос или один статус ответа для одного и того же метода и нормализованного пути.
+Выводи каждую сторону из свидетельств соответствующего состояния.
+Не копируй поля, присутствующие только в состоянии «стало», в состояние «было» и не сохраняй поля, присутствующие только в состоянии «было», в состоянии «стало».
+Если свидетельства неоднозначны, опускай поле.
+Переименование вместе с изменением структуры сохраняет идентичность роли в эндпоинте, а не состав полей.
 
-For a before/after description, use AsciiDoc by default and follow the artifact's document-level paired-table convention.
+Для описания «было/стало» по умолчанию используй AsciiDoc и соблюдай соглашение формата артефакта о парной таблице уровня документа.
 
-## Before Finishing
+## Перед завершением
 
-Verify:
-- every endpoint has a method and path;
-- every referenced model, enum, and named sum type is defined or intentionally external;
-- nullability is explicit where relevant;
-- enums and sum types are normalized and deduplicated;
-- unchanged details are omitted unless needed as context;
-- every observable reusable rule belongs to an endpoint, model, sum type, or enum;
-- comments either point to such a rule or state a local checkable fact;
-- the final artifact passes `validate_humanistic_api.py`.
+Проверь:
+- у каждого эндпоинта есть метод и путь;
+- каждая модель, перечисление и именованный тип-сумма, на которые есть ссылки, определены или намеренно являются внешними;
+- допустимость `null` явно указана там, где это значимо;
+- перечисления и типы-суммы нормализованы и не содержат дубликатов;
+- неизменённые детали опущены, если они не нужны для контекста;
+- каждое наблюдаемое переиспользуемое правило принадлежит эндпоинту, модели, типу-сумме или перечислению;
+- комментарии либо ссылаются на такое правило, либо описывают локальный проверяемый факт;
+- итоговый артефакт проходит проверку `validate_humanistic_api.py`.
 
-## Output
+## Результат
 
-Output only the requested API description or files.
-Do not add unchanged details, commit-by-commit explanations, or explanations outside the target artifact unless requested.
-Write all human-readable parts in the configured `artifact_language`.
+Выдавай только запрошенное описание API или файлы.
+Не добавляй неизменённые детали, пояснения по отдельным коммитам или пояснения вне целевого артефакта без запроса.
+Пиши все человекочитаемые части на языке, заданном в `artifact_language`.

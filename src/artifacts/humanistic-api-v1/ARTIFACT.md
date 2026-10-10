@@ -1,42 +1,42 @@
 # Humanistic API
 
-Use `humanistic-api/v1` to describe JSON-over-HTTP contracts in a compact human-readable form.
-Write current-state descriptions in Markdown.
-Write before/after descriptions in AsciiDoc by default.
-The source blocks are the contract; surrounding headings, change markers, tables, and prose are presentation and are not validated.
+Используй `humanistic-api/v1` для компактного человекочитаемого описания контрактов JSON поверх HTTP.
+Описывай текущее состояние в Markdown.
+Описания «было/стало» по умолчанию оформляй в AsciiDoc.
+Контракт задаётся блоками исходного текста; окружающие заголовки, маркеры изменений, таблицы и пояснения относятся к оформлению и не валидируются.
 
-## Content
+## Содержание
 
-Describe only externally observable facts:
-- endpoints with typed path and query parameters;
-- relevant request and response headers;
-- request bodies and response bodies by status;
-- shared models, enums, and named sum types;
-- validation, business rules, compatibility notes, and read/write asymmetry.
+Описывай только внешне наблюдаемые факты:
+- эндпоинты с типизированными параметрами пути и запроса;
+- значимые заголовки запросов и ответов;
+- тела запросов и ответов по статусам;
+- общие модели, перечисления и именованные типы-суммы;
+- валидацию, бизнес-правила, примечания о совместимости и асимметрию чтения и записи.
 
-Do not invent behavior, constraints, statuses, or schemas.
-Prefer the narrowest externally valid type.
-Use shared definitions instead of repeating large structures.
-Use one semantic statement per line.
-Write human-readable text in the configured `artifact_language`.
+Не выдумывай поведение, ограничения, статусы или схемы.
+Предпочитай наиболее узкий тип, корректный с точки зрения внешнего контракта.
+Используй общие определения вместо повторения больших структур.
+Пиши одно смысловое утверждение на строку.
+Пиши человекочитаемый текст на языке, заданном в `artifact_language`.
 
-## Source Blocks
+## Блоки исходного текста
 
-Put every endpoint, model, enum, or named sum type in its own `text` source block.
-In Markdown, use ```` ```text ```` fences.
-In AsciiDoc, use `[source,text]` followed by a `----` delimited block.
-See `references/humanistic-api.ebnf` for the source-block grammar.
+Помещай каждый эндпоинт, модель, перечисление или именованный тип-сумму в отдельный блок исходного текста `text`.
+В Markdown используй ограждения ```` ```text ````.
+В AsciiDoc используй `[source,text]`, за которым следует блок с разделителями `----`.
+Грамматика блоков исходного текста описана в `references/humanistic-api.ebnf`.
 
-### Endpoint
+### Эндпоинт
 
-Start with `Method <HTTP_METHOD> <PATH_TEMPLATE>`.
-Keep query parameters on separate indented lines after a trailing `?`.
-Use `>` for the request and `<` for responses.
-Do not repeat path or query parameters in the request block.
-Add `Headers` and `Body` only when present.
-Repeat the response status for every relevant response.
-Separate `Headers` and `Body` with an empty line when both are present.
-Compress standard non-endpoint-specific errors as `400, 401, 403, 500 // standard error body`.
+Начинай с `Method <HTTP_METHOD> <PATH_TEMPLATE>`.
+Размещай параметры запроса на отдельных строках с отступом после завершающего `?`.
+Используй `>` для запроса и `<` для ответов.
+Не повторяй параметры пути или запроса в блоке запроса.
+Добавляй `Headers` и `Body` только при их наличии.
+Повторяй статус ответа для каждого значимого ответа.
+Разделяй `Headers` и `Body` пустой строкой, если присутствуют оба.
+Сокращай стандартные ошибки, не специфичные для эндпоинта, до `400, 401, 403, 500 // стандартное тело ошибки`.
 
 ```text
 Method POST /users/{userId=String:UUID}?
@@ -57,10 +57,10 @@ Method POST /users/{userId=String:UUID}?
     none
 
 Rules:
-  - The request is rejected when the user does not exist.
+  - Запрос отклоняется, если пользователь не существует.
 ```
 
-For multipart bodies, use:
+Для составных тел запроса используй:
 
 ```text
 Method POST /users/{userId=String:UUID}/avatar
@@ -75,13 +75,13 @@ Method POST /users/{userId=String:UUID}/avatar
     none
 ```
 
-### Model And Named Sum Type
+### Модель и именованный тип-сумма
 
-Start with `Model <Name> =`.
-Use JSON-like fields for a model.
-Use `|`-separated variant names for a named sum type.
-Include only externally visible fields.
-Add a `Rules:` block when the definition owns observable constraints.
+Начинай с `Model <Name> =`.
+Для модели используй поля в стиле JSON.
+Для именованного типа-суммы используй имена вариантов, разделённые `|`.
+Включай только внешне видимые поля.
+Добавляй блок `Rules:`, если определение задаёт наблюдаемые ограничения.
 
 ```text
 Model User =
@@ -100,11 +100,11 @@ Model Result =
   Failure
 ```
 
-### Enum
+### Перечисление
 
-Start with `Enum <Name> =` and put one value on each following line.
-Use a dedicated enum for a reused or source-named closed value set.
-Use `Enum<A|B|C>` inline only for a local one-off enum.
+Начинай с `Enum <Name> =` и размещай по одному значению на каждой следующей строке.
+Используй отдельное перечисление для замкнутого набора значений, который переиспользуется или имеет имя в источнике.
+Используй встроенное `Enum<A|B|C>` только для локального перечисления, используемого один раз.
 
 ```text
 Enum UserState =
@@ -113,37 +113,37 @@ Enum UserState =
   DISABLED
 ```
 
-## Type Notation
+## Обозначения типов
 
-- Primitive: `String`, `Number`, `Boolean`, `Binary`, `Object`.
-- Refined primitive: `String:UUID`, `String:timestamp`, `String:date`, `String:uri`, `Number:int`, `Number:int64`, `Number:double`.
-- Collection: `[<Type>]`.
-- Nullable: append `?` to the whole type.
-- Reference: `<Type>`.
-- Inline enum: `Enum<A|B|C>`.
-- Inline sum type: `<A|B>`.
-- Inline object: `{ "items": [<Type>] }`.
+- Примитивный тип: `String`, `Number`, `Boolean`, `Binary`, `Object`.
+- Уточнённый примитивный тип: `String:UUID`, `String:timestamp`, `String:date`, `String:uri`, `Number:int`, `Number:int64`, `Number:double`.
+- Коллекция: `[<Type>]`.
+- Тип, допускающий `null`: добавь `?` ко всему типу.
+- Ссылка: `<Type>`.
+- Встроенное перечисление: `Enum<A|B|C>`.
+- Встроенный тип-сумма: `<A|B>`.
+- Встроенный объект: `{ "items": [<Type>] }`.
 
-Use `$` only in rules and comments to refer to the whole current request or response body.
-Do not attach rules to parameters, fields, or type expressions.
-Attach rules to endpoints, models, named sum types, or enums.
+Используй `$` только в правилах и комментариях для ссылки на всё текущее тело запроса или ответа.
+Не прикрепляй правила к параметрам, полям или выражениям типов.
+Прикрепляй правила к эндпоинтам, моделям, именованным типам-суммам или перечислениям.
 
-## Changes
+## Изменения
 
-Use `+`, `*`, and `x` in a presentation gutter for added, changed, and removed fragments.
-Mark only the smallest changed endpoint, parameter, field, enum item, model title, status, or rule.
-For before/after output, use one AsciiDoc document-level two-column table with `separator=!` and headers `Было` and `Стало`.
-Set `:max-width: 95%` once.
-Put only `[source,text]` blocks in data cells and use `!` cells so `|` inside source blocks cannot split the table.
-The validator ignores change gutters and all content outside source blocks.
+Используй `+`, `*` и `x` в боковой колонке оформления для добавленных, изменённых и удалённых фрагментов.
+Помечай только наименьший изменённый эндпоинт, параметр, поле, элемент перечисления, заголовок модели, статус или правило.
+Для вывода «было/стало» используй одну двухколоночную таблицу уровня документа AsciiDoc с `separator=!` и заголовками `Было` и `Стало`.
+Задавай `:max-width: 95%` один раз.
+Помещай в ячейки данных только блоки `[source,text]` и используй ячейки с разделителем `!`, чтобы `|` внутри блоков исходного текста не разбивал таблицу.
+Валидатор игнорирует боковые колонки с маркерами изменений и всё содержимое вне блоков исходного текста.
 
-## Validation
+## Валидация
 
-Run:
+Запусти:
 
 ```text
 python framework_checkout_root/src/artifacts/humanistic-api-v1/scripts/validate_humanistic_api.py <artifact-path>
 ```
 
-Validation checks source-block delimiters and the canonical syntax inside each API source block.
-It does not validate surrounding headings, tables, prose, or change-marker semantics.
+Валидация проверяет разделители блоков исходного текста и канонический синтаксис внутри каждого блока API.
+Она не проверяет окружающие заголовки, таблицы, пояснения или смысл маркеров изменений.

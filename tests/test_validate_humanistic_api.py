@@ -37,13 +37,13 @@ def test_ignores_surrounding_document_but_rejects_invalid_source_block():
 
     errors = _load_validator_module().validate_document(fixture.read_text(encoding="utf-8"))
 
-    assert errors == ["line 4: source block must start with Method, Model, or Enum"]
+    assert errors == ["строка 4: блок исходного текста должен начинаться с Method, Model или Enum"]
 
 
 def test_rejects_unclosed_source_block():
     errors = _load_validator_module().validate_document("```text\nModel User =\n")
 
-    assert errors == ["line 1: unclosed Markdown text fence"]
+    assert errors == ["строка 1: незакрытое ограждение блока text в Markdown"]
 
 
 @pytest.mark.parametrize(
@@ -60,7 +60,7 @@ def test_rejects_invalid_response_body_type(invalid_line: str):
 
     errors = _load_validator_module().validate_document(document)
 
-    assert errors == ["line 5: invalid body type"]
+    assert errors == ["строка 5: некорректный тип тела"]
 
 
 def test_rejects_invalid_types_in_typed_slots():
@@ -86,8 +86,8 @@ Model User =
     errors = _load_validator_module().validate_document(document)
 
     assert errors == [
-        "line 3: invalid query parameter",
-        "line 6: invalid header or multipart part",
-        "line 8: invalid body type",
-        "line 16: invalid model field",
+        "строка 3: некорректный параметр запроса",
+        "строка 6: некорректный заголовок или часть составного тела",
+        "строка 8: некорректный тип тела",
+        "строка 16: некорректное поле модели",
     ]
