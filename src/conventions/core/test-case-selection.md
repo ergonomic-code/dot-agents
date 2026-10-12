@@ -3,36 +3,37 @@ keywords:
   - tests
 ---
 
-# Test case selection
+# Выбор тест-кейса
 
-## Design-time kind and SUT
+## Вид теста и SUT при проектировании
 
-- Start from the intent to demonstrate that the selected desired behavior is absent from the current system.
-- From that behavior and actual code or supplied design, identify the available boundary, component, and unit SUT candidates through which the same behavior can be exercised and observed.
-- Prefer a unit SUT when the behavior can be exercised and observed directly without infrastructure or IO.
-- Otherwise prefer the stable external boundary that exposes the behavior.
-- Use a component SUT instead when moving inward from that boundary materially shortens the test or its execution time, or keeps the test on the standard test infrastructure.
-- Select one evidence-backed kind and SUT before selecting examples.
-- Stop when no candidate is evidence-backed or the priority does not select one unambiguously.
-- After selecting the kind and SUT, use the corresponding interaction rules from `test-design.md`.
+- Исходи из намерения показать, что выбранное целевое поведение отсутствует в текущей системе.
+- По требуемому целевому поведению и фактическому коду или предоставленному дизайну определи доступные кандидаты SUT уровней `boundary`, `component` и `unit`, через которые его можно вызвать.
+- Предпочитай SUT уровня `unit`, если поведение можно вызвать и наблюдать напрямую без инфраструктуры или IO (в том числе — без их моков).
+- Иначе предпочитай стабильную внешнюю границу, предоставляющую это поведение.
+- Выбирай SUT уровня `component`, если переход внутрь от внешней границы существенно сокращает тест или время его выполнения.
+- До выбора примеров выбери один подтверждённый свидетельствами вид теста и SUT.
+- Остановись, если ни один кандидат не подтверждён свидетельствами или приоритет не позволяет выбрать однозначно.
+- После выбора вида теста и SUT используй соответствующие правила взаимодействия из `test-design.md`.
 
-## Polymorphic operations
+## Полиморфные операции
 
-- Keep the operation itself as the SUT for behavior common to all input or output variants.
-- Qualify the SUT with the exact variant from code or supplied design when the behavior belongs to only that variant.
+- Для поведения, общего всем вариантам входа или выхода, сохраняй саму операцию как SUT.
+- Если поведение относится только к одному варианту, уточняй SUT точным вариантом из кода или предоставленного дизайна.
 
-## Existing coverage
+## Существующее покрытие
 
-- After selecting the SUT, inspect its existing and sibling tests for cases that exercise the selected obligation or its behaviorally distinguishing input or context classes.
-- Select exactly one target disposition, its examples, and its form together in this order:
-  - select `strengthen` when an existing case already exercises the selected precondition and action and its verification can be added or strengthened without changing the meaning of any invocation; record that case's existing `example`, `parameterized`, or `property` form and the examples needed to state the strengthened obligation;
-  - otherwise select `extend-parameterized` when an existing parameterized case verifies the same rule over the same varying axis and can receive a behaviorally distinguishing concrete example not covered by an existing invocation; record `parameterized` and the added example;
-  - otherwise select `new`, prefer a generated example class when the rule can be expressed over that class and the repository has an applicable property-testing facility for the selected SUT, otherwise select several concrete examples when they form a meaningful set of materially distinct cases, or one concrete example when they do not.
-- For `new` without `property`, when one obligation maps a finite set of mutually exclusive input or context states to expected outcomes, include the complete set as concrete examples unless the user explicitly selects a subset.
-- For `new`, map one concrete example to `example`, several concrete examples to `parameterized`, and a generated example class to `property`.
+- После выбора SUT изучи его существующие и соседние тесты на предмет кейсов, проверяющих выбранное обязательство или классы входных данных.
+- Выбери ровно одно действие с целью, его примеры и форму совместно в следующем порядке:
+  - выбери `strengthen`, если существующий кейс уже использует выбранное предусловие и действие, а проверку можно добавить или усилить без изменения смысла любого вызова; зафиксируй существующую форму `example`, `parameterized` или `property` и примеры, необходимые для описания усиленного обязательства;
+  - иначе выбери `extend-parameterized`, если существующий параметризованный кейс проверяет то же правило по той же изменяемой оси и допускает добавление конкретного примера, различающего поведение и не покрытого существующим вызовом; зафиксируй `parameterized` и добавленный пример;
+  - иначе выбери `new`; выбирай property-тест, если в репозитории уже есть инфраструктура для property-тестирования выбранного SUT и правило можно выразить как инвариант; иначе выбери несколько конкретных примеров, если они образуют содержательный набор существенно разных кейсов, или один пример, если не образуют.
+- Для `strengthen` сохраняй исходную формулировку правила дословно и все существующие обязательства; при необходимости только дополняй её новым требованием, не переписывая исходный текст.
+- Для `new` без `property`, когда одно обязательство сопоставляет конечный набор взаимоисключающих состояний входа или контекста ожидаемым результатам, включай весь набор конкретных примеров, если пользователь явно не выбрал подмножество.
+- Для `new` сопоставляй один конкретный пример с `example`, несколько конкретных примеров с `parameterized`, а генерируемый класс примеров с `property`.
 
-## Coding-time mapping
+## Сопоставление при кодировании
 
-- Derive a new container and path mechanically from the selected kind and SUT through the independently loaded framework-specific naming convention.
-- Implement the selected example, parameterized, or property form.
-- Strengthen or extend the selected existing case in place, preserving its other assertions and invocations.
+- Механически выводи новый контейнер и путь из выбранного вида теста и SUT через независимо загруженное соглашение об именовании для применимого тестового фреймворка.
+- Реализуй выбранную форму `example`, `parameterized` или `property`.
+- Усиливай или расширяй выбранный существующий кейс на месте, сохраняя остальные проверки и вызовы.

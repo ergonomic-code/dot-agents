@@ -1,72 +1,65 @@
 ---
 name: design-test-case
-description: Design one test-method-sized `test-case-specification-format` full-mode check from a requirement, bug report, or desired behavior description.
+description: Проектирует спецификацию одного тестового метода в формате `test-case-specification-format` на основе требования, сообщения об ошибке или описания целевого поведения.
 ---
 
-# Design Test Case
+# Проектирование тест-кейса
 
-Use this skill when the user gives requirements, a bug report, or desired behavior and needs one test-method-sized check, but has not already provided one selected full-mode test-case specification.
+Используй этот скилл, когда пользователь предоставляет требования, сообщение об ошибке или целевое поведение и ему нужна спецификация одного тестового метода для проверки этого требования.
 
-Read `../write-verification-check/SKILL.md`.
-Read `framework_checkout_root/src/conventions/core/ergonomic-approach-rules.md`.
-Read `framework_checkout_root/src/conventions/core/test-design.md`.
-Read `framework_checkout_root/src/conventions/core/test-case-selection.md`.
-Read `framework_checkout_root/src/references/test-case-implementation-order.md`.
+Прочитай `../write-verification-check/SKILL.md`.
+Прочитай `framework_checkout_root/src/conventions/core/ergonomic-approach-rules.md`.
+Прочитай `framework_checkout_root/src/conventions/core/test-design.md`.
+Прочитай `framework_checkout_root/src/conventions/core/test-case-selection.md`.
+Прочитай `framework_checkout_root/src/references/test-case-implementation-order.md`.
 
-## Eligibility
+## Допустимость
 
-Before designing, verify that the selected obligation is test-eligible under `framework_checkout_root/src/conventions/core/test-design.md`.
-Accept an implementation detail only when the user explicitly requests that specific test or supplied requirements unambiguously record an earlier explicit request for it.
-Do not treat progress, design context, an implementation step, or a verification instruction as a test obligation without an eligible requirement source.
-Return `status: blocked` with `reason: not-test-eligible` when this condition is not met.
+Принимай проверку деталей реализации только когда пользователь явно запросил именно этот тест или предоставленные требования однозначно фиксируют такой предыдущий явный запрос.
+Если условие не выполнено, верни `status: blocked` с `reason: not-test-eligible`.
 
-Design exactly one test-method-sized target behavior check.
-For bugs, select the corrected target behavior; use the broken behavior only as evidence of the violated obligation.
-For new behavior, select the stable desired behavior and apply `framework_checkout_root/src/references/test-case-implementation-order.md` when several valid cases are implied.
-If several independent obligations are implied and the target case is not selected, ask which one to design.
+Спроектируй ровно одну проверку целевого поведения.
+Для ошибок выбирай корректное целевое поведение; используй ошибочное поведение только как свидетельство нарушенного обязательства.
+Для нового поведения выбирай стабильное целевое поведение и применяй `framework_checkout_root/src/references/test-case-implementation-order.md`, если подразумеваются несколько допустимых кейсов.
 
-## Design
+## Проектирование
 
-1. Identify the selected observable obligation without fixing its technical SUT.
-2. Discover the available test levels and select the test kind, evidence-backed SUT, and optional polymorphic variant through the design-time rules in `core/test-case-selection.md`.
-3. Resolve the verified object for `Feature` from the selected SUT, explicit user input, existing artifacts, code, or supplied design.
-4. Inspect existing and sibling tests and select the target disposition, examples, and test form together through `core/test-case-selection.md`, including the exact existing target anchor when applicable.
-5. Map the selected obligation to `Feature` and `Rule`, then render the selected concrete example, concrete parameter set, or generated example class with `Given`, `When`, and `Then`.
+1. Определи выбранное наблюдаемое поведение, не фиксируя его технический SUT.
+2. Определи доступные уровни тестирования и выбери вид теста, подтверждённый свидетельствами SUT и необязательный полиморфный вариант по правилам проектирования из `core/test-case-selection.md`.
+3. Определи проверяемый объект для `Feature` по выбранному SUT, явным входным данным пользователя, существующим артефактам, коду или предоставленному дизайну.
+4. Изучи существующие и соседние тесты и совместно выбери действие с целью, примеры и форму теста по `core/test-case-selection.md`, включая точный якорь существующей цели, когда применимо.
+5. Сопоставь выбранное обязательство с `Feature` и `Rule`; для `strengthen` восстанови исходный `Rule` из существующей спецификации или названия выбранного теста и примени правило сохранения из `core/test-case-selection.md`.
+   Затем оформи выбранный конкретный пример, конкретный набор параметров или генерируемый класс примеров с `Given`, `When` и `Then`.
 
-If no candidate SUT can be resolved from the behavior and repository evidence, ask for the missing target instead of inventing one.
-If no verified object can be resolved after selecting the SUT, ask for the missing object instead of inventing one.
-When the verified object is an explicitly planned new SUT whose technical reference is not designed yet, stop and ask for that reference instead of writing a provisional `Feature`.
-Otherwise ask only when unresolved observable product behavior prevents stating the selected `Rule` or `Example`.
-Then render through `../write-verification-check/SKILL.md`.
-Do not add sibling rules or examples outside that selected obligation.
+Если поведение и свидетельства репозитория не позволяют определить кандидата SUT, запроси недостающую цель, не выдумывая её.
+Затем оформи результат через `../write-verification-check/SKILL.md`.
 
-## Scope Boundary
+## Границы
 
-This skill is design-only.
-Do not create, modify, plan, or announce test code or production code.
-After returning or writing the verification case stop.
+Этот скилл предназначен только для проектирования.
+Не создавай, не изменяй, не планируй и не анонсируй тестовый или продакшн-код.
+После возврата или записи проверочного кейса остановись.
 
-## Output
+## Выход
 
-Accompany the check with concise coding decisions outside the test-case-specification block: selected kind, form, and whether to create, strengthen, or extend a parameterized case.
-For an existing case, identify its repository-relative file, exact container, and source-level method; for a new case, leave the path to coding.
-Pass these decisions to the caller along with the selected check; in an artifact, place them immediately before its block and identify the selected `Rule` and `Example` headers, or the sole unnamed example, and the selected assertion change for `strengthen`.
+Сопроводи проверку краткими решениями для кодирования вне блока спецификации тест-кейса: выбранные вид, форма и действие — создать, усилить или расширить параметризованный кейс.
+Для существующего кейса укажи файл относительно репозитория, точный контейнер и метод исходного кода; для нового кейса оставь выбор пути этапу кодирования.
+Передай эти решения вызывающей стороне вместе с выбранной проверкой; в артефакте размести их непосредственно перед её блоком и укажи заголовки выбранных `Rule` и `Example` либо единственный безымянный пример, а для `strengthen` — выбранное изменение проверки.
 
-When invoked by another skill with an explicit resolved output path, write the rendered case before returning it to that caller.
-When invoked by another skill without a resolved output path, return the rendered case without writing files.
-When the caller identifies the output as an existing cases artifact, update it instead of returning the case inline.
-In that artifact, write only the selected target check under the caller-selected cases section.
-Merge into a block for the same `Feature` only when its kind, form, disposition, and target agree and the accompanying decisions still identify the exact selected verification and examples; otherwise add a separate block.
-Within a compatible block, merge into the matching `Rule`, or insert the selected `Rule` when none matches.
-Use the artifact's existing source-block format.
-When merging, add only missing examples or strengthen only the selected verification; preserve existing examples and obligations, naming an unnamed example if it gains a sibling.
-Preserve all other sections and cases.
-If the resolved output path is not a cases artifact, write the check and accompanying coding decisions to that file.
-If no output path is resolved, return one full-mode check with its coding decisions, or the missing selection issue.
+При вызове другим скиллом с явно разрешённым путём результата запиши оформленный кейс до его возврата вызывающей стороне.
+При вызове другим скиллом без разрешённого пути результата верни оформленный кейс без записи файлов.
+Если вызывающая сторона определяет результат как существующий артефакт кейсов, обнови его вместо возврата кейса в сообщении.
+В этом артефакте запиши только выбранную целевую проверку в выбранном вызывающей стороной разделе кейсов.
+В совместимом блоке объединяй с соответствующим `Rule` или вставляй выбранный `Rule`, если соответствующего нет.
+Используй существующий формат блока исходного текста артефакта.
+При объединении добавляй только недостающие примеры или усиливай только выбранную проверку; сохраняй существующие примеры и обязательства, именуя безымянный пример, если у него появляется соседний.
+Сохраняй остальные разделы и кейсы.
+Если разрешённый путь результата не является артефактом кейсов, запиши проверку и сопутствующие решения для кодирования в этот файл.
+Если путь результата не разрешён, верни одну проверку режима `full` с решениями для кодирования или сообщи о недостающем выборе.
 
-When invoked by another skill, return `status: complete` with `outcome: case-designed` only after writing the valid rendered case to the requested artifact.
-Return `status: blocked` with the exact missing selection, behavior, or artifact issue otherwise.
+При вызове другим скиллом возвращай `status: complete` с `outcome: case-designed` только после записи допустимого оформленного кейса в запрошенный артефакт.
+Иначе верни `status: blocked` с точным указанием недостающего выбора, поведения или проблемы артефакта.
 
-## Before Finishing
+## Перед завершением
 
-Read `../../artifacts/test-case-specification-format/references/requirements-coverage-checklist.md` and apply it within the selected obligation.
+Прочитай `../../artifacts/test-case-specification-format/references/requirements-coverage-checklist.md` и примени его в пределах выбранного обязательства.
