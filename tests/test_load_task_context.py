@@ -152,8 +152,12 @@ def test_missing_task_workdir_rules_emits_no_partial_context(tmp_path):
     assert "brief that must not leak" not in output
 
 
-def test_hyphenated_task_code_loads_context_through_real_resolver(tmp_path):
-    make_task(tmp_path, "EL-363-export", '---\ntask_id: "EL-363"\n---\nExport requirements\n')
-    output = loader.load_task_context("$work EL-363", tmp_path)
-    assert "Active task: `devlog/EL-363-export`" in output
-    assert "Export requirements" in output
+def test_dotted_task_code_loads_context_through_real_resolver(tmp_path):
+    make_task(tmp_path, "371-doctor-portal", "Parent task requirements\n")
+    task = make_task(tmp_path, "371.1-refactor-roles", "Subtask requirements\n")
+    (task / "work-state.md").write_text("Tests are green.\n", encoding="utf-8")
+    output = loader.load_task_context("371.1\n\n/$design-test-case\n\ng04", tmp_path)
+    assert "Active task: `devlog/371.1-refactor-roles`" in output
+    assert "Subtask requirements" in output
+    assert "Parent task requirements" not in output
+    assert "Tests are green." in output

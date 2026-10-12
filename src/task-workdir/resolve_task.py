@@ -9,12 +9,9 @@ import subprocess
 import sys
 import tempfile
 
-import yaml
-
-
 NO_TASK = "n/a"
-TASK_ID = r"[^\W_]+(?:-[^\W_]+)*"
-TASK_DIRECTORY = re.compile(r"^(?P<id>[^\W_]+)(?:-.+)?$")
+TASK_ID = r"[^\W_]+(?:\.[^\W_]+)*"
+TASK_DIRECTORY = re.compile(rf"^(?P<id>{TASK_ID})(?:-.+)?$")
 STANDALONE_ID = re.compile(
     rf"(?m)(?:^|\\n)[ \t]*(?P<id>{TASK_ID})[ \t]*(?=$|\\n)"
 )
@@ -23,34 +20,13 @@ SKILL_ID = re.compile(
     r"`?\$[A-Za-z0-9][A-Za-z0-9_-]*`?"
     r"|"
     r"`?(?:[^\s`]+/)?skills/[^\s`]+/SKILL\.md`?"
-    rf")\s+(?P<id>{TASK_ID})(?![\w-])"
+    rf")\s+(?P<id>{TASK_ID})(?![\w.-])"
 )
 
 SemanticResolver = Callable[[str, Mapping[str, Path]], str]
 
 
 def directory_task_id(path: Path) -> str | None:
-    brief = path / "010-task-brief.md"
-    try:
-        lines = brief.read_text(encoding="utf-8").splitlines() if brief.is_file() else []
-        if lines and lines[0] == "---":
-            end = lines.index("---", 1)
-            metadata = yaml.safe_load("\n".join(lines[1:end]))
-            if not isinstance(metadata, dict):
-                return None
-            if "task_id" in metadata:
-                task_id = metadata["task_id"]
-                if not isinstance(task_id, str) or not re.fullmatch(TASK_ID, task_id):
-                    return None
-                if path.name == task_id or (
-                    path.name.startswith(task_id + "-")
-                    and len(path.name) > len(task_id) + 1
-                ):
-                    return task_id
-                return None
-    except (OSError, UnicodeError, ValueError, yaml.YAMLError):
-        return None
-
     match = TASK_DIRECTORY.fullmatch(path.name)
     return match.group("id") if match else None
 
