@@ -6,16 +6,14 @@ keywords:
 
 # Чек-лист реализации тестов
 
-- Is every changed test backed by the current explicit request or supplied requirements, an unambiguously recorded earlier explicit implementation-detail request, or a mechanical compile adaptation without a new observation?
-- Использует ли каждый test-case method literal-секции `Given`, `When` и `Then`, с отдельными `And when` и `Then` для каждого observation endpoint?
-- For each literal, enum member, constant, code, id, date, name, fixture constant, or preset: does the case or public contract require that exact variant?
-- Is fixture setup minimal, shared state reused where suitable, setup-returned ids preferred, and shared state cleaned only by the shared reset layer?
-- Do tests assert observable outcomes without internal calls, wiring, or control flow except for a specifically requested implementation-detail assertion?
-- Нужен ли каждый fake, stub или mock, поскольку ни existing production component, ни component required selected design не воспроизводит поведение безопасно в пределах test budgets?
-- Не привёл ли test double к введению или обобщению production interface?
-- Are in-process class or object mocks limited to behavior that is hard or expensive to reproduce with a real dependency, typically infrastructure failures, or the smallest mechanism for a specifically requested internal-interaction test, and otherwise absent for normal behavior?
-- Проверяются ли interactions только на external-system boundaries и только для outgoing requests или messages, кроме специально запрошенного internal-interaction test?
-- Are low-level setup and observation helpers absent from test classes, scoped `*TestApi` helpers used, and cross-scope setup placed in `*FixturePresets`?
-- Остаётся ли каждый `*TestApi` в одном aggregate/resource scope, stateful verification — в его `verify...`, а `*Assertions` — stateless над domain values caller?
-- Проверяются ли observations разных scopes отдельно без assertion-specific data holder?
-- Are expected values bound in Given and are new test methods appended to the class?
+- Использует ли каждый метод тест-кейса дословные секции `Given`, `When` и `Then`, с отдельными `And then` для каждой точки входа наблюдения?
+- Отсутствует ли в телах тест-кейсов любой условный поток управления, включая условные выражения, вынесены ли необходимые условия в хелперы и удалены ли ненужные проверки?
+- Минимальна ли подготовка фикстур, переиспользуется ли подходящая глобальная разделяемая фикстура, предпочитаются ли идентификаторы из результатов подготовки и очищается ли общее состояние только общим слоем сброса?
+- Проверяют ли тесты наблюдаемые результаты без проверки внутренних вызовов, связывания зависимостей и потока управления, кроме явно запрошенных проверок деталей реализации?
+- Нужен ли каждый fake, stub или mock, поскольку ни существующий продакшн-компонент, ни компонент, требуемый выбранным дизайном, не воспроизводит поведение безопасно в пределах бюджетов тестов?
+- Не привёл ли тестовый дубль к введению или обобщению продакшн-интерфейса, необходиомости в котором для продакшн кода нет?
+- Проверяются ли взаимодействия только на границах внешних систем, кроме явно запрошенного теста внутреннего взаимодействия?
+- Вынесены ли низкоуровневые хелперы подготовки и наблюдения из классов тестов, используются ли `*TestApi` с ограниченной областью и размещена ли подготовка нескольких областей в `*FixturePresets`?
+- Остаётся ли каждый `*TestApi` в пределах одного агрегата или ресурса, размещены ли проверки с получением состояния в его `verify...`, а `*Assertions` — без состояния и только над доменными значениями, переданными вызывающей стороной?
+- Заданы ли неочевидные ожидаемые значения в `Given`
+- Были ли новые методы тестов добавлены после последнего существовавшего тестового метода?

@@ -4,46 +4,44 @@ keywords:
   - implementation
 ---
 
-# Test implementation
+# Реализация тестов
 
-## Test case body
+## Тело тест-кейса
 
-- In every new or changed test-case method, split the body with literal `Given`, `When`, and `Then` comments, adapting only the language comment syntax.
-- Put setup under Given, the action under When, and verification under Then.
-- In command tests with a public observation API, put the target command under `When` and the observation operation under `And when`.
-- If command-returned data must be checked before observation, use `When`, `Then`, `And when`, `Then`.
-- If observing the result requires several endpoint calls, render each under its own `And when` followed by `Then`.
+- В каждом новом или изменённом методе тест-кейса разделяй тело комментариями с дословными `Given`, `When` и `Then`, адаптируя только синтаксис комментариев языка.
+- Размещай подготовку в `Given`, действие в `When`, проверки в `Then`.
+- Не допускай в телах тест-кейсов никакого условного потока управления, включая условные выражения; необходимые условия выноси в хелперы фикстур, тестовые API или доменные ассёрты.
+- В тестах команд с публичным API наблюдения размещай целевую команду в `When`, а операцию наблюдения в `And when`.
+- Если данные, возвращённые командой, нужно проверить до наблюдения, используй `When`, `Then`, `And when`, `Then`.
+- Если для наблюдения результата нужны несколько вызовов точек входа, размещай каждый в отдельном `And then`.
 
-## Fixture setup
+## Подготовка фикстур
 
-- Each test case must explicitly establish its required fixture.
-- Establishing a fixture may reuse shared setup state instead of creating new DB data.
-- Do not add per-test cleanup for shared fixture state; use or extend the shared fixture setup/reset layer.
-- Before adding cleanup or DB fixture data, inspect the selected test container's setup/reset path and shared state.
-- Reuse semantically suitable shared fixture state when the entity identity is not the behavior under test.
-- If fixture setup code duplication exceeds 3 lines, it may be extracted into helpers.
-- In fixture setup specify only data relevant to the test-case; derive related data instead of copying it.
-- Prefer values returned by fixture setup over extra observation calls when they identify created data.
-- Do not broaden fixture data or add visibility-only fields only to make an incidental observation path work.
+- Каждый тест-кейс должен явно устанавливать необходимую ему фикстуру.
+- При наличии подходящей глобальной разделяемой фикстуры, следует переиспользовать её, вместо вставки дополнительных данных в БД.
+- Не добавляй очистку глобальной разделяемой фикстуры после каждого теста; используй или расширяй общий слой подготовки и сброса фикстур.
+- Если дублирование кода подготовки фикстур превышает 3 строки, его необходимо вынести в хелперы.
+- При подготовке фикстур задавай только данные, значимые для тест-кейса; связанные данные вычисляй вместо копирования.
+- Предпочитай значения, возвращённые подготовкой фикстур, дополнительным вызовам наблюдения, если они идентифицируют созданные данные.
 
-## Assertions and data
+## Проверки и данные
 
-- Do not put expected literals in Then; bind each business value once in Given and reuse it in setup, request, and assertions.
-- Do not extract a self-evident expected literal used only once into a Given variable.
-- If exact value is not the point, assert a property; if derived, compute it in Given.
-- If a literal is unavoidable, declare it in Given with a short rationale comment.
-- In test-case bodies, name expected-value variables by the expected meaning or checked property, not `expected*`; `expected*` names are allowed in helpers.
-- Exact input values include literals, enum members, constants, codes, ids, dates, and names.
-- Use exact input values only when the case or public contract names them; otherwise encode the data role in a helper, factory, or fixture.
-- Prefer generic role helpers over incidental named samples.
+- Не размещай ожидаемые литералы в `Then`; задай каждое бизнес-значение один раз в `Given` и переиспользуй его при подготовке, в запросе и проверках.
+- Не выноси самоочевидный литерал, используемый только один раз или с именем совпадающим с именем параметров, в которые он передаётся, в переменную в `Given`.
+- Если точное значение несущественно, проверяй свойство; если значение производное, вычисляй его в `Given`.
+- Если литерал неизбежен, объяви его в `Given` с коротким комментарием-обоснованием.
+- В телах тест-кейсов называй переменные ожидаемых значений по ожидаемому смыслу или проверяемому свойству, без `expected*`; имена `expected*` допустимы в хелперах.
+- Используй точные входные значения только когда их задаёт кейс или публичный контракт; иначе выражай роль данных через хелпер, фабрику или фикстуру.
+  - Точные входные значения включают литералы, элементы перечислений, константы, коды, идентификаторы, даты и имена.
+- Предпочитай обобщённые хелперы по роли случайным именованным образцам.
 
-## Coverage
+## Покрытие
 
-- For each changed or added operation and computation, cover each normal and realistically reachable path with at least one case, excluding paths for unexpected and practically impossible failures.
-- Prefer a unit test when verification needs no infrastructure or I/O, otherwise a boundary test; use a component test only for a material reduction in size or time or to stay on standard test infrastructure.
+- Для каждой изменённой или добавленной операции и вычисления покрой каждый нормальный и реально достижимый путь хотя бы одним кейсом, исключая пути неожиданных и практически невозможных сбоев.
+- Предпочитай модульный тест, если проверка не требует инфраструктуры или I/O, иначе — тест внешней границы; используй компонентный тест только ради существенного сокращения объёма или времени либо сохранения стандартной тестовой инфраструктуры.
 
-## Determinism and ordering
+## Детерминизм и порядок
 
-- Do not use non-deterministic randomness; use faker or data factories built on top of it.
-- Do not use fixed sleep to await an asynchronous result.
-- For class-based tests, always add new test case methods to the end of the class.
+- Не используй недетерминированную случайность; используй faker или фабрики данных на его основе.
+- Не используй фиксированные паузы для ожидания асинхронного результата.
+- В тестах на основе классов всегда добавляй новые методы тест-кейсов в конец класса.
