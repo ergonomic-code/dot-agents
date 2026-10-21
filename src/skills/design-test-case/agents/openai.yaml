@@ -1,4 +1,4 @@
 interface:
-  display_name: "Design Test Case"
-  short_description: "Design one test-method-sized Feature/Rule check"
-  default_prompt: "Use $design-test-case to design one test-method-sized `test-case-specification-format` full-mode Feature/Rule check from a requirement, bug report, or desired behavior description. Select its SUT, test kind, form, and target through the skill rules. This is design-only: do not code or announce coding next steps."
+  display_name: "Проектирование тест-кейса"
+  short_description: "Проектирует один обычный или параметризованный кейс"
+  default_prompt: "Используй $design-test-case, чтобы спроектировать одну проверку размера тестового метода в формате test-case-specification-format, по требованию, сообщению об ошибке или описанию поведения. Выбери SUT, вид, форму и цель по правилам скилла; для parameterized используй Scenario Outline с Examples. Только проектирование: не кодируй и не анонсируй кодирование."

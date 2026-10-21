@@ -1,4 +1,4 @@
 interface:
   display_name: "Кодирование тест-кейса"
   short_description: "Материализует и проверяет один тест-кейс"
-  default_prompt: "Используй $code-test-case, чтобы материализовать одну выбранную спецификацию тест-кейса в привязанном репозитории, затем вернуть expected-red, already-green или blocked со свидетельствами."
+  default_prompt: "Используй $code-test-case, чтобы закодировать одну выбранную спецификацию тест-кейса в привязанном репозитории, затем верни expected-red, already-green или blocked со свидетельствами."

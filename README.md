@@ -224,7 +224,6 @@ modules:
 | [`$fix-red-case`](src/skills/fix-red-case/SKILL.md) | Реализует поведение, специфицированное одним тест-кейсом. |
 | [`$refactor-case`](src/skills/refactor-case/SKILL.md) | Выполняет ревью одного TDD-инкремента. |
 | [`$save-session-evidence`](src/skills/save-session-evidence/SKILL.md) | Сохраняет свидетельства ошибки сессии и Git-снимок для последующего исправления. |
-| [`$write-verification-check`](src/skills/write-verification-check/SKILL.md) | Описывает один тест-кейс в стандартном Gherkin-подобном формате. |
 
 ## Скиллы рабочей директории задачи
 
