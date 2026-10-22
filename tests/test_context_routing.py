@@ -78,6 +78,20 @@ def referenced_convention_paths(text: str) -> list[Path]:
     ]
 
 
+def test_complex_fixture_implementation_route_has_stack_requirements():
+    route = CONTEXT_ROOT / "spring-kotlin-test-fixtures.md"
+    metadata = front_matter(route)
+    assert set(metadata["requires_modules"]) == {"core", "spring", "kotlin"}
+    assert metadata["routing_order"] == 125
+    references = re.findall(r"`(\.\./[^`]+\.md)`", route.read_text())
+    assert references == ["../patterns/spring/complex-test-fixtures.md"]
+    implementation = (route.parent / references[0]).resolve()
+    assert implementation.is_file()
+    references = re.findall(r"\]\(([^)]+\.md)\)", implementation.read_text())
+    general = SRC_ROOT / "conventions/core/test-fixture-architecture.md"
+    assert general in {(implementation.parent / ref).resolve() for ref in references}
+
+
 def test_index_convention_references_exist_and_are_reachable():
     indexed = set()
     for index in CONTEXT_ROOT.glob("*.md"):

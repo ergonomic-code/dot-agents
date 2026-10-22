@@ -34,6 +34,7 @@
 | `spring-http-api-tests` | `spring`, `http-api` | Тестовые клиенты Spring HTTP API. |
 | `spring-database` | `spring`, `database` | Spring JDBC и маппинг строк. |
 | `spring-kotlin` | `spring`, `kotlin` | Доступ к Spring бинам и их регистрация из Kotlin. |
+| `spring-kotlin-test-fixtures` | `core`, `spring`, `kotlin` | Сложные тестовые фикстуры, их фабрики и установщики на Kotlin и Spring. |
 
 ## Конфигурация модулей
 
