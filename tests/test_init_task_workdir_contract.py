@@ -25,7 +25,9 @@ def test_implementation_design_template_is_connected_to_creation_and_updates():
     task_workdir = ROOT / "src" / "task-workdir"
     template_path = task_workdir / "references" / "implementation-design-template.md"
     template = template_path.read_text(encoding="utf-8")
-    context = (task_workdir / "context.md").read_text(encoding="utf-8")
+    context = (task_workdir / "references" / "development-process.md").read_text(
+        encoding="utf-8"
+    )
 
     assert "references/implementation-design-template.md" in context
     assert "030-implementation-design.md" in context

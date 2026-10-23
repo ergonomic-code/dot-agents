@@ -12,7 +12,7 @@ NO_TASK_CONTEXT = "# Контекст активной задачи\n\nActive ta
 TaskResolver = Callable[[str, Path], Path | None]
 
 
-def has_useful_work_state(content: str) -> bool:
+def has_useful_content(content: str) -> bool:
     return any(
         line.strip() and not line.lstrip().startswith("#")
         for line in content.splitlines()
@@ -51,6 +51,8 @@ def load_task_context(
             if work_state_path.is_file()
             else ""
         )
+        todo_path = task_dir / "todo.md"
+        todo = todo_path.read_text(encoding="utf-8") if todo_path.is_file() else ""
     except Exception:
         return NO_TASK_CONTEXT
 
@@ -65,13 +67,17 @@ def load_task_context(
         f"Источник: `{task_path}/010-task-brief.md`\n\n"
         f"{brief}{brief_separator}"
     )
-    if has_useful_work_state(work_state):
-        work_state_separator = "" if work_state.endswith("\n") else "\n"
-        output += (
-            "\n## Состояние работы\n\n"
-            f"Источник: `{task_path}/work-state.md`\n\n"
-            f"{work_state}{work_state_separator}"
-        )
+    for filename, title, content in (
+        ("todo.md", "Список подзадач", todo),
+        ("work-state.md", "Состояние работы", work_state),
+    ):
+        if has_useful_content(content):
+            separator = "" if content.endswith("\n") else "\n"
+            output += (
+                f"\n## {title}\n\n"
+                f"Источник: `{task_path}/{filename}`\n\n"
+                f"{content}{separator}"
+            )
     return output
 
 

@@ -6,7 +6,6 @@ description: Создаёт новую рабочую директорию за�
 # Инициализация рабочей директории задачи
 
 Прочитай `framework_checkout_root/src/task-workdir/references/task-brief-template.md`.
-Прочитай `framework_checkout_root/src/task-workdir/references/solution-brief-template.md`.
 Прочитай `framework_checkout_root/src/task-workdir/references/todo-template.md`.
 Прочитай `framework_checkout_root/src/task-workdir/references/work-state-template.md`.
 
@@ -20,7 +19,7 @@ description: Создаёт новую рабочую директорию за�
 - Если slug содержит разделитель пути или выводит за пределы `./devlog`, запроси исправленный slug и остановись.
 - Используй целевую директорию `./devlog/<task-id>-<task-slug>`.
 - Если целевая директория уже существует, остановись и сообщи, что файлы не изменены.
-- Создай только целевую директорию, `010-task-brief.md`, `030-solution-brief.md`, `work-state.md` и `todo.md`.
+- Создай только целевую директорию, `010-task-brief.md`, `work-state.md` и `todo.md`.
 - Скопируй шаблоны файлов из загруженных справочников.
 - Проверь, что директория и все файлы существуют.
 

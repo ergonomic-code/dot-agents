@@ -2,6 +2,8 @@ import importlib.util
 from pathlib import Path
 import sys
 
+import pytest
+
 
 TASK_WORKDIR = Path(__file__).parents[1] / "src" / "task-workdir"
 WORK_STATE_TEMPLATE = TASK_WORKDIR / "references" / "work-state-template.md"
@@ -161,3 +163,45 @@ def test_dotted_task_code_loads_context_through_real_resolver(tmp_path):
     assert "Subtask requirements" in output
     assert "Parent task requirements" not in output
     assert "Tests are green." in output
+
+
+@pytest.mark.parametrize("with_solution", [False, True])
+def test_task_resumes_with_all_three_files_without_loading_design(tmp_path, with_solution):
+    brief = "Required outcome and acceptance procedure\n"
+    task = make_task(tmp_path, "123-example", brief)
+    todo = "# Work\n\n## Delivery\n\n- [x] Investigate\n  - [ ] Implement\n"
+    state = "# State\n\nContinue at the integration boundary.\n"
+    (task / "todo.md").write_text(todo, encoding="utf-8")
+    (task / "work-state.md").write_text(state, encoding="utf-8")
+    if with_solution:
+        (task / "030-solution-brief.md").write_text(
+            "Detailed solution that must be loaded explicitly\n", encoding="utf-8"
+        )
+
+    output = loader.load_task_context("123\nContinue the task", tmp_path)
+
+    assert "Active task: `devlog/123-example`" in output
+    for filename, content in (
+        ("010-task-brief.md", brief),
+        ("todo.md", todo),
+        ("work-state.md", state),
+    ):
+        assert f"`devlog/123-example/{filename}`" in output
+        assert content in output
+    assert "030-solution-brief.md" not in output
+    assert "Detailed solution that must be loaded explicitly" not in output
+
+
+@pytest.mark.parametrize("todo", [None, "", "# Work\n", "# Work\n\n## Next\n"])
+def test_missing_or_empty_todo_does_not_prevent_resuming(tmp_path, todo):
+    task = make_task(tmp_path, "123-example")
+    (task / "work-state.md").write_text("Continue here.\n", encoding="utf-8")
+    if todo is not None:
+        (task / "todo.md").write_text(todo, encoding="utf-8")
+
+    output = loader.load_task_context("123\nContinue", tmp_path)
+
+    assert "Active task: `devlog/123-example`" in output
+    assert "Task brief body" in output
+    assert "Continue here." in output
+    assert "/todo.md`" not in output
