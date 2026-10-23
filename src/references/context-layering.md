@@ -3,7 +3,9 @@
 ## Компоненты контекста и направление зависимостей
 Обеспечивай направление зависимостей:
 - `SessionStart -> baseline`
-  - `baseline -> task-context loader`
+  - `baseline -> task-workdir entrypoint`
+- `framework AGENTS.md -> task-workdir entrypoint`
+- `task-workdir entrypoint -> task-context loader`
   - `task-context loader -> task resolver`
   - `task-context loader -> task-workdir context`
 - `SessionStart -> root context protocol`
@@ -17,7 +19,8 @@
 Метаданные `requires_modules`, `applies_when` и `routing_order` должны храниться в YAML front matter тематического индекса; не дублируй каталог маршрутов в Python.
 
 Бейзлайн отвечает за глобальную оркестрацию и ограничения поведения.
-Бейзлайн один раз вызывает загрузчик контекста задачи для первоначального запроса и напрямую использует его вывод.
+Бейзлайн целевого проекта и собственный `AGENTS.md` фреймворка подключают общий `src/task-workdir/entrypoint.md`.
+Он задаёт однократный вызов загрузчика контекста задачи для первоначального запроса и прямое использование его вывода.
 Task resolver отвечает только за выбор задачи.
 Task-context loader отвечает за сборку контекста задачи и выдаёт либо полный контекст задачи, либо отсутствие активной задачи.
 Общий протокол классифицирует запрошенную и запланированную работу только по отфильтрованным маршрутам и загружает каждый подходящий тематический индекс.

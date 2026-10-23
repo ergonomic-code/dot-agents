@@ -64,11 +64,14 @@ devlog/123-example-task/
 Дополнительные материалы создаются по необходимости.
 Правила хранения и ведения памяти описаны в [контексте задач](src/task-workdir/context.md).
 
+Для легковесной подготовки любой задачи используйте [`$prepare-task-workdir`](src/task-workdir/skills/prepare-task-workdir/SKILL.md): агент проведёт интервью, согласует постановку и актуализирует бриф, `todo.md` и `work-state.md`.
+
 #### Структурированный процесс разработки
 
-При необходимости подготовки решения используйте [`$prepare-task-workdir`](src/task-workdir/skills/prepare-task-workdir/SKILL.md).
-В брифе задачи скилл уточняет, что сделать и как проверить результат, а в `030-solution-brief.md` записывает, как техлид хочет реализовать задачу.
+При необходимости подготовки решения используйте [`$prepare-development-task`](src/task-workdir/skills/prepare-development-task/SKILL.md).
+Скилл сначала выполняет `$prepare-task-workdir`, затем в `030-solution-brief.md` записывает, как техлид хочет реализовать задачу.
 При необходимости собирает якори в коде и помогает сравнить и выбрать ещё не определённые решения.
+Уже согласованная постановка при неизменных требованиях используется без повторного интервью.
 Для новой задачи явно запросите создание директории; для существующей укажите её код или путь.
 
 Бриф решения, API, тестовые кейсы и дизайн не входят в обязательную память задачи.
@@ -112,7 +115,8 @@ flowchart TD
     SessionStart[Codex SessionStart] --> Baseline[Базовый контекст<br/>project-baseline.md]
     SessionStart --> Context[Корневой роутинг контекста<br/>context/index.md]
     SessionStart -->  ContextIndexes[Доступные тематические индексы<br/>context/*.md]
-    Baseline --> TaskLoader[Загрузчик контекста задачи<br/>task-workdir/load_task_context.py]
+    Baseline --> TaskEntry[Подключение задачи<br/>task-workdir/entrypoint.md]
+    TaskEntry --> TaskLoader[Загрузчик контекста задачи<br/>task-workdir/load_task_context.py]
     TaskLoader --> TaskResolver[Резолвер задачи<br/>task-workdir/resolve_task.py]
     TaskLoader -. при наличии задачи .-> TaskModule[Модуль task-workdir<br/>task-workdir/context.md]
     TaskModule --> Skill[Применимый скилл<br/>skills/**/SKILL.md]
@@ -122,7 +126,7 @@ flowchart TD
     TaskModule <--> Task[Контекст задачи<br/>devlog/**]
 ```
 
-В первом ходе базовый контекст вызывает загрузчик контекста задачи и использует его вывод напрямую.
+В первом ходе базовый контекст подключает протокол `task-workdir/entrypoint.md`, который задаёт однократный вызов загрузчика контекста задачи и использование его вывода напрямую.
 Резолвер учитывает только идентификаторы активных задач, явно указанные отдельной строкой или сразу после ссылки на скилл, а при нескольких кандидатах изолированно выбирает единственное ясное соответствие по брифам.
 Загрузчик вызывает резолвер и собирает контекст из правил памяти задачи, брифа выбранной задачи и существующих содержательных `todo.md` и `work-state.md` либо сообщает об отсутствии активной задачи.
 После разрешения задачи модуль передаёт применимой операции конкретные привязки артефактов как явные смысловые входы и разрешённые вызывающей стороной пути результатов.
@@ -219,5 +223,6 @@ modules:
 | Скилл | Назначение |
 | --- | --- |
 | [`$init-task-workdir`](src/task-workdir/skills/init-task-workdir/SKILL.md) | По явному запросу создаёт директорию задачи с брифом, `todo.md` и `work-state.md`. |
-| [`$prepare-task-workdir`](src/task-workdir/skills/prepare-task-workdir/SKILL.md) | В диалоге подготавливает бриф задачи, якори в коде и выбранное направление решения. |
+| [`$prepare-task-workdir`](src/task-workdir/skills/prepare-task-workdir/SKILL.md) | Через интервью согласует постановку задачи любого типа и актуализирует бриф, `todo.md` и `work-state.md`. |
+| [`$prepare-development-task`](src/task-workdir/skills/prepare-development-task/SKILL.md) | Выполняет легковесную подготовку, затем собирает необходимые якори в коде и согласует техническое решение для задачи на разработку по структурированному процессу. |
 | [`$select-next-increment`](src/task-workdir/skills/select-next-increment/SKILL.md) | Выбирает следующий минимальный нереализованный инкремент. |
