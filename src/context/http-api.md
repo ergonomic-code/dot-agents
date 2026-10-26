@@ -1,7 +1,7 @@
 ---
 requires_modules:
   - http-api
-applies_when: Работа затрагивает HTTP-операцию, HTTP-контракт, тест HTTP-границы, типизированный HTTP-хелпер либо сессии и фабрики тестовых HTTP-клиентов.
+applies_when: Работа затрагивает HTTP-операцию, HTTP-контракт, документацию HTTP API, тест HTTP-границы, типизированный HTTP-хелпер либо сессии и фабрики тестовых HTTP-клиентов.
 routing_order: 50
 ---
 
@@ -10,6 +10,7 @@ routing_order: 50
 Загружай только пункты, соответствующие запрошенной или запланированной HTTP-работе:
 
 - первоначальная настройка обвязки тестов HTTP-границы в новом проекте: `../references/http-api-test-project-start.md`;
+- написание или изменение документации HTTP API, включая OpenAPI: `../conventions/http-api/api-documentation.md`;
 - добавление или изменение граничных тестов HTTP-эндпоинтов: `../conventions/http-api/http-api-test-design.md` и `../conventions/http-api/http-api-test-rules.md`;
 - добавление или изменение тестовых `*HttpApi`: `../conventions/http-api/http-api-test-rules.md`;
 - проектирование или изменение тестовых HTTP-клиентов, их сессий и фабрик: `../patterns/http-json-api/test-client-sessions.md`;
