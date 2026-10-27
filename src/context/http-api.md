@@ -10,6 +10,7 @@ routing_order: 50
 Загружай только пункты, соответствующие запрошенной или запланированной HTTP-работе:
 
 - первоначальная настройка обвязки тестов HTTP-границы в новом проекте: `../references/http-api-test-project-start.md`;
+- создание, изменение, рефакторинг или ревью объявлений HTTP-эндпоинтов: `../conventions/http-api/endpoint-implementation.md`;
 - написание или изменение документации HTTP API, включая OpenAPI: `../conventions/http-api/api-documentation.md`;
 - добавление или изменение граничных тестов HTTP-эндпоинтов: `../conventions/http-api/http-api-test-design.md` и `../conventions/http-api/http-api-test-rules.md`;
 - добавление или изменение тестовых `*HttpApi`: `../conventions/http-api/http-api-test-rules.md`;
