@@ -21,7 +21,7 @@ routing_order: 30
 - Если работа предполагает добавление или изменение тестов, которые используют тестовые дубли прочитай `../conventions/core/test-doubles.md`;
 - Если работа предполагает проектирование тестов прочитай `../conventions/core/test-case-selection.md`;
 - Если работа предполагает добавление или изменение имён тестовых групп или кейсов (в том числе при рефакторинге), прочитай `../conventions/core/test-naming.md` и `../artifacts/test-case-specification-format/references/feature-naming.md`;
-- Если работа предполагает добавление или изменение тел тест-кейсов `../conventions/core/test-implementation.md`.
+- Если работа предполагает добавление или изменение тел тест-кейсов, источников параметров, фикстур, тестовых помощников или адаптеров, прочитай `../conventions/core/test-implementation.md`.
 
 После внесения изменений в код тестов выполни `../conventions/core/ergonomic-approach-checklist.md` и `../conventions/core/test-implementation-checklist.md`.
 Если подключён модуль `ergonomic-testing`, также выполни `../conventions/ergonomic-testing/checklist.md`.
