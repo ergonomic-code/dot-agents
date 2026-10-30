@@ -4,51 +4,46 @@ keywords:
   - component-structure
 ---
 
-# Ergonomic component structure projection
+# Проекция структуры компонентов Эргономичной архитектуры
 
-## Terminology
+## Терминология
 
-- `ports` — entry points that receive external signals and delegate to one operation or one resource method.
-- `operations` — top-level scenario components that orchestrate one use case over resources.
-- `domain operations` (`DOPs`) — reusable lower-level effect sequences that are shared by multiple operations.
-- `resources` — runtime components that encapsulate stateful code or abstract another runtime dependency behind an explicit API, whether that dependency is stateful or stateless.
-- `complex resources` — domain-facing resources that expose one resource API over several lower-level resources or storage/integration mechanisms.
-- `primitive resources` — resources that are internal implementation parts of a higher-level resource.
-- `infrastructure resources` — project-owned infrastructure-facing resources reused as implementation parts of multiple domain-facing resources.
+- Порты (`ports`) — точки входа, принимающие внешние сигналы и делегирующие выполнение одной операции или одному методу ресурса.
+- Операция системы (`operation`) — метод-оркестратор, вызываемый напрямую из какого-либо порта и координирующий один сценарий использования через ресурсы.
+  Компонент операции (`Op`) предоставляет этот метод.
+- Доменные операции (`DOPs`) — переиспользуемые последовательности эффектов нижнего уровня, общие для нескольких операций.
+- Ресурсы (`resources`) — компоненты времени выполнения, инкапсулирующие код с состоянием или скрывающие другую зависимость времени выполнения за явным API, независимо от наличия состояния у этой зависимости.
+- Сложные ресурсы (`complex resources`) — ресурсы с доменным API, объединяющие несколько ресурсов нижнего уровня или механизмов хранения и интеграции.
+- Примитивные ресурсы (`primitive resources`) — внутренние части реализации ресурса более высокого уровня.
+- Инфраструктурные ресурсы (`infrastructure resources`) — принадлежащие проекту ресурсы доступа к инфраструктуре, переиспользуемые в реализации нескольких доменных ресурсов.
 
-## Rules
+## Правила
 
-- Reserve `port` for an entry point that receives an external signal; model outbound and internal dependencies as resources, not ports.
-- Introduce a component interface only when current requirements, the selected design, or verified production code indicate at least two production implementations; test doubles do not count as production implementations.
-- When a design artifact needs to show one not-yet-implemented component, use a concrete class declaration or explicitly labeled pseudocode instead of an interface.
-- Expose one public use-case method name from each operation; allow multiple overloads of that method when needed.
-- Keep the component dependency graph acyclic.
-- Use a complex resource when one domain resource must coordinate several primitive or infrastructure resources behind a single bounded API.
-- Keep primitive resources private to one higher-level resource unless the project intentionally creates multiple configured instances with non-overlapping state.
-- Do not let infrastructure API types leak through a domain-facing resource API.
-- Use explicit behavior layering: operations on top, optional domain operations below them, resources below operations, and optional infrastructure resources below resources.
-- For each behavior layer except DOPs, forbid horizontal dependencies between peers on the same layer.
-- Inject the resources an operation uses directly into that operation.
-- Keep each component to at most 10 direct component dependencies.
-- Keep domain operations, when they exist, between orchestration-level operations and resources instead of mixing those responsibilities.
-- Do not register DOPs in the DI container.
-- Operations instantiate DOPs from dependencies already injected into the operation.
-- Keep infrastructure concerns behind infrastructure resources instead of leaking them into domain-facing resources or operations.
-- Do not hide core dependencies behind incidental facades when direct operation-to-resource wiring is the intended shape.
+- Используй термин «порт» только для точки входа, принимающей внешний сигнал; моделируй исходящие и внутренние зависимости как ресурсы.
+- Вводи интерфейс компонента только тогда, когда текущие требования, выбранный дизайн или проверенный рабочий код указывают хотя бы на две реализации в рабочем коде; тестовые дубли не учитываются.
+- Сохраняй граф зависимостей компонентов ацикличным.
+- Используй сложный ресурс, когда один доменный ресурс должен координировать несколько примитивных или инфраструктурных ресурсов за единым API с ограниченной областью ответственности.
+- Скрывай примитивный ресурс внутри одного ресурса более высокого уровня, если только проект намеренно не создаёт несколько настроенных экземпляров с непересекающимися областями ответственности.
+- Не допускай утечки типов инфраструктурных API в доменный API ресурса.
+- Явно разделяй слои поведения: операции сверху, необязательные доменные операции под ними, ресурсы под операциями и необязательные инфраструктурные ресурсы под ресурсами.
+- Ограничивай каждый компонент десятью прямыми зависимостями от других компонентов.
+- Размещай доменные операции, если они есть, между операциями уровня оркестрации и ресурсами, не смешивая их ответственности.
+- Скрывай инфраструктурные задачи за инфраструктурными ресурсами, не перенося их в доменные ресурсы или операции.
+- Не скрывай основные зависимости за случайными фасадами, когда предполагается прямая связь операции с ресурсом.
 
-## Resource class naming
+## Именование классов ресурсов
 
-- Treat resource as an architectural category, not a concrete class role.
-- Never end a resource class name with `Resource`.
-- Name a resource class by its concrete role.
-- Common role suffixes are `Repo` for an entity repository, `Dao` for storage operations over data that do not fit the entity model, `Client` for an external-system client, `Service` for a composite resource, and `Channel` for a channel of domain-specific messages.
-- This suffix list is not exhaustive; use another role-specific name when it communicates the responsibility better.
+- Считай ресурс архитектурной категорией, а не конкретной ролью класса.
+- Не заканчивай имя класса суффиксом `Resource`.
+- Называй класс ресурса по его конкретной роли.
+- Типичные суффиксы: `Repo` для репозитория сущности, `Dao` для доступа к хранилищу вне модели сущности, `Client` для клиента внешней системы, `Service` для составного ресурса и `Channel` для канала доменных сообщений.
+- Список суффиксов не исчерпывающий; используй другое имя роли, если оно лучше передаёт ответственность.
 
-## Typical component names
+## Типичные имена компонентов
 
-- Ports: `NewsController`, `RabbitMqReplicationListener`, `DailyReplicationScheduler`.
-- Operations: `PublishNewsOp`, `ReplicateAggregateOp`, `CreateUserOp`.
-- Resources: `ExercisesRepo`, `ExternalSystemClient`, `ConfirmEmailsChannel`, `FillScheduleNotificationsChannel`.
-- Complex resources: `ConfirmEmailService`.
-- Primitive resources: `ConfirmTokensDao`, `OutboxDao`, `ConfirmEmailsChannel`.
-- Infrastructure resources: `FilesStorage`, `EmailSender`, `PushNotificationsService`.
+- Порты: `NewsController`, `RabbitMqReplicationListener`, `DailyReplicationScheduler`.
+- Операции: `PublishNewsOp`, `ReplicateAggregateOp`, `CreateUserOp`.
+- Ресурсы: `ExercisesRepo`, `ExternalSystemClient`, `ConfirmEmailsChannel`, `FillScheduleNotificationsChannel`.
+- Сложные ресурсы: `ConfirmEmailService`.
+- Примитивные ресурсы: `ConfirmTokensDao`, `OutboxDao`, `ConfirmEmailsChannel`.
+- Инфраструктурные ресурсы: `FilesStorage`, `EmailSender`, `PushNotificationsService`.
