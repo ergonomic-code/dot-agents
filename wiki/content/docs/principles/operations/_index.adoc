@@ -1,0 +1,13 @@
+---
+title: Принципы проектирования поведения системы
+type: docs
+weight: 625
+bookcollapsesection: true
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:sectlinks:
+
+Принципы проектирования поведения системы - кода в сервисах, юзкейсах, интеракторах, операциях, бизнес-логики в агрегатах и т.д.

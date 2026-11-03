@@ -1,0 +1,24 @@
+<link rel="stylesheet" href="/css/github.css">
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+<script>
+window.goatcounter = {
+  path: function (path) {
+    {{- if eq .RelPermalink "/404.html" }}
+    return location.host
+      + '/404'
+      + location.pathname
+      + location.search;
+    {{- else }}
+    return location.host + path;
+    {{- end }}
+  }
+  {{- if eq .RelPermalink "/404.html" }},
+  title: function () {
+    return '404: ' + location.pathname;
+  }
+  {{- end }}
+};
+</script>
+<script data-goatcounter="https://azhidkov.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>

@@ -1,0 +1,15 @@
+---
+title: Превращение невалидного состояния в непредставимое (v1.0.0)
+type: docs
+weight: 500
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:toc:
+:sectanchors:
+
+* https://azhidkov.pro/posts/24/06/http-api-and-design/[Влияние дизайна HTTP API на дизайн модели]
+* https://lexi-lambda.github.io/blog/2019/11/05/parse-don-t-validate/[Parse, don’t validate]
+* https://fsharpforfunandprofit.com/posts/designing-with-types-making-illegal-states-unrepresentable/[Designing with types: Making illegal states unrepresentable]

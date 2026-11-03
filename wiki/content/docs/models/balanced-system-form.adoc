@@ -1,0 +1,18 @@
+---
+title: Сбалансированная форма системы (v1.0.0)
+type: docs
+weight: 625
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:sectlinks:
+:imagesdir: /docs/models/images
+
+* Структурный дизайн. Древний секрет простого и быстрого кода. (https://jokerconf.com/talks/f9b11eab0fc14bc2b2dc7c3ad62834d0/?referer=%2Fpersons%2F5f0fcf0f3fe443b5a15e994409da806d%2F[доклад] и https://azhidkov.pro/posts/24/11/structured-design/[пост])
+* https://azhidkov.pro/posts/23/12/project-e-dev-guideline/[Гайдлайн разработчика Проекта Э]
+* https://azhidkov.pro/posts/23/10/why-fp/[ФП виновно в снижении стоимости программ. Вот мои доказательства, господа присяжные заседатели]
+* https://azhidkov.pro/posts/22/05/lazy-eval-for-func-arch/[Ленивые вычисления для реализации функциональной архитектуры]
+* https://azhidkov.pro/posts/21/10/211018-ergo-approach-post/[Структура эргономичных программ]
+* https://azhidkov.pro/posts/21/09/210925-maintanable-arch/[Архитектура ориентированная на трансформацию]

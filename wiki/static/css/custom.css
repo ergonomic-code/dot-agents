@@ -1,0 +1,94 @@
+body {
+  font-family: Roboto, sans-serif;
+}
+
+/* Якорь со ссылкой слева от заголовков */
+#content h1 > a.anchor::before,
+h2 > a.anchor::before,
+h3 > a.anchor::before,
+#toctitle > a.anchor::before,
+.sidebarblock > .content > .title > a.anchor::before,
+h4 > a.anchor::before,
+h5 > a.anchor::before,
+h6 > a.anchor::before {
+  content: "\00A7";
+  display: inline;
+  position: fixed;
+  left: -1em;
+}
+
+/* Разрешение горизонтального скролла для листингов*/
+.markdown .highlight {
+  overflow: auto;
+}
+
+/* Возврат парагрфов в цитаты*/
+.markdown blockquote :last-child,
+.markdown blockquote :first-child {
+  margin-top: initial;
+  margin-bottom: 1em;
+}
+
+/* Цитаты курсивом */
+.markdown blockquote {
+  font-style: italic;
+  padding: 2rem;
+  border-inline-start: .5rem solid var(--gray-200)
+}
+
+/* Иконки примечаний и варнингов */
+table{border-collapse:collapse;border-spacing:0}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{
+  text-align:center;
+  width:80px;
+  background-color: var(--gray-100);
+  border: 0px;
+}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Roboto","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{
+  padding-left:1.125em;
+  padding-right:1.25em;
+  color: var(--body-font-color);
+  background-color: var(--gray-100);
+  border: 0px;
+}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note::before{
+  content:"\f05a";
+  color: var(--hint-color-info)
+}
+.admonitionblock td.icon .icon-tip::before{
+  content:"\f0eb";
+  color: var(--hint-color-info)
+}
+.admonitionblock td.icon .icon-warning::before{
+  content:"\f071";
+  color:var(--hint-color-warning)
+}
+.admonitionblock td.icon .icon-caution::before{
+  content:"\f06d";
+  color:var(--hint-color-danger)
+}
+.admonitionblock td.icon .icon-important::before{
+  content:"\f06a";
+  color:var(--hint-color-danger)
+}
+
+
+/* about-me */
+.about-me td {
+  border: 0px !important;
+}
+
+.image.right {
+  float: right;
+  margin-left: 2em;
+}
+
+/* вертикальная отбивка в конце статьи*/
+footer.book-footer {
+    margin-bottom: 10em
+}

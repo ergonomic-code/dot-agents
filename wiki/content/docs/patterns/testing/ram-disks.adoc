@@ -1,0 +1,13 @@
+---
+title: Запуск тестконтейнеров на RAM-дисках (v1.0.0)
+type: docs
+weight: 500
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:toc:
+:sectanchors:
+
+см. https://azhidkov.pro/posts/24/04/trainer-advisor-testing-test-suite-setup/#\_%D0%B7%D0%B0%D0%BF%D1%83%D1%81%D0%BA_%D0%B8%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D1%8B[Тестирование Trainer Advisor: сетап набора тестов (test suite)/ тестируемой системы (system under test) - Запуск инфраструктуры]

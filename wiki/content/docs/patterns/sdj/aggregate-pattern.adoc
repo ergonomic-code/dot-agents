@@ -1,0 +1,66 @@
+---
+title: "Шаблон Kotlin-класса агрегата (v1.0.0)"
+type: docs
+weight: 500
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:sectlinks:
+
+Агрегаты реализуются как неизменяемые data-классы
+Так же все агрегаты должны иметь стандартный набор технических полей:
+
+* идентификатор
+* версия
+* момент времени создания
+* момент времени последней модификации
+
+Все эти поля должны иметь значения по умолчанию и идти последними в конструкторе:
+
+[source,kotlin]
+----
+data class User(
+    val login: String,
+
+    @Id
+    val id: Long = 0,
+    @CreatedDate
+    val createdAt: Instant = Instant.now(),
+    @LastModifiedDate
+    val modifiedAt: Instant? = null,
+    @Version
+    val version: Long = 0
+)
+----
+
+При желании, можно завести базовый класс для сущностей:
+
+[source,kotlin]
+----
+interface Entity<T> {
+    val id: Long
+    val createdAt: Instant
+    val modifiedAt: Instant?
+    val version: Long
+}
+----
+
+Это не позволит убрать дублирование "шапки" технических полей, но позволит сделать эти шапки единообразными среди всех сущностей:
+
+[source,kotlin]
+----
+data class User(
+    val login: String,
+
+    @Id
+    override val id: Long = 0,
+    @CreatedDate
+    override val createdAt: Instant = Instant.now(),
+    @LastModifiedDate
+    override val modifiedAt: Instant? = null,
+    @Version
+    override val version: Long = 0
+) : Entity<User>
+----

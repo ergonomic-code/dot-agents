@@ -1,0 +1,13 @@
+---
+title: Хранение информации в её первичной форме (v0.0.0)
+type: docs
+weight: 500
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:toc:
+:sectanchors:
+
+см. https://enterprisecraftsmanship.com/posts/storing-information-in-its-highest-form/[Storing information in its highest form]

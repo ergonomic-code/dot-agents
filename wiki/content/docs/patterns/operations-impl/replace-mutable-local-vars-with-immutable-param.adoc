@@ -1,0 +1,75 @@
+---
+title: Замена локальных изменяемых переменных на неизменяемый параметр функции (v0.0.0)
+type: docs
+weight: 500
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:toc:
+:sectanchors:
+
+Вместо мутабельных локальных переменных:
+
+[source,kotlin]
+----
+    fun parseInt(str: String): ParseResult {
+        var res = 0
+        var negative = false
+        var firstInvalidCharIdx = -1
+        str.forEachIndexed { idx, char ->
+            when (char) {
+                '-' if idx == 0 -> negative = true
+                in '0'..'9' -> res = res * 10 + char.digitToInt()
+                else -> firstInvalidCharIdx = idx
+            }
+        }
+
+        if (firstInvalidCharIdx != -1) {
+            return ParseResult.Failure(firstInvalidCharIdx, str[firstInvalidCharIdx])
+        }
+
+        if (negative) {
+            res = -res
+        }
+
+        return ParseResult.Success(res)
+    }
+----
+
+Можно завести иммутабельный класс с ними же
+
+[source,kotlin]
+----
+data class ParsingData(
+    val digits: List<Int> = emptyList<Int>(),
+    val negative: Boolean = false,
+    val firstInvalidChar: Int = -1
+)
+----
+
+И передавать его в параметрах:
+
+[source,kotlin]
+----
+    fun parseInt3(str: String): ParseResult {
+        val stringData = str.foldIndexed(ParsingData()) { idx, data, char ->
+            when (char) {
+                '-' if idx == 0 -> data.copy(negative = true)
+                in '0'..'9' -> data.copy(digits = data.digits + char.digitToInt())
+                else -> data.copy(firstInvalidChar = idx)
+            }
+        }
+
+        return when {
+            stringData.firstInvalidChar != -1 -> ParseResult.Failure(
+                stringData.firstInvalidChar,
+                str[stringData.firstInvalidChar]
+            )
+
+            stringData.negative -> ParseResult.Success(stringData.digits.fold(0) { acc, d -> acc * 10 + d } * -1)
+            else -> ParseResult.Success(stringData.digits.fold(0) { acc, d -> acc * 10 + d })
+        }
+    }
+----

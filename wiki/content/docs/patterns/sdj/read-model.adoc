@@ -1,0 +1,18 @@
+---
+title: Read-модель (v1.0.0)
+type: docs
+weight: 500
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:sectlinks:
+
+Если необходимо вытащить данные, которые пересикают границы агрегатов и на их основе потом не надо будет делать запись, то это надо делать через специализированную read-модель.
+
+По большому счёту, это обычная SDJ-сущность, которая либо достаётся с помощью кастомных `@Query`-методов, либо замапленная на SQL VIEW.
+
+При том если для такой сущности заводится отедльный репозиторий, он должен реализовывать `Repository` (не `CrudRepository`).
+
+см. https://github.com/ergonomic-code/Project-Moby/blob/master/src/main/kotlin/reading01/ProductView.kt[Project Moby - ProductView]

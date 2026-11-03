@@ -1,0 +1,13 @@
+---
+title: Методики
+type: docs
+weight: 730
+bookcollapsesection: true
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:sectlinks:
+
+Методики проектирования, которые позволяют создавать код соответствующий моделям и принципам Эргономичного подхода.

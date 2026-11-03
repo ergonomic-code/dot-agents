@@ -1,0 +1,13 @@
+---
+title: Инъекция IO в бизнес-логику через ленивовычисляемое значение (v1.0.0)
+type: docs
+weight: 500
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:toc:
+:sectanchors:
+
+см. https://azhidkov.pro/posts/22/05/lazy-eval-for-func-arch/[Ленивые вычисления для реализации функциональной архитектуры]

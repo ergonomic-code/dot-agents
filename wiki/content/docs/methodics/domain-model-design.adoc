@@ -1,0 +1,15 @@
+---
+title: Проектирование домена приложения (v1.0.0)
+type: docs
+weight: 750
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:sectlinks:
+:imagesdir: /docs/methodics/images
+
+* Рациональный подход к декомпозиции систем на модули или микросервисы (https://jpoint.ru/archive/2023/talks/329f3cb2b72e4ec6a0e931207191546b/?referer=%2Farchive%2F2023%2Fpersons%2Fbb6431956f3f41c396d7e2b0fdc93654%2F[доклад]
+* https://azhidkov.pro/posts/23/04/ergonomic-decomposition/[пост])
+* https://azhidkov.pro/posts/22/06/220611-true-story-project/[Диаграмма эффектов: пример построения]

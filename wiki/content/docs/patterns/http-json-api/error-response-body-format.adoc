@@ -1,0 +1,30 @@
+---
+title: Формат тела ошибочного ответа (v1.1.0)
+type: docs
+weight: 500
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:toc:
+:sectanchors:
+
+== Формат тела ошибочного ответа
+
+Тело ответа должно соответствовать стандарту https://datatracker.ietf.org/doc/html/rfc9457[Problem Details for HTTP APIs].
+В дополнение к стандарту, ответ может содержать поле timestamp с моментом возникновения ошибки в формате https://en.wikipedia.org/wiki/ISO_8601[ISO 8601].
+
+Пример тела ошибочного ответа:
+
+[source,json]
+----
+{
+    "instance": "9c2e4f2b-3a6d-4f1b-9d1e-8a2b5c7d9e10",
+    "status": 409,
+    "type": "/no-available-rooms",
+    "title": "CONFLICT",
+    "detail": "There are no available rooms of type: LUX in hotel with id=2 2024-06-03 to: 2024-06-04",
+    "timestamp": "2024-05-29T11:18:20.665505897Z"
+}
+----

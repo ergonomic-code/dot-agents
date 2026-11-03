@@ -1,0 +1,56 @@
+---
+title: Spring Data JDBC
+type: docs
+weight: 625
+bookcollapsesection: true
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:sectlinks:
+
+Шаблоны проектирования и реализации агрегатов на базе Spring Data JDBC.
+
+== SDJ на одной странице
+
+По сути своей SDJ - простой как три копейки:
+
+. Он работает с агрегатами
+. Агрегат - это дерево с корнем
+. Корень агрегата - это класс с аннотацией Table
+. Границы агрегата - это все объекты достижимые из корня через разыменовывание java-ссылок
+. Помимо скалярных ссылок, поддерживаются ещё и List, Set и Map
+. Для List и Map в таблице вложенных сущностей заводится поле для индекса/ключа, которым рулит SDJ
+. Работа всегда идёт через корень агрегата и со всем агрегатом целиком
+.. При вставке корня автоматически вставляется всё дерево
+.. При обновлении корня, корень обновляется, а все остальные сущности удаляются и вставляются заново
+... К такой реализации и у меня есть вопросы, но сейчас так
+.. При удалении корня автоматически удаляется всё дерево
+.. При загрузке агрегата автоматически загружается всё дерево целиком
+... OneToOne (просто поле) загружается JOIN-ом
+... OneToMany (поле-коллекция) загружается доп. запросом
+.... При загрузке несколько агрегатов с OneToMany связями по умолчанию всегда будет проблема N+1
+.... Есть ещё экспериментальная поддержка https://docs.spring.io/spring-data/relational/reference/jdbc/entity-persistence.html#jdbc.loading-aggregates[загрузки агрегатов одним запросом], но у неё сейчас множество ограничений:
+..... Не поддерживаются вложенные коллекции;
+..... Не поддерживаются поля типа AggregateReference и вложенные сущности;
+..... Работает только с методами из CrudRepository - findById, findAll и т.д. - не работает выведеными (derived) запросами (аля findUserByLoginAndPassword) и кастомными запросами (в аннотации Query);
+..... По умолчанию отключена;
+... ManyToMany нет по философии DDD.
+    Если надо это замоделирровать, то надо явно завести вложенную сущность для таблицы ассоциации и либо сделать её самостоятельным агрегатом (если там с каждой стороны >20 сущностей может быть, либо если это кажется "разумным"), либо сделать эту сущность частью того агрегата, где их будет мало (например, в связке пост-тэг в блог платформе, связь делается частью поста, потому что у поста будет пара-тройка тэгов, а у тэга - неограниченное количество постов)
+. Эвристика сборки агрегата: сущность добавляется в агрегат, если она удовлетворяет трём условиям:
+.. её жизненный цикл полностью ограничен корнем - невозможно создать сущность раньше корня агрегата, а после удаления корня агрегата её существование становится бессмысленным (она становится "сиротой")
+.. Кол-во сущностей в ассоциации ограниченное и небольше (< 20)
+.. Сущность создаётся в той же транзакции, что и корень
+.. У меня есть https://docs.google.com/presentation/d/13pRifu1OAY8I1KzoOQsLNB4NEhG4vgG9Girjp4xFAbA/edit#slide=id.g30a6a26a466_0_32[слайды] с заметками докладчика об этом, надеюсь когда-нить таки запишу видео по ним
+. Что ещё почитать:
+.. https://docs.spring.io/spring-data/relational/reference/#reference[мануал] от корки до корки
+.. Серию постов от автора
+... https://spring.io/blog/2018/09/17/introducing-spring-data-jdbc[Introducing Spring Data JDBC]
+... https://spring.io/blog/2018/09/24/spring-data-jdbc-references-and-aggregates[Spring Data JDBC, References, and Aggregates]
+... https://spring.io/blog/2022/01/20/spring-data-jdbc-how-can-i-do-a-partial-update-of-an-aggregate-root[Spring Data JDBC - How Can I Do a Partial Update of an Aggregate Root?]
+... https://spring.io/blog/2021/09/22/spring-data-jdbc-how-do-i-make-bidirectional-relationships[Spring Data JDBC - How do I make Bidirectional Relationships?]
+... https://spring.io/blog/2023/08/31/this-is-the-beginning-of-the-end-of-the-n-1-problem-introducing-single-query[This is the Beginning of the End of the N+1 Problem: Introducing Single Query Loading.]
+.. https://www.youtube.com/watch?v=WYa9n0F4CRM&pp=ygUQc3ByaW5nIGRhdGEgamRiYw%3D%3D[Доклад] от автора о миграции с JPA на SDJ и про проектирование агрегатов
+.. Мои посты про https://azhidkov.pro/posts/22/04/220401-aggregates/[агрегаты] и https://azhidkov.pro/posts/23/11/immutable-relation-data-model-v2/[неизменяемую модель данных]
+. Возможно что-то из link:++{{<ref "/docs/models/immutable-relationd-data-model/">}}++[этих черновиков] поможет уложить информационную модель (модель модели данных) Spring Data JDBC

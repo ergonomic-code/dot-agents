@@ -1,0 +1,16 @@
+---
+title: Дополнительные материалы
+type: docs
+weight: 960
+---
+
+Подборка книг, статей и выступлений других экспертов об идеях, входящих в Эргономичный подход.
+
+* https://t.ly/YNCr0[Grokking Simplicity]
+* https://t.ly/B_flt[Принципы юнит-тестирования]
+* https://t.ly/RhCaG[Java to Kotlin: A Refactoring Guidebook]
+* https://t.ly/uwFIt[Domain Modeling Made Functional]
+* https://t.ly/7_Njg[Data-Oriented Programming]
+* https://t.ly/QaMDu[Структура и интерпретация компьютерных программ]
+* https://t.ly/foQRZ[Functional Design: Principles, Patterns, and Practices]
+* https://t.ly/BHhpa[Structured Design]

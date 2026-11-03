@@ -1,0 +1,150 @@
+---
+title: Функциональный (типизированный) подход к обработке ошибок
+type: docs
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:sectanchors:
+:toc:
+
+_Функциональный (типизированный) подход к обработке ошибок — способ сигнализировать об ошибках через тип результата (контейнер/ADT), а не через исключения._
+
+В этом подходе обработка ошибок заключается в том, чтобы при проектировании не тотальных^*^ функций, для сигнализации об ошибках использовать не исключения, а тип-контейнер в качестве результата функции, который может содержать в себе либо результат успешного выполнения, либо ошибку.
+
+[NOTE]
+====
+^*^ функция является тотальной в только том случае, если она всегда для любых значений своих аргументов и любого состояния глобального окружения может вернуть корректный результат.
+
+Примером тотальной функции является функция возведения в квадрат значения типа BigInteger.
+А примерами не тотальных функций являются:
+
+* функция парсинга строки в целое число - она не может вернуть корректный ответ для аргумента "foo";
+* функция чтения текстового файла - она не может вернуть корректный результат, если в момент вызова файл отсутствует на диске или диск вообще отказал.
+====
+
+Таким типом может служить либо `kotlin.Result` из стандартной библиотеки, либо какой-то монадический тип из сторонней библиотеки (такие как Either из https://arrow-kt.io/[Arrow] или Result из https://github.com/michaelbull/kotlin-result[kotlin-result]), либо специфичная для функции закрытая (sealed) иерархия типов.
+
+Специфическим для Kotlin-а (и других языков с null безопасностью) является возврат null для сигнализации об ошибке.
+Но этот способ можно использовать только в том случае, если в функции может случиться только одна ошибка, обработка которой не требует какой-то дополнительной информации.
+
+Соответственно, при обнаружении ошибки, функция вместо выброса исключения, возвращает вариант результирующего значения сигнализирующий об ошибке.
+
+== Примеры
+
+=== Кастомный ADT
+
+Условно https://elizarov.medium.com/kotlin-and-exceptions-8062f589d07[официально рекомендуемый] стиль обработки доменных ошибок в Kotlin.
+
+.Подход к обработке ошибок на базе кастомного ADT
+[source,kotlin]
+----
+sealed interface ParseResult {
+    @JvmInline
+    value class Success(val value: Int) : ParseResult
+    data class Failure(val pos: Int, val char: Char) : ParseResult
+}
+
+fun parseInt(str: String): ParseResult {
+    var res = 0
+    var sign = 1
+    str.forEachIndexed { idx, char ->
+        when (char) {
+            '-' if idx == 0 -> sign = -1
+            in '0'..'9' -> res = res * 10 + char.digitToInt()
+            else -> return ParseResult.Failure(idx, char)
+        }
+    }
+
+    return ParseResult.Success(res * sign)
+}
+----
+
+=== Result из стандартной библиотеки
+
+Рекомендуемый Эргономичным подходом вариант реализации функционального стиля обработки ошибок.
+Он требует меньше церемоний, чем вариант с ADT (не надо заводить корневой класс иерархии и вариант для успешного результата) и сразу даёт вспомогательные функции работы со значением в контейнере в духе `map`/`recover`.
+
+Кроме того, вопреки вышеупомянотму посту и разделу https://github.com/Kotlin/KEEP/blob/master/proposals/stdlib/result.md#error-handling-style-and-exceptions[Error-handling style and exceptions] в KEEP-е посвящённому дизайну `Result`-а, в том же KEEP-е функциональный стиль обработки ошибок https://github.com/Kotlin/KEEP/blob/master/proposals/stdlib/result.md#functional-error-handling[упоминается] как один из целевых юз кейсов этого типа.
+
+Однако при выборе этого варианта стоит помнить о том, что создание экземпляра исключения - это дорогая операция, и в "горячем" коде лучше выбрать один из альтернативных вариантов.
+
+[source,kotlin]
+----
+data class UnparseableString(
+    val idx: Int,
+    val char: Char
+) : RuntimeException()
+
+
+fun parseInt(str: String): Result<Int> {
+    var res = 0
+    var sign = 1
+    str.forEachIndexed { idx, char ->
+        when (char) {
+            '-' if idx == 0 -> sign = -1
+            in '0'..'9' -> res = res * 10 + char.digitToInt()
+            else -> return failure(UnparseableString(idx, char))
+        }
+    }
+
+    return success(res * sign)
+}
+----
+
+=== Result из сторонней библиотеки
+
+Result из стандартной библиотеки хорош только тем, что он из стандартной библиотеки.
+И тем кто не боится добавлять зависимости в проект лучше взять одну из сторонних библиотек, предлагающих полноценный монадический тип с более богатой библиотекой функций работы со значениями в контейнере.
+
+[source,kotlin]
+----
+data class UnparseableString(
+    val idx: Int,
+    val char: Char
+)
+
+fun parseInt(str: String): Result<Int, UnparseableString> {
+    var res = 0
+    var sign = 1
+    str.forEachIndexed { idx, char ->
+        when (char) {
+            '-' if idx == 0 -> sign = -1
+            in '0'..'9' -> res = res * 10 + char.digitToInt()
+            else -> return Err(UnparseableString(idx, char))
+        }
+    }
+
+    return Ok(res * sign)
+}
+----
+
+=== Нуллабельный тип результата функции
+
+Возврат null для сигнализации об ошибке - де-факто официально рекомендуемый (см. функции *OrNull в стандартной библиотеке) стиль обработки ошибок, в случаях когда обработка не требует какой-то дополнительной информации.
+
+.Подход к обработке ошибок на базе нуллабельного типа результата функции
+[source,kotlin]
+----
+fun parseInt(str: String): Int? {
+    var res = 0
+    var sign = 1
+    str.forEachIndexed { idx, char ->
+        when (char) {
+            '-' if idx == 0 -> sign = -1
+            in '0'..'9' -> res = res * 10 + char.digitToInt()
+            else -> return null
+        }
+    }
+
+    return res * sign
+}
+----
+
+=== Из реального проекта
+
+Варианты на базе:
+
+* https://github.com/ergonomic-code/Trainer-Advisor/blob/6dea08ee45f981a158b2ac8ab81e6598ef9e2cd8/app/src/main/kotlin/pro/qyoga/app/therapist/clients/journal/list/GetJournalPageOp.kt#L12[Кстомного ADT]
+* https://github.com/ergonomic-code/Trainer-Advisor/blob/6dea08ee45f981a158b2ac8ab81e6598ef9e2cd8/app/src/main/kotlin/pro/qyoga/core/therapy/exercises/ExercisesServiceImpl.kt#L77[Возврата null]

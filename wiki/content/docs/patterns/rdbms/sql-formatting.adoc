@@ -1,0 +1,37 @@
+---
+title: Форматирование SQL-запросов (v1.0.0)
+type: docs
+weight: 500
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:toc:
+:sectanchors:
+
+* в SQL-запросах ключевые слова пишутся в UPPER CASE
+* Блоки SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY, LIMIT/OFFSET начинаются с новой строки
+* Все остальные блоки отбиваются на один уровень от своего родителя
+* Вложенные SELECT отбиваются на один уровень от своего родителя
+
+Неправильно:
+[source,sql]
+----
+select ex.id as id, title from exercises ex
+INNER JOIN exercise_purposes ep ON ex.id = ep.exercise_id
+WHERE (ex.title LIKE '%' || :title || '%' OR :title IS NULL) 
+AND (ex.contradictions LIKE '%' || :contradiction || '%' OR :contradiction IS NULL)
+LIMIT :pageSize OFFSET :offset
+----
+
+Правильно:
+[source,sql]
+----
+SELECT ex.id as id, title
+FROM exercises ex
+    INNER JOIN exercise_purposes ep ON ex.id = ep.exercise_id
+WHERE (ex.title LIKE '%' || :title || '%' OR :title IS NULL) 
+    AND (ex.contradictions LIKE '%' || :contradiction || '%' OR :contradiction IS NULL)
+LIMIT :pageSize OFFSET :offset
+----

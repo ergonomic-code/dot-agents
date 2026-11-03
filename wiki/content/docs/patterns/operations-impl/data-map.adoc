@@ -1,0 +1,17 @@
+---
+title: Карта данных (v1.0.0)
+type: docs
+weight: 500
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:toc:
+:sectanchors:
+
+Если для бизнес-логики требуется много разнородных данных - их можно собрать в локальный класс.
+
+см.
+
+* Структурный дизайн. Древний секрет простого и быстрого кода. (https://jokerconf.com/talks/f9b11eab0fc14bc2b2dc7c3ad62834d0/?referer=%2Fpersons%2F5f0fcf0f3fe443b5a15e994409da806d%2F[доклад] и https://azhidkov.pro/posts/24/11/structured-design/[пост])

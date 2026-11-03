@@ -1,0 +1,15 @@
+---
+title: Оценка функциональной связанности (cohesion) функции (v1.0.0)
+type: docs
+weight: 935
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:sectlinks:
+:imagesdir: /docs/methodics/images
+
+image::cohesion-estimation-1.png[]
+
+image::cohesion-estimation-2.png[]

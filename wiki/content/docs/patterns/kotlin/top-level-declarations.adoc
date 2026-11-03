@@ -1,0 +1,197 @@
+---
+title: Объявления верхнего уровня/top-level declarations (v0.1.0)
+type: docs
+weight: 500
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:toc:
+:sectanchors:
+
+== Мнение команды разработки и комьюнити Kotlin о объявлениях верхнего уровня
+
+По состоянию на декабрь 2025 года ни в https://kotlinlang.org/docs/home.html[официальной документации к языку], ни в https://kotlinlang.org/docs/coding-conventions.html[официальном стиле кодирования] нет явных рекомендаций по использованию объявлений верхнего уровня (top-level declarations) в Kotlin.
+
+Но есть сообщение https://discuss.kotlinlang.org/t/best-practices-for-top-level-declarations/2198/3[Дмитрия Жемерова] от 2017 года:
+
+____
+The recommended practice is to never use object for creating namespaces, and to always use top-level declarations when possible.
+We haven’t found name conflicts to be an issue, and if you do get a conflict, you can resolve it using an import with alias.
+
+---
+
+Рекомендуемая практика — никогда не использовать object для создания пространств имен и всегда использовать объявления верхнего уровня, когда это возможно.
+Мы не сталкивались с проблемами конфликтов имен, а если вы столкнетесь с конфликтом, вы можете решить его, используя импорт с псевдонимом.
+____
+
+И отрывок из книги https://www.manning.com/books/kotlin-in-action-second-edition[«Kotlin in Action»] (2024):
+
+____
+We all know that Java, as an object-oriented language, requires all code to be written as methods of classes.
+Usually, this works out nicely, but in reality, almost every large project ends up with a lot of code that doesn’t clearly belong to any single class.
+Sometimes, an operation works with objects of two different classes that play an equally important role for it.
+Other times, there is one primary object, but you don’t want to bloat its API by adding the operation as an instance method.
+
+As a result, you end up with classes that don’t contain any state or instance methods.
+Such classes only act as containers for several static methods.
+A perfect example is the Collections class in the JDK.
+To find other examples in your own code, look for classes that have Util as part of the name.
+
+In Kotlin, you don’t need to create all those meaningless classes.
+Instead, you can place functions directly at the top level of a source file, outside of any class.
+Such functions are still members of the package declared at the top of the file, and you still need to import them if you want to call them from other packages, but the unnecessary extra level of nesting no longer exists. 
+
+---
+
+Мы все знаем, что Java, как объектно-ориентированный язык, требует, чтобы весь код был написан в виде методов классов.
+Обычно это работает хорошо, но на практике почти каждый крупный проект в конечном итоге содержит много кода, который явно не принадлежит ни одному классу.
+Иногда операция работает с объектами двух разных классов, которые играют для нее одинаково важную роль.
+В других случаях один основной объект есть, но вы не хотите раздувать его API, добавляя операцию в виде метода экземпляра.
+
+В результате у вас появляются классы, которые не содержат никакого состояния или методов экземпляра.
+Такие классы действуют только как контейнеры для нескольких статических методов.
+Идеальным примером является класс Collections в JDK.
+Чтобы найти другие примеры в вашем собственном коде, поищите классы, в названии которых есть Util.
+
+В Kotlin вам не нужно создавать все эти бессмысленные классы.
+Вместо этого вы можете размещать функции непосредственно на верхнем уровне файла исходного кода, вне какого-либо класса.
+Такие функции по-прежнему являются членами пакета, объявленного вверху файла, и вам все равно нужно импортировать их, если вы хотите вызвать их из других пакетов, но ненужный дополнительный уровень вложенности больше не существует.
+____
+
+Исходя из этого можно предположить, что разработчики Kotlin рекомендуют использовать объявления верхнего уровня всегда, когда это возможно или, по крайней мере, без каких-либо существенных ограничений.
+
+Однако моя (и не только - https://discuss.kotlinlang.org/t/companion-object-vs-top-level-declaration/7538/2[раз], https://discuss.kotlinlang.org/t/how-do-you-namespace-things-in-kotlin/21297/2[два]) практика показывает, что чрезмерное использование объявлений верхнего уровня может привести к проблемам с автодополнением:
+
+* В него попадают все объявления верхнего уровня и смысл автодополнения теряется;
+* Если вы не помните точное имя объявления верхнего уровня, то нет возможности использовать пакет/неймспейс в качестве контекста для поиска нужного объявления.
+
+== Правила Эргономичного подхода касательно объявлений верхнего уровня
+
+Поэтому в Эргономичном подходе касательно объявлений верхнего уровня действуют следующие правила:
+
+* Простые функции-утилиты и константы, локальные для файла объявляются приватными объявлениями верхнего уровня;
+* Локальные для файла, но сложные настолько, что требуют отдельного тестирования, функции объявляются внутри объекта-синглтона, который выступает в роли неймспейса;
+* Чистые функции сложной бизнес-логики, а так же глобальные функции-утилиты и константы объявляются внутри объекта-синглтона;
+* В редких случаях объявления, которые действительно требуются повсеместно, могут быть объявлены на верхнем уровне без модификатора private.
+
+== Примеры
+
+.Простая локальная функция
+[source,kotlin]
+----
+private fun formatMinutesLabel(minutes: Double): String {
+    val totalMinutes = minutes.toLong()
+    val hours = (totalMinutes / 60) % 24
+    val mins = totalMinutes % 60
+    return String.format("%02d:%02d", hours, mins)
+}
+----
+
+.Сложная локальная функция
+[source,kotlin]
+----
+object LinearChartInterpolation {
+
+    // Публичная только для того, чтобы можно было протестировать
+    fun interpolateGaps(
+        points: List<ChartPoint>,
+        gapThreshold: Long
+    ): List<ChartPoint> {
+        if (points.size < 2) {
+            return points
+        }
+
+        val interpolatedPoints = points
+            .zipWithNext()
+            .flatMap { (current, next) ->
+                val gap = next.x - current.x
+                val patch = if (gap > gapThreshold) {
+                    interpolateGap(current, next)
+                } else {
+                    emptyList()
+                }
+
+                listOf(current) + patch
+            }
+
+        return interpolatedPoints + points.last()
+    }
+
+    // Публичная только для того, чтобы можно было протестировать
+    fun interpolateGap(
+        current: ChartPoint,
+        next: ChartPoint,
+    ): List<ChartPoint> {
+        val gap = next.x - current.x
+        val patch = generateSequence(1.0) { it + 1 }
+            .takeWhile { xOffset -> xOffset < gap }
+            .map { xOffset -> ChartPoint(current.x + xOffset, interpolate(current.y, next.y, xOffset / gap)) }
+            .toList()
+        return patch
+    }
+
+    private fun interpolate(a: Double, b: Double, fraction: Double) =
+        a + (b - a) * fraction
+
+}
+----
+
+.https://github.com/ergonomic-code/Trainer-Advisor/blob/d074d5b175ab099e5e0107a957ceeceb78762be0/app/src/main/kotlin/pro/qyoga/core/therapy/programs/ProgramDocxGenerator.kt#L20[Чистая функция сложной бизнес-логики]
+[source,kotlin]
+----
+object ProgramDocxGenerator {
+
+    fun generateDocx(program: DocxProgram, fetchImage: (Long, Int) -> StoredFileInputStream?): InputStream {
+        // 80 строк формирования документа
+    }
+
+    @Throws(Exception::class)
+    private fun getAnchorWithGraphic(
+        graphicalObject: CTGraphicalObject,
+        drawingDescr: String,
+        width: Int, 
+        height: Int,
+        left: Int, 
+        top: Int,
+        marginRight: Int, 
+        marginBottom: Int
+    ): CTAnchor {
+        // ещё 30 строк формирования якоря
+    }
+
+}
+
+----
+
+.Глобальная функция-утилита
+[source,kotlin]
+----
+object ResponseEntityExt {
+
+    fun ok(storedFileInputStream: StoredFileInputStream): ResponseEntity<InputStreamResource> =
+        ResponseEntity.ok()
+            .headers {
+                it.contentType = MediaType.parseMediaType(storedFileInputStream.metaData.mediaType)
+                if (storedFileInputStream.metaData.size > 0) {
+                    it.contentLength = storedFileInputStream.metaData.size
+                }
+                it.contentDisposition = ContentDispositionExt.inline(storedFileInputStream.metaData)
+            }
+            .body(InputStreamResource(storedFileInputStream.inputStream))
+
+}
+----
+
+.https://github.com/ergonomic-code/Trainer-Advisor/blob/d074d5b175ab099e5e0107a957ceeceb78762be0/app/src/testFixtures/kotlin/pro/qyoga/tests/fixture/data/Faker.kt#L7[Повсеместно используемая глобальная переменная]
+[source,kotlin]
+----
+// Используется 67 раз в 26 файлах
+var faker = Faker(systemLocale, java.util.Random(1))
+    private set
+
+fun resetFaker() {
+    faker = Faker(systemLocale, java.util.Random(1))
+}
+----

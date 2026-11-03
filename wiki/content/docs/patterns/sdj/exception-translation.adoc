@@ -1,0 +1,37 @@
+---
+title: Маппинг исключений на DataAccessException (в версиях до 4) (v1.0.0)
+type: docs
+weight: 500
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:sectlinks:
+
+[WARNING]
+====
+В Spring Data JDBC 4 DbActionExecutionException https://github.com/spring-projects/spring-data-relational/pull/1956[удалили] и маппинг более не актуален.
+====
+
+По непонятным причинам и вопреки https://docs.spring.io/spring-framework/reference/data-access/dao.html#dao-exceptions[Spring-овой консистентной иерархии исключений], в случае ошибки SDJ выбрасывает кастомный DbActionExecutionException вместо DataAccessException.
+
+На исправленией этой проблемы есть две древних задачи в GitHub Issues проекта:
+
+* https://github.com/spring-projects/spring-data-relational/issues/831[save() method is raising a DbActionExecutionException on unique key violation]
+* https://github.com/spring-projects/spring-data-relational/issues/1086[Spring Data JDBC throws DbActionExecutionException, which is the correct exception handling?]
+ 
+и никаких подвижек в её исправлении несколько лет.
+
+Пока у команды не дошли руки до решения этой проблемы, её можно решить локально добавив в контекст приложения PersistenceExceptionTranslator:
+
+[source,kotlin]
+----
+@Component
+class SdjPersistenceExceptionTranslator : PersistenceExceptionTranslator {
+
+    override fun translateExceptionIfPossible(ex: RuntimeException): DataAccessException? =
+        (ex as? DbActionExecutionException)?.cause as? DataAccessException
+
+}
+----
