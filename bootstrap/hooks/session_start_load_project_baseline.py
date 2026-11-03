@@ -16,7 +16,6 @@ KNOWN_MODULES = {
     "tdd",
     "database",
     "http-api",
-    "kotlin",
     "spring",
     "junit",
     "kotest",

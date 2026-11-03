@@ -22,7 +22,6 @@ def test_topical_indexes_have_valid_module_metadata_and_unique_order():
         "tdd",
         "database",
         "http-api",
-        "kotlin",
         "spring",
         "junit",
         "kotest",
@@ -46,13 +45,9 @@ def test_stack_matrix_is_expressed_by_index_text():
     http_api = (CONTEXT_ROOT / "http-api.md").read_text()
     spring = (CONTEXT_ROOT / "spring.md").read_text()
 
-    kotlin_database = (CONTEXT_ROOT / "kotlin-database.md").read_text()
     spring_http = (CONTEXT_ROOT / "spring-http-api.md").read_text()
     spring_http_tests = (CONTEXT_ROOT / "spring-http-api-tests.md").read_text()
-    kotlin_http = (CONTEXT_ROOT / "kotlin-http-api.md").read_text()
 
-    assert "kotlin/persistence-models.md" in kotlin_database
-    assert "http-api-versioning.md" in kotlin_http
     assert "spring/" not in database
     assert "spring/" not in http_api
     assert "spring-http-json-api.md" not in spring
@@ -69,10 +64,10 @@ def referenced_convention_paths(text: str) -> list[Path]:
     ]
 
 
-def test_complex_fixture_implementation_route_has_stack_requirements():
-    route = CONTEXT_ROOT / "spring-kotlin-test-fixtures.md"
+def test_complex_fixture_implementation_route_requires_only_core():
+    route = CONTEXT_ROOT / "complex-test-fixtures.md"
     metadata = front_matter(route)
-    assert set(metadata["requires_modules"]) == {"core", "spring", "kotlin"}
+    assert metadata["requires_modules"] == ["core"]
     assert metadata["routing_order"] == 125
     references = re.findall(r"`(\.\./[^`]+\.md)`", route.read_text())
     assert references == ["../patterns/spring/complex-test-fixtures.md"]

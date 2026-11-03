@@ -10,6 +10,6 @@ routing_order: 105
 
 Прочитай `../conventions/spring/http-api-tests.md`.
 
-При проектировании или изменении сессий, их фабрик и доменных классов API на Kotlin прочитай `../patterns/spring/test-client-sessions.md`.
+При проектировании или изменении сессий, их фабрик и доменных классов API прочитай `../patterns/spring/test-client-sessions.md`.
 
-При создании или изменении общей инфраструктуры HTTP-тестов на Kotlin прочитай `../patterns/spring/http-api-test-support.md`.
+При создании или изменении общей инфраструктуры HTTP-тестов прочитай `../patterns/spring/http-api-test-support.md`.

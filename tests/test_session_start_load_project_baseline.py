@@ -2,6 +2,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import pytest
+
 
 ROOT = Path(__file__).parents[1]
 SCRIPT = ROOT / "bootstrap" / "hooks" / "session_start_load_project_baseline.py"
@@ -24,11 +26,9 @@ def create_repo(tmp_path: Path, baseline: str | None = "BASELINE", index: str | 
         ("relational-databses.md", ["database"], 40, "database"),
         ("http-api.md", ["http-api"], 50, "http"),
         ("spring.md", ["spring"], 80, "spring"),
-        ("kotlin-database.md", ["kotlin", "database"], 90, "kotlin database"),
-        ("kotlin-http-api.md", ["kotlin", "http-api"], 95, "kotlin http"),
         ("spring-http-api.md", ["spring", "http-api"], 100, "spring http"),
         ("spring-http-api-tests.md", ["spring", "http-api"], 105, "spring http tests"),
-        ("spring-kotlin-test-fixtures.md", ["core", "spring", "kotlin"], 125, "spring kotlin fixtures"),
+        ("complex-test-fixtures.md", ["core"], 125, "complex fixtures"),
         ("junit.md", ["junit"], 130, "junit"),
         ("kotest.md", ["kotest"], 140, "kotest"),
     ]
@@ -62,6 +62,7 @@ def test_emits_baseline_then_root_index(tmp_path):
     assert "`.agents/ergo/src/context/markup.md`" in result.stdout
     assert "`.agents/ergo/src/context/production-code.md`" in result.stdout
     assert "`.agents/ergo/src/context/tests.md`" in result.stdout
+    assert "`.agents/ergo/src/context/complex-test-fixtures.md`" in result.stdout
     assert "`.agents/ergo/src/context/spring.md`" not in result.stdout
     assert "BODY" not in result.stdout
 
@@ -69,7 +70,7 @@ def test_emits_baseline_then_root_index(tmp_path):
 def test_emits_optional_config_after_mandatory_context(tmp_path):
     repo = create_repo(tmp_path)
     (repo / "ergo-config.yaml").write_text(
-        "artifact_language: en\nmodules:\n  - core\n  - kotlin\n  - junit\n",
+        "artifact_language: en\nmodules:\n  - core\n  - junit\n",
         encoding="utf-8",
     )
 
@@ -77,7 +78,6 @@ def test_emits_optional_config_after_mandatory_context(tmp_path):
 
     assert result.returncode == 0
     assert result.stdout.startswith("BASELINE\n\nINDEX\n\n# Разрешённые тематические маршруты\n")
-    assert "`.agents/ergo/src/context/kotlin-database.md`" not in result.stdout
     assert "`.agents/ergo/src/context/junit.md`" in result.stdout
     assert "`.agents/ergo/src/context/spring.md`" not in result.stdout
     assert "`.agents/ergo/src/context/relational-databses.md`" not in result.stdout
@@ -150,7 +150,7 @@ def test_spring_http_intersection_requires_both_modules(tmp_path):
     assert with_http.returncode == 0
     assert "`.agents/ergo/src/context/spring-http-api.md`" in with_http.stdout
     assert "`.agents/ergo/src/context/spring-http-api-tests.md`" in with_http.stdout
-    assert "`.agents/ergo/src/context/spring-kotlin-test-fixtures.md`" not in with_http.stdout
+    assert "`.agents/ergo/src/context/complex-test-fixtures.md`" in with_http.stdout
 
 
 def test_missing_modules_uses_only_core(tmp_path):
@@ -161,14 +161,14 @@ def test_missing_modules_uses_only_core(tmp_path):
 
     assert result.returncode == 0
     assert "`.agents/ergo/src/context/markup.md`" in result.stdout
-    assert "`.agents/ergo/src/context/kotlin-database.md`" not in result.stdout
     assert "`.agents/ergo/src/context/spring.md`" not in result.stdout
 
 
-def test_invalid_config_fails_without_expanding_routes(tmp_path):
+@pytest.mark.parametrize("module", ["unknown", "kotlin"])
+def test_invalid_config_fails_without_expanding_routes(tmp_path, module):
     repo = create_repo(tmp_path)
     (repo / "ergo-config.yaml").write_text(
-        "modules:\n  - core\n  - unknown\n",
+        f"modules:\n  - core\n  - {module}\n",
         encoding="utf-8",
     )
 
@@ -176,12 +176,12 @@ def test_invalid_config_fails_without_expanding_routes(tmp_path):
 
     assert result.returncode == 1
     assert result.stdout == ""
-    assert "unknown modules: unknown" in result.stderr
+    assert f"unknown modules: {module}" in result.stderr
 
 
 def test_explicit_modules_must_include_core(tmp_path):
     repo = create_repo(tmp_path)
-    (repo / "ergo-config.yaml").write_text("modules:\n  - kotlin\n", encoding="utf-8")
+    (repo / "ergo-config.yaml").write_text("modules:\n  - junit\n", encoding="utf-8")
 
     result = run_hook(repo, "--framework-config-path", "ergo-config.yaml")
 
