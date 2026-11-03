@@ -22,7 +22,6 @@ def test_topical_indexes_have_valid_module_metadata_and_unique_order():
         "tdd",
         "database",
         "http-api",
-        "spring",
         "junit",
         "kotest",
     }
@@ -43,18 +42,18 @@ def test_topical_indexes_have_valid_module_metadata_and_unique_order():
 def test_stack_matrix_is_expressed_by_index_text():
     database = (CONTEXT_ROOT / "relational-databses.md").read_text()
     http_api = (CONTEXT_ROOT / "http-api.md").read_text()
-    spring = (CONTEXT_ROOT / "spring.md").read_text()
+    doubles = (CONTEXT_ROOT / "test-doubles.md").read_text()
 
-    spring_http = (CONTEXT_ROOT / "spring-http-api.md").read_text()
-    spring_http_tests = (CONTEXT_ROOT / "spring-http-api-tests.md").read_text()
+    http_errors = (CONTEXT_ROOT / "http-api-errors.md").read_text()
+    http_clients = (CONTEXT_ROOT / "http-api-test-clients.md").read_text()
 
     assert "spring/" not in database
     assert "spring/" not in http_api
-    assert "spring-http-json-api.md" not in spring
-    assert "http-api-tests.md" not in spring
-    assert "spring-http-json-api.md" in spring_http
-    assert "http-api-tests.md" not in spring_http
-    assert "http-api-tests.md" in spring_http_tests
+    assert "core/test-doubles.md" in doubles
+    assert "core/test-implementation-checklist.md" in doubles
+    assert "http-api/error-responses.md" in http_errors
+    assert "http-api/test-clients.md" not in http_errors
+    assert "http-api/test-clients.md" in http_clients
 
 
 def referenced_convention_paths(text: str) -> list[Path]:
@@ -146,7 +145,7 @@ def test_generic_tdd_chain_has_no_routed_technology_contracts():
         assert all(marker not in text for marker in technology_markers), document
 
 
-def test_general_conventions_have_no_spring_or_controller_leaks():
+def test_conventions_have_no_controller_or_database_mapping_leaks():
     general_http = "\n".join(
         path.read_text() for path in (SRC_ROOT / "conventions" / "http-api").glob("*.md")
     )
@@ -155,7 +154,5 @@ def test_general_conventions_have_no_spring_or_controller_leaks():
     )
 
     assert "controller" not in general_http
-    assert "WebTestClient" not in general_http
-    assert "RestTestClient" not in general_http
     assert "@ReadingConverter" not in database
     assert "JdbcCustomConversions" not in database

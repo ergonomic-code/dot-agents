@@ -27,7 +27,6 @@ def test_modular_convention_paths_have_no_legacy_files():
         "tdd",
         "database",
         "http-api",
-        "spring",
         "junit",
         "kotest",
     }

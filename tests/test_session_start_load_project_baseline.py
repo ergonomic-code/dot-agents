@@ -25,9 +25,9 @@ def create_repo(tmp_path: Path, baseline: str | None = "BASELINE", index: str | 
         ("ergonomic-testing.md", ["ergonomic-testing"], 35, "ergonomic tests"),
         ("relational-databses.md", ["database"], 40, "database"),
         ("http-api.md", ["http-api"], 50, "http"),
-        ("spring.md", ["spring"], 80, "spring"),
-        ("spring-http-api.md", ["spring", "http-api"], 100, "spring http"),
-        ("spring-http-api-tests.md", ["spring", "http-api"], 105, "spring http tests"),
+        ("test-doubles.md", ["core"], 80, "test doubles"),
+        ("http-api-errors.md", ["http-api"], 100, "http errors"),
+        ("http-api-test-clients.md", ["http-api"], 105, "http test clients"),
         ("complex-test-fixtures.md", ["core"], 125, "complex fixtures"),
         ("junit.md", ["junit"], 130, "junit"),
         ("kotest.md", ["kotest"], 140, "kotest"),
@@ -63,7 +63,7 @@ def test_emits_baseline_then_root_index(tmp_path):
     assert "`.agents/ergo/src/context/production-code.md`" in result.stdout
     assert "`.agents/ergo/src/context/tests.md`" in result.stdout
     assert "`.agents/ergo/src/context/complex-test-fixtures.md`" in result.stdout
-    assert "`.agents/ergo/src/context/spring.md`" not in result.stdout
+    assert "`.agents/ergo/src/context/test-doubles.md`" in result.stdout
     assert "BODY" not in result.stdout
 
 
@@ -79,7 +79,7 @@ def test_emits_optional_config_after_mandatory_context(tmp_path):
     assert result.returncode == 0
     assert result.stdout.startswith("BASELINE\n\nINDEX\n\n# Разрешённые тематические маршруты\n")
     assert "`.agents/ergo/src/context/junit.md`" in result.stdout
-    assert "`.agents/ergo/src/context/spring.md`" not in result.stdout
+    assert "`.agents/ergo/src/context/test-doubles.md`" in result.stdout
     assert "`.agents/ergo/src/context/relational-databses.md`" not in result.stdout
     assert "`.agents/ergo/src/context/http-api.md`" not in result.stdout
     assert result.stdout.index("# Разрешённые тематические маршруты") < result.stdout.index("# Framework config")
@@ -128,28 +128,28 @@ def test_tdd_route_requires_explicit_module(tmp_path):
     assert "`.agents/ergo/src/context/ergonomic-testing.md`" not in with_module.stdout
 
 
-def test_spring_http_intersection_requires_both_modules(tmp_path):
+def test_http_routes_require_only_http_api_module(tmp_path):
     repo = create_repo(tmp_path)
     config = repo / "ergo-config.yaml"
-    config.write_text("modules:\n  - core\n  - spring\n", encoding="utf-8")
+    config.write_text("modules:\n  - core\n", encoding="utf-8")
 
-    spring_only = run_hook(repo, "--framework-config-path", "ergo-config.yaml")
+    core_only = run_hook(repo, "--framework-config-path", "ergo-config.yaml")
 
-    assert spring_only.returncode == 0
-    assert "`.agents/ergo/src/context/spring.md`" in spring_only.stdout
-    assert "`.agents/ergo/src/context/spring-http-api.md`" not in spring_only.stdout
-    assert "`.agents/ergo/src/context/spring-http-api-tests.md`" not in spring_only.stdout
+    assert core_only.returncode == 0
+    assert "`.agents/ergo/src/context/test-doubles.md`" in core_only.stdout
+    assert "`.agents/ergo/src/context/http-api-errors.md`" not in core_only.stdout
+    assert "`.agents/ergo/src/context/http-api-test-clients.md`" not in core_only.stdout
 
     config.write_text(
-        "modules:\n  - core\n  - spring\n  - http-api\n",
+        "modules:\n  - core\n  - http-api\n",
         encoding="utf-8",
     )
 
     with_http = run_hook(repo, "--framework-config-path", "ergo-config.yaml")
 
     assert with_http.returncode == 0
-    assert "`.agents/ergo/src/context/spring-http-api.md`" in with_http.stdout
-    assert "`.agents/ergo/src/context/spring-http-api-tests.md`" in with_http.stdout
+    assert "`.agents/ergo/src/context/http-api-errors.md`" in with_http.stdout
+    assert "`.agents/ergo/src/context/http-api-test-clients.md`" in with_http.stdout
     assert "`.agents/ergo/src/context/complex-test-fixtures.md`" in with_http.stdout
 
 
@@ -161,10 +161,10 @@ def test_missing_modules_uses_only_core(tmp_path):
 
     assert result.returncode == 0
     assert "`.agents/ergo/src/context/markup.md`" in result.stdout
-    assert "`.agents/ergo/src/context/spring.md`" not in result.stdout
+    assert "`.agents/ergo/src/context/test-doubles.md`" in result.stdout
 
 
-@pytest.mark.parametrize("module", ["unknown", "kotlin"])
+@pytest.mark.parametrize("module", ["unknown", "kotlin", "spring"])
 def test_invalid_config_fails_without_expanding_routes(tmp_path, module):
     repo = create_repo(tmp_path)
     (repo / "ergo-config.yaml").write_text(

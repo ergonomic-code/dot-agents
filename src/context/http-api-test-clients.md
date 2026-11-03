@@ -1,14 +1,13 @@
 ---
 requires_modules:
-  - spring
   - http-api
-applies_when: Работа затрагивает тестовые HTTP-клиенты на Spring, их сессии, фабрики или инфраструктуру проверки тел запросов.
+applies_when: Работа затрагивает тестовые HTTP-клиенты, их сессии, фабрики или инфраструктуру проверки тел запросов.
 routing_order: 105
 ---
 
-# Контекст тестовых клиентов Spring HTTP API
+# Контекст тестовых клиентов HTTP API
 
-Прочитай `../conventions/spring/http-api-tests.md`.
+Прочитай `../conventions/http-api/test-clients.md`.
 
 При проектировании или изменении сессий, их фабрик и доменных классов API прочитай `../patterns/spring/test-client-sessions.md`.
 

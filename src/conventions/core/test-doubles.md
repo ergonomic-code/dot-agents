@@ -4,13 +4,31 @@ keywords:
   - doubles
 ---
 
-# Test doubles
+# Тестовые дубли
 
-- Plan tests against existing production components or selected-design components with existing project test infrastructure whenever that safely executes the behavior within test budgets.
-- Use a fake, stub, or mock only when neither can reproduce the behavior safely within those budgets; pending implementation and easier setup, control, or observation are insufficient.
-- Prefer an existing project double over creating a new one.
-- Do not introduce or generalize a production interface solely to substitute a test double.
-- Когда нужен class-level double, явно собери target dependency graph из real dependencies и замени только dependency с симулируемым поведением.
-- Use in-process class or object mocks only for behavior that is hard or expensive to reproduce with a real dependency, typically infrastructure failures, or the smallest mechanism for a specifically requested internal-interaction test under `./test-design.md`; otherwise omit them for normal behavior.
-- Except for that requested test, verify interactions only at external-system boundaries and only for outgoing requests or messages.
-- Do not use mocks or spies to observe calls between internal classes or objects except for that specifically requested test.
+## Когда использовать дубль
+
+- Сначала рассмотри вариант проверки на реальных компонентах: уже существующих или предусмотренных выбранным дизайном.
+  Используй существующую тестовую инфраструктуру проекта, если она позволяет безопасно воспроизвести нужное поведение в пределах бюджетов тестов.
+- Используй фейки, стабы или моки, только если реальные компоненты не позволяют выполнить такую проверку.
+  Отсутствие реализации и удобство подготовки, управления или наблюдения сами по себе не оправдывают дубль.
+- Предпочитай существующий проектный дубль созданию нового.
+- Не вводи и не обобщай интерфейс рабочего кода только ради подстановки тестового дубля.
+
+## Как подключать дубль класса
+
+- Явно собери нужный граф зависимостей: возьми реальные компоненты из существующего контекста приложения и замени только ту зависимость, поведение которой нужно симулировать.
+- Не переопределяй Spring-бины через `@MockBean`, `@SpyBean`, `@MockitoBean`, `@MockitoSpyBean` и аналогичные механизмы, так как они приводят к запуску Spring-контекста на каждый кейс.
+- Зависимости, нужные только для сборки этого графа, получай на месте через унаследованный хелпер доступа к контексту приложения.
+  Не внедряй их или сам контекст в конструктор либо поля тестового класса.
+- Если такого хелпера нет, добавь его в общий базовый класс тестов: защищённый метод, обращающийся к существующему контексту приложения.
+- Если компоненту нужны Spring-прокси, зарегистрируй собранный граф в том же контексте приложения через существующую тестовую инфраструктуру.
+  При этом не переопределяй бины.
+
+## Моки и проверка взаимодействий
+
+- Используй моки классов или объектов внутри процесса только для поведения, которое сложно или дорого воспроизвести с реальной зависимостью, например инфраструктурного сбоя.
+- Проверяй взаимодействия только на границах внешних систем и только для исходящих запросов или сообщений.
+  Не используй моки или spy для наблюдения вызовов между внутренними классами или объектами.
+- Исключение — явно запрошенный тест внутренних взаимодействий по [правилам проектирования тестов](test-design.md).
+  Для него допустимы проверки внутренних вызовов и моки как минимально необходимый механизм такой проверки.
