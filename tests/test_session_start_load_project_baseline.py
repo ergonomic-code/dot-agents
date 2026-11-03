@@ -18,7 +18,6 @@ def create_repo(tmp_path: Path, baseline: str | None = "BASELINE", index: str | 
     if index is not None:
         (src / "context" / "index.md").write_text(index, encoding="utf-8")
     routes = [
-        ("markup.md", ["core"], 10, "markup"),
         ("production-code.md", ["core"], 20, "production"),
         ("tdd.md", ["tdd"], 25, "tdd"),
         ("tests.md", ["core"], 30, "tests"),
@@ -59,7 +58,6 @@ def test_emits_baseline_then_root_index(tmp_path):
 
     assert result.returncode == 0
     assert result.stdout.startswith("BASELINE\n\nINDEX\n\n# Разрешённые тематические маршруты\n")
-    assert "`.agents/ergo/src/context/markup.md`" in result.stdout
     assert "`.agents/ergo/src/context/production-code.md`" in result.stdout
     assert "`.agents/ergo/src/context/tests.md`" in result.stdout
     assert "`.agents/ergo/src/context/complex-test-fixtures.md`" in result.stdout
@@ -160,7 +158,7 @@ def test_missing_modules_uses_only_core(tmp_path):
     result = run_hook(repo, "--framework-config-path", "ergo-config.yaml")
 
     assert result.returncode == 0
-    assert "`.agents/ergo/src/context/markup.md`" in result.stdout
+    assert "`.agents/ergo/src/context/production-code.md`" in result.stdout
     assert "`.agents/ergo/src/context/test-doubles.md`" in result.stdout
 
 
