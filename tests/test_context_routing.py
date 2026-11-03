@@ -44,31 +44,25 @@ def test_topical_indexes_have_valid_module_metadata_and_unique_order():
 def test_stack_matrix_is_expressed_by_index_text():
     database = (CONTEXT_ROOT / "relational-databses.md").read_text()
     http_api = (CONTEXT_ROOT / "http-api.md").read_text()
-    kotlin = (CONTEXT_ROOT / "kotlin.md").read_text()
     spring = (CONTEXT_ROOT / "spring.md").read_text()
 
     kotlin_database = (CONTEXT_ROOT / "kotlin-database.md").read_text()
     spring_http = (CONTEXT_ROOT / "spring-http-api.md").read_text()
     spring_http_tests = (CONTEXT_ROOT / "spring-http-api-tests.md").read_text()
     spring_database = (CONTEXT_ROOT / "spring-database.md").read_text()
-    spring_kotlin = (CONTEXT_ROOT / "spring-kotlin.md").read_text()
     kotlin_http = (CONTEXT_ROOT / "kotlin-http-api.md").read_text()
 
-    assert "kotlin/persistence-models.md" not in kotlin
     assert "kotlin/persistence-models.md" in kotlin_database
-    assert "http-api-versioning.md" not in kotlin
     assert "http-api-versioning.md" in kotlin_http
     assert "spring/" not in database
     assert "spring/" not in http_api
     assert "spring-jdbc.md" not in spring
-    assert "kotlin-beans.md" not in spring
     assert "spring-http-json-api.md" not in spring
     assert "http-api-tests.md" not in spring
     assert "spring-http-json-api.md" in spring_http
     assert "http-api-tests.md" not in spring_http
     assert "http-api-tests.md" in spring_http_tests
     assert "spring-jdbc.md" in spring_database
-    assert "kotlin-beans.md" in spring_kotlin
 
 
 def referenced_convention_paths(text: str) -> list[Path]:

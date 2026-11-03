@@ -23,14 +23,13 @@ def create_repo(tmp_path: Path, baseline: str | None = "BASELINE", index: str | 
         ("ergonomic-testing.md", ["ergonomic-testing"], 35, "ergonomic tests"),
         ("relational-databses.md", ["database"], 40, "database"),
         ("http-api.md", ["http-api"], 50, "http"),
-        ("kotlin.md", ["kotlin"], 70, "kotlin"),
         ("spring.md", ["spring"], 80, "spring"),
         ("kotlin-database.md", ["kotlin", "database"], 90, "kotlin database"),
         ("kotlin-http-api.md", ["kotlin", "http-api"], 95, "kotlin http"),
         ("spring-http-api.md", ["spring", "http-api"], 100, "spring http"),
         ("spring-http-api-tests.md", ["spring", "http-api"], 105, "spring http tests"),
         ("spring-database.md", ["spring", "database"], 110, "spring database"),
-        ("spring-kotlin.md", ["spring", "kotlin"], 120, "spring kotlin"),
+        ("spring-kotlin-test-fixtures.md", ["core", "spring", "kotlin"], 125, "spring kotlin fixtures"),
         ("junit.md", ["junit"], 130, "junit"),
         ("kotest.md", ["kotest"], 140, "kotest"),
     ]
@@ -79,7 +78,7 @@ def test_emits_optional_config_after_mandatory_context(tmp_path):
 
     assert result.returncode == 0
     assert result.stdout.startswith("BASELINE\n\nINDEX\n\n# Разрешённые тематические маршруты\n")
-    assert "`.agents/ergo/src/context/kotlin.md`" in result.stdout
+    assert "`.agents/ergo/src/context/kotlin-database.md`" not in result.stdout
     assert "`.agents/ergo/src/context/junit.md`" in result.stdout
     assert "`.agents/ergo/src/context/spring.md`" not in result.stdout
     assert "`.agents/ergo/src/context/relational-databses.md`" not in result.stdout
@@ -153,7 +152,7 @@ def test_spring_http_intersection_requires_both_modules(tmp_path):
     assert "`.agents/ergo/src/context/spring-http-api.md`" in with_http.stdout
     assert "`.agents/ergo/src/context/spring-http-api-tests.md`" in with_http.stdout
     assert "`.agents/ergo/src/context/spring-database.md`" not in with_http.stdout
-    assert "`.agents/ergo/src/context/spring-kotlin.md`" not in with_http.stdout
+    assert "`.agents/ergo/src/context/spring-kotlin-test-fixtures.md`" not in with_http.stdout
 
 
 def test_missing_modules_uses_only_core(tmp_path):
@@ -164,7 +163,7 @@ def test_missing_modules_uses_only_core(tmp_path):
 
     assert result.returncode == 0
     assert "`.agents/ergo/src/context/markup.md`" in result.stdout
-    assert "`.agents/ergo/src/context/kotlin.md`" not in result.stdout
+    assert "`.agents/ergo/src/context/kotlin-database.md`" not in result.stdout
     assert "`.agents/ergo/src/context/spring.md`" not in result.stdout
 
 

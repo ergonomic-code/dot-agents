@@ -16,7 +16,7 @@
 | `tdd` | Порядок разработки через тесты и проверка красного теста. | Пользователь явно выбрал TDD. |
 | `database` | Схемы и миграции БД, транзакции, запросы, read models и условные записи. | Проект работает с реляционной БД. |
 | `http-api` | HTTP-контракты, формат ошибок, boundary tests и типизированные HTTP test helpers. | Проект предоставляет, использует или тестирует HTTP API. |
-| `kotlin` | Общие правила реализации production-кода и тестов на Kotlin. | В целевой части проекта используется Kotlin. |
+| `kotlin` | Kotlin-контекст в пересечениях с другими модулями: персистанс, HTTP API и сложные тестовые фикстуры. | В целевой части проекта используется Kotlin. |
 | `spring` | Dependency injection, регистрация beans и Spring test doubles. | В целевой части проекта используется Spring. |
 | `junit` | Именование и итоговая проверка JUnit-тестов. | Проект использует JUnit. |
 | `kotest` | Реализация и итоговая проверка Kotest-тестов. | Проект использует Kotest. |
@@ -33,7 +33,6 @@
 | `spring-http-api` | `spring`, `http-api` | Обработка ошибок и формат ошибочных ответов Spring HTTP JSON API. |
 | `spring-http-api-tests` | `spring`, `http-api` | Тестовые клиенты Spring HTTP API. |
 | `spring-database` | `spring`, `database` | Spring JDBC и маппинг строк. |
-| `spring-kotlin` | `spring`, `kotlin` | Доступ к Spring бинам и их регистрация из Kotlin. |
 | `spring-kotlin-test-fixtures` | `core`, `spring`, `kotlin` | Сложные тестовые фикстуры, их фабрики и установщики на Kotlin и Spring. |
 
 ## Конфигурация модулей

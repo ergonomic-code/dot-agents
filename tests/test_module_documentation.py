@@ -38,7 +38,6 @@ def test_module_catalog_covers_selectable_modules_and_intersections():
         "spring-http-api",
         "spring-http-api-tests",
         "spring-database",
-        "spring-kotlin",
         "spring-kotlin-test-fixtures",
     }
 
