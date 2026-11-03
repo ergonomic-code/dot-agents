@@ -1,0 +1,213 @@
+<mxfile host="Electron">
+  <diagram id="fixture-architecture" name="Архитектура фикстур">
+    <mxGraphModel dx="5735" dy="2189" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="2280" pageHeight="1600" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="8gFUoLK8gN5UFx0c8EVb-7" edge="1" parent="1" source="base" style="edgeStyle=none;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#60718A;strokeWidth=1.5;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;" target="sut" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-80" y="380" />
+              <mxPoint x="-80" y="1480" />
+              <mxPoint x="2040" y="1480" />
+            </Array>
+            <mxPoint x="40" y="400" as="sourcePoint" />
+            <mxPoint x="1440" y="1500" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="infrastructure" parent="1" style="rounded=1;absoluteArcSize=1;arcSize=24;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#DCE3EC;verticalAlign=top;align=left;spacingTop=20;spacingLeft=24;fontSize=22;fontStyle=1;fontFamily=DejaVu Sans;fontColor=#26374A;container=1;collapsible=0;recursiveResize=0;" value="Инфраструктура тестов" vertex="1">
+          <mxGeometry height="1020" width="2280" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="base" parent="infrastructure" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F0F2F6;strokeColor=#78879A;fontColor=#26374A;fontFamily=DejaVu Sans;fontSize=17;absoluteArcSize=1;arcSize=16;spacing=8;" value="&lt;b&gt;Базовый слой&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:14px&quot;&gt;Запускает зависимости, готовит стандартное состояние, создаёт SUT.&lt;br&gt;Предоставляет экземпляры TestApi, FixtureInstaller и ApiSession&lt;/span&gt;" vertex="1">
+          <mxGeometry height="120" width="400" x="40" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="universal" parent="infrastructure" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EAF2FF;strokeColor=#6891C8;fontColor=#203650;fontFamily=DejaVu Sans;fontSize=17;absoluteArcSize=1;arcSize=16;spacing=8;" value="&lt;b&gt;Генераторы универсальных данных&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:14px&quot;&gt;Числа, строки, даты…&lt;/span&gt;" vertex="1">
+          <mxGeometry height="120" width="400" x="40" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="domain" parent="infrastructure" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EAF2FF;strokeColor=#6891C8;fontColor=#203650;fontFamily=DejaVu Sans;fontSize=17;absoluteArcSize=1;arcSize=16;spacing=8;" value="&lt;b&gt;Генераторы доменных данных&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:14px&quot;&gt;Доменные значения&lt;/span&gt;" vertex="1">
+          <mxGeometry height="120" width="400" x="40" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="mother" parent="infrastructure" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EAF2FF;strokeColor=#6891C8;fontColor=#203650;fontFamily=DejaVu Sans;fontSize=17;absoluteArcSize=1;arcSize=16;spacing=8;" value="&lt;b&gt;Фабрики тестовых объектов&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:14px&quot;&gt;*ObjectMother&lt;/span&gt;" vertex="1">
+          <mxGeometry height="120" width="400" x="40" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="preset" parent="infrastructure" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EAF2FF;strokeColor=#6891C8;fontColor=#203650;fontFamily=DejaVu Sans;fontSize=17;absoluteArcSize=1;arcSize=16;spacing=8;" value="&lt;b&gt;Фабрики пресетов фрагментов&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:14px&quot;&gt;Согласованные группы объектов&lt;/span&gt;" vertex="1">
+          <mxGeometry height="120" width="400" x="640" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="fixture" parent="infrastructure" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F7FAFF;strokeColor=#6891C8;fontColor=#203650;fontFamily=DejaVu Sans;fontSize=17;absoluteArcSize=1;arcSize=16;spacing=8;" value="&lt;b&gt;Фрагменты фикстур&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:14px&quot;&gt;*Fixture · описание состояния в памяти&lt;/span&gt;" vertex="1">
+          <mxGeometry height="120" width="400" x="640" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="wrapper" parent="infrastructure" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E7F5F0;strokeColor=#62A28A;fontColor=#203E35;fontFamily=DejaVu Sans;fontSize=17;absoluteArcSize=1;arcSize=16;spacing=8;" value="&lt;b&gt;Инсталляторы пресетов&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:14px&quot;&gt;Обёртка: создать фрагмент и установить&lt;/span&gt;" vertex="1">
+          <mxGeometry height="120" width="400" x="1240" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="installer" parent="infrastructure" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E7F5F0;strokeColor=#62A28A;fontColor=#203E35;fontFamily=DejaVu Sans;fontSize=17;absoluteArcSize=1;arcSize=16;spacing=8;" value="&lt;b&gt;Инсталляторы фрагментов&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:14px&quot;&gt;*FixtureInstaller&lt;/span&gt;" vertex="1">
+          <mxGeometry height="120" width="400" x="1240" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="setup" parent="infrastructure" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E7F5F0;strokeColor=#62A28A;fontColor=#203E35;fontFamily=DejaVu Sans;fontSize=17;absoluteArcSize=1;arcSize=16;spacing=8;" value="&lt;b&gt;API сетапа&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:14px&quot;&gt;*TestApi · один API на ресурс&lt;/span&gt;" vertex="1">
+          <mxGeometry height="120" width="400" x="1240" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="http" parent="infrastructure" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F0EBFC;strokeColor=#9982C4;fontColor=#392D54;fontFamily=DejaVu Sans;fontSize=17;absoluteArcSize=1;arcSize=16;spacing=8;" value="&lt;b&gt;Типизированные HTTP-клиенты&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:14px&quot;&gt;*HttpApi&lt;/span&gt;" vertex="1">
+          <mxGeometry height="120" width="400" x="1840" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="session" parent="infrastructure" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F0EBFC;strokeColor=#9982C4;fontColor=#392D54;fontFamily=DejaVu Sans;fontSize=17;absoluteArcSize=1;arcSize=16;spacing=8;" value="&lt;b&gt;Сессия API&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:14px&quot;&gt;ApiSession · транспорт и аутентификация&lt;/span&gt;" vertex="1">
+          <mxGeometry height="120" width="400" x="1840" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_6" edge="1" parent="infrastructure" source="wrapper" style="edgeStyle=none;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#60718A;strokeWidth=1.5;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;" target="preset" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label_6" connectable="0" parent="edge_6" style="edgeLabel;shape=rectangle;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;absoluteArcSize=1;arcSize=10;fillColor=#ffffff;strokeColor=none;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;spacing=6;resizable=0;points=[];" value="создаёт" vertex="1">
+          <mxGeometry height="32" relative="1" width="93.75" as="geometry">
+            <mxPoint x="-46.875" y="-16" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_7" edge="1" parent="infrastructure" source="wrapper" style="edgeStyle=none;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#60718A;strokeWidth=1.5;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;" target="installer" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label_7" connectable="0" parent="edge_7" style="edgeLabel;shape=rectangle;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;absoluteArcSize=1;arcSize=10;fillColor=#ffffff;strokeColor=none;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;spacing=6;resizable=0;points=[];" value="вызывает" vertex="1">
+          <mxGeometry height="32" relative="1" width="121.05" as="geometry">
+            <mxPoint x="-60.525" y="-16" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_8" edge="1" parent="infrastructure" source="preset" style="edgeStyle=none;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#60718A;strokeWidth=1.5;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;" target="mother" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="buJuwebgLZvVQOTEml5D-2" connectable="0" parent="edge_8" style="edgeLabel;shape=rectangle;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;absoluteArcSize=1;arcSize=10;fillColor=#ffffff;strokeColor=none;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;spacing=6;resizable=0;points=[];" value="вызывает" vertex="1">
+          <mxGeometry height="32" relative="1" width="104.25" as="geometry">
+            <mxPoint x="-52.125" y="-16" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_9" edge="1" parent="infrastructure" source="mother" style="edgeStyle=none;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#60718A;strokeWidth=1.5;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;" target="domain" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label_9" connectable="0" parent="edge_9" style="edgeLabel;shape=rectangle;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;absoluteArcSize=1;arcSize=10;fillColor=#ffffff;strokeColor=none;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;spacing=6;resizable=0;points=[];" value="вызывает" vertex="1">
+          <mxGeometry height="32" relative="1" width="104.25" as="geometry">
+            <mxPoint x="-52.125" y="-16" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_10" edge="1" parent="infrastructure" source="domain" style="edgeStyle=none;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#60718A;strokeWidth=1.5;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;" target="universal" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label_10" connectable="0" parent="edge_10" style="edgeLabel;shape=rectangle;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;absoluteArcSize=1;arcSize=10;fillColor=#ffffff;strokeColor=none;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;spacing=6;resizable=0;points=[];" value="вызывает" vertex="1">
+          <mxGeometry height="32" relative="1" width="104.25" as="geometry">
+            <mxPoint x="-52.125" y="-16" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_11" edge="1" parent="infrastructure" source="preset" style="edgeStyle=none;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#60718A;strokeWidth=1.5;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;dashed=1;" target="fixture" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label_11" connectable="0" parent="edge_11" style="edgeLabel;shape=rectangle;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;absoluteArcSize=1;arcSize=10;fillColor=#ffffff;strokeColor=none;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;spacing=6;resizable=0;points=[];" value="создаёт" vertex="1">
+          <mxGeometry height="32" relative="1" width="76.95" as="geometry">
+            <mxPoint x="-38.475" y="-16" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_12" edge="1" parent="infrastructure" source="installer" style="edgeStyle=none;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#60718A;strokeWidth=1.5;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;dashed=1;" target="fixture" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label_12" connectable="0" parent="edge_12" style="edgeLabel;shape=rectangle;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;absoluteArcSize=1;arcSize=10;fillColor=#ffffff;strokeColor=none;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;spacing=6;resizable=0;points=[];" value="читает описание" vertex="1">
+          <mxGeometry height="32" relative="1" width="145.2" as="geometry">
+            <mxPoint x="-72.6" y="-16" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_13" edge="1" parent="infrastructure" source="installer" style="edgeStyle=none;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#60718A;strokeWidth=1.5;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;" target="setup" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label_13" connectable="0" parent="edge_13" style="edgeLabel;shape=rectangle;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;absoluteArcSize=1;arcSize=10;fillColor=#ffffff;strokeColor=none;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;spacing=6;resizable=0;points=[];" value="вызывает" vertex="1">
+          <mxGeometry height="32" relative="1" width="91.65" as="geometry">
+            <mxPoint x="-45.825" y="-16" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_15" edge="1" parent="infrastructure" source="http" style="edgeStyle=none;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#60718A;strokeWidth=1.5;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;" target="session" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label_15" connectable="0" parent="edge_15" style="edgeLabel;shape=rectangle;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;absoluteArcSize=1;arcSize=10;fillColor=#ffffff;strokeColor=none;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;spacing=6;resizable=0;points=[];" value="вызывает" vertex="1">
+          <mxGeometry height="32" relative="1" width="104.25" as="geometry">
+            <mxPoint x="-52.125" y="-16" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="case" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F4F8;strokeColor=#CBD2DC;fontFamily=DejaVu Sans;fontSize=17;absoluteArcSize=1;arcSize=16;spacing=8;strokeWidth=1;fontColor=#26374A;" value="&lt;b&gt;Кейс&lt;/b&gt;" vertex="1">
+          <mxGeometry height="120" width="400" x="1240" as="geometry" />
+        </mxCell>
+        <mxCell id="sut" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3DF;strokeColor=#C5A16B;fontColor=#4B3A22;fontFamily=DejaVu Sans;fontSize=17;absoluteArcSize=1;arcSize=16;spacing=8;" value="&lt;b&gt;SUT&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:14px&quot;&gt;Тестируемое приложение / компонент&lt;/span&gt;" vertex="1">
+          <mxGeometry height="120" width="400" x="1840" y="1280" as="geometry" />
+        </mxCell>
+        <mxCell id="deps" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3DF;strokeColor=#C5A16B;fontColor=#4B3A22;fontFamily=DejaVu Sans;fontSize=17;absoluteArcSize=1;arcSize=16;spacing=8;" value="&lt;b&gt;Внепроцессные зависимости&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:14px&quot;&gt;БД, внешние системы и их дублёры&lt;/span&gt;" vertex="1">
+          <mxGeometry height="120" width="400" x="1240" y="1280" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_3" edge="1" parent="1" source="case" style="edgeStyle=none;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#60718A;strokeWidth=1.5;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;" target="preset" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label_3" connectable="0" parent="edge_3" style="edgeLabel;shape=rectangle;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;absoluteArcSize=1;arcSize=10;fillColor=#ffffff;strokeColor=none;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;spacing=6;resizable=0;points=[];" value="вызывает" vertex="1">
+          <mxGeometry height="32" relative="1" width="158.85" as="geometry">
+            <mxPoint x="-79" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_4" edge="1" parent="1" source="case" style="edgeStyle=none;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#60718A;strokeWidth=1.5;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;" target="wrapper" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label_4" connectable="0" parent="edge_4" style="edgeLabel;shape=rectangle;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;absoluteArcSize=1;arcSize=10;fillColor=#ffffff;strokeColor=none;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;spacing=6;resizable=0;points=[];" value="вызывает" vertex="1">
+          <mxGeometry height="32" relative="1" width="158.85" x="-0.6" as="geometry">
+            <mxPoint x="-79.425" y="-16" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_5" edge="1" parent="1" source="case" style="edgeStyle=none;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#60718A;strokeWidth=1.5;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;" target="http" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label_5" connectable="0" parent="edge_5" style="edgeLabel;shape=rectangle;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;absoluteArcSize=1;arcSize=10;fillColor=#ffffff;strokeColor=none;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;spacing=6;resizable=0;points=[];" value="вызывает" vertex="1">
+          <mxGeometry height="32" relative="1" width="198.75" as="geometry">
+            <mxPoint x="-80" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_14" edge="1" parent="1" source="setup" style="edgeStyle=none;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#60718A;strokeWidth=1.5;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;" target="deps" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label_14" connectable="0" parent="edge_14" style="edgeLabel;shape=rectangle;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;absoluteArcSize=1;arcSize=10;fillColor=#ffffff;strokeColor=none;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;spacing=6;resizable=0;points=[];" value="задаёт состояние" vertex="1">
+          <mxGeometry height="32" relative="1" width="149.4" as="geometry">
+            <mxPoint x="-74.7" y="-16" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_16" edge="1" parent="1" source="session" style="edgeStyle=none;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#60718A;strokeWidth=1.5;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;" target="sut" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label_16" connectable="0" parent="edge_16" style="edgeLabel;shape=rectangle;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;absoluteArcSize=1;arcSize=10;fillColor=#ffffff;strokeColor=none;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;spacing=6;resizable=0;points=[];" value="HTTP" vertex="1">
+          <mxGeometry height="32" relative="1" width="54.9" as="geometry">
+            <mxPoint x="-27.45" y="-16" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_17" edge="1" parent="1" source="sut" style="edgeStyle=none;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#60718A;strokeWidth=1.5;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;" target="deps" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label_17" connectable="0" parent="edge_17" style="edgeLabel;shape=rectangle;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;absoluteArcSize=1;arcSize=10;fillColor=#ffffff;strokeColor=none;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;spacing=6;resizable=0;points=[];" value="обращается" vertex="1">
+          <mxGeometry height="32" relative="1" width="107.4" as="geometry">
+            <mxPoint x="-53.7" y="-16" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8gFUoLK8gN5UFx0c8EVb-2" edge="1" parent="1" source="case" style="edgeStyle=none;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#60718A;strokeWidth=1.5;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;" target="base" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1450" y="360" as="sourcePoint" />
+            <mxPoint x="1450" y="573.333" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8gFUoLK8gN5UFx0c8EVb-3" connectable="0" parent="8gFUoLK8gN5UFx0c8EVb-2" style="edgeLabel;shape=rectangle;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;absoluteArcSize=1;arcSize=10;fillColor=#ffffff;strokeColor=none;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;spacing=6;resizable=0;points=[];" value="вызывает" vertex="1">
+          <mxGeometry height="32" relative="1" width="158.85" x="-0.6" as="geometry">
+            <mxPoint x="-320" y="54" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8gFUoLK8gN5UFx0c8EVb-5" edge="1" parent="1" source="base" style="edgeStyle=none;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#60718A;strokeWidth=1.5;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;" target="deps" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-80" y="380" />
+              <mxPoint x="-80" y="1480" />
+              <mxPoint x="1440" y="1480" />
+            </Array>
+            <mxPoint x="580" y="1410" as="sourcePoint" />
+            <mxPoint x="-220" y="1596" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8gFUoLK8gN5UFx0c8EVb-6" connectable="0" parent="8gFUoLK8gN5UFx0c8EVb-5" style="edgeLabel;shape=rectangle;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;absoluteArcSize=1;arcSize=10;fillColor=#ffffff;strokeColor=none;fontColor=#43536A;fontFamily=DejaVu Sans;fontSize=14;spacing=6;resizable=0;points=[];" value="запускает SUT и внепроцессные зависимости и приводит их к стандартному состоянию" vertex="1">
+          <mxGeometry height="32" relative="1" width="158.85" x="-0.6" as="geometry">
+            <mxPoint x="-90" y="-445" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
