@@ -1,0 +1,16 @@
+---
+title: Защитные выражения (v1.0.0)
+type: docs
+weight: 500
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:toc:
+:sectanchors:
+
+см.:
+
+* https://www.oreilly.com/library/view/tidy-first/9781098151232/ch01.html[Tidy First? - Guard Clauses]
+* https://azhidkov.pro/posts/22/11/ea-at-jpoint/[Эргономичный подход на JPoint]

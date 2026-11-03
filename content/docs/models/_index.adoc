@@ -1,0 +1,13 @@
+---
+title: Модели
+type: docs
+weight: 690
+bookcollapsesection: true
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:sectlinks:
+
+Ключевые модели, используемые для описания/осмысления код в Эргономичном подходе.

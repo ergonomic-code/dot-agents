@@ -1,0 +1,43 @@
+---
+title: Добавляйте название сущности к параметрам идентификаторов (v1.0.0)
+type: docs
+weight: 500
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:toc:
+:sectanchors:
+
+И в шаблонах эндпоинтов и в Kotlin-методов не используйте название "id" - всегда добавляйте тип идентифицируемой сущности.
+
+Правильно:
+
+[source,kotlin]
+----
+@RestController
+class JournalController { 
+
+    @DeleteMapping("/{entryId}")
+    fun deleteEntry(entryId: UUID) {
+        // ...
+    }
+}
+----
+
+Не правильно
+
+[source,kotlin]
+----
+@RestController
+class JournalController { 
+
+    @DeleteMapping("/{id}")
+    fun deleteEntry(id: UUID) {
+        // ...
+    }
+}
+----
+
+Это повышает наглядность кода, оставляет возможность обратносовместимо и согласованно добавлять новые параметры-идентификаторы и уменьшает вероятность передачи клиентами идентификаторов в неправильном порядке в методах, которые получают на вход несколько идентификаторов.

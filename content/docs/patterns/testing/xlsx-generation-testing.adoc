@@ -1,0 +1,101 @@
+---
+title: Тестирование генерации xlsx-документов с помощью Apache POI (v0.0.0)
+type: docs
+weight: 500
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:toc:
+:sectanchors:
+
+Тестирование кода генерации xlsx-документов является достаточно сложной задачей.
+
+Верификация состояния XSSFWorkbook вручную будет очень громоздкой и сложной для чтения.
+
+О существовании какого-то DSL-я, который бы позволял лаконичного и читаемо описывать корректные документы я не знаю и идей как он мог бы выглядеть у меня тоже нет.
+
+Сравнивать байты результат вызова с эталонными байтами не получится, потому что идентичные документы всегда представляются разным набором байт (подозреваю, дело во включении текущего момента времени в документ и компрессии).
+
+В результате, кажется наиболее оптимальным вариант "слепого" сравнения полученного XSSFWorkbook объекта с предварительно сгенерированным (и проверенным глазами) эталоном.
+
+После чего сравнение можно выполнить с помощью этого набора функций на базе Kotest assertions:
+
+[WARNING]
+====
+Я не проверял этот набор на полноту - проверяйте отлавливает ли он важные для вас изменения в форматировании через ручную "поломку" кода или эталона.
+====
+
+[WARNING]
+====
+Эти функции генерируют не самые простые для отладки сообщения об ошибке.
+
+При наличии времени, лучше для них написать https://kotest.io/docs/assertions/custom-matchers.html[кастомные матчеры] (https://github.com/ergonomic-code/Trainer-Advisor/blob/master/app/src/testFixtures/kotlin/pro/qyoga/tests/assertions/ElementMatchers.kt#L14[пример из Trainer Advisor]).
+====
+
+[source,kotlin]
+----
+infix fun XSSFWorkbook.shouldMatch(expected: XSSFWorkbook) {
+    this.numberOfSheets shouldBe expected.numberOfSheets
+    this.numCellStyles shouldBe expected.numCellStyles
+    this.numberOfFonts shouldBe expected.numberOfFonts
+    this.numberOfNames shouldBe expected.numberOfNames
+
+    this.sheetIterator().asSequence().zip(expected.sheetIterator().asSequence()).toList()
+        .forAll { (actualSheet, expectedSheet) ->
+            actualSheet shouldMatch expectedSheet
+        }
+}
+
+infix fun Sheet.shouldMatch(expected: Sheet) {
+    this.firstRowNum shouldBe expected.firstRowNum
+    this.lastRowNum shouldBe expected.lastRowNum
+    this.numMergedRegions shouldBe expected.numMergedRegions
+
+    this.rowIterator().asSequence().zip(expected.rowIterator().asSequence()).forAll { (actualRow, expectedRow) ->
+        actualRow shouldMatch expectedRow
+    }
+
+    this.mergedRegions.zip(expected.mergedRegions).forAll { (actualRegion, expectedRegion) ->
+        actualRegion shouldMatch expectedRegion
+    }
+}
+
+infix fun Row.shouldMatch(expected: Row) {
+    this.physicalNumberOfCells shouldBe expected.physicalNumberOfCells
+    cellIterator().asSequence().zip(expected.cellIterator().asSequence())
+        .forAll { (actualCell, expectedCell) ->
+            actualCell shouldMatch expectedCell
+        }
+}
+
+infix fun Cell.shouldMatch(expected: Cell) {
+    this.cellType shouldBe expected.cellType
+    when (this.cellType) {
+        CellType.STRING -> this.stringCellValue shouldBe expected.stringCellValue
+        CellType.NUMERIC -> this.numericCellValue shouldBe expected.numericCellValue
+        CellType.BOOLEAN -> this.booleanCellValue shouldBe expected.booleanCellValue
+        CellType.BLANK -> this.stringCellValue shouldBe expected.stringCellValue
+        else -> error("Тип ${this.cellType} пока не поддержан")
+    }
+
+    this.cellStyle shouldMatch expected.cellStyle
+}
+
+infix fun CellRangeAddress.shouldMatch(expected: CellRangeAddress) {
+    this.firstRow shouldBe expected.firstRow
+    this.lastRow shouldBe expected.lastRow
+    this.firstColumn shouldBe expected.firstColumn
+    this.lastColumn shouldBe expected.lastColumn
+}
+
+infix fun CellStyle.shouldMatch(expected: CellStyle) {
+    this.fontIndex shouldBe expected.fontIndex
+    this.alignment shouldBe expected.alignment
+    this.borderTop shouldBe expected.borderTop
+    this.borderRight shouldBe expected.borderRight
+    this.borderLeft shouldBe expected.borderLeft
+    this.borderBottom shouldBe expected.borderBottom
+}
+----

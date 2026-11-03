@@ -1,0 +1,16 @@
+---
+title: Kotlin
+type: docs
+weight: 1700
+bookCollapseSection: true
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:sectlinks:
+:toc:
+:toc-levels: 6
+:toc-title: Содержание
+
+Паттерны программирования на Kotlin.

@@ -1,0 +1,224 @@
+---
+title: "Мультитенантность на основе схем (v0.0.0)"
+type: docs
+weight: 500
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:sectlinks:
+
+Для того чтобы поддержать мультитенантность на основе схем, глобально надо сделать три вещи:
+
+. Опционально: завести кастомную аннотацию для бинов обеспечиваюищих мультитенантный режим
+. Завести ресурс/инфраструктурный компонент, который будет хранить тенанта для которого выполняется запрос;
+. Для каждого запроса проставить тенанта;
+. Встроиться в логику получения подключения к БД и перед возвратом подключения проставлять для него схему текущего запроса
+
+В коде эти штуки выглядят так:
+
+.Аннотация мультитенантных компонент
+[source,kotlin]
+----
+@ConditionalOnProperty(value = ["multitenant.enabled"], havingValue = "true")
+@Retention(AnnotationRetention.RUNTIME)
+@Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION)
+annotation class ConditionalOnMultiTenant
+----
+
+Компонент текущего тенанта строится вокруг одной ThreadLocal-переменной:
+
+.Компонент хранения текущего тенанта
+[source,kotlin]
+----
+@ConditionalOnMultiTenant
+@Component
+class CurrentTenantService {
+
+    private val log = LoggerFactory.getLogger(javaClass)
+
+    private val currentTenant = ThreadLocal<String?>()
+
+    fun <T> withTenant(tenantId: String, block: () -> T): T {
+        log.debug("Switching to tenant {}", tenantId)
+        val prevTenant = currentTenant.get()
+        setCurrentTenant(tenantId)
+        return try {
+            block()
+        } finally {
+            setCurrentTenant(prevTenant)
+            log.debug("Returned to tenant {}", prevTenant)
+        }
+    }
+
+    fun getCurrentTenant(): String {
+        return (currentTenant.get()
+            ?: DEFAULT_TENANT)
+            .also { log.debug("Current tenant: {}", it) }
+    }
+
+    fun setCurrentTenant(tenant: String?) {
+        log.debug("Setting current tenant to {}", tenant)
+        currentTenant.set(tenant)
+    }
+
+    companion object {
+        const val DEFAULT_TENANT = "public"
+    }
+
+}
+----
+
+.Фильтр установки тенанта в HTTP-запросах
+[source,kotlin]
+----
+@WebFilter("/**")
+@ConditionalOnMultiTenant
+@Component
+class SetTenantFilter(
+    private val currentTenantService: CurrentTenantService
+) : Filter {
+
+    override fun doFilter(
+        rq: ServletRequest,
+        rs: ServletResponse,
+        chain: FilterChain
+    ) {
+        val tenantId = getTenantId(rq)
+
+        currentTenantService.withTenant(tenantId) {
+            chain.doFilter(rq, rs)
+        }
+    }
+
+    // здесь тенант берётся из поддомена
+    private fun getTenantId(rq: ServletRequest): String {
+        var tenant = rq.serverName
+            .split(".")[0]
+            .lowercase()
+        if (tenant == "localhost") {
+            tenant = CurrentTenantService.DEFAULT_TENANT
+        }
+        return tenant
+    }
+
+}
+----
+
+.Аспект установки тенанта в обработчиках JMS-сообщений
+[source,kotlin]
+----
+@Aspect
+@Component
+@ConditionalOnMultiTenant
+class SetTenantOnJmsMessageAspect(
+    private val objectMapper: ObjectMapper,
+    private val dataSource: DataSource
+) {
+
+    private val log = LoggerFactory.getLogger(javaClass)
+
+    @Around("@annotation(org.springframework.jms.annotation.JmsListener)")
+    fun filterMessage(joinPoint: ProceedingJoinPoint) {
+        val args = joinPoint.args
+
+        val payload = args.payloadOrNull()
+        if (payload == null) {
+            log.warn("Cannot find payload in {} for {}", args, joinPoint)
+            joinPoint.proceed()
+            return
+        }
+
+        val tenantId: String? = payload.get(SupportsMultiTenant::tenantId.name)?.asText()
+        if (tenantId == null) {
+            log.warn("Cannot find tenantId in {} for {}", payload, joinPoint)
+            joinPoint.proceed()
+            return
+        }
+
+        // При работе с JMS в транзакционном режиме подключение открывается где-то в кишках Спринга до этого места и, соответственно,
+        // без тенанта проставленного в currentTenantsService.
+        // По-хорошему, наверное, надо найти способ встроиться туда, но не понятно, разумно ли там будет пытаться выковырить
+        // тенанта из сообщения
+
+        // Копипаста из JdbcTemplate
+        val con = DataSourceUtils.getConnection(dataSource) 
+        val prevSchema = con.schema
+        try {
+            con.schema = tenantId
+            joinPoint.proceed()
+        } finally {
+            con.schema = prevSchema
+        }
+    }
+
+    private fun Array<Any>.payloadOrNull(): JsonNode? {
+        return this.asSequence()
+            .filterIsInstance<String>()
+            .mapNotNull {
+                try {
+                    objectMapper.readTree(it)
+                } catch (ex: IOException) {
+                    log.debug("Ignoring {}", ex.toString())
+                    null
+                }
+            }
+            .firstOrNull()
+    }
+
+}
+----
+
+.Кастомный DataSource с установкой схемы
+[source,kotlin]
+----
+internal class MultiTenantsDataSource(
+    private val delegate: DataSource,
+    private val currentTenantService: CurrentTenantService
+) : DataSource by delegate {
+
+    private val log = LoggerFactory.getLogger(javaClass)
+
+    override fun getConnection(): Connection {
+        val conn = delegate.connection
+        conn.schema = currentTenantService.getCurrentTenant()
+        log.debug("Returning connection with schema: {}", conn.schema)
+        return conn
+    }
+
+    override fun createConnectionBuilder(): ConnectionBuilder? {
+        return delegate.createConnectionBuilder()
+    }
+
+    override fun createShardingKeyBuilder(): ShardingKeyBuilder? {
+        return delegate.createShardingKeyBuilder()
+    }
+
+}
+----
+
+.Конфиг мультитенантного режима
+[source,kotlin]
+----
+@Configuration
+@ConditionalOnMultiTenant
+class MultiTenantConf {
+
+    @Bean
+    @Primary
+    fun multiTenantDataSource(properties: DataSourceProperties, currentTenantService: CurrentTenantService): DataSource {
+        // Конфигурируется так же как и в случае использования автоконфигурации
+        val delegate = properties.initializeDataSourceBuilder()
+            .type(HikariDataSource::class.java)
+            .build()
+
+        return MultiTenantsDataSource(delegate, multiTenantService)
+    }
+
+}
+----
+
+И в случае если в прикладном коде в запросах явно не указывается схема, он начнёт работать в мультитенантном режиме без каких-либо изменений.
+
+Если же схемы упоминаются и удалить эти упоминания нельзя, то придётся воспользоваться https://docs.spring.io/spring-data/relational/reference/jdbc/query-methods.html#jdbc.query-methods.at-query[поддержкой SpEL в Spring Data JDBC] и так же брать схему из currentTenantService.

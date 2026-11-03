@@ -1,0 +1,89 @@
+---
+title: Миграция объектов БД без состояния (v1.0.0)
+type: docs
+weight: 500
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:toc:
+:sectanchors:
+
+== Общие рекомендации
+
+Обновление представлений, правил, хранимых процедур и т.д. объектов без состояния выполняется с помощью https://documentation.red-gate.com/fd/migrations-184127470.html#Migrations-RepeatableMigrations[repeatable migrations].
+
+== Миграции строковых констант в коде (Flyway)
+
+Миграции объектов без состояния бывает удобно хранить рядом с кодом, который их использует - например SQL-представление для Spring Data JDBC модели на чтение удобно хранить, в том же файле, что класс модели.
+
+В Flyway такие миграции можно оформить только как Java-миграции, плюс для них необходимо в ручную вычислять чексумму, чтобы они исполнялись автоматически, при изменении значения константы.
+
+Вычисление чексуммы, можно вынести в базовый класс:
+
+[source,kotlin]
+----
+open class BaseRepeatableMigration(
+    vararg migrationSqlStatements: String,
+) : BaseJavaMigration() {
+
+    private val migrationSqlStatement = concatenateMigrations(migrationSqlStatements)
+
+    private fun concatenateMigrations(migrations: Array<out String>): String {
+        return migrations.joinToString(";")
+    }
+
+    override fun migrate(context: Context) {
+        val connection = context.connection
+        connection.prepareStatement(migrationSqlStatement).execute()
+    }
+
+    override fun getChecksum(): Int {
+        val bytes = migrationSqlStatement.toByteArray()
+        val crc32 = CRC32()
+        crc32.update(bytes)
+        return crc32.value.toInt()
+    }
+}
+----
+
+После чего новые объекты без состояния можно будет добавлять так:
+
+.Файл миграции
+[source,kotlin]
+----
+package db.migration.devices
+
+import project.domain.devices.firmwares.api.dtos.firmwaresViewDdl
+import project.platform.migrations.BaseRepeatableMigration
+
+class R__FirmwaresView : BaseRepeatableMigration(firmwaresViewDdl)
+----
+
+.Файл DTO
+[source,kotlin]
+----
+const val firmwares = "firmwares_view"
+
+@Language("PostgreSQL")
+const val firmwaresViewDdl = """
+    DROP VIEW IF EXISTS $firmwares;
+    CREATE VIEW $firmwares AS (
+        SELECT 
+        fi.id AS id, 
+        fi.firmware_version AS firmware_version,
+        -- ...
+    FROM
+        firmware_infos fi 
+        -- INNER JOIN ...
+    )
+"""
+
+@Table(firmwares)
+data class Firmware(
+    @Id
+    val id: UUID,
+    // ...
+)
+----

@@ -1,0 +1,15 @@
+---
+title: Бейзлайн миграций тестов (v1.0.0)
+type: docs
+weight: 500
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:toc:
+:sectanchors:
+
+Для ускорения запуска тестов можно переодически делать снапшот схемы БД и использовать его в качестве бейзлайна.
+
+см. https://azhidkov.pro/posts/24/07/project-r-test-setup/#\_%D1%81%D0%BE%D0%BA%D1%80%D0%B0%D1%89%D1%91%D0%BD%D0%BD%D1%8B%D0%B5_%D0%BC%D0%B8%D0%B3%D1%80%D0%B0%D1%86%D0%B8%D0%B8[Как поднимать свежую фикстуру БД на 300+ таблиц за 1.5 секунды]

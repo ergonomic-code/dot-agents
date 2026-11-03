@@ -1,0 +1,13 @@
+---
+title: Использование ON DELETE CASCADE для внешних ключей внутри агрегата (v1.0.0)
+type: docs
+weight: 500
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:toc:
+:sectanchors:
+
+Для внешних ключей между таблицами, хранящие части агрегата используйте ON DELETE CASCADE.

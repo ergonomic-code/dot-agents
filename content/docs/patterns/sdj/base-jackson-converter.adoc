@@ -1,0 +1,66 @@
+---
+title: Базовые классы для конвертации JSONB-полей (v1.0.0)
+type: docs
+weight: 500
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:sectlinks:
+
+Для конвертеров из/в jsonb-поля можно завести базовые классы, которые соберут в себе всю логику:
+
+[source,kotlin]
+----
+@WritingConverter
+interface ObjectToJsonbWriter<T : Any> : Converter<T, PGobject>
+
+@ReadingConverter
+interface JsonbToObjectReader<T : Any> : Converter<PGobject, T>
+
+class JacksonObjectToJsonbWriter<T : Any>(
+    private val objectMapper: ObjectMapper
+) : ObjectToJsonbWriter<T> {
+
+    override fun convert(source: T): PGobject =
+        source.let {
+            PGobject().apply {
+                type = "jsonb"
+                value = objectMapper.writeValueAsString(source)
+            }
+        }
+
+}
+
+@ReadingConverter
+class JacksonJsonbToObjectReader<T : Any>(
+    private val objectMapper: ObjectMapper,
+    private val type: KClass<T>
+) : JsonbToObjectReader<T> {
+
+    override fun convert(source: PGobject): T? =
+        if (source.isNull) {
+            null
+        } else {
+            objectMapper.readValue(source.value!!, type.java)
+        }
+
+}
+----
+
+Затем, конвертеры конкретных типов можно будет делать однострочниками:
+
+[source,kotlin]
+----
+class CustomFieldValueWriter(
+    objectMapper: ObjectMapper
+) : ObjectToJsonbWriter<BaseCustomFieldValue<*>> by JacksonObjectToJsonbWriter(objectMapper)
+
+class CustomFieldValueReader(
+    objectMapper: ObjectMapper,
+) : JsonbToObjectReader<BaseCustomFieldValue<*>> by JacksonJsonbToObjectReader(
+    objectMapper,
+    BaseCustomFieldValue::class
+)
+----

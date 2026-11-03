@@ -1,0 +1,13 @@
+---
+title: Универсальные принципы
+type: docs
+weight: 500
+bookcollapsesection: true
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:sectlinks:
+
+Принципы, которые применяются во всех аспектах работы.

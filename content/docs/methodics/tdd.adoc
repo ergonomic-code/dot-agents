@@ -1,0 +1,9 @@
+---
+title: Test-driven development (v1.0.0)
+type: docs
+weight: 250
+---
+
+* https://azhidkov.pro/posts/23/12/project-e-dev-guideline/#_tdd[Гайдлайн разработчика Проекта Э - TDD]
+* https://azhidkov.pro/posts/22/04/220409-ergo-approach-v10m1/[Эргономичный подход v1.0M1]
+* link:++{{<ref "process">}}++[Процесс разработки]

@@ -1,0 +1,14 @@
+---
+title: Эргономичная ER-модель (v1.0.0)
+type: docs
+weight: 500
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:sectlinks:
+
+* https://azhidkov.pro/posts/23/11/immutable-relation-data-model-v2/[Нотация описания неизменяемой модели данных]
+* https://azhidkov.pro/posts/23/11/irdm-answers/[Ответы на вопросы по Эргономичной нотации ER-модели]
+* https://azhidkov.pro/posts/22/04/220401-aggregates/[Агрегаты].

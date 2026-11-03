@@ -1,0 +1,12 @@
+---
+title: Агрегаты должны быть реализованны неизменяемыми классами (v1.0.0)
+type: docs
+weight: 750
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:sectlinks:
+
+Для моделирования домена используйте неизменяемые данные.

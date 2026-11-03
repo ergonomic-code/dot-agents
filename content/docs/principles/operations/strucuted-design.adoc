@@ -1,0 +1,13 @@
+---
+title: Разделяйте бизнес-логику и ввод-вывод (v1.0.0)
+type: docs
+weight: 500
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:sectlinks:
+
+Разделяйте код реализующий бизнес-логику и ввод-вывод.
+см. https://azhidkov.pro/posts/24/11/structured-design/[Структурный дизайн. Древний секрет простого и быстрого кода]

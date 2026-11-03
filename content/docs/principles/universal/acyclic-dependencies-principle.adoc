@@ -1,0 +1,12 @@
+---
+title: Принцип ацикличности зависимостей (v1.0.0)
+type: docs
+weight: 500
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:sectlinks:
+
+Исключите циклы в зависимостях между элементами системы.

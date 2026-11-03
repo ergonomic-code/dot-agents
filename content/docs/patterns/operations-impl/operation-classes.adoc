@@ -1,0 +1,15 @@
+---
+title: Классы операций (юзкейсов) (v1.0.0)
+type: docs
+weight: 500
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:toc:
+:sectanchors:
+
+Код оркестрации каждой операции системы помещайте в отдельный класс (а не пачку операций в класс сервисов).
+
+см. https://github.com/ergonomic-code/Trainer-Advisor/blob/master/app/src/main/kotlin/pro/qyoga/app/publc/register/RegisterTherapistOp.kt[RegisterTherapistOp]

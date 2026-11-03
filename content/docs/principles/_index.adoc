@@ -1,0 +1,13 @@
+---
+title: Принципы
+type: docs
+weight: 625
+bookcollapsesection: true
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:sectlinks:
+
+Основные руководящие принципы Эргономичного подхода.

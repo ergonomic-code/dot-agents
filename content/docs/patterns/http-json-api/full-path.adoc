@@ -1,0 +1,46 @@
+---
+title: Используйте в маппинге эндпоинтов полные пути (v1.0.0)
+type: docs
+weight: 500
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:toc:
+:sectanchors:
+
+Используйте в маппинге эндпоинтов полные пути. 
+
+Например, в Spring используйте такой маппинг:
+
+[source,kotlin]
+----
+@RestController
+class JournalController { 
+
+    @DeleteMapping("/therapist/clients/{clientId}/journal/{entryId}")
+    fun deleteEntry(clientId: UUID, entryId: UUID) {
+        // ...
+    }
+}
+----
+
+а не такой:
+
+[source,kotlin]
+----
+@RestController
+@RequestMapping("/therapist/clients/{clientId}/journal")
+class JournalController { 
+
+    @DeleteMapping("/{entryId}")
+    fun deleteEntry(clientId: UUID, entryId: UUID) {
+        // ...
+    }
+}
+----
+    
+Это упрощает их поиск, который выполняется существенно чаще, чем изменение, и зачастую выполняется в легковесных текстовых редакторах.
+
+Для упрощения редактирования, можно воспользоваться функцией множества курсоров, поддерживаемой в большинстве современных редакторов.

@@ -1,0 +1,15 @@
+---
+title: Изменение глубокого дерева неизменяемых объектов (v1.0.0)
+type: docs
+weight: 500
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:toc:
+:sectanchors:
+
+* Глубина дерева больше трёх - дурной запах
+* Можно начать с цепочки вспомогательных методов, начиющейся с корня
+* Либо взять либу https://github.com/JavierSegoviaCordoba/kopy[попроще] или https://arrow-kt.io/learn/immutable-data/lens/[посложнее]

@@ -1,0 +1,13 @@
+---
+title: Эргономичная архитектура тестов (v1.0.0)
+type: docs
+weight: 925
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:sectlinks:
+:imagesdir: /docs/models/images
+
+см. https://azhidkov.pro/posts/24/03/trainer-advisor-testing-theory/[Тестирование Trainer Advisor: теория]

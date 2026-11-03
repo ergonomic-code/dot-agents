@@ -1,0 +1,110 @@
+---
+title: Ссылки на некорневые сущности (v0.0.0)
+type: docs
+weight: 500
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:sectlinks:
+
+По философии DDD идентичностью (глобальным идентификатором) обладают только корни агрегатов, соответственно извне агрегата ссылаться можно только на его корень.
+
+Однако время от времени возникает необходимость сослаться на некорневую сущность агрегата.
+
+Примером такого случая из моей практики является https://t.me/s/ergonomic_code?q=%23project_r[Проект Р], который управляет некими динамически настраиваемыми таблицами.
+В этом проекте администратор настраивает типы таблиц, определяя список колонок этих таблиц.
+
+А потом пользователи могут загружать экземпляры таблицы и дальше как-то с ними работать.
+
+И в Проекте Р это замоделировано тремя техническими агрегатами - настройками (включен тип или нет) со списком полей типа таблицы, экземплярами таблиц и, так как строк в таблице может быть до тысячи, строками таблиц со списком значений.
+
+Объект-значение значения поля таблицы (value object, определяющий что в такой-то строке такая-то колонка имеет такое-то значение) имеет два свойства - собственно значение и ссылку на поле, являющееся некоренвой сущностью агрегата настроек таблицы.
+И тут мы нарушаем каноны DDD - ссылаться на поле - вложенную сущность другого агрегата нельзя.
+Но я не вижу другого разумного способа это замоделировать - делать поля самостоятельными агрегатами нельзя, потому что у полей одной таблицы есть общий инвариант - название и внешний идентификатор поля должны быть уникальными в рамках таблицы.
+
+Так же по канонам проектирования реляционной модели ссылка из значения на поле должна быть внешним ключём.
+
+И с таким дизайном модели нас начинает кусать дизайн реализации Spring Data JDBC: по непонятным для меня причинам^*^ при обновлении агрегата он корневую таблицу обновляет, а в таблицах вложенных сущностей делает DELETE + INSERT.
+
+[NOTE]
+====
+^*^ Полагаю, это как-то связано с тем, что SDJ не отслеживает загруженные агрегаты (у него не аналога Persistence Context) и, возможно, это делает сложным или невозможным определение того, что делать с сущностью при сохранении - INSERT или UPDATE.
+Хотя умозрительно вроде должна сработать та же стратегия, что и с корнем агрегата - если id != null/0 - вставить, иначе обновить.
+Либо делать MERGE/UPSERT/ON CONFLICT UPDATE - вроде все поддерживаемые SDJ СУБД дают такую возможность.
+====
+
+И из коробки такая комбинация (ссылки на некорневые сущности и их удаление при обновлении агрегата) не работает - при удалении строк из таблицы полей вылетит исключение о нарушении целостности.
+
+Эту проблему можно решить удалив внешний ключ - в каком-то из докладов автор SDJ пропагандировал идею отказа от внешних ключей между агрегатами.
+
+Однако я придерживаюсь мнения, что софт в целом и технологии в частности приходят и уходят.
+А данные и их модель остаётся и жертвовать качеством модели данных в угоду ограничений используемый на данный момент технологии для работы с ними - недальновидно.
+
+Поэтому я предлагаю другой способ решения этой проблемы - https://www.postgresql.org/docs/current/sql-set-constraints.html[откладывание проверки целостности].
+
+Для этого надо:
+
+. При объявлении внешнего ключа https://www.postgresql.org/docs/current/ddl-constraints.html#DDL-CONSTRAINTS-FK[сделать его откладываемым];
+. https://docs.spring.io/spring-data/relational/reference/repositories/custom-implementations.html#repositories.single-repository-behavior[С помощью фрагмента] сделать кастомный метод сохранения агрегата (настроек таблицы в примере выше);
+. В кастомном методе:
+.. В блоке try
+... С помощью JdbcOperations или JdbcClient https://www.postgresql.org/docs/current/sql-set-constraints.html[отложить] проверку целлостности для текущей сессии;
+... С помощью https://docs.spring.io/spring-data/jdbc/docs/current/api/org/springframework/data/jdbc/core/JdbcAggregateOperations.html[JdbcAggregateOperations] выполнить сохранение агрегата;
+.. В блоку finally вернуть немедленную проверку целостности;
+
+В коде это выглядит так:
+
+.Объявление внешнего ключа DEFERRABLE
+[source,sql]
+----
+CREATE TABLE field_values
+(
+    row_ref BIGINT NOT NULL
+        CONSTRAINT fk_table_field_values_table_ref
+            REFERENCES tables
+            ON DELETE CASCADE,
+    field_ref     BIGINT NOT NULL
+        CONSTRAINT fk_table_field_values_field_ref
+            REFERENCES tables_fields
+            DEFERRABLE INITIALLY DEFERRED,
+    value         JSONB  NOT NULL,
+    UNIQUE (row_ref, field_ref)
+);
+----
+
+.Фрагмент с кастомным методом сохранения
+[source,kotlin]
+----
+interface TableSettingsCustomizedSave {
+
+    fun save(entity: TableSettings): TableSettings
+
+}
+
+
+open class TableSettingsCustomizedSaveImpl(
+    private val jdbcClient: JdbcClient,
+    private val jdbcAggregateOperations: JdbcAggregateOperations
+) : TableSettingsCustomizedSave {
+
+    @Transactional
+    @Override
+    override fun save(entity: TableSettings): TableSettings {
+        try {
+            jdbcClient.sql("SET CONSTRAINTS fk_table_field_values_field_ref DEFERRED").update()
+            val id = jdbcAggregateOperations.save(entity).id
+            return jdbcAggregateOperations.findById(id, TableSettings::class.java)!!
+        } finally {
+            jdbcClient.sql("SET CONSTRAINTS fk_table_field_values_field_ref IMMEDIATE").update()
+        }
+    }
+
+}
+
+@Repository
+interface TableSettingsRepo : CrudRepository<TableSettings, Long>,
+    TableSettingsCustomizedSave {
+}
+----

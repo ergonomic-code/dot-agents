@@ -1,0 +1,33 @@
+---
+title: Массовая вставка данных (v1.0.0)
+type: docs
+weight: 500
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:toc:
+:sectanchors:
+
+
+Массовая вставка в одну таблицу должна выполняться одним запросом со списком значений.
+
+Неправильно:
+
+[source,sql]
+----
+INSERT INTO products (food_id, food_name, created_at, owner_id, deleted, version)
+VALUES ('393de5ca-b74d-48cc-acef-1fc5d2952cbd', 'Белый хлеб', '2023-10-20 07:41:09.093052', null, false, 1);
+INSERT INTO products (food_id, food_name, created_at, owner_id, deleted, version)
+VALUSE ('d8ff3f53-57d0-4550-8479-e3b8de79094c', 'Черный хлеб', '2023-10-20 07:41:09.093052', null, false, 1);
+----
+
+Правильно:
+
+[source,sql]
+----
+INSERT INTO products (food_id, food_name, created_at, owner_id, deleted, version)
+VALUES ('393de5ca-b74d-48cc-acef-1fc5d2952cbd', 'Белый хлеб', '2023-10-20 07:41:09.093052', null, false, 1),
+       ('d8ff3f53-57d0-4550-8479-e3b8de79094c', 'Черный хлеб', '2023-10-20 07:41:09.093052', null, false, 1);
+----

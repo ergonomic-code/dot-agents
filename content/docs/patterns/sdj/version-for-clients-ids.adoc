@@ -1,0 +1,14 @@
+---
+title: "@Version для поддержки клиентских идентификаторов (v1.0.0)"
+type: docs
+weight: 500
+---
+
+При сохранении агрегата для выбора операции (INSERT или UPDATE) SDJ по дефолту опирается на значение поля ИДа - если оно дефолтное (null или 0) - делает вставку, иначе - апдейт.
+
+Это ломается если ИДы (UUID-ы) генерируются на клиенте или приложением.
+
+И это можно закостылять добавив поле версии.
+В этом случае SDJ будет смотреть на его значение и для 0-ой версии делать вставку, а для больших - обновление.
+
+см. также https://docs.spring.io/spring-data/relational/reference/jdbc/entity-persistence.html#entity-persistence.id-generation[ID Generation] и https://docs.spring.io/spring-data/relational/reference/repositories/core-concepts.html#is-new-state-detection[Entity State Detection Strategies].

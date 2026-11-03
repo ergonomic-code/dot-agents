@@ -1,0 +1,141 @@
+---
+title: DomainException — ожидаемые невосстановимые ошибки (v1.0.0)
+type: docs
+weight: 500
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:toc:
+:sectanchors:
+
+`DomainException` — базовый класс для ожидаемых невосстановимых ошибок.
+
+См. также link:++{{<ref "/docs/patterns/operations-impl/error-handling">}}++[Обработка ошибок].
+
+== Зачем нужен базовый класс
+
+Базовый класс используется чтобы:
+
+. отличать ожидаемые ошибки от неожиданных;
+. централизованно задавать поля/атрибуты, которые нужны для логгирования и формирования ответа пользователю;
+. иметь опорную точку для маппинга на протокол точки входа (например HTTP).
+
+== Рекомендуемое содержимое
+
+В базовый класс обычно добавляются:
+
+. внутреннее сообщение об ошибке;
+. код ошибки;
+. сообщение для пользователя или ключ сообщения в локализациях;
+. первопричина (`cause`).
+
+Код ошибки (`errorCode`) используется как стабильный идентификатор ошибки во внешних интеграциях и/или при формировании HTTP-ответов.
+
+== Пример реализации
+
+[source,kotlin]
+----
+open class DomainException(
+    message: String? = null,
+    cause: Throwable? = null,
+    errorCode: String? = null,
+    val userMessageKey: String? = null,
+    val attributes: Map<String, Any?> = emptyMap(),
+) : Exception(message, cause) {
+
+    val errorCode: String = errorCode ?: errorCodeOf(this::class)
+
+    companion object {
+
+        inline fun <reified E : Throwable> errorCodeOf(): String =
+            errorCodeOf(E::class)
+
+        fun errorCodeOf(clazz: kotlin.reflect.KClass<out Throwable>): String =
+            requireNotNull(errorCodeOrNullOf(clazz)) {
+                "Can't derive error code from class: ${clazz.qualifiedName ?: clazz}"
+            }
+
+        fun errorCodeOrNullOf(clazz: kotlin.reflect.KClass<out Throwable>): String? =
+            clazz.simpleName
+                ?.camelToKebabCase()
+                ?.removeSuffix("-exception")
+
+    }
+
+}
+
+private fun String.camelToKebabCase(): String = buildString(length + 8) {
+    this@camelToKebabCase.forEachIndexed { index, ch ->
+        val isUpper = ch in 'A'..'Z'
+        if (isUpper && index != 0) append('-')
+        append(if (isUpper) ch.lowercaseChar() else ch)
+    }
+}
+----
+
+== EntityNotFoundException — стандартная not found ошибка
+
+`EntityNotFoundException` — стандартная ожидаемая невосстановимая ошибка для случаев, когда сущность/ресурс не удаётся найти по ключу.
+
+=== Когда использовать
+
+Используйте `EntityNotFoundException`, когда:
+
+. входные данные содержат идентификатор сущности;
+. по этому идентификатору сущность не находится в репозитории/хранилище;
+. операция должна завершиться отказом (например вернуть не 2xx в HTTP и откатить транзакцию).
+
+=== Когда не использовать
+
+Не используйте `EntityNotFoundException`, когда код загрузил данные из собственных хранилищ, извлёк из них идентификатор и затем попытался загрузить сущность по этому идентификатору, но не нашёл.
+Такие ошибки являются логическими ошибками программы и сигнализируются стандартными механизмами (например `error` или `checkNotNull`).
+
+=== Что важно сохранить в ошибке
+
+Как минимум стоит включать:
+
+. тип сущности;
+. список ключей (имя поля -> значение);
+. стабильный код ошибки (`errorCode`).
+
+=== Пример реализации
+
+[source,kotlin]
+----
+class EntityNotFoundException(
+    val type: String,
+    val keys: List<Pair<String, Any?>>,
+    override val message: String = "Entity of type $type not found by ${keys.format()}",
+    errorCode: String = "entity-not-found",
+    cause: Throwable? = null
+) : DomainException(
+    message,
+    cause,
+    errorCode = errorCode
+) {
+
+    init {
+        require(keys.isNotEmpty())
+    }
+
+    constructor(prop: KProperty1<*, Any?>, key: Any) : this(
+        prop.parameters[0].type.jvmErasure.simpleName!!,
+        listOf(prop.name to key),
+        errorCode = "${prop.parameters[0].type.jvmErasure.simpleName!!.inKebabCase}-not-found"
+    )
+
+    constructor(entityType: KClass<*>, key: Any) : this(
+        entityType.simpleName ?: "Entity",
+        listOf("key" to key),
+        errorCode = "${entityType.simpleName?.inKebabCase ?: "entity"}-not-found"
+    )
+
+}
+----
+
+== Связанные паттерны
+
+. link:++{{<ref "/docs/patterns/http-json-api/status-code-choosing">}}++[Правила выбора статуса ответа]
+. link:++{{<ref "/docs/patterns/http-json-api/error-response-body-format">}}++[Формат тела ошибочного ответа]

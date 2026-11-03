@@ -1,0 +1,15 @@
+---
+title: Реализация связей между агрегатами полями типа AggregateReference (v1.0.0)
+type: docs
+weight: 500
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:sectlinks:
+
+Ссылки на другие агрегаты должны быть реализованы в виде полей тип AggregateReference.
+Это позволит, при необходимости подтянуть ссылаемый агрегат в это поле.
+
+см. link:++{{<ref "/docs/patterns/sdj/aggregate-ref-eager-loading">}}++[Энергичная загрузка агрегатов]

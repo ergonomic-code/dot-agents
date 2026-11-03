@@ -1,0 +1,15 @@
+---
+title: Обёртка AggregateReferenceTarget (v1.0.0)
+type: docs
+weight: 500
+---
+
+:source-highlighter: rouge
+:rouge-theme: github
+:icons: font
+:sectlinks:
+
+Класс-обёртка вокруг агрегатов.
+Совместно с link:++{{<ref "/docs/patterns/sdj/aggregate-reference-fields">}}++[связями между агрегатами в виде AggregateReference-полей] используется для link:++{{<ref "/docs/patterns/sdj/aggregate-ref-eager-loading">}}++[энергичной загрузки связанных агрегатов].
+
+Обойтись без этого класса и имплеменить AggregateReference прямо в классах агрегатах нельзя, потому что в SDJ все подтипы AggregateReference считает простыми типами и для простых типов не заводит метаинформацию для персистанса.

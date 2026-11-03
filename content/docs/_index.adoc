@@ -1,0 +1,6 @@
+---
+title: Эргономичный подход
+type: docs
+weight: 125
+bookHref: "/docs/about-ea"
+---
