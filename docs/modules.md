@@ -17,7 +17,7 @@
 | `database` | Схемы и миграции БД, транзакции, запросы, read models и условные записи. | Проект работает с реляционной БД. |
 | `http-api` | HTTP-контракты, формат ошибок, boundary tests и типизированные HTTP test helpers. | Проект предоставляет, использует или тестирует HTTP API. |
 | `kotlin` | Kotlin-контекст в пересечениях с другими модулями: персистанс, HTTP API и сложные тестовые фикстуры. | В целевой части проекта используется Kotlin. |
-| `spring` | Dependency injection, регистрация beans и Spring test doubles. | В целевой части проекта используется Spring. |
+| `spring` | Тестовые дубли Spring и технологические пересечения с другими модулями. | В целевой части проекта используется Spring. |
 | `junit` | Именование и итоговая проверка JUnit-тестов. | Проект использует JUnit. |
 | `kotest` | Реализация и итоговая проверка Kotest-тестов. | Проект использует Kotest. |
 
@@ -32,7 +32,6 @@
 | `kotlin-http-api` | `kotlin`, `http-api` | Версионирование Kotlin врапперов для HTTP API. |
 | `spring-http-api` | `spring`, `http-api` | Обработка ошибок и формат ошибочных ответов Spring HTTP JSON API. |
 | `spring-http-api-tests` | `spring`, `http-api` | Тестовые клиенты Spring HTTP API. |
-| `spring-database` | `spring`, `database` | Spring JDBC и маппинг строк. |
 | `spring-kotlin-test-fixtures` | `core`, `spring`, `kotlin` | Сложные тестовые фикстуры, их фабрики и установщики на Kotlin и Spring. |
 
 ## Конфигурация модулей

@@ -28,7 +28,6 @@ def create_repo(tmp_path: Path, baseline: str | None = "BASELINE", index: str | 
         ("kotlin-http-api.md", ["kotlin", "http-api"], 95, "kotlin http"),
         ("spring-http-api.md", ["spring", "http-api"], 100, "spring http"),
         ("spring-http-api-tests.md", ["spring", "http-api"], 105, "spring http tests"),
-        ("spring-database.md", ["spring", "database"], 110, "spring database"),
         ("spring-kotlin-test-fixtures.md", ["core", "spring", "kotlin"], 125, "spring kotlin fixtures"),
         ("junit.md", ["junit"], 130, "junit"),
         ("kotest.md", ["kotest"], 140, "kotest"),
@@ -151,7 +150,6 @@ def test_spring_http_intersection_requires_both_modules(tmp_path):
     assert with_http.returncode == 0
     assert "`.agents/ergo/src/context/spring-http-api.md`" in with_http.stdout
     assert "`.agents/ergo/src/context/spring-http-api-tests.md`" in with_http.stdout
-    assert "`.agents/ergo/src/context/spring-database.md`" not in with_http.stdout
     assert "`.agents/ergo/src/context/spring-kotlin-test-fixtures.md`" not in with_http.stdout
 
 
